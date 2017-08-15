@@ -258,6 +258,66 @@
 								break;
 						}	
 					});
+				}else if(status=='已见证'||status=='已见证复检'){
+					var btnArray = [
+						{title:"送样"}
+					];
+					plus.nativeUI.actionSheet({
+						title:"操作",
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						switch (index){
+							case 1://实测
+							if(status=='已见证'){
+								mui.openWindow({
+									url:'deliver.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										my_name:my_name
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								})
+							}else if(status=='已见证复检'){
+								mui.openWindow({
+									url:'../my_material/my_material_recheckDeliver.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										my_name:my_name
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								})
+							}
+								
+								break;
+							case 2://撤销
+								break;
+						}	
+					  }
+					);
 				}
 			},
 			error:function(xhr,type,errorThrown){

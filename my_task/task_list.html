@@ -178,7 +178,9 @@
 				uid = geturl("uid");
 				unit = geturl("unit");
 				mobile = geturl("mobile");
+				my_name = geturl("my_name");
 				unit = decodeURI(decodeURI(unit));
+				my_name = decodeURI(decodeURI(my_name));
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',
