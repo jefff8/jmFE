@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/iconfont.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title" id="H_name"></h1>
+		</header>
+		<div class="mui-content">
+		    <ul id="my_list" class="mui-table-view mui-grid-view mui-grid-9 my_list">
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_material/my_material_results.html">
+	                    <span class="mui-icon iconfont icon-cailiao"></span>
+	                    <div class="mui-media-body">材料送检</div>
+	            	</a>
+	            </li>
+	            <!--<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="my_inspection_results.html">
+	                    <span class="mui-icon iconfont icon-zijian1"></span>
+	                    <div class="mui-media-body">自检结果</div>
+	            	</a>
+	            </li>-->
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_insp_material/my_inspection_mtResult.html">
+	                    <span class="mui-icon iconfont icon-cailiaozidian"></span>
+	                    <div class="mui-media-body">材料自检</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_insp_entity/my_inspection_entity_final.html">
+	                    <span class="mui-icon iconfont icon-shiti"></span>
+	                    <div class="mui-media-body">实体自检</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_commission/my_entity_results.html">
+	                    <span class="mui-icon iconfont icon-shitimoshiicon"></span>
+	                    <div class="mui-media-body">实体检测</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a >
+	                    <span class="mui-icon iconfont icon-gongzhongjiandu"></span>
+	                    <div class="mui-media-body">监督抽检</div>
+	            	</a>
+	            </li>
+	        </ul> 
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				mobile = self.mobile;
+				my_name = self.my_name;
+				
+				gcmc = self.gcmc;
+				timestamp = self.timestamp;
+				document.getElementById('H_name').innerHTML=gcmc;//标题名称
+				
+				//主列表点击事件 ,把项目id传到所有子页面中
+				mui('#my_list').on('tap', 'a', function() {
+//					alert("测试");
+					var id = this.getAttribute('href');
+					var href = this.href;
+					var webview_style = {
+						popGesture: "close",					
+						hardwareAccelerated:false
+					};
+					//alert(href);
+					mui.openWindow({
+						id: id,
+						url: this.href,
+						styles: webview_style,
+						extras:{
+							mobile:mobile,
+							my_name:my_name,
+							gcmc:gcmc,
+							timestamp:timestamp
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

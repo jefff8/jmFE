@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<style type="text/css">
+			.chart {
+				height: 250px;
+				margin: 0px; 
+				padding: 0px; 
+			}
+			h5 {
+				margin-top: 30px;
+				font-weight: bold;
+			}
+			h5:first-child {
+				margin-top: 15px;
+			}
+			.btn_size{
+				width: 90px; 
+				height: 34px;
+				background:#0000FF;
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">统计分析</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-content-padded">
+				<h5>统计分析：</h5>
+				<div class="chart" id="pieChart"></div>
+			</div>
+			<div style="margin-top: 5px;">
+				<div>
+					<p class="my_duangluo_hangju">已有&nbsp;<b class="my_xiahuaxian">1</b>&nbsp;份合格单</p>
+					<p class="my_duangluo_hangju">已有&nbsp;<b class="my_xiahuaxian">1</b>&nbsp;份不合格单</p>
+				</div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/echarts.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				 // 基于准备好的dom，初始化echarts实例
+        		var pieChart = echarts.init(document.getElementById('pieChart'));
+				//饼图
+				option = {
+				    title : {
+				        text: '',
+				        subtext: '',
+				        x:'center'
+				    },
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'vertical',
+				        left: 'left',
+				        data: ['合格数','不合格数']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '60%'],
+				            data:[
+				                {value:100, name:'合格数1份'},
+				                {value:100, name:'不合格数1份'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+				// 使用刚指定的配置项和数据显示图表。
+        		pieChart.setOption(option);
+			});
+		</script>
+	</body>
+
+</html>

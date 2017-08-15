@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">发布公告</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;">
+			 <div id="title_form" class="">
+				&nbsp;&nbsp;<label >公告标题：</label>
+			    <div class="mui-input-row" >
+					<textarea id="title" rows="1" placeholder="请输入公告标题"></textarea>
+				</div>
+			</div>
+		    <div id="notice_form" class="">
+				&nbsp;&nbsp;<label >公告内容：</label>
+			    <div class="mui-input-row" >
+					<textarea id="notice" rows="8" placeholder=""></textarea>
+				</div>
+			</div>
+			<div id="formbtn" class="mui-button-row">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">发布</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<!--<script src="../js/push.js"></script>-->
+		<script src="../js/immersed.js" ></script>	
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				my_name = self.my_name;  //发布人(账号姓名)
+				
+				var doc = document;
+				var title = doc.getElementById("title");
+				var notice = doc.getElementById("notice");
+				var save = doc.getElementById("save");
+				var push = doc.getElementById("push");
+				
+				//保存按钮监听
+				save.addEventListener('tap',function(){
+					var myDate = new Date();//获取系统当前时间
+					var mytime=myDate.toLocaleString();//获取日期与时间
+					var mydata = {
+						title:title.value,
+						notice:notice.value,
+						my_name:my_name,
+						mytime:mytime
+					};
+					ajaxform(mydata,function(err){
+						if(err){
+							plus.nativeUI.toast(err);
+							return;
+						}
+//						var btnArray = ['是','否'];
+//						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统' ,function(){
+//							if(e.index==0){
+//								var title_form = document.getElementById("title_form");
+//								var notice_form = document.getElementById("notice_form");
+//								var formbtn = document.getElementById("formbtn");
+//								title_form.classList.add("my_none");
+//								notice_form.classList.add("my_none");
+//								formbtn.classList.add("my_none");
+//							}else{
+								//返回父页面刷新
+								var target=plus.webview.getWebviewById('my_info/information_list.html');
+								target.reload(true);
+								mui.toast('发布成功',{ duration:'long', type:'div' })
+								mui.back();
+								var server=url+"push/push.php";
+								var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+									//推送完成
+									if(status==200){
+										alert("发送成功");
+									}else{
+										alert("失败");
+									}
+								});
+								task.addData("title",'江门市建设工程施工质量管理系统');
+								task.addData("notice",'你有一条新的公告,请注意查收！');
+								task.start();
+//							}
+//						});
+					});
+				});
+				
+				var ajaxform = function(mydata,callback){
+					callback = callback || $.noop;
+					mydata = mydata || {};
+					mydata.title = mydata.title || '';
+					mydata.notice = mydata.notice || '';
+					mydata.my_name = mydata.my_name || '';
+					mydata.mytime = mydata.mytime || '';
+					mui.ajax(url+'my_info/information_add.php',{
+						data:{
+							title:mydata.title,
+							notice:mydata.notice,
+							my_name:mydata.my_name,
+							mytime:mydata.mytime
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							//alert(data.result);
+							if (data.result=='success') {
+								return callback();
+							} else{
+								return callback('服务器返回error');	
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							//alert('ajax错误'+type);
+							return callback('ajax错误'+type+errorThrown);
+						}
+					});
+				}
+			});	
+
+
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('my_info/information_list.html');
+				target.reload(true);
+				mui.back();
+			}
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

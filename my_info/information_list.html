@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+	<style>
+		#addNew{
+				position:fixed;
+				right:10px;
+				bottom:50px;
+		        z-index: 998 ;
+		    }
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">公告栏</h1>
+		</header>
+		<!--新增按钮-->
+		<div>
+			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
+            	<span class="mui-icon mui-icon-plusempty"></span>
+       		</button>
+		</div>
+		<div id="info_list" class="mui-content">
+			<!--<ul class="mui-table-view mui-table-view-chevron my_list">
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right" open-type="common" href="information_detail.html">
+						<div class="mui-media-body">
+							通知:今晚晚上9点开会
+							<p  class='mui-ellipsis'>发布人:王经理</p>
+							<p>发布时间:2017-07-10</p>
+						</div>
+					</a>
+				</li>
+			</ul>-->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				my_name = self.my_name;  //发布人(账号姓名)
+				var doc = document;
+				var addNew = doc.getElementById("addNew");
+				
+				
+				//新增按钮监听
+				addNew.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'information_add.html',
+						id:'information_add.html',
+						extras:{
+							//传递参数
+							my_name:my_name
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				});
+				
+				//动态创建公告列表
+				function infoList (id,issuer,title,message,pun_time){
+					var info_list = document.getElementById("info_list");
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-table-view-chevron my_list";
+					ul.innerHTML = '<li class="mui-table-view-cell mui-media"><a class="mui-navigate-right" open-type="common" href="information_detail.html?notice_id='+id+'"><div class="mui-media-body"><span>通知:'+title+'</span><p>发布人:'+issuer+'</p><p>发布时间:'+pun_time+'</p></div></a></li>';
+					info_list.appendChild(ul);
+				}
+				
+				
+				//异步获取公告列表
+				mui.ajax(url+'my_info/information_list.php',{
+					data:{
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].id;
+								var issuer = data[i].发布人;
+								var title = data[i].公告标题;
+								var message = data[i].公告内容;
+								var pun_time = data[i].发布时间;
+								infoList(id,issuer,title,message,pun_time)
+							}	
+						}
+					},
+					error:function(xhr,type,errorThrown){
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市建设工程施工质量管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">不合格处理</h1>
+		</header>
+		<div class="mui-content">
+			<form id="myform">
+				<div>
+					<label> 处理情况：</label>
+					<br />
+					<textarea id="content" rows="5" cols="200"></textarea>
+				</div>
+				<div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+			</form>
+			<div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+	      		self_timestamp = self.self_timestamp; 
+				var doc = document;
+				var sjc = doc.getElementById("sjc");
+				sjc.value = self_timestamp;
+				var content = doc.getElementById("content");
+				var save = doc.getElementById("save");
+				
+				save.addEventListener('tap',function(){
+					mui.ajax(url+'my_plus/my_inspection_entityhandleinformation.php',{
+						data:{
+							self_timestamp:self_timestamp,
+							data_sent:content.value
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity.html');
+							target.reload(true);
+							mui.toast("保存成功~");
+							mui.back();
+						},
+						error:function(){
+							alert("ajax error!");
+						}
+					});
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity.html');
+				target.reload(true);
+				mui.back();
+			}	
+		</script>
+	</body>
+
+</html>

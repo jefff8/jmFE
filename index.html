@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<link href="css/my_css.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-menu mui-icon mui-icon-bars mui-pull-left my_none"></a>	
+			<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
+			<a id="team" class="mui-icon mui-icon-plus mui-pull-right my_none" style="color: #999;"></a>
+			<a id="attention" class="mui-icon iconfont icon-erweima mui-pull-right my_none" style="color: #999;"></a>
+			<h1 id="title" class="mui-title">江门市建设工程施工质量管理系统</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="my.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+			<a class="mui-tab-item" href="team.html">
+				<span class="mui-icon iconfont icon-xiaozu"></span>
+				<span class="mui-tab-label">小组</span>
+			</a>
+		</nav>
+		<script src="js/mui.min.js"></script>
+		<script src="js/my_js_index.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+	      		var self = plus.webview.currentWebview();
+	      		mobile = self.mobile; 
+	      		my_name = self.my_name;
+	      		uid = self.uid;
+				unit = self.unit;
+			});
+		</script>
+		
+	</body>
+
+</html>

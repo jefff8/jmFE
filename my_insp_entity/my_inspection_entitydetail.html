@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left " ></a>
+		    <h1 class="mui-title">自检自测详情</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>自检自测类型:</label>
+		             <input id="zjlx"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
+		        </div>
+		        <div class="mui-input-row">
+		        	<label>检测部位:</label>
+		        	<input type="text" class="mui-input-clear" placeholder="请输入检测部位" id="jcbw">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测数量:</label>
+		            <input id="sl" type="text" class="mui-input-clear" placeholder="请输入数量" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测人:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测日期:</label>
+		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input id="bz" type="text" class="mui-input-clear" placeholder="请输入备注信息" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测单位:</label>
+		            <input id="tdpm" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
+				&nbsp;&nbsp;
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var doc = document;
+				var my_popover = doc.getElementById("my_popover");
+				var xiugai = doc.getElementById("xiugai");
+				var wancheng = doc.getElementById("wancheng");
+				var fjck = doc.getElementById("fjck");
+				var fjgx = doc.getElementById("fjgx");
+				var taphoto = doc.getElementById("taphoto");
+				var taphoto1 = doc.getElementById("taphoto1");
+				
+				var gg = doc.getElementById("gg");
+				var sl = doc.getElementById("sl");
+				var jcr = doc.getElementById("jcr");
+				var jcrq = doc.getElementById("jcrq");
+				var jcbw = doc.getElementById("jcbw");
+				var bz = doc.getElementById("bz");
+				var sjc_in = doc.getElementById("sjc");
+				var tdpm = doc.getElementById("tdpm");
+				
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取URL上的时间戳
+				var sjc_send = geturl("sjc");
+				var gcid = geturl("gcid");
+				sjc_in.value = sjc_send;
+				//异步取值
+				mui.ajax(url+'my_plus/my_inspection_entitydetail.php',{
+					data:{
+						flag:"获取信息",
+						sjc:sjc_send,
+						gcid:gcid
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						zjlx.value = data.自检自测类型;
+						sl.value = data.数量;
+						jcr.value = data.检测人;
+						jcrq.value = data.检测日期;
+						jcbw.value = data.检测部位;
+						tdpm.value = data.检测单位;
+						bz.value = data.备注;
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+				
+				//日期监听
+				jcrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    jcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+				//获取材料送检信息
+				var before_photo=[];
+				var course_photo=[];
+				var equipment_photo=[];
+				var selfcheck_photo=[];
+				mui.ajax(url+'my_plus/my_inspection_entitydetail.php',{
+					data:{
+						flag:"获取图片",
+						sjc:sjc_send,
+						gcid:gcid
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						timestamp = data.时间戳;
+						status_self = data.工程单状态;
+						if(data.检测前照片 != null){
+							before_photo=data.检测前照片.split("~*^*~");
+						}else{
+							before_photo = "";
+						}
+						if(data.检测实施过程照片 != null){
+							course_photo=data.检测实施过程照片.split("~*^*~");
+						}else{
+							course_photo = "";
+						}
+						if(data.检测设备照片 != null){
+							equipment_photo=data.检测设备照片.split("~*^*~");
+						}else{
+							equipment_photo = "";
+						}
+						if(data.自测照片 != null){
+							selfcheck_photo=data.自测照片.split("~*^*~");
+						}else{
+							selfcheck_photo = "";
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+//						return callback('ajax错误'+type+errorThrown);
+					}
+				});
+				
+				//附件查看
+				fjck.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'readimage_inspection_entity.html',
+						id:'readimage_inspection_entity.html',
+						extras:{
+							timestamp:timestamp,
+							status_self:status_self,
+							before_photo:before_photo,
+							course_photo:course_photo,
+							equipment_photo:equipment_photo,
+							selfcheck_photo:selfcheck_photo
+						},
+						show:{							
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
+						}
+					})
+				});
+				
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('my_inspection_entity.html');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>

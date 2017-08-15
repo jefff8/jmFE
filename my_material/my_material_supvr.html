@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">不合格处理</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;">
+		    <div id="myform">
+				&nbsp;&nbsp;<label >退场记录：</label>
+			    <div class="mui-input-row" >
+					<textarea id="tcjv" rows="5" placeholder="请输入退场记录"></textarea>
+				</div>
+			</div>
+			<div class="mui-input-row my_none ">
+				<label> 时间戳：</label>
+				<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+			</div>
+			<div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>	
+		</div>
+		<!-------------------------------------------处理图片------------------------------------------>
+	     <form id="img_content" class="my_none" >
+        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+	        	<span style="padding-bottom: 10px;">处理照片</span>
+	        	<br/>
+	        	<div><img id="newUpload5" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+	        </div>
+	         <div class="mui-input-group" >
+	        	<div  class="mui-input-row">
+		            <label>处理图片说明:</label>
+		            <input id="disposeText" type="text" class="mui-input-clear" placeholder="请输入处理照片说明">
+	        	</div>
+	        </div>
+	        <div>
+	        	<ul id="history_clzp" class="dlist" style="text-align:left;">
+					<li id="empty_clzp" class="ditem-empty">无历史记录</li>
+				</ul>
+	        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        	<button id="clean_clzp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('clzp');">清空记录</button>
+	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        	<button id="clzp" type="button" class="mui-btn mui-btn-primary" onclick="upload4(this.id,'clean_clzp');">附件上传</button>
+	        </div>
+	    </form>
+		<!-------------------------------------------处理图片------------------------------------------>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script src="../js/upload_jlcl.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取工程项目id
+				var self = plus.webview.currentWebview();
+	      		ulId = self.ulId; 
+				var doc = document;
+				var tcjv = doc.getElementById("tcjv");
+				var save = doc.getElementById("save");
+				var sjc = doc.getElementById("sjc");
+				
+				
+				//异步获取材料送检时间戳
+				mui.ajax(url+'my_plus/material_detail.php',{
+					data:{
+						gcid:ulId				
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sjc.value=data[i].时间戳;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+						return callback('ajax错误'+type+errorThrown);
+					}
+					
+				});	
+				//保存按钮
+				save.addEventListener('tap',function(){
+					var mydata = {
+						tcjv:tcjv.value,
+						gcid:ulId
+					};
+					ajaxform(mydata,function(err){
+						if (err) {
+							plus.nativeUI.toast(err);
+							return;
+						}
+						var btnArray = ['是', '否'];
+						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+							if (e.index == 0) {
+								var myform=document.getElementById('myform');
+								var img_content=document.getElementById('img_content');
+								var formbtn=document.getElementById("formbtn");
+								myform.classList.add('my_none');
+								formbtn.classList.add('my_none');
+								img_content.classList.remove('my_none');
+							} else {
+								//返回父页面刷新
+								var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+								target.reload(true);
+								mui.back();
+							}
+						});
+					});
+				});
+				//异步传值
+				var ajaxform = function(mydata, callback) {
+					callback = callback || $.noop;
+					mydata = mydata || {};
+					mydata.tcjv = mydata.tcjv || '';
+					mydata.gcid = mydata.gcid || '';
+					mui.ajax(url+'my_plus/my_material_supvr.php',{
+						data:{
+							tcjv:mydata.tcjv,
+							gcid:mydata.gcid
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							//alert(data.result);
+							if (data.result=='success') {
+								return callback();
+							} else{
+								return callback('服务器返回error');	
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							//alert('ajax错误'+type);
+							return callback('ajax错误'+type+errorThrown);
+						}
+					});
+				};
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>

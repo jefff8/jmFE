@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<style type="text/css">
+			.mui-control-content {				
+				bottom: 0px;	
+			}
+			/*媒体查询，横屏效果*/
+			@media only screen and (orientation:landscape ) {
+				.mui-control-content {
+					bottom: 0px;
+					}			
+			}
+			html,
+			body,
+			.mui-content {
+				height: 0px;
+				margin: 0px;
+				background-color: #efeff4;
+			}
+			.mui-control-content {				
+				bottom: 0px;	
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+			.btn_size{
+				background:#0000FF;
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">材料送检分析</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-content-padded">
+				<form class="mui-input-group">
+				    <div class="mui-input-row">
+				        <label>起始日期：</label>
+				        <input id="star_time" type="text"  class="mui-input-clear" placeholder="请选择开始日期" readonly="readonly">
+				    </div>
+				    <div class="mui-input-row">
+				        <label>截止日期：</label>
+				        <input id="end_time" type="text" class="mui-input-clear" placeholder="请选择结束日期" readonly="readonly">
+				    </div>
+				</form>
+				<button id="sure" type="button" class="mui-btn mui-btn-success mui-btn-block btn_size" disabled="disabled">确定</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var doc = document;
+				var star_time = doc.getElementById("star_time");
+				var end_time = doc.getElementById("end_time");
+				var sureButton = doc.getElementById("sure");
+				
+				//起始日期
+				star_time.addEventListener('tap',function(){
+					var dDate = new Date();
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						star_time.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						if (star_time.value&&end_time.value) {
+							var gksrq=star_time.value;
+							var gjsrq=end_time.value;
+							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
+							var xgksrq = xgksrq.getTime();
+							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
+							var xgjsrq = xgjsrq.getTime();
+							if (xgjsrq>=xgksrq) {
+								sureButton.disabled=false;
+							}else{
+								alert('起始日期不能大于结束日期！');
+								sureButton.disabled=true;
+							}
+						}
+					});
+				});
+				//结束日期
+				end_time.addEventListener('tap',function(){
+					var dDate = new Date();
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						end_time.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						if (star_time.value&&end_time.value) {
+							var gksrq=star_time.value;
+							var gjsrq=end_time.value;
+							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
+							var xgksrq = xgksrq.getTime();
+							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
+							var xgjsrq = xgjsrq.getTime();
+							if (xgjsrq>=xgksrq) {
+								sureButton.disabled=false;
+							}else{
+								alert('起始日期不能大于结束日期！');
+								sureButton.disabled=true;
+							}
+						}
+					});
+				});
+				//确定按钮
+				sureButton.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'my_statistics_data.html',
+						id: 'my_statistics_data',
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

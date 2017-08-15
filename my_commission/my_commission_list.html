@@ -1,0 +1,664 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
+		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
+		<style>
+			#consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			
+			#zuyPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			
+			#addNew{
+				position:fixed;
+				right:10px;
+				bottom:50px;
+				/*background-color:transparent;*/
+		        z-index: 998 ;
+		    }
+		   
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->	
+		    <h1 class="mui-title">现场实体第三方检测</h1>
+		</header>
+		<!--------------------------------------新增按钮--------------------------------------------->
+		<div>
+			<span id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
+            <span class="mui-icon mui-icon-plusempty"></span>
+       		</span>
+		</div>
+		<!--------------------------------------新增按钮--------------------------------------------->
+		<!--委托编号-->
+		<div id="consigncode" class="mui-popover">
+    		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+    			<div class="mui-input-row">
+    				<label>委托编号:</label>
+    				<input id="code_input" type="number" class="mui-input-clear" placeholder="输入委托编号">
+    			</div>    			
+    		</form>
+			<div id="code_act"  class="mui-button-row my_margintop10px">
+				<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode(this)">确认</button>
+			</div>
+		</div>
+		<!--委托编号-->
+		<!--验证码-->
+			<div id="zuyPopover" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>验证码:</label>
+        				<input id="code" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+        			</div>    			
+        		</form>
+				<div id="comfirm"  class="mui-button-row my_margintop10px">
+					<button   type="button" class="mui-btn mui-btn-primary" onclick="qdjz(this)">确定</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+				</div>
+			</div>
+			<form class="mui-input-group my_none">
+			    <div class="mui-input-row my_none">
+			        <label>企业ID</label>
+			        <input name="CorpID"  type="text" id="CorpID" class="mui-input-clear" value="101781">
+			    </div>
+			    <div class="mui-input-row my_none">
+			        <label>登录名</label>
+			        <input name="LoginName" type="text" id="LoginName" class="mui-input-clear" value="Admin">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>密码</label>
+			        <input name="pwd" type="text" id="pwd" class="mui-input-clear" value="174012" >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>服务器地址</label>
+			        <input name="serverIP" type="text" id="serverIP" class="mui-input-clear"  value="http://sms.mobset.com:8080/Api?wsdl">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>手机号码</label>
+			        <input name="mobPhone" type="text" id="mobPhone" class="mui-input-clear"  >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>短信内容</label>
+			        <input name="smsContent" type="text" id="smsContent" class="mui-input-clear" value="验证码：">
+			    </div>
+			     <div class="mui-input-row  my_none">
+			        <label>验证码</label>
+			        <input name="yzm" type="text" id="yzm" class="mui-input-clear" >
+			    </div>
+			</form>
+		<!--验证码-->
+		<div class="mui-content">
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
+									委托检测(检测单位)
+								</a>
+								<a id="a5" class="mui-control-item"  href="#item2">
+									监理见证(监理单位)
+								</a>
+								<!--<a class=" mui-icon mui-icon-arrowright mui-pull-right" style="bottom: 18px;"></a>-->
+								<!--<a class=" mui-icon mui-icon-arrowleft mui-pull-left" style="bottom: 18px;"></a>-->
+		         		   </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			
+			<!--------------------------------------委托检测----------------------------->
+			<div id="item1" class="mui-control-content  mui-active">
+			    <div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="draft" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
+			</div>
+			<!--------------------------------------委托检测----------------------------->
+			
+			<!--------------------------------------监理见证----------------------------->
+			<div id="item2" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="witness" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
+			</div>
+			<!--------------------------------------监理见证----------------------------->
+			
+			<!--------------------------------------prepare part----------------------------->
+			<div id="item3" class="mui-control-content"></div>
+			<!--------------------------------------prepare part----------------------------->
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false	
+				}
+			});
+			
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				mobile = self.mobile;
+				my_name = self.my_name;
+	            gcmc = self.gcmc;
+	            timestamp = self.timestamp;
+	            constr = self.constr; //施工单位
+	            supvision = self.supvision; //监理单位
+	            detect = self.detect; //检测单位
+				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
+				my_name = encodeURI(encodeURI(my_name)); //获取用户名
+				
+				var doc = document;
+				var my_popover = doc.getElementById("my_popover");
+				var draft = doc.getElementById("draft");
+				var witness = doc.getElementById("witness");
+				
+				var addnew = doc.getElementById('addNew');
+				
+				//creat new test
+				addnew.addEventListener('tap',function(){
+					mui.openWindow({
+						url:"my_commission_add.html",
+						extras:{
+							//传递参数
+							gcmc_c:gcmc_c,
+							my_name:my_name,
+							timestamp:timestamp
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				});
+				
+				//creat active massagebox				
+				function mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp){
+					proatt_c = encodeURI(encodeURI(proatt));
+					ttype_c = encodeURI(encodeURI(ttype));
+					tepe_c = encodeURI(encodeURI(jcr));
+
+					if(proatt=="新建"){
+						var draft = document.getElementById("draft");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						draft.appendChild(ul);
+					}
+					else if(proatt=="准备"){
+						var draft = document.getElementById("draft");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						draft.appendChild(ul);
+					}
+					else if(proatt=="待确认"){
+						var witness = document.getElementById("witness");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						witness.appendChild(ul);						
+					}
+					else if(proatt=="已确认"){
+						var witness = document.getElementById("witness");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						witness.appendChild(ul);						
+					}
+//					else{
+//						alert('have a happy dey');
+//					}
+				}
+				//异步取值并创建卡项
+				mui.ajax(url+'my_plus/my_commission_list.php',{
+					data:{
+						flag:"创建卡项",
+						gcmc:gcmc,
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+//						alert(length+","+data[0].idd);
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								
+								var id = data[i].卡项id;
+								var owtsp = data[i].时间戳;
+								var gcmc = data[i].工程名称;
+								var proatt = data[i].工程单状态;
+								var ttype = data[i].检测类型;
+								var jcbw = data[i].检测部位;
+								var num=data[i].检测数量;
+								var jcr=data[i].检测人;	
+								var jcrq=data[i].检测日期;
+								var rmark=data[i].备注;
+								var test_dpm=data[i].检测单位;
+								mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp);
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				////////////////////////////委托检测//////////////////////////////
+				mui('#draft').on('longtap','ul',function(){
+					var ulId = this.id;//获取当前的卡项的id
+//					alert(ulId);
+					mui.ajax(url+'my_plus/my_commission_list.php',{
+						data:{
+							flag:"获取状态",
+							ulid:ulId,
+							gcmc:gcmc,
+							timestamp:timestamp
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							var gcdzt_pd = data.工程单状态;
+//							alert(gcdzt_pd);
+
+							//判断状态并根据状态执行改变状态的任务
+							if(gcdzt_pd=='新建'){
+								var btnArray = [
+								{title:"取样"},
+								{title:"删除"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://准备
+											//输入委托编号
+											mui("#consigncode").popover("toggle");
+											var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+											but_id.id=ulId;
+											break;
+										case 2://删除
+											mui.ajax(url+'my_plus/my_commission_list.php',{
+												data:{
+													flag:"删除",
+													ulid:ulId,
+													gcmc:gcmc,
+													timestamp:timestamp
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+//													alert(data.结果);
+													mui.toast(data.结果,{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+									}	
+								 });
+							}else if(gcdzt_pd=='准备'){
+								var btnArray = [
+								{title:"提交见证"},
+								{title:"撤销取样"}
+								];
+								plus.nativeUI.actionSheet({
+									title:"操作",
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1:
+											//提交见证
+											mui.ajax(url+'my_plus/my_commission_checode.php',{
+												data:{
+													gcdzt:'jzz',
+													gcdId:ulId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													if(data.result=='success'){
+						   								mui.toast('操作成功',{ duration:'long', type:'div' }) 
+														location.reload();
+													}
+												},
+												error:function(xhr,type,errorThrown){
+													alert('ajax错误'+type+'---'+errorThrown);
+												}
+											});
+											
+											
+											
+											
+											
+											break;
+										case 2://撤销准备
+											mui.ajax(url+'my_plus/my_commission_list.php',{
+												data:{
+													flag:"撤销准备",
+													ulid:ulId,
+													gcmc:gcmc,
+													timestamp:timestamp
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													mui.toast(data.结果,{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+									}	
+								  }
+								);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				})
+				////////////////////////////委托检测//////////////////////////////
+				////////////////////////////监理见证//////////////////////////////
+				mui("#witness").on('longtap','ul',function(){
+					var ulId = this.id;
+					mui.ajax(url+'my_plus/my_commission_list.php',{
+						data:{
+							flag:"获取状态",
+							ulid:ulId,
+							gcmc:gcmc,
+							timestamp:timestamp
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							var gcdzt_pd = data.工程单状态;
+							if(gcdzt_pd=='待确认'){
+								var btnArray = [
+								{title:"确认见证"}
+								];
+								plus.nativeUI.actionSheet({
+									title:"操作",
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://确认见证
+//											//执行验证码
+											mui("#zuyPopover").popover("toggle");
+											var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+											but_id.id=ulId;
+//											alert('wait a moment');
+											break;
+										case 2:
+											break;
+									}	
+								  }
+								);
+							}else if(gcdzt_pd=='已确认'){
+								var btnArray = [
+								{title:"合格"},
+								{title:"不合格"}
+								];
+								plus.nativeUI.actionSheet({
+									title:"操作",
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									switch (index){
+										case 1://合格
+											mui.ajax(url+'my_plus/my_commission_list.php',{
+												data:{
+													flag:"合格",
+													ulid:ulId,
+													gcmc:gcmc,
+													timestamp:timestamp
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+//													alert(data.结果);
+													mui.toast(data.结果,{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+										case 2://不合格
+											mui.openWindow({
+												url:'my_commssion_fail.html',
+												styles: {
+													hardwareAccelerated:false
+												},
+												extras:{
+													//传递参数
+													ulId:ulId,
+													timestamp:timestamp
+												},
+												show:{
+													autoShow:true,//页面loaded事件发生后自动显示
+													aniShow:'slide-in-right',//页面显示动画
+													duration:'100'//页面动画持续时间
+												},
+												waiting:{
+													autoShow:false,//自动显示等待框
+												}
+											});
+											break;
+									}	
+								  }
+								);
+							}
+							
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+					
+				});
+				////////////////////////////监理见证//////////////////////////////
+			});
+			//委托编号
+			function inpcode(obj){
+				var ulId = obj.id;
+				var code = document.getElementById('code_input').value;
+//				alert(code);
+				mui.ajax(url+'my_plus/my_commission_list.php',{
+					data:{
+						flag:"准备",
+						code:code,
+						ulid:ulId
+					},
+//					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data.结果);
+						mui.toast('操作成功',{ duration:'long', type:'div' }) 
+						location.reload();
+					},
+					error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+			}
+			//验证码监听
+			var wait = 60;
+			function time(o){
+				 if (wait == 0) {  
+		            o.removeAttribute("disabled");
+		            o.innerHTML="获取验证码";  
+		            wait = 60;  
+		        }else{
+		        	if(wait == 60){
+		        		//短信发送
+						var sendMsg = document.getElementById("sendMsg");
+						var CorpID = document.getElementById("CorpID");
+						var LoginName = document.getElementById("LoginName");
+						var pwd = document.getElementById("pwd");
+						var serverIP = document.getElementById("serverIP");
+						var mobPhone = document.getElementById("mobPhone");
+						var smsContent = document.getElementById("smsContent");
+						mobPhone.value = mobile;
+						yzm = document.getElementById("yzm");
+						mui.ajax(url+'send_Sms/SendSms.php',{
+							data:{
+								CorpID:CorpID.value,
+								LoginName:LoginName.value,
+								pwd:pwd.value,
+								serverIP:serverIP.value,
+								mobPhone:mobPhone.value,
+								smsContent:smsContent.value
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+								if(data.result=='success'){
+//									alert(data.smsContent);
+									yzm.value = data.yzm; //获取验证码数字
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown);
+							}
+						});
+		        	}
+		            o.setAttribute("disabled", true);  
+		            o.innerHTML="重新发送(" + wait + ")";  
+		            wait--;  
+		            setTimeout(function() {  
+		                time(o)  
+		            },1000)  
+		        }  
+			}
+			//验证验证码
+			function qdjz(jzid){
+				var jzid = jzid.id;
+				if(yzm.value==""){
+					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
+				}else if(code.value==""){
+					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
+				}else if(code.value==yzm.value){
+					//确定见证
+					mui.ajax(url+'my_plus/my_entity_detail.php',{
+						data:{
+							flag:"获取信息",
+							myid:jzid
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var sampling_man = data[0].检测人;
+							mui.openWindow({
+								url:'my_commission_change.html',
+								styles: {
+									hardwareAccelerated:false
+								},
+								extras:{
+									//传递参数
+									ulId:jzid,
+									timestamp:timestamp,
+									my_name:my_name,
+									sampling_man:sampling_man,
+									constr:constr,
+									supvision:supvision,
+									detect:detect
+								},
+								show:{
+									autoShow:true,//页面loaded事件发生后自动显示
+									aniShow:'slide-in-right',//页面显示动画
+									duration:'100'//页面动画持续时间
+								},
+								waiting:{
+									autoShow:false,//自动显示等待框
+								}
+							});
+						},
+						error:function(xhr,type,errorThrown){
+							alert("ajax错误："+type+"----"+errorThrown);
+						}
+					});
+					
+				}else{
+					mui.toast('验证码不正确',{ duration:'long', type:'div' }) 
+				}
+			}
+		</script>
+	</body>
+
+</html>

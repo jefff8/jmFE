@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->
+		    <h1 class="mui-title">新增自检自测</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		       <div class="mui-input-row">
+		            <label>自检自测类型:</label>
+		           <input id="zjlx"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测部位:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测部位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测数量:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测数量">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测人:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测人">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测日期:</label>
+		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入备注">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测单位:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测单位">
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" hidden="hidden" placeholder="时间戳" readonly="readonly">						
+				</div>
+		    </form>
+		    <br/>
+		   
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary " onclick="back()">关闭</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>
+			
+			<!--处理图片-->
+		    <form id="img_content" class="my_none" >
+	        	<!--检测前照片-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">场景照片</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div>
+		        	<ul id="history_cj" class="dlist" style="text-align:left;">
+						<li id="empty_cj" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>
+		        </div>
+		        <!--检测实施过程照片-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测实施过程照片</span>
+		        	<br/>
+		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div>
+		        	<ul id="history_yp" class="dlist" style="text-align:left;">
+						<li id="empty_yp" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>
+		        </div>
+		        <!--检测设备照片-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测设备照片</span>
+		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        	<br/>
+		        </div>
+		        <div>
+		        	<ul id="history_sb" class="dlist" style="text-align:left;">
+						<li id="empty_sb" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_sb" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('sbzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="sbzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_sb');">附件上传</button>
+		        </div>
+		    </form>
+		    <!--处理图片-->
+		    
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>	
+		<script src="../js/service.js"></script>
+		<script src="../js/pic_upload_SelfTest.js"></script>	
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取工程名称
+				var self = plus.webview.currentWebview();
+				project_name = self.project_name;//工程名称
+				timestamp = self.timestamp;
+				my_name = self.my_name;
+				var doc = document;
+				var my_popover = doc.getElementById("my_popover");
+				var qyrq = doc.getElementById("qyrq");
+				var jcrq = doc.getElementById("jcrq");
+				var rwfj = doc.getElementById("rwfj");
+				var zjlx = doc.getElementById("zjlx");
+				var myform = doc.getElementById("myform");
+				var jcdw = doc.getElementById("jcdw");
+				var sjc = doc.getElementById("sjc");
+				var save = doc.getElementById("save");
+				var samping_peo = doc.getElementById("samping_peo");
+//				samping_peo.value = my_name;//取样人关联手机号姓名
+				//自动添加当前时间戳,附件上传时会用到
+				var myDate=new Date();
+				var mytime=myDate.getTime();
+				sjc.value=mytime;
+				
+				jcrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    jcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//日期监听
+				
+				//自动获取日期
+//				qyrq.value= myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();//获取当前日期
+				
+				function typeAll(data){
+					//初始化popPicker组件
+					var userPicker = new mui.PopPicker();
+					var length = data.length;
+					var arr_4 = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[i] = new Array();
+						arr_4[i]['text'] = data[i];
+					}
+					userPicker.setData(arr_4);  //给picker对象添加数据
+					userPicker.show(function(items) {
+						zjlx.value = items[0].text;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					}, false);
+				}
+				
+				
+				
+				
+				//自检自测类型
+				zjlx.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"自检自测"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							var typeData = new Array();
+							typeData[0] = "";
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].自检自测);
+							}
+							typeAll(typeData);
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+				
+				//信息保存
+				save.addEventListener('tap',function(){
+					//获取信息并合并为字符窜Str,从上到下顺序获取,注意时间戳也在里面
+//					var F_select = zjlx.value;
+					var F_input = myform.getElementsByTagName("input");
+					var F_jcrq = jcrq.value;
+					var Str = "";
+					for(i=0;i<8;i++){
+						Str = Str + F_input[i].value + "|";
+					}
+//					alert(Str);
+					//异步传值并保存
+					mui.ajax(url+'my_plus/my_inspection_add.php',{
+						data:{
+							flag:"保存信息",
+							project_name:project_name,
+							timestamp:timestamp,
+							str_send:Str
+						},
+						dataType:'json',
+						type:'POST',
+						timeout:10000,
+						success:function(data){
+							var btnArray = ['是', '否'];
+							mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+								if (e.index == 0) {
+									var myform=document.getElementById('myform');
+//									var myform2=document.getElementById('myform2');
+									var img_content=document.getElementById('img_content');
+									var formbtn=document.getElementById("formbtn");
+									myform.classList.add('my_none');
+//									myform2.classList.add('my_none');
+									formbtn.classList.add('my_none');			
+									img_content.classList.remove('my_none');
+								} else {
+									//返回父页面刷新
+									var target=plus.webview.getWebviewById('../my_insp_material/my_inspection_material.html');
+									target.reload(true);
+									mui.toast('新增成功',{ duration:'long', type:'div' });
+									mui.back();
+									
+								}
+							});
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type);
+						}
+					});
+				});
+				
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_insp_material/my_inspection_material.html');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>

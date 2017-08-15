@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/iconfont.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title" id="H_name"></h1>
+		</header>
+		<div class="mui-content">
+		    <ul id="my_list" class="mui-table-view mui-grid-view mui-grid-9 my_list">
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_material/my_material_list.html">
+	                    <span class="mui-icon iconfont icon-zhunbei"></span>
+	                    <div class="mui-media-body">材料送检</div> 
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="my_inspection.html">
+	                    <span class="mui-icon iconfont icon-zijian"></span>
+	                    <div class="mui-media-body">自检自测</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a >
+	                    <span class="mui-icon iconfont icon-yanshoutongguo "></span>
+	                    <div class="mui-media-body">监督抽检</div>
+	            	</a>
+	            </li>
+	           	<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="../my_commission/my_commission_list.html">
+	                    <span class="mui-icon iconfont icon-weituochaxun "></span>
+	                    <div class="mui-media-body">实体检测</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="my_query.html">
+	                    <span class="mui-icon iconfont icon-zonghechaxun "></span>
+	                    <div class="mui-media-body">综合查询</div>
+	            	</a>
+	            </li>
+	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            	<a href="my_result.html">
+	                    <span class="mui-icon iconfont icon-jieguoji"></span>
+	                    <div class="mui-media-body">综合结果</div> 
+	            	</a>
+	            </li>
+	        </ul> 
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				mobile = self.mobile;
+				my_name = self.my_name;
+				
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取工程名称
+				var gcmc = geturl("gcmc");
+				var constr = geturl("constr");
+				var supvision = geturl("supvision");
+				var detect = geturl("detect");
+				gcmc = decodeURI(gcmc);
+				//施工单位
+				constr = decodeURI(constr);
+				//监理单位
+				supvision = decodeURI(supvision);
+				//检测单位
+				detect = decodeURI(detect);
+				var timestamp = geturl("timestamp");
+//				alert(timestamp);
+				document.getElementById('H_name').innerHTML=gcmc;//标题名称
+				
+				//主列表点击事件 ,把项目id传到所有子页面中
+				mui('#my_list').on('tap', 'a', function() {
+//					alert("测试");
+					var id = this.getAttribute('href');
+					var href = this.href;
+					var webview_style = {
+						popGesture: "close",					
+						hardwareAccelerated:false
+					};
+					//alert(href);
+					mui.openWindow({
+						id: id,
+						url: this.href,
+						styles: webview_style,
+						extras:{
+							gcmc:gcmc,
+							mobile:mobile,
+							my_name:my_name,
+							timestamp:timestamp,
+							constr:constr,
+							supvision:supvision,
+							detect:detect
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

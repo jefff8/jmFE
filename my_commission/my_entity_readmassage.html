@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <!--<a id="xiugai" class="mui-btn mui-btn-link mui-pull-right mui-btn-#007aff ">修改</a>-->
+		    <h1 class="mui-title">实体检测详情</h1>
+		</header>
+		<div class="mui-content">
+			<input id="url" class="my_none"/>
+			<input id="state" class="my_none"/>			
+		    <form class="mui-input-group" id="myform">
+		        <div class="mui-input-row">
+		            <label>检测类型:</label>
+		            <input id="ttype"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
+		        </div>		        
+		        <div class="mui-input-row">
+		        	<label>检测部位:</label>
+		        	<input type="text" class="mui-input-clear" placeholder="请输入检测部位" id="jcbw">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测数量:</label>
+		            <input type="text" class="mui-input-clear" readonly="readonly" id="num">
+		        </div>
+		    	<div class="mui-input-row">
+		            <label>检测人:</label>
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测日期:</label>
+		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" >
+		        </div>    
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input type="text" class="mui-input-clear" readonly="readonly" id="rmark">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测单位:</label>
+		            <input id="tdpm" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		        <div id="myform2" class="mui-input-row my_none">
+		            <label>委托编号:</label>
+		            <input id="tnum" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		    </form>
+		    <!--<form class="mui-input-group my_none" id="myform2">
+		        
+		    </form>-->
+		    <form class="mui-input-group my_none" id="myform3">
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input id="sedate" type="text" class="mui-input-clear" readonly="readonly" >
+		        </div>
+		         <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="redate" type="text" class="mui-input-clear"  readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input type="text" class="mui-input-clear"  id="seun" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input type="text" class="mui-input-clear"id="wiun" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input type="text" class="mui-input-clear"  id="reun" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样人:</label>
+		            <input type="text" class="mui-input-clear"  id="sepe" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input type="text" class="mui-input-clear" id="wipe" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测报告编号:</label>
+		            <input type="text" class="mui-input-clear" id="teid" readonly="readonly">
+		        </div>
+		        
+		        
+		    </form>
+		    <form class="mui-input-group my_none" id="myform4" >
+		        <div class="mui-input-row">
+		            <label>不合格报告:</label>
+		            <input id="freport" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		    </form>
+		    <form class="mui-input-group my_none" id="myform5">
+		        <div class="mui-input-row">
+		            <label>退场记录:</label>
+		            <input id="lreport" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		    </form>
+		    <br/>
+		    <div id="formbtn" class="mui-button-row">
+				<!--<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>-->
+				<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+				<button type="button" class="mui-btn mui-btn-primary" id="dache">附件查看</button>
+			</div>	
+			<!--<input id="tbpho"/>
+			<input id="tipho"/>
+			<input id="tepho"/>
+			<input id="rtpho"/>
+			<input id="tfpho"/>
+			<input id="dwpho"/>-->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var doc = document;			
+				var ttype = doc.getElementById('ttype');
+				var jcbw = doc.getElementById('jcbw');
+				var num = doc.getElementById('num');
+				var jcrq = doc.getElementById('jcrq');
+				var rmark = doc.getElementById('rmark');				
+				var tdpm = doc.getElementById('tdpm');
+				var tnum = doc.getElementById('tnum');
+				var freport = doc.getElementById('freport');
+				var lreport = doc.getElementById('lreport');
+				var sepe = doc.getElementById("sepe");
+				var tbpho = [];//检测前
+				var tipho = [];//检测中
+				var tepho = []//检测设备
+				var rtpho = [];//实测照片
+				var tfpho = [];//不合格报表
+				var dwpho = [];//处理照片			
+				var dache = doc.getElementById('dache');
+				
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				var owtsp = geturl("owtsp");
+				gcid = geturl("gcid");
+				//获取工程名称
+				var self = plus.webview.currentWebview();
+                my_name = self.my_name;
+                timestamp = self.timestamp;
+              	samping_man = self.sampling_man;
+              	sepe.value = samping_man;
+                my_name = decodeURI(decodeURI(my_name));
+				var proatt='';
+				var owntsp;
+				var myform2=document.getElementById('myform2');
+				var myform3=document.getElementById('myform3');
+				var myform4=document.getElementById('myform4');
+				var myform5=document.getElementById('myform5');
+				
+				//test
+				var urlo = doc.getElementById('url');
+				urlo.value = timestamp +'/'+ my_name +'/'+ owtsp;
+				var stateo = doc.getElementById('state');
+				
+				//设定哪些信息可见
+				function datashow(proatt){
+					if(proatt == '准备' || proatt=='待确认'){
+						myform2.classList.remove('my_none');
+					}else if(proatt == '已确认'){
+						myform2.classList.remove('my_none');
+						myform3.classList.remove('my_none');
+					}else if(proatt == '合格'){
+						myform2.classList.remove('my_none');
+						myform3.classList.remove('my_none');
+					}else if(proatt == '不合格'){
+						myform2.classList.remove('my_none');
+						myform3.classList.remove('my_none');
+						myform4.classList.remove('my_none');
+					}else if(proatt == '已处理'){
+						myform2.classList.remove('my_none');
+						myform3.classList.remove('my_none');
+						myform4.classList.remove('my_none');
+						myform5.classList.remove('my_none');
+					}
+				}
+//				alert(gcid);
+				//异步数据传输
+				mui.ajax(url+'my_plus/my_entity_detail.php',{
+					data:{
+						flag:"获取信息",
+						myid:gcid
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var id = data[0].卡项id;
+						owntsp = data[0].时间戳;
+						proatt = data[0].工程单状态;
+						ttype.value = data[0].检测类型;
+						jcbw.value = data[0].检测部位;
+						num.value = data[0].检测数量;
+						jcr.value = data[0].检测人;
+						jcrq.value = data[0].检测日期;
+						rmark.value = data[0].备注;						
+						tdpm.value = data[0].检测单位;
+						tnum.value = data[0].委托编号;
+						tbpho = data[0].检测前照片.split("~*^*~");
+						tipho = data[0].检测实施过程照片.split("~*^*~");
+						tepho = data[0].检测设备照片.split("~*^*~");
+						sedate.value = data[0].送样日期;
+						redate.value = data[0].收样日期;
+						seun.value = data[0].送样单位;
+						wiun.value = data[0].见证单位;
+						reun.value = data[0].收样单位;
+						sepe.value = data[0].送样人;
+						wipe.value = data[0].见证人 ;
+						teid.value = data[0].检测报告编号;												
+						rtpho = data[0].实测照片.split("~*^*~");
+						freport.value = data[0].不合格报告;
+						lreport.value = data[0].退场记录;
+						dwpho = data[0].处理照片.split("~*^*~");
+						tfpho = data[0].不合格报表.split("~*^*~");
+						
+						stateo.value = data[0].工程单状态;
+						
+						datashow(proatt);
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误:'+type+'+'+errorThrown);
+					}
+				});
+				
+				dache.addEventListener('tap',function(){
+					mui.openWindow({
+						url:"my_entity_readimage.html",
+						extras:{
+							//传递参数
+//							gcmc_c:gcmc_c,
+//							my_name:my_name,
+							owntsp:owntsp,
+							proatt:proatt,
+							tbpho:tbpho,//检测前
+							tipho:tipho,//检测中
+							tepho:tepho,//检测设备
+							rtpho:rtpho,//实测照片
+							tfpho:tfpho,//不合格报表
+							dwpho:dwpho//处理照片
+						},
+						show: {
+							aniShow:"pop-in"
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				});
+				
+			});	
+		</script>
+	</body>
+
+</html>

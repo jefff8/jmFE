@@ -1,0 +1,305 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<!--App自定义的css-->
+		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+			img{
+				padding: 3px;
+			}
+			.myp{
+				font-size: 1em;
+				color: #000000;			
+			}
+			.myp2{				
+				color:red;	
+				text-indent:2em;	
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">附件查看</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<p>正在加载高质量图片，请耐心等待...(^_^)</p>				
+				<p class="myp">场景照片: </p>
+				<p id="rwfj1">
+				
+				</p>	
+				<p class="myp">检测实施过程照片: </p>
+				<p id="rwfj2">
+				
+				</p>	
+				<p class="myp">检测设备照片: </p>
+				<p id="rwfj3">
+				
+				</p>	
+				<p id="selfcheck_ph" class="myp my_none">自测照片: </p>
+				<p id="rwfj4">
+				
+				
+				</p>
+				<p id="dispose_ph" class="myp my_none">处理照片: </p>
+				<p id="rwfj5">
+				
+				
+				</p>
+				
+				
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.zoom.js"></script>
+	<script src="../js/mui.previewimage.js"></script>
+	<script src="../js/service.js" ></script>
+	<script>
+		mui.previewImage();
+		mui.plusReady(function(){
+			var self = plus.webview.currentWebview();
+			//抽检图片
+			var timestamp = self.timestamp;
+			var status_self= self.status_self;
+			var before_photo = self.before_photo;
+			var course_photo = self.course_photo;
+			var equipment_photo = self.equipment_photo;
+			var selfcheck_photo = self.selfcheck_photo;
+			var dispose_photo = self.dispose_photo;
+			//动态创建图片
+			var createimg=function(tplx,tpmc) {		
+				var mysrc=url+"upload/"+tpmc;
+				var fuys=document.getElementById(tplx);
+				var img=document.createElement('img');				
+				img.src=mysrc;
+				img.setAttribute( "data-preview-src", "" );
+				img.setAttribute( "data-preview-group", "1" );
+				fuys.appendChild(img);
+			};		
+			var createtex=function(tplx) {				
+				var fuys=document.getElementById(tplx);
+				fuys.innerHTML='<p class="myp2">该项未上传附件！</p>';			
+			};
+			//检测前图片
+			if (before_photo.length>1) {
+				for (var i=1;i<before_photo.length;i++){
+					createimg('rwfj1',before_photo[i]);
+				}
+			}else{
+				createtex('rwfj1');
+			}	
+			//检测实施过程图片
+			if(course_photo.length>1){
+				for(var i=1;i<course_photo.length;i++){
+					createimg('rwfj2',course_photo[i]);
+				}
+			}else{
+				createtex('rwfj2');
+			}
+			//检测设备图片
+			if(equipment_photo.length>1){
+				for(var i=1;i<equipment_photo.length;i++){
+					createimg('rwfj3',equipment_photo[i]);
+				}
+			}else{
+				createtex('rwfj3');
+			}
+			//自测照片
+			if(status_self == "确定自测"||status_self == "不合格"){
+				var selfcheck_ph = document.getElementById("selfcheck_ph");
+				selfcheck_ph.classList.remove("my_none");
+				if(selfcheck_photo.length>1){
+					for(var i=1;i<selfcheck_photo.length;i++){
+						createimg('rwfj4',selfcheck_photo[i]);
+					}
+				}else{
+					createtex('rwfj4');
+				}
+			}
+			if(status_self == "已处理"){
+				var selfcheck_ph = document.getElementById("selfcheck_ph");
+				var dispose_ph = document.getElementById("dispose_ph");
+				selfcheck_ph.classList.remove("my_none");
+				dispose_ph.classList.remove("my_none");
+				if(selfcheck_photo.length>1){
+					for(var i=1;i<selfcheck_photo.length;i++){
+						createimg('rwfj4',selfcheck_photo[i]);
+					}
+				}else{
+					createtex('rwfj4');
+				}
+				if(dispose_photo.length>1){
+					for(var i=1;i<dispose_photo.length;i++){
+						createimg('rwfj5',dispose_photo[i]);
+					}
+				}else{
+					createtex('rwfj5');
+				}
+			}
+			
+		});
+	</script>
+
+</html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/my_css.css">
+		<!--选择事件弹出的界面样式-->
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<style type="text/css">
+			.my_margin{
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			.mui-control-content {				
+				bottom: 0px;				
+			}	
+			.mui-control-content {
+				height:330px;
+			}
+			/****表格自适应css******/
+			/****大屏幕******/
+			body {
+				font-family: arial;
+			}
+			table {
+				border: 1px solid #ccc;
+				width: 93%;
+				
+				margin:0;
+				padding:0;
+				border-collapse: collapse;
+				border-spacing: 0;
+				margin: 0 auto;
+			}
+			table tr {
+				border: 1px solid #ddd;
+				padding: 5px;
+			}
+			table th, table td {
+				padding: 5px;
+				text-align: center;
+			}
+			table th {
+				text-transform: uppercase;
+				font-size: 14px;
+				letter-spacing: 1px;
+			}
+			/****大屏幕******/
+			/****小屏幕******/
+			@media screen and (max-width: 100px) {
+				table {
+					border: 0;
+				}
+				table thead {
+					display: none;
+				}
+				table tr {
+					margin-bottom: 0px;
+					display: block;
+					border-bottom: 2px solid #ddd;
+				}
+				table td {
+					display: block;
+					text-align: right;
+					font-size: 13px;
+					border-bottom: 1px dotted #ccc;
+				}
+				table td:last-child {
+					border-bottom: 0;
+				}
+				table td:before {
+					content: attr(data-label);
+					float: left;
+					text-transform: uppercase;
+					font-weight: bold;
+				}
+			}
+			/****小屏幕******/
+			.note{
+				max-width: 80%;
+				margin: 0 auto;
+			}
+			/****表格自适应css******/	
+			
+			/**** 饼图样式 ****/
+			.chart {
+				height: 240px;
+				margin: 0px; 
+				padding: 0px; 
+			}		
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">综合查询</h1>
+		</header>
+		<div class="mui-content">
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<a id="" class="mui-control-item mui-active" href="">
+						江门市建设工程施工质量管理系统
+					</a>					
+				</div>
+			</div>
+			
+			<!-- 时间选择器 -->
+			<div class="my_margin">
+				<form class="mui-input-group">					
+					<div class="mui-input-row">
+		            <label>查询类别:</label>
+		            <select id="category" style="font-size: 0.9em;">
+		            	<option></option>
+		            	<option>材料送检</option>
+		            	<option>材料自检</option>
+		            	<option>实体自检</option>
+		            	<option>实体检测</option>
+		            </select>
+		        </div>
+				</form>				
+	        </div>
+	        <!-- 时间选择器 -->
+	        
+	          <!-- 按钮事件 -->
+	        <div class="mui-button-row">
+				<button id="empty" type="button" class="mui-btn mui-btn-primary" >清空</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="collect" type="button" class="mui-btn mui-btn-primary" >汇总</button>
+			</div>
+	        <!-- 按钮事件 -->
+	        
+	        <!-- 按钮事件响应标题 -->
+	        <div style="padding: 4px 10px;">
+				<div style="padding: 10px 10px;">
+					<div id="segmentedControl" class="mui-segmented-control">
+						<a id="hzjg" class="mui-control-item mui-active" href="">
+							汇总结果
+						</a>					
+					</div>
+				</div>
+			</div>
+			<!-- 按钮事件响应标题 -->
+			
+			<!-- 饼图呈现 -->
+			<div class="mui-content-padded">
+				<div class="chart" id="pieChart">&nbsp;&nbsp;&nbsp;&nbsp;无汇总结果！</div>
+			</div>
+			<!-- 饼图呈现 -->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/echarts.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				var pj_timestamp = self.timestamp;
+				var pj_name = self.gcmc;
+				var doc = document;
+				var category = doc.getElementById("category");
+				var collect = doc.getElementById("collect");
+				var empty = doc.getElementById("empty");
+//				var qsrq = doc.getElementById("qsrq");
+//				var jsrq = doc.getElementById("jsrq");
+//				
+//				qsrq.addEventListener('tap', function() {
+//					var dDate = new Date();
+//					plus.nativeUI.pickDate(function(e) {
+//						var d = e.date;
+//						qsrq.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+//						if (qsrq.value&&jsrq.value) {
+//							var gksrq=qsrq.value;
+//							var gjsrq=jsrq.value;
+//							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
+//							var xgksrq = xgksrq.getTime();
+//							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
+//							var xgjsrq = xgjsrq.getTime();
+//							if (xgjsrq>=xgksrq) {
+//								hzong.disabled=false;
+//							}else{
+//								alert('起始日期不能大于结束日期！');
+//								hzong.disabled=true;
+//							}
+//						}
+//						
+//					}, function(e) {
+//						//alert(e);
+//					}, {
+//						title: "请选择日期",
+//					});
+//				});
+//				jsrq.addEventListener('tap', function() {
+//					var dDate = new Date();
+//					plus.nativeUI.pickDate(function(e) {
+//						var d = e.date;
+//						jsrq.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+//						if (qsrq.value&&jsrq.value) {
+//							var gksrq=qsrq.value;
+//							var gjsrq=jsrq.value;
+//							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
+//							var xgksrq = xgksrq.getTime();
+//							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
+//							var xgjsrq = xgjsrq.getTime();
+//							if (xgjsrq>=xgksrq) {
+//								hzong.disabled=false;
+//							}else{
+//								alert('起始日期不能大于结束日期！');
+//								hzong.disabled=true;
+//							}
+//						}
+//						
+//					}, function(e) {
+//						//alert(e);
+//					}, {
+//						title: "请选择日期",
+//					});
+//				});
+				//异步查询数据
+				collect.addEventListener('tap',function(){
+					if(category.value.length<=0){
+						mui.toast('请先选择查询类别!',{ duration:'long', type:'div' })
+					}else{
+						mui.ajax(url+'my_plus/my_query.php',{
+							data:{
+								pj_timestamp:pj_timestamp,
+								pj_name:pj_name,
+								category:category.value
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+	//							alert(data);
+								if(data.result=='success'){
+									var fail_num = data.fail;
+									var qualified_num = data.qualified;
+								}
+								pieChart(fail_num,qualified_num);
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown+"失败！");
+							}
+						});
+					}
+				});
+				
+				//饼图生成
+				var pieChart = function(fail_num,qualified_num){
+					 // 基于准备好的dom，初始化echarts实例
+	        		var pieChart = echarts.init(document.getElementById('pieChart'));
+					//饼图
+					option = {
+					    title : {
+					        text: '',
+					        subtext: '',
+					        x:'center'
+					    },
+					    tooltip : {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b} : {c} ({d}%)"
+					    },
+					     color:['#0CAF2D','#FF0000'],
+					    legend: {
+					        orient: 'vertical',
+					        left: 'left',
+					        data: [
+					        {value:qualified_num, name:'合格数'},
+					        {value:fail_num, name:'不合格数'},],
+					    },
+					    series : [
+					        {
+					            name: '访问来源',
+					            type: 'pie',
+					            radius : '55%',
+					            center: ['50%', '60%'],
+					            data:[
+					                {value:qualified_num, name:'合格数'},
+					                {value:fail_num, name:'不合格数'},
+					            ],
+					            itemStyle: {
+					                emphasis: {
+					                    shadowBlur: 10,
+					                    shadowOffsetX: 0,
+					                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+					                }
+					            }
+					        }
+					    ]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+	        		pieChart.setOption(option);
+				}
+				
+				//清空监听
+				empty.addEventListener('tap',function(){
+					var pieChart = document.getElementById("pieChart");
+					pieChart.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;无汇总结果！"
+					category.value="";
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">公告详情</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;">
+		    <div id="title_form">
+				&nbsp;&nbsp;<label >公告标题：</label>
+			    <div class="mui-input-row" >
+					<textarea id="title" rows="1" placeholder="" value="2223"></textarea>
+				</div>
+			</div>
+		    <div id="notice_form">
+				&nbsp;&nbsp;<label >公告内容：</label>
+			    <div class="mui-input-row" >
+					<textarea id="notice" rows="8" placeholder="" readonly="readonly"></textarea>
+				</div>
+			</div>
+		</div>
+			<!--附件-->
+		    <form id="img_content" class="my_none" >
+	        	<!--公告附件-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">公告附件:</span>
+		        	<br/>
+		        </div>
+		    </form>
+		    <!--附件-->
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				var notice_id = geturl("notice_id");
+				var doc = document;
+				var title = doc.getElementById("title");
+				var notice = doc.getElementById("notice");
+				var selfid = notice_id;
+				//异步获取公告列表
+				mui.ajax(url+'my_info/information_det.php',{
+					data:{
+						selfid:selfid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								title.value = data[i].公告标题;
+								notice.value = data[i].公告内容;
+							}	
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+//				
+			});
+		</script>
+	</body>
+
+</html>

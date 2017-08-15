@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">委托检测-实测提交</h1>
+		</header>
+		<div class="mui-content">
+		    <form class="mui-input-group" id="myform2">
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input id="sedate" type="text" class="mui-input-clear" placeholder="请选择送样日期" readonly="readonly" disabled="disabled">
+		        </div>
+		         <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="redate" type="text" class="mui-input-clear" placeholder="请选择收样日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入送样单位" id="seun">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入见证单位 "id="wiun">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入收样单位" id="reun">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入见证人" id="wipe" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测报告编号:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入检测报告编号" id="teid">
+		        </div>
+		    </form>			
+			<!--处理图片-->
+		    <form id="img_content" >
+	        	<!--实测照片-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">实测照片</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-button-row">
+		        	<ul id="history_cj" class="dlist" style="text-align:left;">
+						<li id="empty_cj" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('syzp');">清空记录</button>
+					<button id="syzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">保存及上传</button>
+		        </div>
+		    </form>
+		    <!--处理图片-->
+		    <input id="ulid" class="my_none" value="" />
+			<input id="gcmc" class="my_none" value="" />
+			<input id="sjc" class="my_none" value="" />
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/upload_encomchge.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取工程名称
+				var self = plus.webview.currentWebview();
+                gcmc_c = self.gcmc_c;
+                my_name = self.my_name;
+                timestamp = self.timestamp;
+                constr = self.constr;
+	      		supvision = self.supvision;
+	      		detect = self.detect;
+                my_name = decodeURI(decodeURI(my_name));
+                gcmc = decodeURI(decodeURI(gcmc_c));
+                ulid = self.ulId;
+				var doc = document;
+				var timech = doc.getElementById("date");
+				var sedate = document.getElementById('sedate');
+				var redate = document.getElementById('redate');
+				var seun = document.getElementById('seun');
+				var wiun = document.getElementById('wiun');
+				var reun = document.getElementById('reun');
+				var wipe = document.getElementById('wipe');
+				var teid = document.getElementById('teid');
+				wipe.value = my_name;
+				seun.value = constr;
+				wiun.value = supvision;
+				reun.value = detect;
+				//日期监听
+				sedate.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    sedate.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				var myDate = new Date();
+				sedate.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				redate.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    redate.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+				var progcmc = doc.getElementById('gcmc');
+				progcmc.value = gcmc;
+				var protimesp = doc.getElementById('ulid');
+				protimesp.value = ulid;
+				var protimesp = doc.getElementById('sjc');
+				protimesp.value = timestamp;
+				
+				mui.ajax(url+'my_plus/my_entity_detail.php',{
+					data:{
+						flag:"获取信息",
+						myid:ulid
+					},
+					type:'post',
+					dataType:'json',
+					timeout:10000,
+					success:function(data){
+//						sepe.value = data[0].取样人;
+					},
+					error:function(xhr,type,errorThrown){
+						alert("ajax错误:"+type+"----"+errorThrown); 
+					}
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_commission/my_commission_list.html');
+				target.reload(true);
+				mui.back();
+				mui.toast('保存成功',{ duration:'long', type:'div' });
+			}
+		</script>
+	</body> 
+
+</html>

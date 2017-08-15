@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">送样基本信息</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input id="shyrq" type="text" class="mui-input-clear" placeholder="请输入送样日期" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="soyrq" type="text" class="mui-input-clear" placeholder="请输入收样日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input id="jzdw" type="text" class="mui-input-clear" placeholder="请输入见证单位" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input id="shydw" type="text" class="mui-input-clear" placeholder="请输入收样单位" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样人:</label>
+		            <input id="syr" type="text" class="mui-input-clear" placeholder="请输入送样人" >
+		        </div>
+		         <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样数量:</label>
+		            <input id="samplingNum" type="text" class="mui-input-clear" placeholder="请输入取样数量" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样部位:</label>
+		            <input id="samplingPart" type="text" class="mui-input-clear" placeholder="请输入取样部位" readonly="readonly" >
+		        </div>
+		         <div class="mui-input-row">
+		            <label>初检编号:</label>
+		            <input id="ypbh" type="text" class="mui-input-clear" readonly="readonly" placeholder="请输入初检编号">
+		        </div> 
+		        <div class="mui-input-row">
+		            <label>样品编号:</label>
+		            <input id="second_num" type="text" class="mui-input-clear" placeholder="请输入样品编号">
+		        </div> 
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>	
+			
+			<!-------------------------------------------处理图片------------------------------------------>
+		    <form id="img_content" class="my_none" >
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">收样照片</span>
+		        	<br/>
+		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>收样照片说明:</label>
+			            <input id="receivedText" type="text" class="mui-input-clear" placeholder="请输入收样照片说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_syzp" class="dlist" style="text-align:left;">
+						<li id="empty_syzp" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_syzp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('syzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="syzp" type="button" class="mui-btn mui-btn-primary" onclick="upload2(this.id,'clean_syzp');">附件上传</button>
+		        </div>
+		    </form>
+		    <!-------------------------------------------处理图片------------------------------------------>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script src="../js/upload_sy.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+	      		var self = plus.webview.currentWebview();
+	      		ulId = self.ulId; 
+	      		my_name = self.my_name;
+                my_name = decodeURI(decodeURI(my_name));
+				var doc=document;
+				var shyrq=doc.getElementById("shyrq");
+				var soyrq=doc.getElementById("soyrq");
+				var sydw=doc.getElementById("sydw");
+				var jzdw=doc.getElementById("jzdw");
+				var shydw=doc.getElementById("shydw");
+				var syr=doc.getElementById("syr");
+				var jzr=doc.getElementById("jzr");
+				var save=doc.getElementById("save");
+				var ypbh=doc.getElementById("ypbh");
+				var sjc = doc.getElementById("sjc");
+				var samplingNum = doc.getElementById("samplingNum");
+				var samplingPart = doc.getElementById("samplingPart");
+				var second_num = doc.getElementById("second_num");
+				jzr.value = my_name  //见证人默认为账号姓名
+				//获取当前日期
+				var myDate=new Date();
+				shyrq.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				//日期监听
+				soyrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    soyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+				//异步获取材料送检时间戳
+				mui.ajax(url+'my_plus/material_detail.php',{
+					data:{
+						gcid:ulId				
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sjc.value=data[i].时间戳;
+							syr.value=data[i].取样人;   //“送样人”为上一步的“取样人”
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+						return callback('ajax错误'+type+errorThrown);
+					}
+					
+				});
+				
+				
+				//异步获取送样信息
+				mui.ajax(url+'my_plus/material_detail.php',{
+					data:{
+						gcid:ulId
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							second_num.value=data[i].样品编号;
+							sydw.value=data[i].送样单位;
+							jzdw.value=data[i].见证单位;	
+							shydw.value=data[i].收样单位;
+							samplingNum.value=data[i].数量;
+							samplingPart.value=data[i].使用部位;
+							ypbh.value=data[i].检测报告编号;
+						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+						return callback('ajax错误'+type+errorThrown);
+					}
+				});	
+				
+				
+				//保存
+				save.addEventListener('tap',function(){
+					var mydata = {
+						ulId:ulId,
+						shyrq:shyrq.value,
+						soyrq:soyrq.value,
+						sydw:sydw.value,
+						jzdw:jzdw.value,
+						shydw:shydw.value,
+						syr:syr.value,
+						jzr:jzr.value,
+						second_num:second_num.value,
+					};
+					songyang(mydata,function(err){
+						if (err) {
+							plus.nativeUI.toast(err);
+							return;
+						}
+						  
+						var btnArray = ['是', '否'];
+						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+							if (e.index == 0) {
+								var myform=document.getElementById('myform');
+								var img_content=document.getElementById('img_content');
+								var formbtn=document.getElementById("formbtn");
+								myform.classList.add('my_none');
+								formbtn.classList.add('my_none');			
+								img_content.classList.remove('my_none');
+							} else {
+								//返回父页面刷新
+								var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
+								target.reload(true);
+								mui.back();
+							}
+						});
+					});
+				});	
+			});
+				
+				//送样信息异步
+				var songyang = function(mydata,callback){
+					callback = callback || $.noop;
+					mydata = mydata || {};
+					mydata.ulId = mydata.ulId || '';
+					mydata.shyrq = mydata.shyrq || '';
+					mydata.soyrq = mydata.soyrq || '';
+					mydata.sydw = mydata.sydw || '';
+					mydata.jzdw = mydata.jzdw || '';
+					mydata.shydw = mydata.shydw || '';
+					mydata.syr = mydata.syr || '';
+					mydata.jzr = mydata.jzr || '';
+					mydata.second_num = mydata.second_num || '';
+					mui.ajax(url+'my_plus/my_material_recheckDeliver.php',{
+						data:{
+							ulId:mydata.ulId,
+							shyrq:mydata.shyrq,
+							soyrq:mydata.soyrq,
+							sydw:mydata.sydw,
+							jzdw:mydata.jzdw,
+							shydw:mydata.shydw,
+							syr:mydata.syr,
+							jzr:mydata.jzr,
+							second_num:mydata.second_num,
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if (data.result=='success') {
+								return callback();
+							} else{
+								return callback('服务器返回error');	
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							//alert('ajax错误'+type);
+							return callback('ajax错误'+type+errorThrown);
+						}
+					});
+				}
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
+				target.reload(true);
+				mui.back();
+			}	
+			
+		</script>
+	</body>
+
+</html>

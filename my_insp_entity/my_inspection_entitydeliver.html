@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">确定自测信息</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input id="zcrq" type="text" class="mui-input-clear" placeholder="请输入送样日期" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="syrq"  type="text" class="mui-input-clear" placeholder="请输入收样日期" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input id="jzdw"  type="text" class="mui-input-clear" placeholder="请输入见证单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input id="sdw"  type="text" class="mui-input-clear" placeholder="请输入收样单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input id="jzr"  type="text" class="mui-input-clear" placeholder="请输入见证人" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测报告编号:</label>
+		            <input id="jcbh"  type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>	
+			
+			<!-------------------------------------------处理图片------------------------------------------>
+		    <form id="img_content" class="my_none" >
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">自测照片</span>
+		        	<br/>
+		        	<div><img id="newUpload4" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div>
+		        	<ul id="history_zczp" class="dlist" style="text-align:left;">
+						<li id="empty_zczp" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_zczp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('zczp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="zczp" type="button" class="mui-btn mui-btn-primary" onclick="upload2(this.id,'clean_zczp');">附件上传</button>
+		        </div>
+		    </form>
+		    <!-------------------------------------------处理图片------------------------------------------>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script src="../js/pic_upload_entity_2.js"></script>
+		
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值
+	      		var self = plus.webview.currentWebview();
+	      		ulid = self.ulId;
+	      		constr = self.constr;
+	      		supvision = self.supvision;
+	      		detect = self.detect;
+	      		timestamp_self = self.timestamp_self;
+	      		my_name = self.my_name;
+				var doc=document;
+				var zcrq = doc.getElementById('zcrq');
+				var syrq = doc.getElementById('syrq');
+				var sydw = doc.getElementById('sydw');
+				var jzdw = doc.getElementById('jzdw');
+				var sdw = doc.getElementById('sdw');
+				var jzr = doc.getElementById('jzr');
+				var jcbh = doc.getElementById('jcbh');
+				var sjc = doc.getElementById('sjc');
+				jzr.value = my_name;
+				sjc.value = timestamp_self;
+				sydw.value = constr;
+				jzdw.value = supvision;
+				sdw.value = detect;
+				//获取当前日期
+				var myDate=new Date();
+				zcrq.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				//日期监听
+				zcrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    zcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				syrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    syrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				
+//				mui.ajax(url+'my_plus/my_inspection_entitydetail.php',{
+//					data:{
+//						flag:"获取信息",
+//						sjc:sjc.value,
+//						gcid:ulid
+//					},
+//					dataType:'json',
+//					type:'POST', 
+//					timeout:10000,
+//					success:function(data){
+//						syr.value = data.检测人;
+//					},
+//					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//					}
+//				});	
+		
+				//保存
+				save.addEventListener('tap',function(){
+					if(sydw.value.length != 0){
+						mui.ajax(url+'my_plus/my_inspection_entitydeliver.php',{
+							data:{
+								flag:"保存信息",
+								id:ulid,
+								timestamp_self:timestamp_self,
+								selfchek_zcrq:zcrq.value,
+								selfchek_syrq:syrq.value,
+								selfchek_sydw:sydw.value,
+								selfchek_jzdw:jzdw.value,
+								selfchek_sdw:sdw.value,
+								selfchek_jzr:jzr.value,
+								selfchek_jcbh:jcbh.value,
+
+							},
+							type:'post',
+							dataType:'json',
+							timeout:10000,
+							success:function(data){
+//								alert(data);
+								var btnArray = ['是', '否'];
+								mui.confirm(data.result+'是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										var myform=document.getElementById('myform');
+										var img_content=document.getElementById('img_content');
+										var formbtn=document.getElementById("formbtn");
+										myform.classList.add('my_none');
+										formbtn.classList.add('my_none');			
+										img_content.classList.remove('my_none');
+									} else {
+										//返回父页面刷新
+										var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity.html');
+										target.reload(true);
+										mui.back();
+									}
+								});
+							},
+							error:function(){
+								alert("ajax error!");
+							}
+						});
+					}else{
+						alert("请检测信息是否完整");
+					}
+					
+				});	
+			});
+				
+				
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity.html');
+				target.reload(true);
+				mui.back();
+			}	
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />	
+		<style>
+			#addNew{
+				position:fixed;
+				right:10px;
+				bottom:50px;
+				/*background-color:transparent;*/
+		        z-index: 998 ;
+		    }
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">分户分部验收</h1>
+		</header>
+		<div>
+			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
+            	<span class="mui-icon mui-icon-plusempty"></span>
+       		</button>
+		</div>
+		<div class="mui-content">
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
+									委托检测(检测单位)
+								</a>
+								<!--<a class=" mui-icon mui-icon-arrowright mui-pull-right" style="bottom: 18px;"></a>-->
+								<!--<a class=" mui-icon mui-icon-arrowleft mui-pull-left" style="bottom: 18px;"></a>-->
+		         		   </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			
+			<div id="item1" class="mui-control-content  mui-active">
+			    <div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="draft" class="mui-scroll rwdiv">
+	    				<ul class="mui-table-view mui-card my_list my_marginbottom10px">
+			    			<li class="mui-table-view-cell my_backgroundcolor_blue2">
+								<a class="a_color" href="my_household_detail.html">
+									<span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span>
+									<p class="mui-ellipsis my_style2">分户验收</p>
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">栋号：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">户号：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">检测人/见证人：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">验收日期：</p>
+							</li>
+		    			</ul>
+		    			
+					</div>
+			    </div>
+			</div>
+			
+			<div id="item2" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="witness" class="mui-scroll rwdiv">
+	    				<ul class="mui-table-view mui-card my_list my_marginbottom10px">
+			    			<li class="mui-table-view-cell my_backgroundcolor_purple">
+								<a class="a_color" href="my_household_detail.html">
+									<span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span>
+									<p class="mui-ellipsis my_style2">分布验收</p>
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">栋号：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">户号：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">检测人/见证人：</p>
+							</li>
+							<li class="mui-table-view-cell">
+								<p class="mui-ellipsis my_style1">验收日期：</p>
+							</li>
+		    			</ul>
+					</div>
+			    </div>
+			</div>
+			<div id="item3" class="mui-control-content"></div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false	
+				}
+			});
+			
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui.plusReady(function(){
+				var doc = document;
+				var draft = doc.getElementById("draft");
+				var witness = doc.getElementById("witness");
+				
+				
+				
+				//长按草稿
+				draft.addEventListener('longtap',function(){
+					var btnArray = [
+						{title:"提交监理见证"},
+						{title:"删除草稿"}
+						];
+						plus.nativeUI.actionSheet({
+							title:"操作",
+							cancel:"取消",
+							buttons:btnArray
+						},function(e){
+							var index = e.index;	
+							//var nextpage='';
+							switch (index){
+								case 1://提交监理见证
+									break;
+								case 2://删除
+									break;
+							}	
+						  }
+						);
+				});
+				
+				//长按见证
+				witness.addEventListener('longtap',function(){
+					var btnArray = [
+						{title:"确认见证"},
+						{title:"撤销见证"}
+						];
+						plus.nativeUI.actionSheet({
+							title:"操作",
+							cancel:"取消",
+							buttons:btnArray
+						},function(e){
+							var index = e.index;	
+							//var nextpage='';
+							switch (index){
+								case 1://确认见证
+									break;
+								case 2://撤销见证
+									break;
+							}	
+						  }
+						);
+				});
+			});
+		</script>
+	</body>
+
+</html>
