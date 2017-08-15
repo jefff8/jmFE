@@ -2057,7 +2057,9 @@
 					"css/my_css.css",
 					"css/mui.poppicker.css",
 					"css/mui.picker.min.css",
-					"css/my_project_fhys_xz.css"
+					"css/my_project_fhys_xz.css",
+					"my_task/send.js",
+					"my_task/self_inspection1.js"
 				],
 				"refer": [
 					"my_material/my_material_samDet.html"

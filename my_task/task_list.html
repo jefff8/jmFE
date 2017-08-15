@@ -10,6 +10,23 @@
 		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
 		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
 		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
+		<style>
+			#zuyPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+
+			}
+			#recPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -62,6 +79,68 @@
 						</div>
 				    </div>
 				</div>
+				<!--验证码-->
+				<div id="zuyPopover" class="mui-popover">
+	        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	        		<form class="mui-input-group" style="margin-top: 15px;">
+	        			<div class="mui-input-row">
+	        				<label>验证码:</label>
+	        				<input id="code" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+	        			</div>    			
+	        		</form>
+					<div id="comfirm"  class="mui-button-row my_margintop10px">
+						<button   type="button" class="mui-btn mui-btn-primary" onclick="qdjz(this)">确定</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+					</div>
+				</div>
+				<!--复检验证码-->
+				<div id="recPopover" class="mui-popover">
+	        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	        		<form class="mui-input-group" style="margin-top: 15px;">
+	        			<div class="mui-input-row">
+	        				<label >验证码:</label>
+	        				<input id="code_recheck" type="number" class="mui-input-clear" placeholder="输入验证码" value="" >
+	        			</div>    			
+	        		</form>
+					<div id="recheck"  class="mui-button-row my_margintop10px">
+						<button   type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确定</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+					</div>
+				</div>
+				<!--复检验证码-->
+				<form class="mui-input-group my_none">
+				    <div class="mui-input-row my_none">
+				        <label>企业ID</label>
+				        <input name="CorpID"  type="text" id="CorpID" class="mui-input-clear" value="101781">
+				    </div>
+				    <div class="mui-input-row my_none">
+				        <label>登录名</label>
+				        <input name="LoginName" type="text" id="LoginName" class="mui-input-clear" value="Admin">
+				    </div>
+				    <div class="mui-input-row  my_none">
+				        <label>密码</label>
+				        <input name="pwd" type="text" id="pwd" class="mui-input-clear" value="174012" >
+				    </div>
+				    <div class="mui-input-row  my_none">
+				        <label>服务器地址</label>
+				        <input name="serverIP" type="text" id="serverIP" class="mui-input-clear"  value="http://sms.mobset.com:8080/Api?wsdl">
+				    </div>
+				    <div class="mui-input-row  my_none">
+				        <label>手机号码</label>
+				        <input name="mobPhone" type="text" id="mobPhone" class="mui-input-clear"  >
+				    </div>
+				    <div class="mui-input-row  my_none">
+				        <label>短信内容</label>
+				        <input name="smsContent" type="text" id="smsContent" class="mui-input-clear" value="验证码：">
+				    </div>
+				     <div class="mui-input-row  my_none">
+				        <label>验证码</label>
+				        <input name="yzm" type="text" id="yzm" class="mui-input-clear" >
+				    </div>
+				</form>
+				<!--验证码-->
 				<!----------------------材料送检 ------------------------->
 				<!----------------------材料自检 ------------------------->
 				<div id="item2" class="mui-control-content  mui-active">
@@ -76,11 +155,17 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
+		<script src="send.js"></script><!--材料送检-->
+		<script src="self_inspection1.js"></script><!--材料自检-->
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
 				}
+			});
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 			});
 			mui.plusReady(function(){
 				//获取url参数值
@@ -92,8 +177,8 @@
 				}
 				uid = geturl("uid");
 				unit = geturl("unit");
+				mobile = geturl("mobile");
 				unit = decodeURI(decodeURI(unit));
-				count = "";
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',
@@ -106,263 +191,14 @@
 						var length = data.length;
 						for(var i=0;i<length;i++){
 							var pj_timestamp = data[i].时间戳;
-							taskList(pj_timestamp);
+							taskList1(pj_timestamp);//材料送检
+							taskList2(pj_timestamp);//材料自检
 						}
 					},
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
-				
-				//根据对应工程查询任务
-				function taskList(pj_timestamp){
-//					alert(unit);
-					mui.ajax(url+'my_task/task_list.php',{
-						data:{
-							flag:"材料送检",
-							pj_timestamp:pj_timestamp,
-							unit:unit
-						},
-						type:'post',
-						dataType:'json',
-						timeout:10000,
-						success:function(data){
-							var length = data.length;
-							for(var i=0;i<length;i++){
-								var id = data[i].id;
-								var sjc = data[i].时间戳;
-								var pj_name = data[i].工程名称;
-								var type = data[i].取样类型;
-								var scale = data[i].规格;
-								var quantity = data[i].数量;
-								var getGuy = data[i].取样人;
-								var getDate = data[i].取样日期;
-								var state = data[i].工程单状态;
-								send(sjc,id,pj_name,type,scale,quantity,getGuy,getDate,state);
-							}
-						},
-						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-						}
-					});
-				}
-				
-				
-				//动态创建项目
-				function send(sjc,id,pj_name,type,scale,quantity,getGuy,getDate,state){
-					if(state=='新增'||state=='新增复检'){
-						color = 'blue2';
-					}else{
-						color = 'green2';
-					}
-					var ul = document.createElement("ul");
-					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-					ul.id = id;
-					if(state=='新增复检'||state=='取样复检'){
-						ul.style.borderColor = "red";	
-					}
-					var send = document.getElementById("send");
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="../my_material/my_material_samDet.html?sjc='+sjc+'&gcid='+id+'&gcmc='+pj_name+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+scale+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+getGuy+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+getDate+'</p></li>';
-					send.appendChild(ul);
-				}
-				
-				//材料送检操作
-				mui("#send").on('longtap','ul',function(){
-					var ulId = this.id;//获取当前的卡项的id
-					mui.ajax(url+'my_task/my_send.php',{
-						data:{
-							flag:"获取状态",
-							ulId:ulId
-						},
-						type:'post',
-						dataType:'json',
-						success:function(data){
-//							alert(data);
-							var status = data.工程单状态;
-							if(status=='新增' || status=='新增复检'){
-								var btnArray = [
-								{title:"取样(施工单位)"},
-								{title:"删除"}
-								]; 
-								plus.nativeUI.actionSheet({
-									title:"操作", 
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://取样
-										if(status=='新增'){
-											mui.ajax(url+'my_task/my_send.php',{
-												data:{
-													flag:"取样",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' });
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}else if(status=='新增复检'){
-											mui.ajax(url+'my_task/my_send.php',{
-												data:{
-													flag:"取样复检",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}
-												
-											break;
-										case 2://删除
-											mui.ajax(url+'my_task/my_send.php',{
-												data:{
-													flag:"删除",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-											break;
-									}	
-								 });
-							}else if(status=='取样'||status=='取样复检'){
-								var btnArray = [
-								{title:"提交见证"},
-								{title:"撤销取样"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1:
-											//提交见证/*确定见证*/
-											if(status=='取样'){
-												mui.ajax(url+'my_task/my_send.php',{
-													data:{
-														flag:"提交见证",
-														ulId:ulId
-													},
-													dataType:'json',
-													type:'POST', 
-													timeout:10000,
-													success:function(data){
-		//													alert(data.结果);
-														mui.toast(data.结果,{ duration:'long', type:'div' })
-														location.reload();//刷新本页面
-													},
-													error:function(xhr,type,errorThrown){
-			//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-													}
-												});
-											}else if(status=='取样复检'){
-												mui.ajax(url+'my_task/my_send.php',{
-													data:{
-														flag:"提交复检见证",
-														ulId:ulId
-													},
-													dataType:'json',
-													type:'POST', 
-													timeout:10000,
-													success:function(data){
-		//													alert(data.结果);
-														mui.toast(data.结果,{ duration:'long', type:'div' })
-														location.reload();//刷新本页面
-													},
-													error:function(xhr,type,errorThrown){
-			//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-													}
-												});
-											}
-											
-											break;
-										case 2://撤销取样
-										if(status=='取样'){
-											mui.ajax(url+'my_task/my_send.php',{
-												data:{
-													flag:"撤销取样",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}else if(status=='取样复检'){
-											mui.ajax(url+'my_task/my_send.php',{
-												data:{
-													flag:"撤销取样复检",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}
-											
-											break;
-									}	
-								  }
-								);
-							}
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-						}
-					});
-				});
-				//材料送检操作
-				
-				
-				//材料自检操作
-				
-				//材料自检操作
 			});
 		</script>
 	</body>
