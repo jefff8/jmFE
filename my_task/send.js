@@ -39,7 +39,7 @@
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 		ul.id = id;
-		if(state=='新增复检'||state=='取样复检'){
+		if(state=='新增复检'||state=='取样复检'||state=='收样复检'){
 			ul.style.borderColor = "red";	
 		}
 		var send = document.getElementById("send");
@@ -356,7 +356,7 @@
 							
 							break;
 							case 2://不合格
-							if(gcdzt_pd=='收样'){
+							if(status=='收样'){
 								var btnArray = ['是', '否'];
 								mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 									if (e.index == 0) {
@@ -375,18 +375,18 @@
 											}
 										});	
 										//不合格推送通知
-										var server=url+"push/fail_push.php";
-										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-											//推送完成
-											if(status==200){
-		//										alert("发送成功");
-											}else{
-												alert("失败");
-											}
-										});
-										task.addData("title",'江门市建设工程施工质量管理系统');
-										task.addData("notice",'出现新的不合格项目,请注意查收！');
-										task.start();
+//										var server=url+"push/fail_push.php";
+//										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+//											//推送完成
+//											if(status==200){
+//		//										alert("发送成功");
+//											}else{
+//												alert("失败");
+//											}
+//										});
+//										task.addData("title",'江门市建设工程施工质量管理系统');
+//										task.addData("notice",'出现新的不合格项目,请注意查收！');
+//										task.start();
 										mui.openWindow({
 											url:'../my_material/my_material_fail.html',
 											styles: {
@@ -395,7 +395,6 @@
 											extras:{
 												//传递参数
 												ulId:ulId,
-												timestamp:timestamp
 											},
 											show:{
 												autoShow:true,//页面loaded事件发生后自动显示
@@ -410,7 +409,7 @@
 										
 									}
 								});
-							}else if(gcdzt_pd=='收样复检'){
+							}else if(status=='收样复检'){
 								var btnArray = ['是', '否'];
 								mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 									if (e.index == 0) {
@@ -424,28 +423,25 @@
 											type:'POST', 
 											timeout:10000,
 											success:function(data){
-												if(data.result=='success'){
-													mui.openWindow({
-														url:'../my_material/my_material_fail.html',
-														styles: {
-															hardwareAccelerated:false
-														},
-														extras:{
-															//传递参数
-															ulId:ulId,
-															timestamp:timestamp,
-															state:'recheck'
-														},
-														show:{
-															autoShow:true,//页面loaded事件发生后自动显示
-															aniShow:'slide-in-right',//页面显示动画
-															duration:'100'//页面动画持续时间
-														},
-														waiting:{
-															autoShow:false,//自动显示等待框
-														}
-													});
-												}
+												mui.openWindow({
+													url:'../my_material/my_material_fail.html',
+													styles: {
+														hardwareAccelerated:false
+													},
+													extras:{
+														//传递参数
+														ulId:ulId,
+														state:'recheck'
+													},
+													show:{
+														autoShow:true,//页面loaded事件发生后自动显示
+														aniShow:'slide-in-right',//页面显示动画
+														duration:'100'//页面动画持续时间
+													},
+													waiting:{
+														autoShow:false,//自动显示等待框
+													}
+												});
 											},
 											error:function(xhr,type,errorThrown){
 												alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -612,7 +608,8 @@
 		mui.ajax(url+'my_task/my_send.php',{
 			data:{
 				flag:"复检合格",
-				ulId:ulId
+				ulId:ulId,
+				recheckNum:recheckNum
 			},
 			dataType:'json',
 			type:'POST', 
