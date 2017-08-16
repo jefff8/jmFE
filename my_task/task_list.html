@@ -168,19 +168,13 @@
 				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 			});
 			mui.plusReady(function(){
-				//获取url参数值
-				function geturl(name){
-					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-					var r = window.location.search.substr(1).match(reg);
-					if(r!=null)return  unescape(r[2]);
-					return null;
-				}
-				uid = geturl("uid");
-				unit = geturl("unit");
-				mobile = geturl("mobile");
-				my_name = geturl("my_name");
-				unit = decodeURI(decodeURI(unit));
+				var self = plus.webview.currentWebview();
+				uid = self.uid;
+				mobile = self.mobile;
+				my_name = self.my_name;
+				unit = self.unit;
 				my_name = decodeURI(decodeURI(my_name));
+				unit = decodeURI(decodeURI(unit)); 
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',

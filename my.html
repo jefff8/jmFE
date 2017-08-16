@@ -66,7 +66,7 @@
 		<div class="mui-content">
 		    <ul class="mui-table-view mui-table-view-chevron my_list">
 		    	<li class="mui-table-view-cell mui-media" >
-					<a id="task" class="mui-navigate-right" >
+					<a id="task" class="mui-navigate-right" href="my_task/task_list.html">
 						<img class="mui-media-object mui-pull-left" src="images/notice.png">
 						<div class="mui-media-body">
 							任务通知
@@ -113,7 +113,10 @@
 				var task = document.getElementById("task");
 				var p = document.getElementsByTagName("p");
 				my_pj.href = "my_plus/my_project_list.html?uid="+uid+" ";
-				task.href = "my_task/task_list.html?uid="+uid+"&unit="+unit+"&mobile="+mobile+"&my_name="+my_name+"";
+//				task.href = "my_task/task_list.html?uid="+uid+"&unit="+unit+"&mobile="+mobile+"&my_name="+my_name+"";
+				function task(){
+					alert("22");
+				}
 				//获取我的工程数目
 				mui.ajax(url+'index.php',{
 					data:{

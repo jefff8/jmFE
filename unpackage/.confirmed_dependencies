@@ -1764,10 +1764,24 @@
 			"css/mui.picker.min.css",
 			"css/my_project_fhys_xz.css",
 			"my_task/send.js",
-			"my_task/self_inspection1.js"
+			"my_task/self_inspection1.js",
+			"my_material/my_material_samDet.html"
 		],
 		"refer": [
-			"my_material/my_material_samDet.html"
+			"my_material/my_material_samDet.html",
+			"my_task/deliver.html"
+		]
+	},
+	"my_task/deliver.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"js/upload_sy.js",
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css",
+			"js/service.js",
+			"fonts/mui.ttf"
 		]
 	}
 }

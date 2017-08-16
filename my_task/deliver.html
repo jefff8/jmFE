@@ -101,6 +101,7 @@
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
+				main =plus.webview.currentWebview().opener(); //获取当前窗口对象
 				//获取传值
 	      		var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
@@ -150,10 +151,50 @@
 						}
 					},
 					error:function(xhr,type,errorThrown){
-						return callback('ajax错误'+type+errorThrown);
+//						alert('ajax错误'+type+errorThrown);
 					}
 					
-				});	
+				});
+				
+				//获取单位名称
+				mui.ajax(url+'my_task/my_send.php',{
+					data:{
+						flag:"获取工程时间戳",
+						ulId:ulId
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+//						alert(data[0].工程时间戳);
+						var pj_timestamp = data[0].工程时间戳;
+						units(pj_timestamp);
+						
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+errorThrown);
+					}
+				});
+			
+				function units(pj_timestamp){
+					mui.ajax(url+'my_task/my_send.php',{
+						data:{
+							flag:"单位名称",
+							ulId:ulId,
+							pj_timestamp:pj_timestamp
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+//							alert(data);
+							sydw.value = data[0].施工单位;
+							jzdw.value = data[0].监理单位;
+							shydw.value = data[0].检测单位;					
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}
 			
 				//保存
 				save.addEventListener('tap',function(){
@@ -184,7 +225,7 @@
 								img_content.classList.remove('my_none');
 							} else {
 								//返回父页面刷新
-								var target=plus.webview.getWebviewById('task_list.html');
+								var target=plus.webview.getWebviewById('my_task/task_list.html');
 								target.reload(true);
 								mui.back();
 							}
@@ -237,7 +278,7 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('task_list.html');
+				var target=plus.webview.getWebviewById('my_task/task_list.html');
 				target.reload(true);
 				mui.back();
 			}	

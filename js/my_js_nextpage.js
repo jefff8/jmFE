@@ -102,7 +102,9 @@ mui('.my_list').on('tap', 'a', function() {
 			styles: webview_style,
 			extras:{
 				mobile:mobile,
-				my_name:my_name
+				my_name:my_name,
+				unit:unit,
+				uid:uid
 			},
 			show: {		
 				//autoShow:false,

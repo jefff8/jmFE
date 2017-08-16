@@ -253,7 +253,7 @@
 	            detect = self.detect; //检测单位
 	            timestamp = self.timestamp;
 				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
-				my_name = encodeURI(encodeURI(my_name)); //获取用户名
+				my_name = decodeURI(decodeURI(my_name)); //获取用户名
 				var item=doc.getElementsByClassName('mui-control-item');
 				var content=doc.getElementsByClassName('mui-control-content');
 				var draft = doc.getElementById("draft");
@@ -377,474 +377,326 @@
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
-				
 				////////////////////////////取样（施工单位）//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
-					mui.ajax(url+'my_plus/my_material_list.php',{
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
+							my_name:my_name
 						},
 						dataType:'json',
-						type:'POST', 
+						type:'post',
 						timeout:10000,
 						success:function(data){
-							var gcdzt_pd = data.工程单状态;
-//							alert(gcdzt_pd);
-
-							//判断状态并根据状态执行改变状态的任务
-							if(gcdzt_pd=='新增' || gcdzt_pd=='新增复检'){
+							if(data[0]['单位'] == '施工单位'){
+								mui.ajax(url+'my_plus/my_material_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+			//							alert(gcdzt_pd);
+			
+										//判断状态并根据状态执行改变状态的任务
+										if(gcdzt_pd=='新增' || gcdzt_pd=='新增复检'){
+											var btnArray = [
+											{title:"取样(施工单位)"},
+											{title:"删除"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://取样
+													if(gcdzt_pd=='新增'){
+														mui.ajax(url+'my_plus/my_material_list.php',{
+															data:{
+																flag:"改取样状态",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+													}else if(gcdzt_pd=='新增复检'){
+														mui.ajax(url+'my_plus/my_material_list.php',{
+															data:{
+																flag:"取样复检",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+													}
+															
+														break;
+													case 2://删除
+														mui.ajax(url+'my_plus/my_material_list.php',{
+															data:{
+																flag:"删除",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+														break;
+												}	
+											 });
+										}else if(gcdzt_pd=='取样'||gcdzt_pd=='取样复检'){
+											var btnArray = [
+											{title:"提交见证"},
+											{title:"撤销取样"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1:
+														//提交见证//确定见证
+														if(gcdzt_pd=='取样'){
+															mui.ajax(url+'my_plus/my_material_list.php',{
+																data:{
+																	flag:"提交见证",
+																	ulid:ulId,
+																	gcmc:gcmc,
+																	timestamp:timestamp
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+					//													alert(data.结果);
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+														}else if(gcdzt_pd=='取样复检'){
+															mui.ajax(url+'my_plus/my_material_list.php',{
+																data:{
+																	flag:"提交复检见证",
+																	ulid:ulId,
+																	gcmc:gcmc,
+																	timestamp:timestamp
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+					//													alert(data.结果);
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+														}
+														
+														break;
+													case 2://撤销取样
+													if(gcdzt_pd=='取样'){
+														mui.ajax(url+'my_plus/my_material_list.php',{
+															data:{
+																flag:"撤销取样",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+													}else if(gcdzt_pd=='取样复检'){
+														mui.ajax(url+'my_plus/my_material_list.php',{
+															data:{
+																flag:"撤销取样复检",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+													}
+														
+														break;
+												}	
+											  }
+											);
+										}
+									},
+									error:function(xhr,type,errorThrown){
+			//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
 								var btnArray = [
-								{title:"取样(施工单位)"},
-								{title:"删除"}
+//									{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
 									title:"操作", 
 									cancel:"取消",
 									buttons:btnArray
 								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://取样
-										if(gcdzt_pd=='新增'){
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"改取样状态",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}else if(gcdzt_pd=='新增复检'){
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"取样复检",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}
-												
-											break;
-										case 2://删除
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"删除",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-											break;
-									}	
-								 });
-							}else if(gcdzt_pd=='取样'||gcdzt_pd=='取样复检'){
-								var btnArray = [
-								{title:"提交见证"},
-								{title:"撤销取样"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1:
-											//提交见证/*确定见证*/
-											if(gcdzt_pd=='取样'){
-												mui.ajax(url+'my_plus/my_material_list.php',{
-													data:{
-														flag:"提交见证",
-														ulid:ulId,
-														gcmc:gcmc,
-														timestamp:timestamp
-													},
-													dataType:'json',
-													type:'POST', 
-													timeout:10000,
-													success:function(data){
-		//													alert(data.结果);
-														mui.toast(data.结果,{ duration:'long', type:'div' })
-														location.reload();//刷新本页面
-													},
-													error:function(xhr,type,errorThrown){
-			//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-													}
-												});
-											}else if(gcdzt_pd=='取样复检'){
-												mui.ajax(url+'my_plus/my_material_list.php',{
-													data:{
-														flag:"提交复检见证",
-														ulid:ulId,
-														gcmc:gcmc,
-														timestamp:timestamp
-													},
-													dataType:'json',
-													type:'POST', 
-													timeout:10000,
-													success:function(data){
-		//													alert(data.结果);
-														mui.toast(data.结果,{ duration:'long', type:'div' })
-														location.reload();//刷新本页面
-													},
-													error:function(xhr,type,errorThrown){
-			//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-													}
-												});
-											}
-											
-											break;
-										case 2://撤销取样
-										if(gcdzt_pd=='取样'){
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"撤销取样",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}else if(gcdzt_pd=='取样复检'){
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"撤销取样复检",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-										}
-											
-											break;
-									}	
-								  }
-								);
+								});
 							}
-						},
-						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-						}
-					});	
-				});
-				////////////////////////////取样（施工单位）//////////////////////////////
-				
-				//长按见证
-				mui("#witness").on('longtap','ul',function(){
-					var ulId = this.id;
-					mui.ajax(url+'my_plus/my_material_list.php',{
-						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
-						},
-						dataType:'json',
-						type:'POST', 
-						timeout:10000,
-						success:function(data){
-							var gcdzt_pd = data.工程单状态;
-
-							if(gcdzt_pd=='未见证'||gcdzt_pd=='未见证复检'){
-								var btnArray = [
-								{title:"确认见证"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://确认见证
-											//执行验证码
-											if(gcdzt_pd=='未见证'){
-												mui("#zuyPopover").popover("toggle");
-												var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
-												but_id.id=ulId;
-											}else if(gcdzt_pd=='未见证复检'){
-												mui("#recPopover").popover("toggle");
-												var but_id=document.getElementById("recheck").getElementsByTagName('button')[0];
-												but_id.id=ulId;
-											}
-											break;
-										case 2:
-											break;
-									}	
-								  }
-								);
-							}else if(gcdzt_pd=='已见证'||gcdzt_pd=='已见证复检'){
-								var btnArray = [
-								{title:"送样"},
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									switch (index){
-										case 1://实测
-										if(gcdzt_pd=='已见证'){
-											mui.openWindow({
-												url:'my_material_deliver.html',
-												styles: {
-													hardwareAccelerated:false
-												},
-												extras:{
-													//传递参数
-													ulId:ulId,
-													my_name:my_name,
-													timestamp:timestamp,
-													constr:constr,
-													supvision:supvision,
-													detect:detect
-												},
-												show:{
-													autoShow:true,//页面loaded事件发生后自动显示
-													aniShow:'slide-in-right',//页面显示动画
-													duration:'100'//页面动画持续时间
-												},
-												waiting:{
-													autoShow:false,//自动显示等待框
-												}
-											})
-										}else if(gcdzt_pd=='已见证复检'){
-											mui.openWindow({
-												url:'my_material_recheckDeliver.html',
-												styles: {
-													hardwareAccelerated:false
-												},
-												extras:{
-													//传递参数
-													ulId:ulId,
-													my_name:my_name,
-													timestamp:timestamp
-												},
-												show:{
-													autoShow:true,//页面loaded事件发生后自动显示
-													aniShow:'slide-in-right',//页面显示动画
-													duration:'100'//页面动画持续时间
-												},
-												waiting:{
-													autoShow:false,//自动显示等待框
-												}
-											})
-										}
-											
-											break;
-										case 2://撤销
-											break;
-									}	
-								  }
-								);
-							}
-							
 						},
 						error:function(xhr,type,errorThrown){
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
-					
 				});
+				////////////////////////////见证（监理单位）//////////////////////////////
 				
-				//长按收样
-				mui("#result").on('longtap','ul',function(){
+				
+				
+				//长按见证
+				mui("#witness").on('longtap','ul',function(){
 					var ulId = this.id;
-					mui.ajax(url+'my_plus/my_material_list.php',{
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
+							my_name:my_name
 						},
+						type:'post',
 						dataType:'json',
-						type:'POST', 
 						timeout:10000,
 						success:function(data){
-							var gcdzt_pd = data.工程单状态;
-					var btnArray = [
-						{title:"结果(合格)"},
-						{title:"不合格"}
-						];
-						plus.nativeUI.actionSheet({
-							title:"操作",
-							cancel:"取消",
-							buttons:btnArray
-						},function(e){
-							var index = e.index;	
-							//var nextpage='';
-							switch (index){
-								case 1://结果
-								if(gcdzt_pd=='收样'){
-									var btnArray = ['是', '否'];
-									mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
-										if (e.index == 0) {
-											//输入检测报告编号
-											mui("#consigncode").popover("toggle");
-											var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
-											but_id.id=ulId;
-										}	
-									});
-								}else if(gcdzt_pd=='收样复检'){
-									var btnArray = ['是', '否'];
-									mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
-										if (e.index == 0) {
-											//输入检测报告编号
-											mui("#reinspection").popover("toggle");
-											var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
-											but_id.id=ulId;
-										}	
-									});
-								}
-								
-								break;
-								case 2://不合格
-								if(gcdzt_pd=='收样'){
-									var btnArray = ['是', '否'];
-									mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
-										if (e.index == 0) {
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"不合格",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});	
-											//不合格推送通知
-											var server=url+"push/fail_push.php";
-											var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-												//推送完成
-												if(status==200){
-			//										alert("发送成功");
-												}else{
-													alert("失败");
-												}
-											});
-											task.addData("title",'江门市建设工程施工质量管理系统');
-											task.addData("notice",'出现新的不合格项目,请注意查收！');
-											task.start();
-											mui.openWindow({
-												url:'my_material_fail.html',
-												styles: {
-													hardwareAccelerated:false
-												},
-												extras:{
-													//传递参数
-													ulId:ulId,
-													timestamp:timestamp
-												},
-												show:{
-													autoShow:true,//页面loaded事件发生后自动显示
-													aniShow:'slide-in-right',//页面显示动画
-													duration:'100'//页面动画持续时间
-												},
-												waiting:{
-													autoShow:false,//自动显示等待框
-												}
-											})
-										} else {
-											
-										}
-									});
-								}else if(gcdzt_pd=='收样复检'){
-									var btnArray = ['是', '否'];
-									mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
-										if (e.index == 0) {
-											mui.ajax(url+'my_plus/my_material_list.php',{
-												data:{
-													flag:"复检不合格",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp,
-													recheckNum:""
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-													if(data.result=='success'){
+							if(data[0]['单位'] == '监理单位'){
+								mui.ajax(url+'my_plus/my_material_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+			
+										if(gcdzt_pd=='未见证'||gcdzt_pd=='未见证复检'){
+											var btnArray = [
+											{title:"确认见证"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://确认见证
+														//执行验证码
+														if(gcdzt_pd=='未见证'){
+															mui("#zuyPopover").popover("toggle");
+															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+															but_id.id=ulId;
+														}else if(gcdzt_pd=='未见证复检'){
+															mui("#recPopover").popover("toggle");
+															var but_id=document.getElementById("recheck").getElementsByTagName('button')[0];
+															but_id.id=ulId;
+														}
+														break;
+													case 2:
+														break;
+												}	
+											  }
+											);
+										}else if(gcdzt_pd=='已见证'||gcdzt_pd=='已见证复检'){
+											var btnArray = [
+											{title:"送样"},
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://实测
+													if(gcdzt_pd=='已见证'){
 														mui.openWindow({
-															url:'my_material_fail.html',
+															url:'my_material_deliver.html',
 															styles: {
 																hardwareAccelerated:false
 															},
 															extras:{
 																//传递参数
 																ulId:ulId,
+																my_name:my_name,
 																timestamp:timestamp,
-																state:'recheck'
+																constr:constr,
+																supvision:supvision,
+																detect:detect
 															},
 															show:{
 																autoShow:true,//页面loaded事件发生后自动显示
@@ -854,28 +706,245 @@
 															waiting:{
 																autoShow:false,//自动显示等待框
 															}
-														});
+														})
+													}else if(gcdzt_pd=='已见证复检'){
+														mui.openWindow({
+															url:'my_material_recheckDeliver.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																my_name:my_name,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														})
 													}
-												},
-												error:function(xhr,type,errorThrown){
-													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});	
-											
-										} 
-									});
-								}
-								break;
-							}	
-						  }
-						);
-						}	
-					});	
+														
+														break;
+													case 2://撤销
+														break;
+												}	
+											  }
+											);
+										}
+									},
+									error:function(xhr,type,errorThrown){
+			//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
+								var btnArray = [
+//									{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						}
+					});
 				});
 				
+				 ////////////////////////////收样（检测单位）//////////////////////////////
 				
-				
-				
+				//长按收样
+				mui("#result").on('longtap','ul',function(){
+					var ulId = this.id;
+					mui.ajax(url+'check.php',{
+						data:{
+							my_name:my_name
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							if(data[0]['单位']== '检测单位'){
+								mui.ajax(url+'my_plus/my_material_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+										var btnArray = [
+											{title:"结果(合格)"},
+											{title:"不合格"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://结果
+													if(gcdzt_pd=='收样'){
+														var btnArray = ['是', '否'];
+														mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
+															if (e.index == 0) {
+																//输入检测报告编号
+																mui("#consigncode").popover("toggle");
+																var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+																but_id.id=ulId;
+															}	
+														});
+													}else if(gcdzt_pd=='收样复检'){
+														var btnArray = ['是', '否'];
+														mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
+															if (e.index == 0) {
+																//输入检测报告编号
+																mui("#reinspection").popover("toggle");
+																var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
+																but_id.id=ulId;
+															}	
+														});
+													}
+													
+													break;
+													case 2://不合格
+													if(gcdzt_pd=='收样'){
+														var btnArray = ['是', '否'];
+														mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+															if (e.index == 0) {
+																mui.ajax(url+'my_plus/my_material_list.php',{
+																	data:{
+																		flag:"不合格",
+																		ulid:ulId,
+																		gcmc:gcmc,
+																		timestamp:timestamp
+																	},
+																	dataType:'json',
+																	type:'POST', 
+																	timeout:10000,
+																	success:function(data){
+																	},
+																	error:function(xhr,type,errorThrown){
+							//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																	}
+																});	
+																//不合格推送通知
+																var server=url+"push/fail_push.php";
+																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+																	//推送完成
+																	if(status==200){
+								//										alert("发送成功");
+																	}else{
+																		alert("失败");
+																	}
+																});
+																task.addData("title",'江门市建设工程施工质量管理系统');
+																task.addData("notice",'出现新的不合格项目,请注意查收！');
+																task.start();
+																mui.openWindow({
+																	url:'my_material_fail.html',
+																	styles: {
+																		hardwareAccelerated:false
+																	},
+																	extras:{
+																		//传递参数
+																		ulId:ulId,
+																		timestamp:timestamp
+																	},
+																	show:{
+																		autoShow:true,//页面loaded事件发生后自动显示
+																		aniShow:'slide-in-right',//页面显示动画
+																		duration:'100'//页面动画持续时间
+																	},
+																	waiting:{
+																		autoShow:false,//自动显示等待框
+																	}
+																})
+															} else {
+																
+															}
+														});
+													}else if(gcdzt_pd=='收样复检'){
+														var btnArray = ['是', '否'];
+														mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+															if (e.index == 0) {
+																mui.ajax(url+'my_plus/my_material_list.php',{
+																	data:{
+																		flag:"复检不合格",
+																		ulid:ulId,
+																		gcmc:gcmc,
+																		timestamp:timestamp,
+																		recheckNum:""
+																	},
+																	dataType:'json',
+																	type:'POST', 
+																	timeout:10000,
+																	success:function(data){
+																		if(data.result=='success'){
+																			mui.openWindow({
+																				url:'my_material_fail.html',
+																				styles: {
+																					hardwareAccelerated:false
+																				},
+																				extras:{
+																					//传递参数
+																					ulId:ulId,
+																					timestamp:timestamp,
+																					state:'recheck'
+																				},
+																				show:{
+																					autoShow:true,//页面loaded事件发生后自动显示
+																					aniShow:'slide-in-right',//页面显示动画
+																					duration:'100'//页面动画持续时间
+																				},
+																				waiting:{
+																					autoShow:false,//自动显示等待框
+																				}
+																			});
+																		}
+																	},
+																	error:function(xhr,type,errorThrown){
+																		alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																	}
+																});	
+																
+															} 
+														});
+													}
+													break;
+												}	
+											  }
+											);
+											}	
+										});	
+							}else{
+								var btnArray = [
+//									{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						}
+					});
+				});
 			});
 			
 			//验证码监听
@@ -1048,7 +1117,6 @@
 					}
 				});	
 			}
-			
 		</script>
 	</body>
 
