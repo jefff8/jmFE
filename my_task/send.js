@@ -318,6 +318,147 @@
 						}	
 					  }
 					);
+				}else if(status=='收样'||status=='收样复检'){
+					var btnArray = [
+						{title:"结果(合格)"},
+						{title:"不合格"}
+					];
+					plus.nativeUI.actionSheet({
+						title:"操作",
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						//var nextpage='';
+						switch (index){
+							case 1://结果
+							if(status=='收样'){
+								var btnArray = ['是', '否'];
+								mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										//输入检测报告编号
+										mui("#consigncode").popover("toggle");
+										var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+										but_id.id=ulId;
+									}	
+								});
+							}else if(status=='收样复检'){
+								var btnArray = ['是', '否'];
+								mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										//输入检测报告编号
+										mui("#reinspection").popover("toggle");
+										var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
+										but_id.id=ulId;
+									}	
+								});
+							}
+							
+							break;
+							case 2://不合格
+							if(gcdzt_pd=='收样'){
+								var btnArray = ['是', '否'];
+								mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										mui.ajax(url+'my_task/my_send.php',{
+											data:{
+												flag:"不合格",
+												ulId:ulId
+											},
+											dataType:'json',
+											type:'POST', 
+											timeout:10000,
+											success:function(data){
+											},
+											error:function(xhr,type,errorThrown){
+	//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+											}
+										});	
+										//不合格推送通知
+										var server=url+"push/fail_push.php";
+										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+											//推送完成
+											if(status==200){
+		//										alert("发送成功");
+											}else{
+												alert("失败");
+											}
+										});
+										task.addData("title",'江门市建设工程施工质量管理系统');
+										task.addData("notice",'出现新的不合格项目,请注意查收！');
+										task.start();
+										mui.openWindow({
+											url:'../my_material/my_material_fail.html',
+											styles: {
+												hardwareAccelerated:false
+											},
+											extras:{
+												//传递参数
+												ulId:ulId,
+												timestamp:timestamp
+											},
+											show:{
+												autoShow:true,//页面loaded事件发生后自动显示
+												aniShow:'slide-in-right',//页面显示动画
+												duration:'100'//页面动画持续时间
+											},
+											waiting:{
+												autoShow:false,//自动显示等待框
+											}
+										})
+									} else {
+										
+									}
+								});
+							}else if(gcdzt_pd=='收样复检'){
+								var btnArray = ['是', '否'];
+								mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										mui.ajax(url+'my_task/my_send.php',{
+											data:{
+												flag:"复检不合格",
+												ulId:ulId,
+												recheckNum:""
+											},
+											dataType:'json',
+											type:'POST', 
+											timeout:10000,
+											success:function(data){
+												if(data.result=='success'){
+													mui.openWindow({
+														url:'../my_material/my_material_fail.html',
+														styles: {
+															hardwareAccelerated:false
+														},
+														extras:{
+															//传递参数
+															ulId:ulId,
+															timestamp:timestamp,
+															state:'recheck'
+														},
+														show:{
+															autoShow:true,//页面loaded事件发生后自动显示
+															aniShow:'slide-in-right',//页面显示动画
+															duration:'100'//页面动画持续时间
+														},
+														waiting:{
+															autoShow:false,//自动显示等待框
+														}
+													});
+												}
+											},
+											error:function(xhr,type,errorThrown){
+												alert('ajax错误'+type+'---'+errorThrown+"失败！");
+											}
+										});	
+										
+									} 
+								});
+							}
+							break;
+						}	
+					  }
+					);
 				}
 			},
 			error:function(xhr,type,errorThrown){
@@ -438,4 +579,50 @@
 		}else{
 			mui.toast('验证码不正确',{ duration:'long', type:'div' }) 
 		}
+	}
+	//检测报告编号
+	function inpcode(obj){
+		var ulId = obj.id;
+		var testNum = document.getElementById('testNum').value;
+//				alert(code);
+		mui.ajax(url+'my_task/my_send.php',{
+			data:{
+				flag:"合格",
+				ulId:ulId,
+				testNum:testNum
+			},
+			dataType:'json',
+			type:'POST', 
+			timeout:10000,
+			success:function(data){
+				mui.toast(data.结果,{ duration:'long', type:'div' })
+				location.reload();//刷新本页面
+			},
+			error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+			}
+		});	
+	}
+	
+	//复检检测报告编号
+	function recheck(obj){
+		var ulId = obj.id;
+		var recheckNum = document.getElementById('recheckNum').value;
+//				alert(code);
+		mui.ajax(url+'my_task/my_send.php',{
+			data:{
+				flag:"复检合格",
+				ulId:ulId
+			},
+			dataType:'json',
+			type:'POST', 
+			timeout:10000,
+			success:function(data){
+				mui.toast(data.结果,{ duration:'long', type:'div' })
+				location.reload();//刷新本页面
+			},
+			error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+			}
+		});	
 	}

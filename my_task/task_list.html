@@ -11,6 +11,20 @@
 		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
 		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
 		<style>
+			#reinspection{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			#consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
 			#zuyPopover{
 				min-width: 300px;
 				height:150px;				
@@ -141,6 +155,37 @@
 				    </div>
 				</form>
 				<!--验证码-->
+				<!--检测报告编号-->
+				<div id="consigncode" class="mui-popover">
+		    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+		    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+		    			<div class="mui-input-row">
+		    				<label>检测报告编号:</label>
+		    				<input id="testNum" type="number" class="mui-input-clear" placeholder="输入检测报告编号">
+		    			</div>    			
+		    		</form>
+					<div id="code_act"  class="mui-button-row my_margintop10px">
+						<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode(this)">确认</button>
+					</div>
+				</div>
+				<!--复检编号-->
+				<div id="reinspection" class="mui-popover">
+		    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+		    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+		    			<div class="mui-input-row">
+		    				<label>检测报告编号:</label>
+		    				<input id="recheckNum" type="number" class="mui-input-clear" placeholder="输入检测报告编号">
+		    			</div>    			
+		    		</form>
+					<div id="code_act1"  class="mui-button-row my_margintop10px">
+						<button id=""  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确认</button>
+					</div>
+				</div>
+				<!--检测报告编号-->
 				<!----------------------材料送检 ------------------------->
 				<!----------------------材料自检 ------------------------->
 				<div id="item2" class="mui-control-content  mui-active">

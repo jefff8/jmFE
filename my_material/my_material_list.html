@@ -218,7 +218,7 @@
 				<div id="code_act1"  class="mui-button-row my_margintop10px">
 					<button id=""  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确认</button>
+					<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheckNum(this)">确认</button>
 				</div>
 			</div>
 			<!---------------------------------收样------------------------------------------->
@@ -1093,13 +1093,13 @@
 			}
 			
 			//复检检测报告编号
-			function recheck(obj){
+			function recheckNum(obj){
 				var ulId = obj.id;
 				var recheckNum = document.getElementById('recheckNum').value;
 //				alert(code);
 				mui.ajax(url+'my_plus/my_material_list.php',{
 					data:{
-						flag:"复检不合格",
+						flag:"复检合格",
 						ulid:ulId,
 						gcmc:gcmc,
 						timestamp:timestamp,
