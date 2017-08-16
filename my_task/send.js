@@ -601,7 +601,7 @@
 	}
 	
 	//复检检测报告编号
-	function recheck(obj){
+	function recheckNum(obj){
 		var ulId = obj.id;
 		var recheckNum = document.getElementById('recheckNum').value;
 //				alert(code);
