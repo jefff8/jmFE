@@ -13,21 +13,21 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
-		    <h1 class="mui-title">确定见证信息</h1>
+		    <h1 class="mui-title">确定自测信息</h1>
 		</header>
 		<div class="mui-content">
 		    <form id="myform" class="mui-input-group">
 		        <div class="mui-input-row">
 		            <label>送样日期:</label>
-		            <input id="songyrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" disabled="disabled">
+		            <input id="zcrq" type="text" class="mui-input-clear" placeholder="请输入送样日期" readonly="readonly" disabled="disabled">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>收样日期:</label>
-		            <input id="shouyrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly">
+		            <input id="syrq"  type="text" class="mui-input-clear" placeholder="请输入收样日期" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>送样单位:</label>
-		            <input id="songydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位">
+		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>见证单位:</label>
@@ -35,15 +35,15 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>收样单位:</label>
-		            <input id="shouydw"  type="text" class="mui-input-clear" placeholder="请输入收样单位">
+		            <input id="sdw"  type="text" class="mui-input-clear" placeholder="请输入收样单位">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>见证人:</label>
-		            <input id="jzr"  type="text" class="mui-input-clear" placeholder="请输入见证人">
+		            <input id="jzr"  type="text" class="mui-input-clear" placeholder="请输入见证人" disabled="disabled">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测报告编号:</label>
-		            <input id="jcbgbh"  type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
+		            <input id="jcbh"  type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
 		        </div>
 		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
@@ -51,7 +51,7 @@
 				</div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
-				<button type="button" class="mui-btn mui-btn-primary" onclick="back()">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
 			</div>	
 			
@@ -79,44 +79,48 @@
 		<!--<script src="../js/common.js"></script>
 		<script src="../js/immersed.js" ></script>	-->
 		<script src="../js/service.js"></script>
-		<script src="../js/pic_upload_SelfTest_2.js"></script>
+		<script src="../js/pic_upload_entity_2.js"></script>
 		
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
 				//获取传值
 	      		var self = plus.webview.currentWebview();
-	      		ulId = self.ulId;
-	      		my_name = self.my_name;
+	      		ulid = self.ulId;
 	      		timestamp_self = self.timestamp_self;
-	      		sjc.value = timestamp_self;
+	      		my_name = self.my_name;
 				var doc=document;
-				var songyrq = doc.getElementById('songyrq');
-				var shouyrq = doc.getElementById('shouyrq');
-				var songydw = doc.getElementById('songydw');
+				var zcrq = doc.getElementById('zcrq');
+				var syrq = doc.getElementById('syrq');
+				var sydw = doc.getElementById('sydw');
 				var jzdw = doc.getElementById('jzdw');
-				var shouydw = doc.getElementById('shouydw');
+				var sdw = doc.getElementById('sdw');
 				var jzr = doc.getElementById('jzr');
-				var jcbgbh = doc.getElementById('jcbgbh');
+				var jcbh = doc.getElementById('jcbh');
 				var sjc = doc.getElementById('sjc');
 				jzr.value = my_name;
+				sjc.value = timestamp_self;
+//				sydw.value = constr;
+//				jzdw.value = supvision;
+//				sdw.value = detect;
 				//获取当前日期
 				var myDate=new Date();
-				shouyrq.addEventListener('tap',function(){
+				zcrq.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				//日期监听
+				zcrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
 					d=e.date;
-                    shouyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                    zcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
-				songyrq.addEventListener('tap',function(){
+				syrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
 					d=e.date;
-                    songyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                    syrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
-				//自动获取日期
-				songyrq.value= myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();//获取当前日期
-				mui.ajax(url+'my_task/self_inspection1.php',{
+				
+				mui.ajax(url+'my_task/self_inspection2.php',{
 					data:{
 						flag:"获取时间戳",
 						ulId:ulId
@@ -131,10 +135,10 @@
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
-				});
+				});	
 				
 				function units(pj_timestamp){
-					mui.ajax(url+'my_task/self_inspection1.php',{
+					mui.ajax(url+'my_task/self_inspection2.php',{
 						data:{
 							flag:"单位名称",
 							ulId:ulId,
@@ -144,34 +148,38 @@
 						dataType:'json',
 						success:function(data){
 //							alert(data);
-							songydw.value = data[0].施工单位;
+							sydw.value = data[0].施工单位;
 							jzdw.value = data[0].监理单位;
-							shouydw.value = data[0].检测单位;					
+							sdw.value = data[0].检测单位;					
 						},
 						error:function(xhr,type,errorThrown){
 							alert('ajax错误'+type+errorThrown);
 						}
 					});
 				}
-				
+		
 				//保存
 				save.addEventListener('tap',function(){
-						mui.ajax(url+'my_plus/my_inspection_deliver.php',{
+					if(sydw.value.length != 0){
+						mui.ajax(url+'my_plus/my_inspection_entitydeliver.php',{
 							data:{
 								flag:"保存信息",
 								id:ulid,
-								songyrq:songyrq.value,
-								shouyrq:shouyrq.value,
-								songydw:songydw.value,
-								jzdw:jzdw.value,
-								shouydw:shouydw.value,
-								jzr:jzr.value,
-								jcbgbh:jcbgbh.value,
+								timestamp_self:timestamp_self,
+								selfchek_zcrq:zcrq.value,
+								selfchek_syrq:syrq.value,
+								selfchek_sydw:sydw.value,
+								selfchek_jzdw:jzdw.value,
+								selfchek_sdw:sdw.value,
+								selfchek_jzr:jzr.value,
+								selfchek_jcbh:jcbh.value,
+
 							},
 							type:'post',
 							dataType:'json',
 							timeout:10000,
 							success:function(data){
+//								alert(data);
 								var btnArray = ['是', '否'];
 								mui.confirm(data.result+'是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
 									if (e.index == 0) {
@@ -193,6 +201,10 @@
 								alert("ajax error!");
 							}
 						});
+					}else{
+						alert("请检测信息是否完整");
+					}
+					
 				});	
 			});
 				

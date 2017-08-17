@@ -43,7 +43,16 @@
 			ul.style.borderColor = "red";	
 		}
 		var send = document.getElementById("send");
-		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="../my_material/my_material_samDet.html?sjc='+sjc+'&gcid='+id+'&gcmc='+pj_name+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+scale+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+getGuy+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+getDate+'</p></li>';
+		if(state=='新增'||state=='取样'||state=='取样复检'||state=='未见证复检'||state=='已见证'||state=='已见证复检'){
+			var my_href = "../my_material/my_material_samDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+		}else if(state=='新增复检'){
+			var my_href = "../my_material/my_material_samDetEdit.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+		}else if(state=='收样'){
+			var my_href = "../my_material/my_material_rcvdDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+		}else if(state=='收样复检'){
+			var my_href = "../my_material/my_material_recheckDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+		}
+		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+my_href+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+scale+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+getGuy+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+getDate+'</p></li>';
 		send.appendChild(ul);
 	}
 	//材料送检操作
@@ -516,12 +525,13 @@
 	}
 	//验证验证码
 	function qdjz(jzid){
+		var code1 = document.getElementById("code1");
 		var jzid = jzid.id;
 		if(yzm.value==""){
 			mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==""){
+		}else if(code1.value==""){
 			mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==yzm.value){
+		}else if(code1.value==yzm.value){
 			//确定见证
 			mui.ajax(url+'my_task/my_send.php',{
 				data:{

@@ -382,7 +382,7 @@
 					var ulId = this.id;//获取当前的卡项的id
 					mui.ajax(url+'check.php',{
 						data:{
-							my_name:my_name
+							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
@@ -622,7 +622,7 @@
 					var ulId = this.id;
 					mui.ajax(url+'check.php',{
 						data:{
-							my_name:my_name
+							mobile:mobile
 						},
 						type:'post',
 						dataType:'json',
@@ -765,7 +765,7 @@
 					var ulId = this.id;
 					mui.ajax(url+'check.php',{
 						data:{
-							my_name:my_name
+							mobile:mobile
 						},
 						dataType:'json',
 						type:'POST', 
@@ -920,8 +920,7 @@
 																		alert('ajax错误'+type+'---'+errorThrown+"失败！");
 																	}
 																});	
-																
-															} 
+															}
 														});
 													}
 													break;
@@ -942,6 +941,9 @@
 								},function(e){
 								});
 							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown);
 						}
 					});
 				});

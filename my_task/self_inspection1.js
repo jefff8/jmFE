@@ -40,7 +40,7 @@
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 		ul.id = id;
 		var self_inspection1 = document.getElementById("self_inspection1");
-		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="../my_material/my_material_samDet.html?sjc='+sjc+'&gcid='+id+'&gcmc='+pj_name+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">自检自测类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位/数量：'+part+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+inspector+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+testDate+'</p></li>';
+		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="../my_insp_material/my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">自检自测类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位/数量：'+part+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+inspector+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+testDate+'</p></li>';
 		self_inspection1.appendChild(ul);
 	}
 	//材料自检操作
@@ -255,13 +255,13 @@
 	
 	//验证验证码
 	function insp_code1(jzid){
-		alert("222");
+		var code2 = document.getElementById("code2");
 		var jzid = jzid.id;
 		if(yzm.value==""){
 			mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==""){
+		}else if(code2.value==""){
 			mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==yzm.value){
+		}else if(code2.value==yzm.value){
 			mui.ajax(url+'my_plus/my_inspection_material.php',{
 				data:{
 					flag:"获取状态",
@@ -281,7 +281,8 @@
 						extras:{
 							//传递参数
 							ulId:jzid,
-							my_name:my_name
+							my_name:my_name,
+							timestamp_self:timestamp_self
 						},
 						show:{
 							autoShow:true,//页面loaded事件发生后自动显示
