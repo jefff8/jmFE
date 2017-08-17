@@ -397,13 +397,13 @@
 //										task.addData("notice",'出现新的不合格项目,请注意查收！');
 //										task.start();
 										mui.openWindow({
-											url:'../my_material/my_material_fail.html',
+											url:'send_fail.html',
 											styles: {
 												hardwareAccelerated:false
 											},
 											extras:{
 												//传递参数
-												ulId:ulId,
+												ulId:ulId
 											},
 											show:{
 												autoShow:true,//页面loaded事件发生后自动显示
