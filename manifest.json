@@ -2060,10 +2060,14 @@
 					"css/my_project_fhys_xz.css",
 					"my_task/send.js",
 					"my_task/self_inspection1.js",
-					"my_material/my_material_samDet.html"
+					"my_material/my_material_samDet.html",
+					"my_task/self_inspection2.js",
+					"my_insp_material/my_inspection_detail.html"
 				],
 				"refer": [
-					"my_task/deliver.html"
+					"my_task/deliver.html",
+					"my_insp_entity/my_inspection_entitydetail_full.html",
+					"my_task/insp2_fail.html"
 				],
 				"priority": 0
 			},

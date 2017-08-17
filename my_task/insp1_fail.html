@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市建设工程施工质量管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">不合格处理</h1>
+		</header>
+		<div class="mui-content">
+			<form id="myform">
+				<div>
+					<label> 处理情况：</label>
+					<br />
+					<textarea id="content" rows="5" cols="200"></textarea>
+				</div>
+				<div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+				</div>
+			</form>
+			<div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+	      		ulId = self.ulId; 
+				var doc = document;
+				var sjc = doc.getElementById("sjc");
+				var content = doc.getElementById("content");
+				var save = doc.getElementById("save");
+				
+				mui.ajax(url+'my_task/self_inspection1.php',{
+					data:{
+						flag:"获取时间戳",
+						ulId:ulId
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						sjc.value = data.时间戳; //时间戳
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				save.addEventListener('tap',function(){
+					mui.ajax(url+'my_plus/my_inspection_disqualification.php',{
+						data:{
+							self_timestamp:sjc.value,
+							data_sent:content.value
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							var target=plus.webview.getWebviewById('my_task/task_list.html');
+							target.reload(true);
+							mui.back();
+							mui.toast(data.result,{duration:'long',type:'div'});
+						},
+						error:function(){
+							alert("ajax error!");
+						}
+					});
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('my_task/task_list.html');
+				target.reload(true);
+				mui.back();
+			}	
+		</script>
+	</body>
+
+</html>
