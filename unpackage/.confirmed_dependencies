@@ -1302,7 +1302,10 @@
 			"js/immersed.js",
 			"my_material/my_material_list.html",
 			"js/upload_qy.js",
-			"images/iconfont-tianjia.png"
+			"images/iconfont-tianjia.png",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css",
+			"css/my_css.css"
 		],
 		"refer": [
 			"my_material/my_material_list.html",
@@ -1345,7 +1348,12 @@
 	},
 	"my_commission/my_commission_add.html": {
 		"resources": [
-			"js/upload_encomadd.js"
+			"js/upload_encomadd.js",
+			"css/mui.min.css",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png",
+			"css/mui.poppicker.css",
+			"css/my_project_fhys_xz.css"
 		]
 	},
 	"my_commission/my_commisson_list.html": {
@@ -1498,7 +1506,8 @@
 			"js/mui.min.js",
 			"css/my_css.css",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"my_commission/my_entity_readmassage.html"
 		],
 		"refer": [
 			"my_commission/my_commssion_fail.html",
@@ -1551,7 +1560,12 @@
 	},
 	"my_commission/my_commssion_fail.html": {
 		"resources": [
-			"js/upload_encomfail.js"
+			"js/upload_encomfail.js",
+			"css/mui.min.css",
+			"images/iconfont-tianjia.png"
+		],
+		"refer": [
+			"my_commission/camera_image.html"
 		]
 	},
 	"my_commission/my_entity_change.html": {
@@ -1561,7 +1575,8 @@
 	},
 	"my_commission/my_entity_results.html": {
 		"refer": [
-			"my_commission/my_entity_change.html"
+			"my_commission/my_entity_change.html",
+			"my_commission/my_entity_readmassage.html"
 		],
 		"resources": [
 			"js/mui.picker.js",
@@ -1574,7 +1589,8 @@
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
 			"css/mui.picker.min.css",
-			"css/my_project_fhys_xz.css"
+			"css/my_project_fhys_xz.css",
+			"my_commission/my_entity_readmassage.html"
 		]
 	},
 	"my_inspection/my_inspection_results.html": {
@@ -1782,6 +1798,24 @@
 			"css/my_project_fhys_xz.css",
 			"js/service.js",
 			"fonts/mui.ttf"
+		]
+	},
+	"my_commission/my_entity_readmassage.html": {
+		"resources": [
+			"my_commission/my_commission_list.html",
+			"css/mui.min.css",
+			"my_commission/my_entity_results.html",
+			"css/my_css.css",
+			"css/my_project_fhys_xz.css"
+		],
+		"refer": [
+			"my_commission/my_commission_list.html",
+			"my_commission/my_entity_results.html"
+		]
+	},
+	"my_commission/camera_image.html": {
+		"resources": [
+			"js/common.js"
 		]
 	}
 }

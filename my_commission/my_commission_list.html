@@ -125,6 +125,9 @@
 								<a id="a5" class="mui-control-item"  href="#item2">
 									监理见证(监理单位)
 								</a>
+								<a id="a6" class="mui-control-item"  href="#item3">
+									结果(检测单位)
+								</a>
 								<!--<a class=" mui-icon mui-icon-arrowright mui-pull-right" style="bottom: 18px;"></a>-->
 								<!--<a class=" mui-icon mui-icon-arrowleft mui-pull-left" style="bottom: 18px;"></a>-->
 		         		   </div>
@@ -153,9 +156,15 @@
 			</div>
 			<!--------------------------------------监理见证----------------------------->
 			
-			<!--------------------------------------prepare part----------------------------->
-			<div id="item3" class="mui-control-content"></div>
-			<!--------------------------------------prepare part----------------------------->
+			<!--------------------------------------结果----------------------------->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="result" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
+			</div>    
+			<!--------------------------------------结果----------------------------->
 			
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -192,6 +201,7 @@
 				var my_popover = doc.getElementById("my_popover");
 				var draft = doc.getElementById("draft");
 				var witness = doc.getElementById("witness");
+				var result = doc.getElementById("result");
 				
 				var addnew = doc.getElementById('addNew');
 				
@@ -252,9 +262,15 @@
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						witness.appendChild(ul);						
 					}
-//					else{
-//						alert('have a happy dey');
-//					}
+					else if(proatt=="提交结果"){
+						var result = document.getElementById("result");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						result.appendChild(ul);						
+					}
+//					
 				}
 				//异步取值并创建卡项
 				mui.ajax(url+'my_plus/my_commission_list.php',{
@@ -367,8 +383,7 @@
 									var index = e.index;	
 									//var nextpage='';
 									switch (index){
-										case 1:
-											//提交见证
+										case 1://提交见证
 											mui.ajax(url+'my_plus/my_commission_checode.php',{
 												data:{
 													gcdzt:'jzz',
@@ -387,11 +402,6 @@
 													alert('ajax错误'+type+'---'+errorThrown);
 												}
 											});
-											
-											
-											
-											
-											
 											break;
 										case 2://撤销准备
 											mui.ajax(url+'my_plus/my_commission_list.php',{
@@ -465,6 +475,67 @@
 								);
 							}else if(gcdzt_pd=='已确认'){
 								var btnArray = [
+								{title:"提交结果"},
+								];
+								plus.nativeUI.actionSheet({
+									title:"操作",
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									switch (index){
+										case 1://提交结果
+											mui.ajax(url+'my_plus/my_commission_list.php',{
+												data:{
+													flag:"提交结果",
+													ulid:ulId,
+													gcmc:gcmc,
+													timestamp:timestamp
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+//													alert("ajax success!");
+//													alert(data.结果);
+													mui.toast(data.结果,{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+										case 2://
+											break;
+									}	
+								  }
+								);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				});
+				////////////////////////////监理见证//////////////////////////////
+				////////////////////////////结果//////////////////////////////
+				mui("#result").on('longtap','ul',function(){
+					var ulId = this.id;
+					mui.ajax(url+'my_plus/my_commission_list.php',{
+						data:{
+							flag:"获取状态",
+							ulid:ulId,
+							gcmc:gcmc,
+							timestamp:timestamp
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							var gcdzt_pd = data.工程单状态;
+							if(gcdzt_pd=='提交结果'){
+								var btnArray = [
 								{title:"合格"},
 								{title:"不合格"}
 								];
@@ -529,8 +600,17 @@
 					});
 					
 				});
-				////////////////////////////监理见证//////////////////////////////
+			
+			
+			
+				////////////////////////////结果//////////////////////////////
+				
+				
+				
+				
 			});
+			
+			
 			//委托编号
 			function inpcode(obj){
 				var ulId = obj.id;

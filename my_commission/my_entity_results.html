@@ -100,17 +100,17 @@
 				var witness = doc.getElementById("witness");
 				
 				//creat active massagebox
-				function mymaterial(proatt,id,ttype,norm,num,procj,qpeo,qdata,owtsp){
+				function mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp){
 					proatt_c = encodeURI(encodeURI(proatt));
 					ttype_c = encodeURI(encodeURI(ttype));
-					tepe_c = encodeURI(encodeURI(qpeo));
+					tepe_c = encodeURI(encodeURI(jcr));
 					
 					if(proatt=="不合格"){
 						var draft = document.getElementById("draft");
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+norm+'/'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+procj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qpeo +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qdata +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						draft.appendChild(ul);
 					}
 					else if(proatt=="已处理"){
@@ -118,7 +118,7 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+norm+'/'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+procj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qpeo +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qdata +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						draft.appendChild(ul);						
 					}
 					else if(proatt=="合格"){
@@ -126,7 +126,7 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+norm+'/'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+procj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qpeo +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qdata +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_entity_readmassage.html?owtsp='+owtsp+'&gcid='+id+'&gcmc='+gcmc_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						witness.appendChild(ul);
 					}
 //					else{
@@ -152,12 +152,11 @@
 								var owtsp = data[i].时间戳;
 								var proatt = data[i].工程单状态;
 								var ttype = data[i].检测类型;
-								var norm=data[i].规格;
 								var num=data[i].数量;
-								var procj=data[i].生产厂家;
-								var qpeo=data[i].取样人;	
-								var qdata=data[i].取样日期;
-								mymaterial(proatt,id,ttype,norm,num,procj,qpeo,qdata,owtsp);
+								var jcbw = data[i].检测部位;
+								var jcr=data[i].检测人;
+								var jcrq=data[i].检测日期;
+								mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp);
 							}
 						}else{
 							alert("暂无数据");
