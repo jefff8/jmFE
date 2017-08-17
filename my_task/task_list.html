@@ -40,6 +40,20 @@
 				/*position:relative;*/
 				left:8%;
 			}
+			#inspect1_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#inspect2_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
 		</style>
 	</head>
 
@@ -99,7 +113,7 @@
 	        		<form class="mui-input-group" style="margin-top: 15px;">
 	        			<div class="mui-input-row">
 	        				<label>验证码:</label>
-	        				<input id="code" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+	        				<input id="code1" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
 	        			</div>    			
 	        		</form>
 					<div id="comfirm"  class="mui-button-row my_margintop10px">
@@ -182,11 +196,12 @@
 					<div id="code_act1"  class="mui-button-row my_margintop10px">
 						<button id=""  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确认</button>
+						<button id="" type="button" class="mui-btn mui-btn-primary" onclick="recheckNum(this)">确认</button>
 					</div>
 				</div>
 				<!--检测报告编号-->
 				<!----------------------材料送检 ------------------------->
+				
 				<!----------------------材料自检 ------------------------->
 				<div id="item2" class="mui-control-content  mui-active">
 				    <div id="scroll" class="mui-scroll-wrapper">
@@ -195,19 +210,82 @@
 						</div>
 				    </div>
 				</div>
+				<!--验证码-->
+				<div id="inspect1_code" class="mui-popover">
+	        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	        		<form class="mui-input-group" style="margin-top: 15px;">
+	        			<div class="mui-input-row">
+	        				<label>验证码:</label>
+	        				<input id="code2" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+	        			</div>    			
+	        		</form>
+					<div id="insConfirm1"  class="mui-button-row my_margintop10px">
+						<button   type="button" class="mui-btn mui-btn-primary" onclick="insp_code1(this)">确定</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+					</div>
+				</div>
 				<!----------------------材料自检 ------------------------->
+				
+				<!----------------------实体自检 ------------------------->
+				<div id="item3" class="mui-control-content  mui-active">
+				    <div id="scroll" class="mui-scroll-wrapper">
+				    	<div id="self_inspection2" class="mui-scroll rwdiv">
+	
+						</div>
+				    </div>
+				</div>
+				<!--验证码-->
+				<div id="inspect2_code" class="mui-popover">
+	        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	        		<form class="mui-input-group" style="margin-top: 15px;">
+	        			<div class="mui-input-row">
+	        				<label>验证码:</label>
+	        				<input id="code3" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+	        			</div>    			
+	        		</form>
+					<div id="insConfirm2"  class="mui-button-row my_margintop10px">
+						<button   type="button" class="mui-btn mui-btn-primary" onclick="insp_code2(this)">确定</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+					</div>
+				</div>
+				<!----------------------实体自检 ------------------------->
+				
+				<!----------------------实体检测 ------------------------->
+				<div id="item4" class="mui-control-content  mui-active">
+				    <div id="scroll" class="mui-scroll-wrapper">
+				    	<div id="commission" class="mui-scroll rwdiv">
+	
+						</div>
+				    </div>
+				</div>
+				<!----------------------实体检测 ------------------------->
 		   </div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
 		<script src="send.js"></script><!--材料送检-->
 		<script src="self_inspection1.js"></script><!--材料自检-->
+		<script src="self_inspection2.js"></script><!--实体自检-->
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
 				}
 			});
+			function plusReady(){
+				// 弹出系统等待对话框
+				plus.nativeUI.showWaiting( "正在拼命加载中..." );
+				setTimeout( function(){
+					plus.nativeUI.closeWaiting();
+				}, 4000 );
+			}
+			if(window.plus){
+				plusReady();
+			}else{
+				document.addEventListener("plusready",plusReady,false);
+			}
 			//区域滚动,需手动初始化scroll控件
 			mui('.mui-scroll-wrapper').scroll({
 				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
@@ -234,6 +312,7 @@
 							var pj_timestamp = data[i].时间戳;
 							taskList1(pj_timestamp);//材料送检
 							taskList2(pj_timestamp);//材料自检
+							taskList3(pj_timestamp);//实体自检
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -241,6 +320,7 @@
 					}
 				});
 			});
+			
 		</script>
 	</body>
 

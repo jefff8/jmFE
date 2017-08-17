@@ -239,269 +239,343 @@
 				
 				//悬浮按钮添加
 				addNew.addEventListener('tap',function(){
-					mui.openWindow({
-						url:"my_inspection_new.html",
-						extras:{
-							//传递参数
-							project_name:gcmc,
-							timestamp:timestamp,
-							my_name:my_name
+					mui.ajax(url+'check.php',{
+						data:{
+							mobile:mobile
 						},
-						show: {
-							aniShow:"pop-in"
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data[0]['单位']=='施工单位'){
+								mui.openWindow({
+									url:"my_inspection_new.html",
+									extras:{
+										//传递参数
+										project_name:gcmc,
+										timestamp:timestamp,
+										my_name:my_name
+									},
+									show: {
+										aniShow:"pop-in"
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+							}else{
+								alert('抱歉，您没有新建卡项的权限')
+							}
 						},
-						waiting: {
-							autoShow: false
+						error:function(xhr,type,errorThrown){
+						//alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
 				////////////////////////////实体检测（施工单位）//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
-					mui.ajax(url+'my_plus/my_inspection_entity.php',{
+					
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
+							mobile:mobile
 						},
 						dataType:'json',
-						type:'POST', 
+						type:'post',
 						timeout:10000,
 						success:function(data){
-							var zjzt_pd = data.工程单状态;
-							var timestamp_self = data.时间戳;
-							//判断状态并根据状态执行改变状态的任务
-							if(zjzt_pd=='新增'){
+							if(data[0]['单位']=='施工单位'){
+								//取样&&提交操作
+								mui.ajax(url+'my_plus/my_inspection_entity.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var zjzt_pd = data.工程单状态;
+										var timestamp_self = data.时间戳;
+										//判断状态并根据状态执行改变状态的任务
+										if(zjzt_pd=='新增'){
+											var btnArray = [
+											{title:"取样"},
+											{title:"删除"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1:
+													mui.ajax(url+'my_plus/my_inspection_entity.php',{
+														data:{
+															flag:"准备材料",
+															ulid:ulId,
+															gcmc:gcmc,
+															timestamp:timestamp
+														},
+														dataType:'json',
+														type:'POST',
+														timeout:10000,
+														success:function(data){
+															mui.toast(data.结果,{ duration:'long',type:'div'})
+															location.reload();
+														},
+														error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
+														break;
+													case 2://删除
+														mui.ajax(url+'my_plus/my_inspection_entity.php',{
+															data:{
+																flag:"删除",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+														break;
+												}	
+											 });
+										}else if(zjzt_pd=='准备材料'){
+											var btnArray=[
+											{title:"提交见证"},
+											{title:"撤销取样"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;
+												switch(index){
+														case 1:
+														mui.ajax(url+'my_plus/my_inspection_entity_longtap.php',{
+															data:{
+																zjzt:'qdjc',
+																gcdId:ulId
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+																mui.toast("提交成功!",{duration:'long',type:'div'});
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+																alert('ajax错误'+type+'---'+errorThrown);
+															}
+														});
+														break;
+													case 2:
+													mui.ajax(url+'my_plus/my_inspection_entity.php',{
+														data:{
+															flag:"撤销准备",
+															ulid:ulId,
+															gcmc:gcmc,
+															timestamp:timestamp
+														},
+														dataType:'json',
+														type:'POST',
+														timeout:10000,
+														success:function(data){
+															mui.toast(data.结果,{ duration:'long',type:'div'})
+															location.reload();
+														},
+														error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
+														break;
+												}
+											  }
+											);
+										}
+									},
+									error:function(){
+										mui.toast("获取工程单状态失败+ajax error!",{duration:'long',type:'div'});
+									}
+								});	
+							}else{
 								var btnArray = [
-								{title:"取样"},
-								{title:"删除"}
+						//			{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
 									title:"操作", 
 									cancel:"取消",
 									buttons:btnArray
 								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1:
-										mui.ajax(url+'my_plus/my_inspection_entity.php',{
-											data:{
-												flag:"准备材料",
-												ulid:ulId,
-												gcmc:gcmc,
-												timestamp:timestamp
-											},
-											dataType:'json',
-											type:'POST',
-											timeout:10000,
-											success:function(data){
-												mui.toast(data.结果,{ duration:'long',type:'div'})
-												location.reload();
-											},
-											error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-											}
-										});
-											break;
-										case 2://删除
-											mui.ajax(url+'my_plus/my_inspection_entity.php',{
-												data:{
-													flag:"删除",
-													ulid:ulId,
-													gcmc:gcmc,
-													timestamp:timestamp
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data.结果);
-													mui.toast(data.结果,{ duration:'long', type:'div' })
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});
-											break;
-									}	
-								 });
-							}else if(zjzt_pd=='准备材料'){
-								var btnArray=[
-								{title:"提交见证"},
-								{title:"撤销取样"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;
-									switch(index){
-											case 1:
-											mui.ajax(url+'my_plus/my_inspection_entity_longtap.php',{
-												data:{
-													zjzt:'qdjc',
-													gcdId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-													mui.toast("提交成功!",{duration:'long',type:'div'});
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-													alert('ajax错误'+type+'---'+errorThrown);
-												}
-											});
-											break;
-										case 2:
-										mui.ajax(url+'my_plus/my_inspection_entity.php',{
-											data:{
-												flag:"撤销准备",
-												ulid:ulId,
-												gcmc:gcmc,
-												timestamp:timestamp
-											},
-											dataType:'json',
-											type:'POST',
-											timeout:10000,
-											success:function(data){
-												mui.toast(data.结果,{ duration:'long',type:'div'})
-												location.reload();
-											},
-											error:function(xhr,type,errorThrown){
-		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-											}
-										});
-											break;
-									}
-								  }
-								);
+								});
 							}
 						},
-						error:function(){
-							mui.toast("获取工程单状态失败+ajax error!",{duration:'long',type:'div'});
+						error:function(xhr,type,errorThrown){
+						//alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
-					});	
+					});
+					
+							
 				})
 				////////////////////////////监理见证（监理单位）//////////////////////////////
 				
 				//长按见证
 				mui("#witness").on('longtap','ul',function(){
 					var ulId = this.id;
-					mui.ajax(url+'my_plus/my_inspection_entity.php',{
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
+							mobile:mobile
 						},
 						dataType:'json',
-						type:'POST', 
+						type:'post',
 						timeout:10000,
 						success:function(data){
-							var zjzt_pd = data.工程单状态;
-							var self_timestamp = data.时间戳;
-
-							if(zjzt_pd=='未检测'){
-								var btnArray = [
-								{title:"确定见证"},
-//								{title:"不合格"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://确认见证
-											//执行验证码
-											mui("#zuyPopover").popover("toggle");
-											var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
-											but_id.id=ulId;
+							if(data[0]['单位']=='监理单位'){
+								//监理单位见证&&合格不合格操作
+								mui.ajax(url+'my_plus/my_inspection_entity.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var zjzt_pd = data.工程单状态;
+										var self_timestamp = data.时间戳;
+			
+										if(zjzt_pd=='未检测'){
+											var btnArray = [
+											{title:"确定见证"},
+			//								{title:"不合格"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://确认见证
+														//执行验证码
+														mui("#zuyPopover").popover("toggle");
+														var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+														but_id.id=ulId;
+														break;
+												}	
+											  }
+											);
+										}else if(zjzt_pd=='确定检测'){
+											var btnArray = [
+											{title:"合格"},
+											{title:"不合格"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index =e.index;
+												switch(index){
+													case 1://合格
+													var btnArray =['是', '否'];
+													mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) 								{
+												if (e.index == 0) {
+													mui.ajax(url+'my_plus/my_inspection_entity.php',{
+														data:{
+															flag:"合格",
+															ulid:ulId,
+															gcmc:gcmc,
+															timestamp:timestamp
+														},
+														dataType:'json',
+														type:'POST', 
+														timeout:10000,
+														success:function(data){
+															mui.toast(data.结果,{ duration:'long', type:'div' })
+															location.reload();//刷新本页面
+														},
+														error:function(xhr,type,errorThrown){
+				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});	
+												}	
+											});
 											break;
-									}	
-								  }
-								);
-							}else if(zjzt_pd=='确定检测'){
-								var btnArray = [
-								{title:"合格"},
-								{title:"不合格"}
-								];
-								plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index =e.index;
-									switch(index){
-										case 1://合格
-										var btnArray =['是', '否'];
-										mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) 								{
-									if (e.index == 0) {
-										mui.ajax(url+'my_plus/my_inspection_entity.php',{
-											data:{
-												flag:"合格",
-												ulid:ulId,
-												gcmc:gcmc,
-												timestamp:timestamp
-											},
-											dataType:'json',
-											type:'POST', 
-											timeout:10000,
-											success:function(data){
-												mui.toast(data.结果,{ duration:'long', type:'div' })
-												location.reload();//刷新本页面
-											},
-											error:function(xhr,type,errorThrown){
-	//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-											}
-										});	
-									}	
-								});
-								break;
-								case 2:
-										var btnArray =['是', '否'];
-										mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) 										{
-											if (e.index == 0) {
-												mui.openWindow({
-													url:'my_inspection_entityhandleinformation.html',
-													styles: {
-														hardwareAccelerated:false
-													},
-													extras:{
-														//传递参数
-														ulId:ulId,
-														my_name:my_name,
-														self_timestamp:self_timestamp
-													},
-													show:{
-														autoShow:true,//页面loaded事件发生后自动显示
-														aniShow:'slide-in-right',//页面显示动画
-														duration:'100'//页面动画持续时间
-													},
-													waiting:{
-														autoShow:false,//自动显示等待框
-													}
-												});
-											}
-										});
+											case 2:
+													var btnArray =['是', '否'];
+													mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) 										{
+														if (e.index == 0) {
+															mui.openWindow({
+																url:'my_inspection_entityhandleinformation.html',
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId,
+																	my_name:my_name,
+																	self_timestamp:self_timestamp
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+														}
+													});
+													
+														break;
+												}
+											  }
+											);
+										}
 										
-											break;
+									},
+									error:function(){
+										mui.toast("获取工程单状态失败+ajax error!",{duration:'long',type:'div'});
 									}
-								  }
-								);
+								});
+							}else{
+								var btnArray = [
+						//			{title:data[0]['单位']}
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
 							}
-							
 						},
-						error:function(){
-							mui.toast("获取工程单状态失败+ajax error!",{duration:'long',type:'div'});
+						error:function(xhr,type,errorThrown){
+						//alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});	
