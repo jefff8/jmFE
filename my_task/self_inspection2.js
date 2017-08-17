@@ -202,10 +202,10 @@
 							var btnArray =['是', '否'];
 							mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) 								{
 						if (e.index == 0) {
-							mui.ajax(url+'',{
+							mui.ajax(url+'my_task/self_inspection2.php',{
 								data:{
 									flag:"合格",
-									ulid:ulId
+									ulId:ulId
 								},
 								dataType:'json',
 								type:'POST', 
@@ -215,7 +215,7 @@
 									location.reload();//刷新本页面
 								},
 								error:function(xhr,type,errorThrown){
-//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+											alert('ajax错误'+type+'---'+errorThrown+"失败！");
 								}
 							});	
 						}	

@@ -2066,7 +2066,8 @@
 				],
 				"refer": [
 					"my_task/deliver.html",
-					"my_insp_entity/my_inspection_entitydetail_full.html"
+					"my_insp_entity/my_inspection_entitydetail_full.html",
+					"my_task/insp2_fail.html"
 				],
 				"priority": 0
 			},

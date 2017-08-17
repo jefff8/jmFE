@@ -1773,7 +1773,8 @@
 			"my_material/my_material_samDet.html",
 			"my_task/deliver.html",
 			"my_insp_material/my_inspection_detail.html",
-			"my_insp_entity/my_inspection_entitydetail_full.html"
+			"my_insp_entity/my_inspection_entitydetail_full.html",
+			"my_task/insp2_fail.html"
 		]
 	},
 	"my_task/deliver.html": {
