@@ -1819,12 +1819,19 @@
 		],
 		"refer": [
 			"my_commission/my_commission_list.html",
-			"my_commission/my_entity_results.html"
+			"my_commission/my_entity_results.html",
+			"my_commission/my_entity_readimage.html"
 		]
 	},
 	"my_commission/camera_image.html": {
 		"resources": [
 			"js/common.js"
+		]
+	},
+	"my_commission/my_entity_readimage.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
 		]
 	}
 }
