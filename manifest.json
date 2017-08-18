@@ -1624,7 +1624,10 @@
 			},
 			"my_commission/my_commission_add.html": {
 				"resources": [
-					"js/upload_encomadd.js"
+					"js/upload_encomadd.js",
+					"css/mui.min.css",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1787,12 +1790,12 @@
 					"js/mui.min.js",
 					"css/my_css.css",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"my_commission/my_entity_readmassage.html"
 				],
 				"refer": [
 					"my_commission/my_commssion_fail.html",
-					"my_commission/my_commission_add.html",
-					"my_commission/my_entity_readmassage.html"
+					"my_commission/my_commission_add.html"
 				],
 				"priority": 0
 			},
@@ -1842,7 +1845,13 @@
 			},
 			"my_commission/my_commssion_fail.html": {
 				"resources": [
-					"js/upload_encomfail.js"
+					"js/upload_encomfail.js",
+					"css/mui.min.css",
+					"images/iconfont-tianjia.png",
+					"css/my_project_fhys_xz.css",
+					"css/my_css.css",
+					"js/service.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -2081,6 +2090,14 @@
 					"css/my_project_fhys_xz.css",
 					"js/service.js",
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_commission/my_entity_readmassage.html": {
+				"resources": [
+					"css/mui.min.css",
+					"my_commission/my_commission_list.html"
 				],
 				"refer": [],
 				"priority": 0

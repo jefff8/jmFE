@@ -22,6 +22,10 @@
 		            <label>结果报告:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入结果报告" id="test_result">
 		        </div>
+		        <div class="mui-input-row">
+		        <label>检测报告编号:</label>
+		        <input id="testNum" type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
+		    </div>
 		    </form>
 			
 			<!--处理图片-->
@@ -32,6 +36,12 @@
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+	        	<div  class="mui-input-row">
+		            <label>报告照片说明:</label>
+		            <input id="report" type="text" class="mui-input-clear" placeholder="请输入报告照片说明">
+	        	</div>
+	        </div>
 		        <div class="mui-button-row">
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
@@ -74,6 +84,8 @@
 				
 				var doc = document;
 				var tresult = document.getElementById('test_result').value;
+				var testNum = document.getElementById('testNum').value;
+				var report = document.getElementById('report').value;
 				
 //				alert(ulid);
 

@@ -1562,7 +1562,11 @@
 		"resources": [
 			"js/upload_encomfail.js",
 			"css/mui.min.css",
-			"images/iconfont-tianjia.png"
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css",
+			"css/my_css.css",
+			"js/service.js",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"my_commission/camera_image.html"

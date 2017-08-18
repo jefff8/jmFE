@@ -221,7 +221,9 @@ function upload(lx,clean){
 	nub=files.length.toString();
 	task.addData("nub",nub);
 	task.addData("mchen",mchen());
-	task.addData("tresult",getreport());
+	task.addData("tresult",gettresult());
+	task.addData("testNum",gettestNum());
+	task.addData("report",getreport());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
 		task.addFile(f.path,{key:f.name});
@@ -252,8 +254,18 @@ function getName(){
 	return gcmc;
 }
 //获取不合格报告
-function getreport(){
+function gettresult(){
 	var tresult = document.getElementById('test_result').value;
 	return tresult;
+}
+//获取检测报告编号
+function gettestNum(){
+	var testNum = document.getElementById('testNum').value;
+	return testNum;
+}
+//获取报告照片说明
+function getreport(){
+	var report = document.getElementById('report').value;
+	return report;
 }
 ////////////上传文件/////////////////////////////////////////////
