@@ -54,6 +54,27 @@
 				/*position:relative;*/
 				left:8%;
 			}
+			#commissionNum{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#commission_code{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
+			#commissionNum2{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:8%;
+			}
 		</style>
 	</head>
 
@@ -260,6 +281,52 @@
 						</div>
 				    </div>
 				</div>
+				<!--委托编号-->
+				<div id="commissionNum" class="mui-popover">
+		    		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+		    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+		    			<div class="mui-input-row">
+		    				<label>委托编号:</label>
+		    				<input id="code_input" type="number" class="mui-input-clear" placeholder="输入委托编号">
+		    			</div>    			
+		    		</form>
+					<div id="code_act2"  class="mui-button-row my_margintop10px">
+						<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="comcode(this)">确认</button>
+					</div>
+				</div>
+				<!--委托编号-->
+				<!--验证码-->
+				<div id="commission_code" class="mui-popover">
+	        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+	        		<form class="mui-input-group" style="margin-top: 15px;">
+	        			<div class="mui-input-row">
+	        				<label>验证码:</label>
+	        				<input id="code4" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+	        			</div>    			
+	        		</form>
+					<div id="comConfirm"  class="mui-button-row my_margintop10px">
+						<button   type="button" class="mui-btn mui-btn-primary" onclick="comyzm(this)">确定</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+					</div>
+				</div>
+				<!--检测报告编号-->
+				<div id="commissionNum2" class="mui-popover">
+		    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+		    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
+		    			<div class="mui-input-row">
+		    				<label>检测报告编号:</label>
+		    				<input id="comNum" type="number" class="mui-input-clear" placeholder="输入检测报告编号">
+		    			</div>    			
+		    		</form>
+					<div id="frame"  class="mui-button-row my_margintop10px">
+						<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="testcode(this)">确认</button>
+					</div>
+				</div>
 				<!----------------------实体检测 ------------------------->
 		   </div>
 		</div>
@@ -268,6 +335,7 @@
 		<script src="send.js"></script><!--材料送检-->
 		<script src="self_inspection1.js"></script><!--材料自检-->
 		<script src="self_inspection2.js"></script><!--实体自检-->
+		<script src="commission.js"></script><!--实体检测-->
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig:{					
@@ -313,6 +381,7 @@
 							taskList1(pj_timestamp);//材料送检
 							taskList2(pj_timestamp);//材料自检
 							taskList3(pj_timestamp);//实体自检
+							taskList4(pj_timestamp);//实体检测
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -320,6 +389,57 @@
 					}
 				});
 			});
+			
+			//验证码监听
+			var wait = 60;
+			function time(o){
+				 if (wait == 0) {  
+		            o.removeAttribute("disabled");            
+		            o.innerHTML="获取验证码";  
+		            wait = 60;  
+		        }else{
+		        	if(wait == 60){
+		        		//短信发送
+						var sendMsg = document.getElementById("sendMsg");
+						var CorpID = document.getElementById("CorpID");
+						var LoginName = document.getElementById("LoginName");
+						var pwd = document.getElementById("pwd");
+						var serverIP = document.getElementById("serverIP");
+						var mobPhone = document.getElementById("mobPhone");
+						var smsContent = document.getElementById("smsContent");
+						mobPhone.value = mobile;
+						yzm = document.getElementById("yzm");
+						mui.ajax(url+'send_Sms/SendSms.php',{
+							data:{
+								CorpID:CorpID.value,
+								LoginName:LoginName.value,
+								pwd:pwd.value,
+								serverIP:serverIP.value,
+								mobPhone:mobPhone.value,
+								smsContent:smsContent.value
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+								if(data.result=='success'){
+		//									alert(data.smsContent);
+									yzm.value = data.yzm; //获取验证码数字
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown);
+							}
+						});
+		        	}
+		            o.setAttribute("disabled", true);  
+		            o.innerHTML="重新发送(" + wait + ")";  
+		            wait--;  
+		            setTimeout(function() {  
+		                time(o)  
+		            },1000)  
+		        }  
+			}
 			
 		</script>
 	</body>

@@ -211,7 +211,7 @@
 				mobile = self.mobile;
 				my_name = self.my_name;
 	            gcmc = self.gcmc;
-	            timestamp = self.timestamp;
+	            timestamp = self.timestamp;//工程时间戳
 	            constr = self.constr; //施工单位
 	            supvision = self.supvision; //监理单位
 	            detect = self.detect; //检测单位
@@ -605,8 +605,7 @@
 												},
 												extras:{
 													//传递参数
-													ulId:ulId,
-													timestamp:timestamp
+													ulId:ulId
 												},
 												show:{
 													autoShow:true,//页面loaded事件发生后自动显示

@@ -213,7 +213,6 @@ function upload(lx,clean){
 			wt.close();
 		}
 	});
-	task.addData("gcmc",getName());
 	task.addData("lx",lx);
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
@@ -242,16 +241,11 @@ function getid(){
 //	alert(sjc);
 	return ulid;
 }
-//获取工程时间戳
+//获取时间戳
 function mchen(){
 	var sjc=document.getElementById('sjc').value;
 //	alert(sjc);
 	return sjc;
-}
-//获取工程名
-function getName(){
-	var gcmc = document.getElementById("gcmc").value;
-	return gcmc;
 }
 //获取不合格报告
 function gettresult(){

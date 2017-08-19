@@ -473,56 +473,7 @@
 	});
 	//材料送检操作
 	
-	//验证码监听
-	var wait = 60;
-	function time(o){
-		 if (wait == 0) {  
-            o.removeAttribute("disabled");            
-            o.innerHTML="获取验证码";  
-            wait = 60;  
-        }else{
-        	if(wait == 60){
-        		//短信发送
-				var sendMsg = document.getElementById("sendMsg");
-				var CorpID = document.getElementById("CorpID");
-				var LoginName = document.getElementById("LoginName");
-				var pwd = document.getElementById("pwd");
-				var serverIP = document.getElementById("serverIP");
-				var mobPhone = document.getElementById("mobPhone");
-				var smsContent = document.getElementById("smsContent");
-				mobPhone.value = mobile;
-				yzm = document.getElementById("yzm");
-				mui.ajax(url+'send_Sms/SendSms.php',{
-					data:{
-						CorpID:CorpID.value,
-						LoginName:LoginName.value,
-						pwd:pwd.value,
-						serverIP:serverIP.value,
-						mobPhone:mobPhone.value,
-						smsContent:smsContent.value
-					},
-					dataType:'json',
-					type:'POST', 
-					timeout:10000,
-					success:function(data){
-						if(data.result=='success'){
-//									alert(data.smsContent);
-							yzm.value = data.yzm; //获取验证码数字
-						}
-					},
-					error:function(xhr,type,errorThrown){
-						alert('ajax错误'+type+'---'+errorThrown);
-					}
-				});
-        	}
-            o.setAttribute("disabled", true);  
-            o.innerHTML="重新发送(" + wait + ")";  
-            wait--;  
-            setTimeout(function() {  
-                time(o)  
-            },1000)  
-        }  
-	}
+	
 	//验证验证码
 	function qdjz(jzid){
 		var code1 = document.getElementById("code1");
@@ -558,6 +509,7 @@
 	//复检验证码
 	function recheck(jzid){
 		var jzid = jzid.id;
+		var code_recheck = document.getElementById("code_recheck");
 		if(yzm.value==""){
 			mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
 		}else if(code_recheck.value==""){

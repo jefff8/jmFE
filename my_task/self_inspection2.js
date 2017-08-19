@@ -260,11 +260,12 @@
 	//验证验证码
 	function insp_code2(jzid){
 		var jzid = jzid.id;
+		var code3 = document.getElementById("code3");
 		if(yzm.value==""){
 			mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==""){
+		}else if(code3.value==""){
 			mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
-		}else if(code.value==yzm.value){
+		}else if(code3.value==yzm.value){
 			mui.ajax(url+'my_plus/my_inspection_entity.php',{
 				data:{
 					flag:"获取状态",

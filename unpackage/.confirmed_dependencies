@@ -1787,14 +1787,17 @@
 			"my_task/self_inspection1.js",
 			"my_material/my_material_samDet.html",
 			"my_task/self_inspection2.js",
-			"my_insp_material/my_inspection_detail.html"
+			"my_insp_material/my_inspection_detail.html",
+			"my_task/commission.js",
+			"my_commission/my_entity_readmassage.html"
 		],
 		"refer": [
 			"my_material/my_material_samDet.html",
 			"my_task/deliver.html",
 			"my_insp_material/my_inspection_detail.html",
 			"my_insp_entity/my_inspection_entitydetail_full.html",
-			"my_task/insp2_fail.html"
+			"my_task/insp2_fail.html",
+			"my_commission/my_entity_readmassage.html"
 		]
 	},
 	"my_task/deliver.html": {
@@ -1815,7 +1818,10 @@
 			"css/mui.min.css",
 			"my_commission/my_entity_results.html",
 			"css/my_css.css",
-			"css/my_project_fhys_xz.css"
+			"css/my_project_fhys_xz.css",
+			"js/mui.picker.js",
+			"js/native.js",
+			"js/mui.poppicker.js"
 		],
 		"refer": [
 			"my_commission/my_commission_list.html",

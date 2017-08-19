@@ -75,35 +75,40 @@
 				}
 				//获取工程名称
 				var self = plus.webview.currentWebview();
+                gcmc_c = self.gcmc_c;
+                my_name = self.my_name;
+                my_name = decodeURI(decodeURI(my_name));
+                gcmc = decodeURI(decodeURI(gcmc_c));
                 ulid = self.ulId;
 				
 				var doc = document;
 				var tresult = document.getElementById('test_result').value;
 				var testNum = document.getElementById('testNum').value;
 				var report = document.getElementById('report').value;
-				
-
 				var uid = doc.getElementById('ulid');
 				uid.value = ulid;
+				var protimesp = doc.getElementById('sjc');
 				//获取单位名称
-				mui.ajax(url+'my_plus/my_entity_detail.php',{
+				mui.ajax(url+'my_task/commission.php',{
 					data:{
-						flag:"获取信息",
+						flag:"获取时间戳",
 						ulId:ulid
 					},
 					type:'post',
 					dataType:'json',
 					success:function(data){
-						protimesp.value = data[0].时间戳;
+						protimesp.value = data.时间戳;
 					},
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+errorThrown);
 					}
 				});
+			
+				
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_commission/my_commission_list.html');
+				var target=plus.webview.getWebviewById('my_task/task_list.html');
 				target.reload(true);
 				mui.back();
 				mui.toast('保存成功',{ duration:'long', type:'div' });
