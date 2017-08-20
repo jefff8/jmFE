@@ -106,17 +106,14 @@
 				mobile = self.mobile;
 				my_name = self.my_name;
 				uid = self.uid;
-				unit = self.unit;
-				unit = encodeURI(encodeURI(unit));
+				unit_d = self.unit;
+				unit = encodeURI(encodeURI(unit_d));
 				my_name = encodeURI(encodeURI(my_name));
 				var my_pj = document.getElementById("my_pj");
 				var task = document.getElementById("task");
 				var p = document.getElementsByTagName("p");
 				my_pj.href = "my_plus/my_project_list.html?uid="+uid+" ";
-//				task.href = "my_task/task_list.html?uid="+uid+"&unit="+unit+"&mobile="+mobile+"&my_name="+my_name+"";
-				function task(){
-					alert("22");
-				}
+				
 				//获取我的工程数目
 				mui.ajax(url+'index.php',{
 					data:{
@@ -134,6 +131,132 @@
 	//					alert("ajax错误 :"+type+'----'+errThrown);
 					}
 				});
+				mui.ajax(url+'my_task/task_list.php',{
+					data:{
+						flag:'获取工程时间戳',
+						uid:uid
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						for(var i=0;i<length;i++){
+							var pj_timestamp = data[i].时间戳;
+							taskList1(pj_timestamp);//材料送检
+							taskList2(pj_timestamp);//材料自检
+							taskList3(pj_timestamp);//实体自检
+							taskList4(pj_timestamp);//实体检测
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//材料送检
+				function taskList1(pj_timestamp){
+					mui.ajax(url+'my_task/task_list.php',{
+						data:{
+							flag:"材料送检",
+							pj_timestamp:pj_timestamp,
+							unit:unit_d
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							if(length){
+								var task = document.getElementById("task");
+								var span = document.createElement("span");
+								span.innerHTML = "待处理";
+								span.className='mui-badge mui-badge-danger';
+								task.appendChild(span);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+			//				alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+				//材料自检
+				function taskList2(pj_timestamp){
+					mui.ajax(url+'my_task/task_list.php',{
+						data:{
+							flag:"材料自检",
+							pj_timestamp:pj_timestamp,
+							unit:unit_d
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							if(length){
+								var task = document.getElementById("task");
+								var span = document.createElement("span");
+								span.innerHTML = "待处理";
+								span.className='mui-badge mui-badge-danger';
+								task.appendChild(span);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+			//				alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+				//实体自检
+				function taskList3(pj_timestamp){
+					mui.ajax(url+'my_task/task_list.php',{
+						data:{
+							flag:"实体自检",
+							pj_timestamp:pj_timestamp,
+							unit:unit_d
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							if(length){
+								var task = document.getElementById("task");
+								var span = document.createElement("span");
+								span.innerHTML = "待处理";
+								span.className='mui-badge mui-badge-danger';
+								task.appendChild(span);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+			//				alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+				//实体检测
+				function taskList4(pj_timestamp){
+					mui.ajax(url+'my_task/task_list.php',{
+						data:{
+							flag:"实体检测",
+							pj_timestamp:pj_timestamp,
+							unit:unit_d
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							var length = data.length;
+							if(length){
+								var task = document.getElementById("task");
+								var span = document.createElement("span");
+								span.innerHTML = "待处理";
+								span.className='mui-badge mui-badge-danger';
+								task.appendChild(span);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+			//				alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
 			});
 			
 			

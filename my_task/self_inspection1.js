@@ -11,7 +11,9 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				var a2 = document.getElementById("a2");
 				for(var i=0;i<length;i++){
+					a2.innerHTML = "材料自检("+length+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;

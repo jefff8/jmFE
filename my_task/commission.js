@@ -11,7 +11,9 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				var a4 = document.getElementById("a4");
 				for(var i=0;i<length;i++){
+					a4.innerHTML = "实体检测("+length+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;
