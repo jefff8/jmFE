@@ -318,6 +318,9 @@ function upload(lx,clean){
 		}
 	});
 	task.addData("gcmc",getName());
+	task.addData("Text1",text1());
+	task.addData("Text2",text2());
+	task.addData("Text3",text3());
 	task.addData("lx",lx);
 	task.addData("files1",strs);
 	task.addData("uid",getUid());	
@@ -346,5 +349,20 @@ function mchen(){
 function getName(){
 	var gcmc = document.getElementById("gcmc");
 	return gcmc;
+}
+//场景照片说明
+function text1(){
+	var  Text1 = document.getElementById("Text1").value;
+	return Text1;
+}
+//检测实施过程照片说明
+function text2(){
+	var Text2 = document.getElementById("Text2").value;
+	return Text2;
+}
+//检测设备照片说明
+function text3(){
+	var Text3 = document.getElementById("Text3").value;
+	return Text3;
 }
 ////////////上传文件/////////////////////////////////////////////

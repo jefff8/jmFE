@@ -23,7 +23,7 @@
 		            <input id="date" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" value="2017-07-09">
 		        </div>-->
 		        <div class="mui-input-row">
-		            <label>文字说明:</label>
+		            <label>退场记录:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入说明" id="test_txt">
 		        </div>
 		    </form>
@@ -34,6 +34,12 @@
 		        	<span style="padding-bottom: 10px;">处理图片</span>
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>处理图片说明:</label>
+			            <input id="Text6" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
 		        </div>
 		         <div class="mui-button-row">
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
@@ -74,16 +80,28 @@
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 ulid = self.ulId;
-				
 				var doc = document;
-				
+				var sjc = doc.getElementById("sjc");
 				var progcmc = doc.getElementById('gcmc');
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('ulid');
 				protimesp.value = ulid;
-				var protimesp = doc.getElementById('sjc');
-				protimesp.value = timestamp;
 				
+				mui.ajax(url+'my_plus/my_entity_detail.php',{
+					data:{
+						flag:"获取信息",
+						myid:ulid
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+//						alert(data);
+						sjc.value = data[0].时间戳;
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+errorThrown);
+					}
+				});
 //				alert(ulid);
 //				new data save
 //				data_save.addEventListener('tap',function(){

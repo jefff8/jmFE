@@ -127,6 +127,9 @@
 				var course_photo=[];
 				var equipment_photo=[];
 				var selfcheck_photo=[];
+				var Text1;
+				var Text2;
+				var Text3;
 				mui.ajax(url+'my_plus/my_inspection_entitydetail.php',{
 					data:{
 						flag:"获取图片",
@@ -139,6 +142,9 @@
 					success:function(data){
 						timestamp = data.时间戳;
 						status_self = data.工程单状态;
+						Text1 = data.场景照片说明;
+						Text2 = data.检测实施过程照片说明;
+						Text3 = data.检测设备照片说明;
 						if(data.检测前照片 != null){
 							before_photo=data.检测前照片.split("~*^*~");
 						}else{
@@ -178,7 +184,10 @@
 							before_photo:before_photo,
 							course_photo:course_photo,
 							equipment_photo:equipment_photo,
-							selfcheck_photo:selfcheck_photo
+							selfcheck_photo:selfcheck_photo,
+							Text1:Text1,
+							Text2:Text2,
+							Text3:Text3
 						},
 						show:{							
 							aniShow:'slide-in-right',//页面显示动画

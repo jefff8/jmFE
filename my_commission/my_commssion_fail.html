@@ -89,12 +89,13 @@
 				mui.ajax(url+'my_plus/my_entity_detail.php',{
 					data:{
 						flag:"获取信息",
-						ulId:ulid
+						myid:ulid
 					},
 					type:'post',
 					dataType:'json',
 					success:function(data){
-						protimesp.value = data[0].时间戳;
+//						alert(data);
+						sjc.value = data[0].时间戳;
 					},
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+errorThrown);

@@ -186,24 +186,48 @@
 			<div class="mui-content-padded">
 				<p>正在加载高质量图片，请耐心等待...(^_^)</p>				
 				<p class="myp">场景照片: </p>
-				<p id="rwfj1"></p>
+				<p id="rwfj1">
+				<p id="fj1Text">
+					
+				</p>	
+				</p>
 				<p class="myp">检测实施过程中照片: </p>
 				<!--<p id="tephooto" class="myp my_none">检测实施过程中照片: </p>-->
-				<p id="rwfj2"></p>	
+				<p id="rwfj2">
+				<p id="fj2Text">
+					
+				</p>	
+				</p>	
 				<p class="myp">检测设备照片: </p>
-				<p id="rwfj3"></p>
+				<p id="rwfj3">
+				<p id="fj3Text">
+					
+				</p>	
+				</p>
 			</div>
 			<div class="mui-content-padded">
 				<p id="dispose_photo_01"  class="myp my_none">实测照片: </p>
-				<p id="rwfj4"></p>
+				<p id="rwfj4">
+				<p id="fj4Text">
+					
+				</p>	
+				</p>
 			</div>
 			<div class="mui-content-padded">
 				<p id="dispose_photo_02"  class="myp my_none">不合格报表: </p>
-				<p id="rwfj5"></p>
+				<p id="rwfj5">
+				<p id="fj5Text">
+					
+				</p>	
+				</p>
 			</div>
 			<div class="mui-content-padded">
 				<p id="dispose_photo_03"  class="myp my_none">处理照片: </p>
-				<p id="rwfj6"></p>
+				<p id="rwfj6">
+				<p id="fj6Text">
+					
+				</p>	
+				</p>
 			</div>
 		</div>
 	</body>
@@ -214,15 +238,6 @@
 	<script>
 		mui.previewImage();
 		mui.plusReady(function(){
-			//url massage
-//			owntsp:owntsp,
-//			proatt:proatt//statue
-//			tbpho:tbpho,//检测前
-//			tipho:tipho,//检测中
-//			tepho:tepho,//检测设备
-//			rtpho:rtpho,//实测照片
-//			tfpho:tfpho,//不合格报表
-//			dwpho:dwpho//处理照片
 			var self = plus.webview.currentWebview();
 			var owntsp = self.owntsp;
 			var proatt = self.proatt;
@@ -232,12 +247,30 @@
 			var rtpho = self.rtpho;
 			var tfpho = self.tfpho;
 			var dwpho = self.dwpho;
-//			var proatt = self.proatt;
-			
+			var Text1 = self.Text1;
+			var Text2 = self.Text2;
+			var Text3 = self.Text3;
+			var Text4 = self.Text4;
+			var Text5 = self.Text5;
+			var Text6 = self.Text6;
 			var dispose_photo_01 = document.getElementById("dispose_photo_01");
 			var dispose_photo_02 = document.getElementById("dispose_photo_02");
 			var dispose_photo_03 = document.getElementById("dispose_photo_03");
-			
+			var fj1Text = document.getElementById("fj1Text");
+			var fj2Text = document.getElementById("fj2Text");
+			var fj3Text = document.getElementById("fj3Text");
+			var fj4Text = document.getElementById("fj4Text");
+			var fj5Text = document.getElementById("fj5Text");
+			var fj6Text = document.getElementById("fj6Text");
+			if(Text1){
+				fj1Text.innerHTML="场景照片说明："+Text1;
+			}
+			if(Text2){
+				fj2Text.innerHTML="检测实施过程照片说明："+Text2;
+			}
+			if(Text3){
+				fj3Text.innerHTML="检测设备照片说明："+Text3;
+			}
 			//动态创建图片
 			var createimg=function(tplx,tpmc) {		
 				var mysrc=url+"upload/"+tpmc;
@@ -279,6 +312,9 @@
 			//实测照片
 			if(proatt=='已确认'||proatt=='合格'){
 				dispose_photo_01.classList.remove("my_none");
+				if(Text4){
+					fj4Text.innerHTML="实测照片说明："+Text4;
+				}
 				if(rtpho.length>1){
 					for(var i=1;i<rtpho.length;i++){
 						createimg('rwfj4',rtpho[i]);
@@ -291,6 +327,12 @@
 			if(proatt=='不合格'){
 				dispose_photo_01.classList.remove("my_none");
 				dispose_photo_02.classList.remove("my_none");
+				if(Text4){
+					fj4Text.innerHTML="实测照片说明："+Text4;
+				}
+				if(Text5){
+					fj5Text.innerHTML="报告照片说明："+Text5;
+				}
 				if(rtpho.length>1){
 					for(var i=1;i<rtpho.length;i++){
 						createimg('rwfj4',rtpho[i]);
@@ -311,6 +353,15 @@
 				dispose_photo_01.classList.remove("my_none");
 				dispose_photo_02.classList.remove("my_none");
 				dispose_photo_03.classList.remove("my_none");
+				if(Text4){
+					fj4Text.innerHTML="实测照片说明："+Text4;
+				}
+				if(Text5){
+					fj5Text.innerHTML="报告照片说明："+Text5;
+				}
+				if(Text6){
+					fj6Text.innerHTML="处理照片说明："+Text6;
+				}
 				if(rtpho.length>1){
 					for(var i=1;i<rtpho.length;i++){
 						createimg('rwfj4',rtpho[i]);

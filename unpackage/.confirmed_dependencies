@@ -1512,7 +1512,8 @@
 		"refer": [
 			"my_commission/my_commssion_fail.html",
 			"my_commission/my_commission_add.html",
-			"my_commission/my_entity_readmassage.html"
+			"my_commission/my_entity_readmassage.html",
+			"my_commission/my_entity_readmessage.html"
 		]
 	},
 	"my_insp_entity/my_inspection_entitydetail_bresult.html": {

@@ -214,6 +214,7 @@ function upload(lx,clean){
 		}
 	});
 	task.addData("gcmc",getName());
+	task.addData("Text4",text4());
 	task.addData("lx",lx);
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
@@ -258,8 +259,11 @@ function dataAll(){
 	for(i=0;i<8;i++){
 		Str += F_input[i].value+"|";
 	}
-//	alert(Str);
 	return Str;
-					
+}
+//获取实测照片说明
+function text4(){
+	var Text4 = document.getElementById("Text4").value;
+	return Text4;
 }
 ////////////上传文件/////////////////////////////////////////////

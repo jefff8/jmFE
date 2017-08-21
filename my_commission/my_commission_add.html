@@ -32,7 +32,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测人:</label>
-		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr">
+		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测日期:</label>
@@ -62,6 +62,12 @@
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>场景照片说明:</label>
+			            <input id="Text1" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div>
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
@@ -78,6 +84,12 @@
 		        	<br/>
 		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		         <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测实施过程照片说明:</label>
+			            <input id="Text2" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div>
 		        	<ul id="history_yp" class="dlist" style="text-align:left;">
 						<li id="empty_yp" class="ditem-empty">无历史记录</li>
@@ -93,6 +105,12 @@
 		        	<span style="padding-bottom: 10px;">检测设备照片</span>
 		        	<br/>
 		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测设备照片说明:</label>
+			            <input id="Text3" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
 		        </div>
 		        <div>
 		        	<ul id="history_teqm" class="dlist" style="text-align:left;">
@@ -130,7 +148,9 @@
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
                 timestamp = self.timestamp;
+                detect = self.detect;
                 my_name = decodeURI(decodeURI(my_name));
+                detect = decodeURI(decodeURI(detect));
                 gcmc = decodeURI(decodeURI(gcmc_c));
 				
 				
@@ -143,12 +163,13 @@
 				var jcrq = document.getElementById('jcrq');//检测日期
 				var rmark  = document.getElementById('rmark');//备注			
 				var tdpm = document.getElementById('test_dpm');//检测单位
-				
+				jcr.value = my_name;
 				var myDate=new Date();var mytime=myDate.getTime();var timesp = mytime;
 				var progcmc = doc.getElementById('gcmc');
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('sjc');
 				protimesp.value = timesp;
+				tdpm.value = detect;
 				//日期监听
 				jcrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -233,7 +254,6 @@
 							test_dpm:tdpm.value,//检测单位
 							owtst:timesp,//時間戳
 							prots:timestamp,//工程时间戳
-							pronewpe:my_name,//案件新建人
 							proname:gcmc//工程名称
 						},
 //						dataType:'json',

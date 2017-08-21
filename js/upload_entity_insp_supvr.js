@@ -228,6 +228,7 @@ function upload4(lx,clean){
 		}
 	});
 	task.addData("lx",lx);
+	task.addData("Text5",test5());
 	task.addData("uid",getUid());
 	task.addData("files1",strs);
 	nub=files.length.toString();
@@ -249,5 +250,10 @@ function getUid(){
 function mchen(){	
 	var sjc=document.getElementById('sjc').value;
 	return sjc;
+}
+//处理照片说明
+function test5(){
+	var Text5 =document.getElementById("Text5").value;
+	return Text5;
 }
 ////////////上传文件/////////////////////////////////////////////

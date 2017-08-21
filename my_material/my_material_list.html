@@ -245,13 +245,13 @@
 				//获取传值
 				var self = plus.webview.currentWebview();
 				//全局变量mobile
-				mobile = self.mobile;
-				my_name = self.my_name;
+				mobile = self.mobile;//手机号码
+				my_name = self.my_name;//用户姓名
 	            gcmc = self.gcmc; //工程名称
 	            constr = self.constr; //施工单位
 	            supvision = self.supvision; //监理单位
 	            detect = self.detect; //检测单位
-	            timestamp = self.timestamp;
+	            timestamp = self.timestamp;//工程时间戳
 				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
 				my_name = decodeURI(decodeURI(my_name)); //获取用户名
 				var item=doc.getElementsByClassName('mui-control-item');
@@ -280,7 +280,8 @@
 							//传递参数
 							gcmc_c:gcmc_c,
 							my_name:my_name,
-							timestamp:timestamp
+							timestamp:timestamp,
+							detect:detect
 						},
 						show: {
 							aniShow:"pop-in"

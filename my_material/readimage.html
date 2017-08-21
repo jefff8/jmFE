@@ -243,8 +243,12 @@
 			var fj3Text = document.getElementById("fj3Text");
 			var fj4Text = document.getElementById("fj4Text");
 			var fj6Text = document.getElementById("fj6Text");
-			fj1Text.innerHTML="场景照片说明："+sceneText;
-			fj2Text.innerHTML="样品照片说明："+sampleText;
+			if(sceneText){
+				fj1Text.innerHTML="场景照片说明："+sceneText;
+			}
+			if(sampleText){
+				fj2Text.innerHTML="样品照片说明："+sampleText;
+			}
 			//动态创建图片
 			var createimg=function(tplx,tpmc) {		
 				var mysrc=url+"upload/"+tpmc;

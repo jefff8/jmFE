@@ -187,25 +187,33 @@
 				<p>正在加载高质量图片，请耐心等待...(^_^)</p>				
 				<p class="myp">场景照片: </p>
 				<p id="rwfj1">
-				
+				<p id="fj1Text">
+					
+				</p>
 				</p>	
 				<p class="myp">检测实施过程照片: </p>
 				<p id="rwfj2">
-				
+				<p id="fj2Text">
+					
+				</p>
 				</p>	
 				<p class="myp">检测设备照片: </p>
 				<p id="rwfj3">
-				
+				<p id="fj3Text">
+					
+				</p>
 				</p>	
 				<p id="selfcheck_ph" class="myp my_none">自测照片: </p>
 				<p id="rwfj4">
-				
-				
+				<p id="fj4Text">
+					
+				</p>
 				</p>	
 				<p id="dispose_ph" class="myp my_none">处理照片: </p>
 				<p id="rwfj5">
-				
-				
+				<p id="fj5Text">
+					
+				</p>
 				</p>	
 			</div>
 		</div>
@@ -224,9 +232,27 @@
 			var course_photo = self.course_photo;
 			var equipment_photo = self.equipment_photo;
 			var selfcheck_photo = self.selfcheck_photo;
-			
 			var dispose_photo = self.dispose_photo;
 			var gcdzt = self.gcdzt;
+			var Text1 = self.Text1;
+			var Text2 = self.Text2;
+			var Text3 = self.Text3;
+			var Text4 = self.Text4;
+			var Text5 = self.Text5;
+			var fj1Text = document.getElementById("fj1Text");
+			var fj2Text = document.getElementById("fj2Text");
+			var fj3Text = document.getElementById("fj3Text");
+			var fj4Text = document.getElementById("fj4Text");
+			var fj5Text = document.getElementById("fj5Text");
+			if(Text1){
+				fj1Text.innerHTML="场景照片说明："+Text1;
+			}
+			if(Text2){
+				fj2Text.innerHTML="检测实施过程照片说明："+Text2;
+			}
+			if(Text3){
+				fj3Text.innerHTML="检测设备照片说明："+Text3;
+			}
 //			alert(equipment_photo+before_photo+selfcheck_photo);
 			//动态创建图片
 			var createimg=function(tplx,tpmc) {		
@@ -270,6 +296,9 @@
 			if(status_self =="确定检测" || status_self =="合格" || status_self =="不合格"){
 				var selfcheck_ph = document.getElementById("selfcheck_ph");
 				selfcheck_ph.classList.remove("my_none");
+				if(Text4){
+					fj4Text.innerHTML="自测照片说明："+Text4;
+				}
 				if(selfcheck_photo.length>1){
 					for(var i=1;i<selfcheck_photo.length;i++){
 						createimg('rwfj4',selfcheck_photo[i]);
@@ -284,6 +313,12 @@
 				var dispose_ph = document.getElementById("dispose_ph");
 				selfcheck_ph.classList.remove("my_none");
 				dispose_ph.classList.remove("my_none");
+				if(Text4){
+					fj4Text.innerHTML="自测照片说明："+Text4;
+				}
+				if(Text5){
+					fj5Text.innerHTML="处理照片说明："+Text5;
+				}
 				if(selfcheck_photo.length>1){
 					for(var i=1;i<selfcheck_photo.length;i++){
 						createimg('rwfj4',selfcheck_photo[i]);

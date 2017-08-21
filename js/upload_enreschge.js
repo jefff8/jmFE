@@ -214,6 +214,7 @@ function upload(lx,clean){
 		}
 	});
 	task.addData("gcmc",getName());
+	task.addData("Text6",text6());
 	task.addData("lx",lx);
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
@@ -255,5 +256,10 @@ function getName(){
 function getreport(){
 	var ttxt = document.getElementById('test_txt').value;
 	return ttxt;
+}
+//处理照片说明
+function text6(){
+	var Text6 = document.getElementById("Text6").value;
+	return Text6;
 }
 ////////////上传文件/////////////////////////////////////////////

@@ -151,9 +151,10 @@
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
                 timestamp = self.timestamp;
+                detect = self.detect;
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
-				
+				detect = decodeURI(decodeURI(detect));
 				var doc = document;
 				var save = doc.getElementById("save");
 				var qyrq = doc.getElementById("qyrq");
@@ -165,6 +166,8 @@
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
 				var qylx = doc.getElementById("qylx");
+				var F_qcdw = document.getElementById('qcdy');
+				F_qcdw.value = detect;
 				qyr.value = my_name; //取样人默认为账号姓名
 				//自动添加当前时间戳,附件上传时会用到
 				var myDate=new Date();

@@ -132,6 +132,13 @@
 						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_inspection_entitydetail_bresult.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
 						witness.appendChild(ul);						
+					}else if(zjzt=="待审批"){
+						var witness = document.getElementById("witness");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_entitydetail_bresult.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						witness.appendChild(ul);						
 					}
 				}
 				//异步取值并创建卡项
@@ -208,6 +215,41 @@
 													autoShow:false,//自动显示等待框
 												}
 											});
+											break;
+									}	
+								 });
+							}else if(gcdzt=='待审批'){
+								var btnArray = [
+								{title:"审批通过"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://审批通过
+											mui.ajax(url+'my_plus/my_inspection_entity.php',{
+												data:{
+													flag:"审批通过",
+													ulid:ulid
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+		//													alert(data.结果);
+													mui.toast('操作完成！',{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+													mui.toast('操作完成！',{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												}
+											});	
 											break;
 									}	
 								 });

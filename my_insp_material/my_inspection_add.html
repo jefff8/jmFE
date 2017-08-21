@@ -35,7 +35,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测人:</label>
-		           <input type="text" class="mui-input-clear" placeholder="请输入检测人">
+		           <input type="text" id="inspector" class="mui-input-clear" placeholder="请输入检测人" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测日期:</label>
@@ -47,7 +47,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
-		           <input type="text" class="mui-input-clear" placeholder="请输入检测单位">
+		           <input type="text" id="testUnint" class="mui-input-clear" placeholder="请输入检测单位">
 		        </div>
 		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
@@ -70,6 +70,12 @@
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>场景照片说明:</label>
+			            <input id="Text1" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div>
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
@@ -86,6 +92,12 @@
 		        	<br/>
 		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测实施过程照片说明:</label>
+			            <input id="Text2" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div>
 		        	<ul id="history_yp" class="dlist" style="text-align:left;">
 						<li id="empty_yp" class="ditem-empty">无历史记录</li>
@@ -101,6 +113,12 @@
 		        	<span style="padding-bottom: 10px;">检测设备照片</span>
 		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        	<br/>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测设备照片说明:</label>
+			            <input id="Text3" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
 		        </div>
 		        <div>
 		        	<ul id="history_sb" class="dlist" style="text-align:left;">
@@ -129,6 +147,9 @@
 				project_name = self.project_name;//工程名称
 				timestamp = self.timestamp;
 				my_name = self.my_name;
+				detect = self.detect;
+				my_name = decodeURI(decodeURI(my_name));
+				detect = decodeURI(decodeURI(detect));
 				var doc = document;
 				var my_popover = doc.getElementById("my_popover");
 				var qyrq = doc.getElementById("qyrq");
@@ -139,8 +160,10 @@
 				var jcdw = doc.getElementById("jcdw");
 				var sjc = doc.getElementById("sjc");
 				var save = doc.getElementById("save");
-				var samping_peo = doc.getElementById("samping_peo");
-//				samping_peo.value = my_name;//取样人关联手机号姓名
+				var inspector = doc.getElementById("inspector");
+				var testUnint = doc.getElementById("testUnint");
+				inspector.value = my_name;//检测人关联手机号姓名
+				testUnint.value = detect;//关联检测单位
 				//自动添加当前时间戳,附件上传时会用到
 				var myDate=new Date();
 				var mytime=myDate.getTime();

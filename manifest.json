@@ -1795,7 +1795,8 @@
 				],
 				"refer": [
 					"my_commission/my_commssion_fail.html",
-					"my_commission/my_commission_add.html"
+					"my_commission/my_commission_add.html",
+					"my_commission/my_entity_readmessage.html"
 				],
 				"priority": 0
 			},

@@ -221,6 +221,7 @@ function upload2(lx,clean){
 	});
 //	task.addData("gcmc",getName());
 	task.addData("lx",lx);
+	task.addData("Text4",test4());
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
 	nub=files.length.toString();
@@ -249,5 +250,10 @@ function mchen(){
 function getName(){
 	var gcmc = document.getElementById("gcmc");
 	return gcmc;
+}
+//获取自测照片说明
+function test4(){
+	var Text4 = document.getElementById("Text4").value;
+	return Text4;
 }
 ////////////上传文件/////////////////////////////////////////////

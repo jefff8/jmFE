@@ -51,7 +51,7 @@
 				</div>
 		    </form>
 		    <br />
-			<form class="mui-input-group">
+			<form class="mui-input-group my_none" id="form2">
 			    <div class="mui-input-row">
 		            <label>送样日期:</label>
 		            <input id="syrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly">
@@ -163,6 +163,11 @@
 						sdw.value = data.收样单位;
 						jzr.value = data.见证人;
 						jcbh.value = data.检测报告编号;
+						var status = data.工程单状态;
+						if(status=='确定检测'){
+							var form2 = document.getElementById("form2");
+							form2.classList.remove("my_none");
+						}
 					},
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -182,6 +187,10 @@
 				var course_photo=[];
 				var equipment_photo=[];
 				var selfcheck_photo=[];
+				var Text1;
+				var Text2;
+				var Text3;
+				var Text4;
 				mui.ajax(url+'my_plus/my_inspection_entitydetail.php',{
 					data:{
 						flag:"获取图片",
@@ -194,6 +203,10 @@
 					success:function(data){
 						timestamp = data.时间戳;
 						status_self = data.工程单状态;
+						Text1 = data.场景照片说明;
+						Text2 = data.检测实施过程照片说明;
+						Text3 = data.检测设备照片说明;
+						Text4 = data.自测照片说明;
 						if(data.检测前照片 != null){
 							before_photo=data.检测前照片.split("~*^*~");
 						}else{
@@ -235,7 +248,11 @@
 							before_photo:before_photo,
 							course_photo:course_photo,
 							equipment_photo:equipment_photo,
-							selfcheck_photo:selfcheck_photo
+							selfcheck_photo:selfcheck_photo,
+							Text1:Text1,
+							Text2:Text2,
+							Text3:Text3,
+							Text4:Text4
 						},
 						show:{							
 							aniShow:'slide-in-right',//页面显示动画
