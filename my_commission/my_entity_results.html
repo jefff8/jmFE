@@ -175,100 +175,125 @@
 				////////////////////////////不合格处理//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
-//					alert(ulId);
-					mui.ajax(url+'my_plus/my_entity_result.php',{
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulId,
-							gcmc:gcmc,
-							timestamp:timestamp
+							mobile:mobile
 						},
 						dataType:'json',
-						type:'POST', 
+						type:'post',
 						timeout:10000,
 						success:function(data){
-//							alert(data);
-							var gcdzt_pd = data[0].工程单状态;
-//							alert(gcdzt_pd);
-							//判断状态并根据状态执行改变状态的任务
-							if(gcdzt_pd=='不合格'){
+							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
+								mui.ajax(url+'my_plus/my_entity_result.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+			//							alert(data);
+										var gcdzt_pd = data[0].工程单状态;
+			//							alert(gcdzt_pd);
+										//判断状态并根据状态执行改变状态的任务
+										if(gcdzt_pd=='不合格'){
+											var btnArray = [
+											{title:"监理处理"},
+			//								{title:"删除"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://监理处理
+														mui.openWindow({
+															url:'my_entity_change.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+													case 2:
+														break;
+												}	
+											 });
+										}else if(gcdzt_pd=='待审批'){
+											var btnArray = [
+											{title:"审批通过"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://审批通过
+														mui.ajax(url+'my_plus/my_entity_result.php',{
+															data:{
+																flag:"审批通过",
+																ulId:ulId
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data);
+																mui.toast('操作完成！',{ duration:'long', type:'div' });
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});	
+														break;
+												}	
+											 });
+										}
+									},
+									error:function(xhr,type,errorThrown){
+//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});	
+							}else{
 								var btnArray = [
-								{title:"监理处理"},
-//								{title:"删除"}
+									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
 									title:"操作", 
 									cancel:"取消",
 									buttons:btnArray
 								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://监理处理
-											mui.openWindow({
-												url:'my_entity_change.html',
-												styles: {
-													hardwareAccelerated:false
-												},
-												extras:{
-													//传递参数
-													ulId:ulId,
-													timestamp:timestamp
-												},
-												show:{
-													autoShow:true,//页面loaded事件发生后自动显示
-													aniShow:'slide-in-right',//页面显示动画
-													duration:'100'//页面动画持续时间
-												},
-												waiting:{
-													autoShow:false,//自动显示等待框
-												}
-											});
-											break;
-										case 2:
-											break;
-									}	
-								 });
-							}else if(gcdzt_pd=='待审批'){
-								var btnArray = [
-								{title:"审批通过"}
-								]; 
-								plus.nativeUI.actionSheet({
-									title:"操作", 
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://审批通过
-											mui.ajax(url+'my_plus/my_entity_result.php',{
-												data:{
-													flag:"审批通过",
-													ulId:ulId
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data);
-													mui.toast('操作完成！',{ duration:'long', type:'div' });
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});	
-											break;
-									}	
-								 });
+								});
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});	
-				})
+					
+				});
 				////////////////////////////不合格处理//////////////////////////////
 			});
 		</script>

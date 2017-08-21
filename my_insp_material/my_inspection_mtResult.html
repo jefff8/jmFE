@@ -154,79 +154,103 @@
 				//长按不合格照片
 				mui("#fail").on('longtap','ul',function(){
 					var ulid = this.id;
-					mui.ajax(url+'my_plus/my_inspection_material.php',{
+					mui.ajax(url+'check.php',{
 						data:{
-							flag:"获取状态",
-							ulid:ulid
+							mobile:mobile
 						},
-						dataType:"json",
-						type:"POST",
+						dataType:'json',
+						type:'post',
 						timeout:10000,
 						success:function(data){
-							var gcdzt = data.工程单状态;
-							var timestamp = data.时间戳;
-							if(gcdzt=='不合格'){
+							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
+								mui.ajax(url+'my_plus/my_inspection_material.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulid
+									},
+									dataType:"json",
+									type:"POST",
+									timeout:10000,
+									success:function(data){
+										var gcdzt = data.工程单状态;
+										var timestamp = data.时间戳;
+										if(gcdzt=='不合格'){
+											var btnArray = [
+											{title:"监理处理"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://监理处理
+														mui.openWindow({
+															url:"my_insp_supvr.html",
+															extras:{
+																ulid:ulid,
+																timestamp:timestamp
+															}
+														});
+														break;
+												}	
+											 });
+										}else if(gcdzt=='待审批'){
+											var btnArray = [
+											{title:"审批通过"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://审批通过
+														mui.ajax(url+'my_plus/my_inspection_material.php',{
+															data:{
+																flag:"审批通过",
+																ulId:ulid
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data);
+																mui.toast('操作完成！',{ duration:'long', type:'div' });
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+			//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});	
+														break;
+												}	
+											 });
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										alert("ajax错误:"+type+errorThrown);
+									}
+								});
+							}else{
 								var btnArray = [
-								{title:"监理处理"}
+									{title:"抱歉，您没有操作权限"}
 								]; 
 								plus.nativeUI.actionSheet({
 									title:"操作", 
 									cancel:"取消",
 									buttons:btnArray
 								},function(e){
-									var index = e.index;	
-									switch (index){
-										case 1://监理处理
-											mui.openWindow({
-												url:"my_insp_supvr.html",
-												extras:{
-													ulid:ulid,
-													timestamp:timestamp
-												}
-											});
-											break;
-									}	
-								 });
-							}else if(gcdzt=='待审批'){
-								var btnArray = [
-								{title:"审批通过"}
-								]; 
-								plus.nativeUI.actionSheet({
-									title:"操作", 
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://审批通过
-											mui.ajax(url+'my_plus/my_inspection_material.php',{
-												data:{
-													flag:"审批通过",
-													ulId:ulid
-												},
-												dataType:'json',
-												type:'POST', 
-												timeout:10000,
-												success:function(data){
-//													alert(data);
-													mui.toast('操作完成！',{ duration:'long', type:'div' });
-													location.reload();//刷新本页面
-												},
-												error:function(xhr,type,errorThrown){
-//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-												}
-											});	
-											break;
-									}	
-								 });
+								});
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert("ajax错误:"+type+errorThrown);
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
-					});
-				
+					});	
 				});
 			});
 		</script>

@@ -239,7 +239,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'){
+							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_inspection_add.html",
 									extras:{
@@ -281,7 +281,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'){
+							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
 								//异步获取当前卡项的“工程单状态”
 								mui.ajax(url+'my_plus/my_inspection_material.php',{
 									data:{
@@ -445,7 +445,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='监理单位'){
+							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
 								//异步获取当前卡项的“工程单状态”
 								mui.ajax(url+'my_plus/my_inspection_material.php',{
 									data:{

@@ -274,23 +274,41 @@
 				
 				//悬浮新增监听
 				jzsj.addEventListener('tap',function(){
-					mui.openWindow({
-						url:"my_material_add.html",
-						extras:{
-							//传递参数
-							gcmc_c:gcmc_c,
-							my_name:my_name,
-							timestamp:timestamp,
-							detect:detect
+					mui.ajax(url+'check.php',{
+						data:{
+							mobile:mobile
 						},
-						show: {
-							aniShow:"pop-in"
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+								mui.openWindow({
+									url:"my_material_add.html",
+									extras:{
+										//传递参数
+										gcmc_c:gcmc_c,
+										my_name:my_name,
+										timestamp:timestamp,
+										detect:detect
+									},
+									show: {
+										aniShow:"pop-in"
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
 						},
-						waiting: {
-							autoShow: false
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
-					})
-				})
+					});	
+					
+				});
 				
 				
 				//动态创建函数
@@ -389,7 +407,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位'] == '施工单位'){
+							if(data[0]['单位'] == '施工单位'||data[0]['单位']=='管理员'){
 
 								mui.ajax(url+'my_plus/my_material_list.php',{
 									data:{
@@ -630,7 +648,7 @@
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位'] == '监理单位'){
+							if(data[0]['单位'] == '监理单位'||data[0]['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_material_list.php',{
 									data:{
 										flag:"获取状态",
@@ -773,7 +791,7 @@
 						type:'POST', 
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']== '检测单位'){
+							if(data[0]['单位']== '检测单位'||data[0]['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_material_list.php',{
 									data:{
 										flag:"获取状态",
