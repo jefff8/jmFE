@@ -41,10 +41,10 @@
 		            <label>见证人:</label>
 		            <input id="jzr"  type="text" class="mui-input-clear" placeholder="请输入见证人">
 		        </div>
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>检测报告编号:</label>
 		            <input id="jcbgbh"  type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
-		        </div>
+		        </div>-->
 		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
@@ -105,7 +105,7 @@
 				var jzdw = doc.getElementById('jzdw');
 				var shouydw = doc.getElementById('shouydw');
 				var jzr = doc.getElementById('jzr');
-				var jcbgbh = doc.getElementById('jcbgbh');
+//				var jcbgbh = doc.getElementById('jcbgbh');
 				var sjc = doc.getElementById('sjc');
 				jzr.value = my_name;
 				sjc.value = timestamp_self;
@@ -157,7 +157,7 @@
 								jzdw:jzdw.value,
 								shouydw:shouydw.value,
 								jzr:jzr.value,
-								jcbgbh:jcbgbh.value,
+//								jcbgbh:jcbgbh.value,
 							},
 							type:'post',
 							dataType:'json',
