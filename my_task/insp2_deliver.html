@@ -62,6 +62,12 @@
 		        	<br/>
 		        	<div><img id="newUpload4" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>自测照片说明:</label>
+			            <input id="Text4" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div>
 		        	<ul id="history_zczp" class="dlist" style="text-align:left;">
 						<li id="empty_zczp" class="ditem-empty">无历史记录</li>
@@ -122,8 +128,8 @@
 				
 				mui.ajax(url+'my_task/self_inspection2.php',{
 					data:{
-						flag:"获取时间戳",
-						ulId:ulId
+						flag:"获取工程时间戳",
+						ulId:ulid 
 					},
 					dataType:'json',
 					type:'POST', 
@@ -141,7 +147,7 @@
 					mui.ajax(url+'my_task/self_inspection2.php',{
 						data:{
 							flag:"单位名称",
-							ulId:ulId,
+							ulId:ulid,
 							pj_timestamp:pj_timestamp
 						},
 						type:'post',

@@ -306,7 +306,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"team.html"
+					"team.html",
+					"info.html"
 				],
 				"priority": 0
 			},
@@ -1882,7 +1883,8 @@
 				],
 				"refer": [
 					"my_commission/my_entity_change.html",
-					"my_commission/my_entity_readmassage.html"
+					"my_commission/my_entity_readmassage.html",
+					"my_commission/my_entity_readmessage.html"
 				],
 				"priority": 0
 			},
@@ -2082,7 +2084,9 @@
 				"refer": [
 					"my_task/deliver.html",
 					"my_insp_entity/my_inspection_entitydetail_full.html",
-					"my_task/insp2_fail.html"
+					"my_task/insp2_fail.html",
+					"my_material/my_material_rcvdDet.html",
+					"my_task/send_fail.html"
 				],
 				"priority": 0
 			},
@@ -2124,6 +2128,36 @@
 				"resources": [
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_commission/my_entity_readmessage.html": {
+				"resources": [],
+				"refer": [
+					"my_commission/my_entity_readimage.html"
+				],
+				"priority": 0
+			},
+			"my_task/send_fail.html": {
+				"resources": [
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"css/mui.min.css",
+					"js/upload_shy.js",
+					"images/iconfont-tianjia.png",
+					"css/my_project_fhys_xz.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"info.html": {
+				"resources": [
+					"images/appDownload.png",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

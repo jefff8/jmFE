@@ -238,7 +238,6 @@ function getUid(){
 // 获取ULid
 function getid(){
 	var ulid=document.getElementById('ulid').value;
-//	alert(sjc);
 	return ulid;
 }
 //获取工程时间戳
@@ -256,7 +255,7 @@ function getName(){
 function dataAll(){
 	var F_input = document.getElementById('myform2').getElementsByTagName('input');
 	var Str = "";
-	for(i=0;i<8;i++){
+	for(i=0;i<6;i++){
 		Str += F_input[i].value+"|";
 	}
 	return Str;

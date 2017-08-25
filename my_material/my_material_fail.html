@@ -47,7 +47,7 @@
 					<li id="empty_jczp" class="ditem-empty">无历史记录</li>
 				</ul>
 	        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        	<button id="clean_jczp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('jczp');">清空记录</button>
 	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        	<button id="jczp" type="button" class="mui-btn mui-btn-primary" onclick="upload3(this.id,'clean_jczp');">保存上传</button>
@@ -68,6 +68,7 @@
 	      		if(state=='recheck'){
 	      			document.getElementById("allbtn").getElementsByTagName("button")[1].id="jczp2";
 	      		}
+	      		alert(document.getElementById("allbtn").getElementsByTagName("button")[1].id);
 				var doc = document;
 				var sjc = doc.getElementById("sjc");
 				//异步获取材料送检时间戳

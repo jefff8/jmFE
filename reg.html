@@ -7,6 +7,7 @@
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/style.css" rel="stylesheet" />
+		
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -71,12 +72,15 @@
 					<label>单位</label>
 					<select id="units">
 						<option></option>
-						<option>项目部</option>
 						<option>施工单位</option>
 						<option>监理单位</option>
 						<option>检测单位</option>
 						<option>监督机构</option>
 					</select>
+				</div>
+				<div class="mui-input-row">
+					<label style="font-size: 16px;">单位名称</label>
+					<input id='unitName' type="email" class="mui-input-clear mui-input" placeholder="请输入单位名称">
 				</div>
 			</form>
 			<div class="mui-content-padded">
@@ -102,6 +106,7 @@
 					var emailBox = doc.getElementById('email');
 					var my_name = doc.getElementById("my_name");
 					var units = doc.getElementById("units");
+					var unitName = doc.getElementById("unitName");
 					regButton.addEventListener('tap', function(event) {
 						var regInfo = {
 							account: accountBox.value,
@@ -109,14 +114,12 @@
 							email: emailBox.value,
 							mobile:mobile.value,
 							my_name:my_name.value,
-							units:units.value
+							units:units.value,
+							unitName:unitName.value
 						};
 						var passwordConfirm = passwordConfirmBox.value;
 						if (passwordConfirm != regInfo.password) {
 							plus.nativeUI.toast('密码两次输入不一致');
-							return;
-						}else if(!regInfo.my_name){
-							plus.nativeUI.toast('请输入完整信息');
 							return;
 						}
 						app.reg(regInfo, function(err) {
@@ -132,7 +135,8 @@
 										email:regInfo.email,
 										mobile:regInfo.mobile,
 										my_name:regInfo.my_name,
-										units:regInfo.units
+										units:regInfo.units,
+										unitName:regInfo.unitName
 									},
 									dataType:'json',
 									type:'POST', 

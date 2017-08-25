@@ -50,6 +50,12 @@
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>实测照片说明:</label>
+			            <input id="Text4" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
 		        <div class="mui-button-row">
 		        	<ul id="history_cj" class="dlist" style="text-align:left;">
 						<li id="empty_cj" class="ditem-empty">无历史记录</li>
@@ -84,6 +90,7 @@
 				var self = plus.webview.currentWebview();
                 my_name = self.my_name;
                 timestamp = self.timestamp;
+                
                 my_name = decodeURI(decodeURI(my_name));
                 ulid = self.ulId;
 				var doc = document;
@@ -94,6 +101,8 @@
 				var wiun = document.getElementById('wiun');
 				var reun = document.getElementById('reun');
 				var wipe = document.getElementById('wipe');
+				var self_id = document.getElementById("ulid");
+				self_id.value = ulid;
 				wipe.value = my_name;
 				//日期监听
 				sedate.addEventListener('tap',function(){
@@ -111,8 +120,6 @@
 				   });
 				});
 				
-				var protimesp = doc.getElementById('ulid');
-				protimesp.value = ulid;
 				var protimesp = doc.getElementById('sjc');
 				protimesp.value = timestamp;
 				
@@ -133,12 +140,12 @@
 					}
 				});
 			});
-			
+			 
 			function units(pj_timestamp){
 				mui.ajax(url+'my_task/commission.php',{
 					data:{
 						flag:"单位名称",
-						ulId:ulId,
+						ulId:ulid,
 						pj_timestamp:pj_timestamp
 					},
 					type:'post',
@@ -159,7 +166,7 @@
 				var target=plus.webview.getWebviewById('my_task/task_list.html');
 				target.reload(true);
 				mui.back();
-				mui.toast('保存成功',{ duration:'long', type:'div' });
+//				mui.toast('保存成功',{ duration:'long', type:'div' });
 			}
 		</script>
 	</body> 

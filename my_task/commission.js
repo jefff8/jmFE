@@ -194,7 +194,7 @@
 									type:'POST', 
 									timeout:10000,
 									success:function(data){
-										mui.toast(data.结果,{ duration:'long', type:'div' })
+										mui.toast('提交成功',{ duration:'long', type:'div' })
 										location.reload();//刷新本页面
 									},
 									error:function(xhr,type,errorThrown){
@@ -309,7 +309,7 @@
 						},
 						extras:{
 							//传递参数
-							ulId:jzid,
+							ulId:ulId,
 							my_name:my_name,
 							timestamp:timestamp
 						},

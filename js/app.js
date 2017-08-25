@@ -64,6 +64,8 @@
 		regInfo.email = regInfo.email || '';
 		regInfo.mobile = regInfo.mobile || '';
 		regInfo.my_name = regInfo.my_name || '';
+		regInfo.units = regInfo.units || '';
+		regInfo.unitName = regInfo.unitName || '';
 		if (regInfo.account.length < 5) {
 			return callback('用户名最短需要 5 个字符');
 		}
@@ -78,6 +80,12 @@
 		}
 		if(!regInfo.my_name){
 			return callback('请输入姓名');
+		}
+		if(!regInfo.units){
+			return callback('请选择单位');
+		}
+		if(!regInfo.unitName){
+			return callback('请填写单位名称');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		users.push(regInfo);

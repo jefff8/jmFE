@@ -495,10 +495,8 @@
 				type:'POST', 
 				timeout:10000,
 				success:function(data){
-					if(data.result=='success'){
-						mui.toast('见证成功',{ duration:'long', type:'div' }) 
-						location.reload();
-					}
+					mui.toast('见证成功',{ duration:'long', type:'div' }) 
+					location.reload();
 				},
 				error:function(xhr,type,errorThrown){
 					alert('ajax错误'+type+'---'+errorThrown);
@@ -527,10 +525,8 @@
 				type:'POST', 
 				timeout:10000,
 				success:function(data){
-					if(data.result=='success'){
-						mui.toast('见证成功',{ duration:'long', type:'div' }) 
-						location.reload();
-					}
+					mui.toast('见证成功',{ duration:'long', type:'div' }) 
+					location.reload();
 				},
 				error:function(xhr,type,errorThrown){
 					alert('ajax错误'+type+'---'+errorThrown);

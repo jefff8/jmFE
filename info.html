@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>江门市建设工程施工质量管理系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">		
+		<link href="css/mui.min.css" rel="stylesheet"/>    
+		
+		<style>
+			
+			html,
+			body,
+			.mui-content {
+				
+			}			
+			/*h4 {
+				margin-left: 5px;
+			}*/
+			img {
+				margin-left: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">下载</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<h4 >江门市建设工程施工质量管理系统</h4>
+				<p>
+					1.下载APP(扫描二维码即可下载)
+					<p><img src="images/appDownload.png" /></p>
+				</p>
+				
+				<p>2.下载地址：<a href="http://202.105.179.167:8080/jmConstr/jmadmin/release/jmConstr.apk"><p>http://202.105.179.167:8080/jmConstr/jmadmin/release/jmConstr.apk</p></a></p>
+				
+			</div>			
+		</div>
+		<script src="js/mui.min.js"></script>
+		
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			//处理点击事件，需要打开原生浏览器
+			mui('body').on('tap', 'a', function(e) {
+				var href = this.getAttribute('href');
+				if (href) {
+					if (window.plus) {
+						plus.runtime.openURL(href);
+					} else {
+						location.href = href;
+					}
+				}
+			});			
+			
+		</script>
+		<!--<script src="js/setPullToRefresh.js" ></script>-->
+	</body>
+
+</html>

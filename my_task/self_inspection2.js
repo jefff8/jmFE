@@ -40,7 +40,7 @@
 		}
 		if(state=='新增'||state=='准备材料'){
 			var my_href = "../my_insp_entity/my_inspection_entitydetail.html?sjc="+sjc+"&gcid="+id+"";
-		}else if(state=='未检测'||state=='确定自测'){
+		}else if(state=='未检测'||state=='确定检测'){
 			var my_href = "../my_insp_entity/my_inspection_entitydetail_full.html?sjc="+sjc+"&gcid="+id+"";
 		}
 		var ul = document.createElement("ul");
