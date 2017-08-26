@@ -77,10 +77,10 @@
 		            <label>见证人:</label>
 		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入备注" readonly="readonly">
 		        </div>
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row" id="testNum">
 		            <label>检测报告编号:</label>
 		            <input id="jcbgbh" type="text" class="mui-input-clear" placeholder="请输入检测报告编号" readonly="readonly">
-		        </div>
+		        </div>-->
 		        <div id="hide" class="mui-input-row my_none">
 		            <label>处理情况:</label>
 		            <input id="clqk"  type="text" class="mui-input-clear" placeholder="请输入处理情况">
@@ -127,14 +127,14 @@
 				var sybw = doc.getElementById("sybw");
 				var jxsdw = doc.getElementById("jxsdw");
 				var bz = doc.getElementById("bz");
-				
+				var testNum = doc.getElementById("testNum");
 				var songyrq = doc.getElementById("songyrq");
 				var shouyrq = doc.getElementById("shouyrq");
 				var songydw = doc.getElementById("songydw");
 				var jzdw = doc.getElementById("jzdw");
 				var shouydw = doc.getElementById("shouydw");
 				var jzr = doc.getElementById("jzr");
-				var jcbgbh = doc.getElementById("jcbgbh");
+//				var jcbgbh = doc.getElementById("jcbgbh");
 				var clqk = doc.getElementById("clqk");
 				var tcjv = doc.getElementById("tcjv");
 				//获取url参数值
@@ -160,6 +160,7 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
+//						alert(data);
 						if(data.工程单状态=="确定自测" || data.工程单状态=="合格"){
 							var myform2 = document.getElementById('myform2');
 							myform2.classList.remove("my_none");
@@ -168,12 +169,13 @@
 							var hide = document.getElementById("hide");
 							hide.classList.remove("my_none");
 							myform2.classList.remove("my_none");
-						}else if(data.工程单状态=="已处理"){
+						}else if(data.工程单状态=="已处理"||data.工程单状态=="待审批"){
 							var myform2 = document.getElementById('myform2');
 							myform2.classList.remove("my_none");
 							var myform5 = document.getElementById("myform5");
 							myform5.classList.remove("my_none");
 						}
+						
 						zjlx.value = data.自检自测类型;
 						jcbw.value = data.检测部位;
 						sl.value = data.检测数量;
@@ -181,13 +183,14 @@
 						jcrq.value = data.检测日期;
 						bz.value = data.备注;
 						tdpm.value = data.检测单位
+						songyrq.value = data.送样日期;
+						shouyrq.value = data.收样日期;
 						songydw.value = data.送样单位;
 						jzdw.value = data.见证单位;
 						shouydw.value = data.收样单位;
 						jzr.value = data.见证人;
-						jcbgbh.value = data.检测报告编号;
 						clqk.value = data.处理情况;
-						tcjv.value = data.退厂记录;
+						tcjv.value = data.退场记录;
 					},	
 						
 					error:function(xhr,type,errorThrown){

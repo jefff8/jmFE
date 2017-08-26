@@ -76,10 +76,10 @@
 		            <label>见证人:</label>
 		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly">
 		        </div>
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>检测报告编号:</label>
 		            <input id="jcbh" type="text" class="mui-input-clear" placeholder="请输入检测编号" readonly="readonly">
-		        </div>
+		        </div>-->
 		        <div  class="mui-input-row my_none" id="myform4">
 		            <label>处理情况:</label>
 		            <input id="clqk"  type="text" class="mui-input-clear" placeholder="请输入处理情况">
@@ -123,7 +123,7 @@
 				var jzdw = doc.getElementById("jzdw");
 				var sdw = doc.getElementById("sdw");
 				var jzr = doc.getElementById("jzr");
-				var jcbh = doc.getElementById("jcbh");
+//				var jcbh = doc.getElementById("jcbh");
 				var tcjv = doc.getElementById("tcjv");
 				//获取url参数值
 				function geturl(name){
@@ -167,9 +167,9 @@
 						jzdw.value = data.见证单位;
 						sdw.value = data.收样单位;
 						jzr.value = data.见证人;
-						jcbh.value = data.检测报告编号;
+//						jcbh.value = data.检测报告编号;
 						clqk.value = data.处理情况;
-						tcjv.value = data.退厂记录;
+						tcjv.value = data.退场记录;
 						if(tcjv.value.length>0){
 							var myform5 = document.getElementById('myform5');
 							myform5.classList.remove("my_none");

@@ -95,6 +95,7 @@
 	      		ulid = self.ulid;
 	      		timestamp_self = self.timestamp_self;
 	      		my_name = self.my_name;
+	      		my_name = decodeURI(decodeURI(my_name));
 	      		constr = self.constr;
 	      		supvision = self.supvision;
 	      		detect = self.detect;

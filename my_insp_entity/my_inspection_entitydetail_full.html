@@ -76,10 +76,10 @@
 		            <label>见证人:</label>
 		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly">
 		        </div>
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>检测报告编号:</label>
 		            <input id="jcbh" type="text" class="mui-input-clear" placeholder="请输入检测编号" readonly="readonly">
-		        </div>
+		        </div>-->
 			</form>
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
@@ -118,7 +118,7 @@
 				var jzdw = doc.getElementById("jzdw");
 				var sdw = doc.getElementById("sdw");
 				var jzr = doc.getElementById("jzr");
-				var jcbh = doc.getElementById("jcbh");
+//				var jcbh = doc.getElementById("jcbh");
 				
 				//获取url参数值
 				function geturl(name){
@@ -162,7 +162,7 @@
 						jzdw.value = data.见证单位;
 						sdw.value = data.收样单位;
 						jzr.value = data.见证人;
-						jcbh.value = data.检测报告编号;
+//						jcbh.value = data.检测报告编号;
 						var status = data.工程单状态;
 						if(status=='确定检测'){
 							var form2 = document.getElementById("form2");

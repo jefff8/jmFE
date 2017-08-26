@@ -98,6 +98,7 @@
 	      		detect = self.detect;
 	      		timestamp_self = self.timestamp_self;
 	      		my_name = self.my_name;
+	      		my_name = decodeURI(decodeURI(my_name));
 				var doc=document;
 				var zcrq = doc.getElementById('zcrq');
 				var syrq = doc.getElementById('syrq');

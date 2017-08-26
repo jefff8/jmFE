@@ -76,16 +76,12 @@
 		            <input type="text" class="mui-input-clear"  id="reun" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
-		            <label>送样人:</label>
-		            <input type="text" class="mui-input-clear"  id="sepe" readonly="readonly">
-		        </div>
-		        <div class="mui-input-row">
 		            <label>见证人:</label>
 		            <input type="text" class="mui-input-clear" id="wipe" readonly="readonly">
 		        </div>
-		        <div class="mui-input-row">
+		        <div id="testNum" class="mui-input-row ">
 		            <label>检测报告编号:</label>
-		            <input type="text" class="mui-input-clear" id="teid" readonly="readonly">
+		            <input  type="text" class="mui-input-clear " id="teid" readonly="readonly">
 		        </div>
 		        
 		        
@@ -133,7 +129,7 @@
 				var tnum = doc.getElementById('tnum');
 				var freport = doc.getElementById('freport');
 				var lreport = doc.getElementById('lreport');
-				var sepe = doc.getElementById("sepe");
+				var testNum = doc.getElementById("testNum");
 				var tbpho = [];//检测前
 				var tipho = [];//检测中
 				var tepho = []//检测设备
@@ -160,8 +156,6 @@
 				var self = plus.webview.currentWebview();
                 my_name = self.my_name;
                 timestamp = self.timestamp;
-              	samping_man = self.sampling_man;
-              	sepe.value = samping_man;
                 my_name = decodeURI(decodeURI(my_name));
 				var proatt='';
 				var owntsp;
@@ -189,7 +183,7 @@
 						myform2.classList.remove('my_none');
 						myform3.classList.remove('my_none');
 						myform4.classList.remove('my_none');
-					}else if(proatt == '已处理'){
+					}else if(proatt == '已处理' || proatt == '待审批'){
 						myform2.classList.remove('my_none');
 						myform3.classList.remove('my_none');
 						myform4.classList.remove('my_none');
@@ -226,8 +220,10 @@
 						seun.value = data[0].送样单位;
 						wiun.value = data[0].见证单位;
 						reun.value = data[0].收样单位;
-						sepe.value = data[0].送样人;
 						wipe.value = data[0].见证人 ;
+						if(!data[0].检测报告编号){
+							testNum.classList.add("my_none");
+						}
 						teid.value = data[0].检测报告编号;												
 						rtpho = data[0].实测照片.split("~*^*~");
 						freport.value = data[0].不合格报告;

@@ -811,46 +811,29 @@
 					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==yzm.value){
 					//确定见证
-					mui.ajax(url+'my_plus/my_entity_detail.php',{
-						data:{
-							flag:"获取信息",
-							myid:jzid
+					mui.openWindow({
+						url:'my_commission_change.html',
+						styles: {
+							hardwareAccelerated:false
 						},
-						type:'post',
-						dataType:'json',
-						timeout:10000,
-						success:function(data){
-							var sampling_man = data[0].检测人;
-							mui.openWindow({
-								url:'my_commission_change.html',
-								styles: {
-									hardwareAccelerated:false
-								},
-								extras:{
-									//传递参数
-									ulId:jzid,
-									timestamp:timestamp,
-									my_name:my_name,
-									sampling_man:sampling_man,
-									constr:constr,
-									supvision:supvision,
-									detect:detect
-								},
-								show:{
-									autoShow:true,//页面loaded事件发生后自动显示
-									aniShow:'slide-in-right',//页面显示动画
-									duration:'100'//页面动画持续时间
-								},
-								waiting:{
-									autoShow:false,//自动显示等待框
-								}
-							});
+						extras:{
+							//传递参数
+							ulId:jzid,
+							timestamp:timestamp,
+							my_name:my_name,
+							constr:constr,
+							supvision:supvision,
+							detect:detect
 						},
-						error:function(xhr,type,errorThrown){
-							alert("ajax错误："+type+"----"+errorThrown);
+						show:{
+							autoShow:true,//页面loaded事件发生后自动显示
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
 						}
 					});
-					
 				}else{
 					mui.toast('验证码不正确',{ duration:'long', type:'div' }) 
 				}
