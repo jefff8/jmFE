@@ -179,21 +179,31 @@
 
 				
 				
-				function typeAll(data){
+				function typeAll(data,data2){
 					//初始化popPicker组件
-					var userPicker = new mui.PopPicker();
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
 					var length = data.length;
 					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
 					for(i=0;i<data.length;i++){
-						arr_4[i] = new Array();
-						arr_4[i]['text'] = data[i];
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
 					}
-					userPicker.setData(arr_4);  //给picker对象添加数据
-					userPicker.show(function(items) {
-						zjlx.value = items[0].text;
-						//返回 false 可以阻止选择框的关闭
-						//return false;
-					}, false);
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						zjlx.value =  items[0].text + "—" + items[1].text;
+					});
 				}
 				
 				
@@ -204,22 +214,26 @@
 					//异步类型
 					mui.ajax(url+'my_plus/proType.php',{
 						data:{
-							pj_type:"自检自测"
+							pj_type:"实体检测"
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
+//							alert(data);
 							var length = data.length;
 							var typeData = new Array();
-							typeData[0] = "";
+							var typeData2 = new Array();
 							for(var i=0;i<=length-1;i++){
-								typeData.push(data[i].自检自测);
+								typeData.push(data[i].房建工程);
 							}
-							typeAll(typeData);
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
 						},
 						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+errorThrown);
+							alert('ajax错误'+type+errorThrown);
 						}
 					});
 				}, false);

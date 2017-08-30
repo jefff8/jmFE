@@ -81,12 +81,12 @@
 		        </div>
 		    </form>	
 		    <div id="formbtn" class="mui-button-row">
-				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
-				&nbsp;&nbsp;
-				<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>
-				&nbsp;&nbsp;
+				<!--<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
+				&nbsp;&nbsp;-->
 				<button id="Edit" type="button" class="mui-btn mui-btn-primary">修改信息</button>
 				<button id="save" type="button" class="mui-btn mui-btn-primary my_none">保存信息</button>
+				&nbsp;&nbsp;
+				<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件上传</button>
 			</div>
 			
 			<!--处理图片-->
@@ -160,7 +160,7 @@
 				var qyrq = doc.getElementById("qyrq");
 				var jcdw = doc.getElementById("jcdw");
 				var rwfj = doc.getElementById("rwfj");
-				var fjck = doc.getElementById("fjck");
+//				var fjck = doc.getElementById("fjck");
 				var fjgx = doc.getElementById("fjgx");
 				var qualifiedNum = doc.getElementById("qualifiedNum");
 				var usedPart = doc.getElementById("usedPart");
@@ -262,32 +262,32 @@
 				});	
 				
 				//附件查看
-				fjck.addEventListener('tap',function(){
-					mui.openWindow({
-						url: 'readimage.html',
-						id:'readimage.html',
-						extras:{
-							sjc:sjc.value,
-							scene_photo:scene_photo,
-							sample_photo:sample_photo,
-							sceneText:sceneText,
-							sampleText:sampleText
-						},
-						show:{							
-							aniShow:'slide-in-right',//页面显示动画
-							duration:'100'//页面动画持续时间
-						},
-						waiting:{
-							autoShow:false,//自动显示等待框
-						}
-					})
-				});
+//				fjck.addEventListener('tap',function(){
+//					mui.openWindow({
+//						url: 'readimage.html',
+//						id:'readimage.html',
+//						extras:{
+//							sjc:sjc.value,
+//							scene_photo:scene_photo,
+//							sample_photo:sample_photo,
+//							sceneText:sceneText,
+//							sampleText:sampleText
+//						},
+//						show:{							
+//							aniShow:'slide-in-right',//页面显示动画
+//							duration:'100'//页面动画持续时间
+//						},
+//						waiting:{
+//							autoShow:false,//自动显示等待框
+//						}
+//					})
+//				});
 				
 				//附件更新
 				fjgx.addEventListener('tap',function(){
-					var btnArray = ['是', '否'];
-					mui.confirm('更新后会覆盖原有附件，确定更新吗？', '江门建筑管理系统', btnArray, function(e) {
-						if (e.index == 0) {
+//					var btnArray = ['是', '否'];
+//					mui.confirm('更新后会覆盖原有附件，确定更新吗？', '江门建筑管理系统', btnArray, function(e) {
+//						if (e.index == 0) {
 							var myform=document.getElementById('myform');
 							var myform2=document.getElementById('myform2');
 							var img_content=document.getElementById('img_content');
@@ -296,10 +296,10 @@
 							myform2.classList.add('my_none');
 							formbtn.classList.add('my_none');			
 							img_content.classList.remove('my_none');
-						} else {
-							
-						}
-					});
+//						} else {
+//							
+//						}
+//					});
 				});
 				
 				//修改按钮监听

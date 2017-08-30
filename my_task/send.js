@@ -33,8 +33,10 @@
 	}
 	//动态创建项目
 	function send(sjc,id,pj_name,type,scale,quantity,getGuy,getDate,state){
-		if(state=='新增'||state=='新增复检'||state=='未见证'){
+		if(state=='新增'||state=='新增复检'||state=='未见证'||state=='待审批'){
 			color = 'blue2';
+		}else if(state=='不合格'){
+			color = 'red';
 		}else{
 			color = 'green2';
 		}
@@ -44,8 +46,9 @@
 		if(state=='新增复检'||state=='取样复检'||state=='收样复检'){
 			ul.style.borderColor = "red";	
 		}
+		
 		var send = document.getElementById("send");
-		if(state=='新增'||state=='取样'||state=='取样复检'||state=='未见证复检'||state=='已见证'||state=='已见证复检'){
+		if(state=='新增'||state=='取样'||state=='取样复检'||state=='未见证'||state=='未见证复检'||state=='已见证'||state=='已见证复检'){
 			var my_href = "../my_material/my_material_samDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
 		}else if(state=='新增复检'){
 			var my_href = "../my_material/my_material_samDetEdit.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
@@ -53,6 +56,10 @@
 			var my_href = "../my_material/my_material_rcvdDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
 		}else if(state=='收样复检'){
 			var my_href = "../my_material/my_material_recheckDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+		}else if(state=='待审批'){
+			var my_href = "../my_material/my_material_resDet.html?sjc="+sjc+"&gcid="+id+"&state="+'processed'+"";
+		}else if(state=='不合格'){
+			var my_href = "../my_material/my_material_resDet.html?sjc="+sjc+"&gcid="+id+"&state="+'fail'+"";
 		}
 		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+my_href+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+scale+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+getGuy+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+getDate+'</p></li>';
 		send.appendChild(ul);
