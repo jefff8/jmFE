@@ -38,7 +38,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
 		    <h1 class="mui-title">我的工程</h1>
 		</header>
 		<div id="gongcheng" class="mui-content">
@@ -57,6 +57,7 @@
 					return null;
 				}
 				uid = geturl("uid");
+				main =plus.webview.currentWebview().opener();
 				//动态创建函数
 				function myproject(id,timestamp,gcmc,dq,i,construction,supervision,detection){
 					//进行编码
@@ -193,7 +194,12 @@
 					}
 				});
 			});
-			
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('my.html');
+				target.reload(true);
+				mui.back();
+			}
 		</script>
 	</body>
 

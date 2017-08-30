@@ -80,7 +80,7 @@
 
 	<body>
 	    <header class="mui-bar mui-bar-nav">
-	        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	        <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
 	        <h1 class="mui-title">任务列表</h1>
 	    </header>
 	    <div class="mui-content">
@@ -438,7 +438,12 @@
 		            },1000)  
 		        }  
 			}
-			
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('my.html');
+				target.reload(true);
+				mui.back();
+			}
 		</script>
 	</body>
 
