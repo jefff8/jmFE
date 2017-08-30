@@ -1862,7 +1862,8 @@
 			},
 			"my_commission/my_entity_change.html": {
 				"resources": [
-					"js/upload_enreschge.js"
+					"js/upload_enreschge.js",
+					"images/iconfont-tianjia.png"
 				],
 				"refer": [],
 				"priority": 0

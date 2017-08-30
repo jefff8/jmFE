@@ -1576,7 +1576,8 @@
 	},
 	"my_commission/my_entity_change.html": {
 		"resources": [
-			"js/upload_enreschge.js"
+			"js/upload_enreschge.js",
+			"images/iconfont-tianjia.png"
 		]
 	},
 	"my_commission/my_entity_results.html": {

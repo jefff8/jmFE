@@ -196,14 +196,14 @@
 									type:'POST', 
 									timeout:10000,
 									success:function(data){
-			//							alert(data);
 										var gcdzt_pd = data[0].工程单状态;
-			//							alert(gcdzt_pd);
 										//判断状态并根据状态执行改变状态的任务
 										if(gcdzt_pd=='不合格'&&(units=='监理单位'||units=='管理员')){
 											var btnArray = [
-											{title:"监理处理"},
-			//								{title:"删除"}
+											{title:"扩大检测"},
+											{title:"验证检测"},
+											{title:"设计复核"},
+											{title:"返工"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -213,7 +213,7 @@
 												var index = e.index;	
 												//var nextpage='';
 												switch (index){
-													case 1://监理处理
+													case 1://扩大检测
 														mui.openWindow({
 															url:'my_entity_change.html',
 															styles: {
@@ -234,7 +234,68 @@
 															}
 														});
 														break;
-													case 2:
+													case 2://验证检测
+														mui.openWindow({
+															url:'my_entity_change.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+													case 3://设计复核
+														mui.openWindow({
+															url:'my_entity_change.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+													case 4://返工
+														mui.openWindow({
+															url:'my_entity_change.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
 														break;
 												}	
 											 });
