@@ -236,8 +236,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							var units = data[0]['单位']; //获取单位信息
-							if(units=='监理单位'||units=='管理员'||units=='监督机构'){
+							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_material_list.php',{
 									data:{
 										flag:"获取状态",
@@ -250,7 +249,7 @@
 									timeout:10000,
 									success:function(data){
 										var gcdzt_pd = data.工程单状态;
-										if(gcdzt_pd=='不合格'&&(units=='监理单位'||units=='管理员')){
+										if(gcdzt_pd=='不合格'){
 											var btnArray = [
 											{title:"复检"},
 											{title:"监理处理"}
@@ -274,12 +273,14 @@
 															type:'POST', 
 															timeout:10000,
 															success:function(data){
-//																		alert(data.结果);
-																mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
+					//													alert(data.结果);
+																mui.toast('复检提交成功请回看',{ duration:'long', type:'div' })
 																location.reload();//刷新本页面
 															},
 															error:function(xhr,type,errorThrown){
-//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+			//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																mui.toast('复检提交成功请回看',{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
 															}
 														});	
 														break;
@@ -305,9 +306,9 @@
 														break;
 												}	
 											 });
-										}else if(gcdzt_pd=='待审批'&&(units=='监督机构'||units=='管理员')){
+										}else if(gcdzt_pd=='待审批'){
 											var btnArray = [
-											{title:"确认(监督机构)"}
+											{title:"审批通过"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -341,7 +342,7 @@
 														break;
 												}	
 											 });
-										}else if(gcdzt_pd=='复检不合格'&&(units=='监理单位'||units=='管理员')){
+										}else if(gcdzt_pd=='复检不合格'){
 											var btnArray = [
 											{title:"监理处理"}
 											]; 

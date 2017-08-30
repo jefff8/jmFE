@@ -58,7 +58,7 @@
 		            <input id="ypbh" type="text" class="mui-input-clear" readonly="readonly" placeholder="请输入初检编号">
 		        </div> 
 		        <div class="mui-input-row">
-		            <label>样品编号(由检测单位提供):</label>
+		            <label>样品编号:</label>
 		            <input id="second_num" type="text" class="mui-input-clear" placeholder="请输入样品编号">
 		        </div> 
 		        <div class="mui-input-row my_none">
@@ -172,6 +172,7 @@
 					success:function(data){
 						var length=data.length;
 						for (var i=0;i<length-1;i++) {
+							second_num.value=data[i].样品编号;
 							sydw.value=data[i].送样单位;
 							jzdw.value=data[i].见证单位;	
 							shydw.value=data[i].收样单位;

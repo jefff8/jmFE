@@ -183,8 +183,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							var units = data[0]['单位']; //获取单位信息
-							if(units=='监理单位'||units=='管理员'||units=='监督机构'){
+							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_entity_result.php',{
 									data:{
 										flag:"获取状态",
@@ -200,7 +199,7 @@
 										var gcdzt_pd = data[0].工程单状态;
 			//							alert(gcdzt_pd);
 										//判断状态并根据状态执行改变状态的任务
-										if(gcdzt_pd=='不合格'&&(units=='监理单位'||units=='管理员')){
+										if(gcdzt_pd=='不合格'){
 											var btnArray = [
 											{title:"监理处理"},
 			//								{title:"删除"}
@@ -238,9 +237,9 @@
 														break;
 												}	
 											 });
-										}else if(gcdzt_pd=='待审批'&&(units=='监督机构'||units=='管理员')){
+										}else if(gcdzt_pd=='待审批'){
 											var btnArray = [
-											{title:"确认(监督机构)"}
+											{title:"审批通过"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 

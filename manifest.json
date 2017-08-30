@@ -2086,10 +2086,7 @@
 					"my_insp_entity/my_inspection_entitydetail_full.html",
 					"my_task/insp2_fail.html",
 					"my_material/my_material_rcvdDet.html",
-					"my_task/send_fail.html",
-					"my_material/my_material_resDet.html",
-					"my_insp_entity/my_inspection_entitydetail_bresult.html",
-					"my_commission/my_entity_readmessage.html"
+					"my_task/send_fail.html"
 				],
 				"priority": 0
 			},
@@ -2136,11 +2133,7 @@
 				"priority": 0
 			},
 			"my_commission/my_entity_readmessage.html": {
-				"resources": [
-					"js/mui.picker.js",
-					"js/native.js",
-					"js/mui.poppicker.js"
-				],
+				"resources": [],
 				"refer": [
 					"my_commission/my_entity_readimage.html"
 				],

@@ -35,8 +35,6 @@
 	function inspection1(sjc,id,pj_name,type,part,quantity,inspector,testDate,state){
 		if(state=='新增'||state=='提交见证'){
 			color = 'blue2';
-		}else if(state=='不合格'){
-			color = 'red';
 		}else{
 			color = 'green2';
 		}

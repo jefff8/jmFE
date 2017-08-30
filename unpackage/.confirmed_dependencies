@@ -1802,10 +1802,7 @@
 			"my_task/insp2_fail.html",
 			"my_commission/my_entity_readmassage.html",
 			"my_material/my_material_rcvdDet.html",
-			"my_task/send_fail.html",
-			"my_material/my_material_resDet.html",
-			"my_insp_entity/my_inspection_entitydetail_bresult.html",
-			"my_commission/my_entity_readmessage.html"
+			"my_task/send_fail.html"
 		]
 	},
 	"my_task/deliver.html": {
@@ -1851,11 +1848,6 @@
 	"my_commission/my_entity_readmessage.html": {
 		"refer": [
 			"my_commission/my_entity_readimage.html"
-		],
-		"resources": [
-			"js/mui.picker.js",
-			"js/native.js",
-			"js/mui.poppicker.js"
 		]
 	},
 	"my_task/send_fail.html": {
