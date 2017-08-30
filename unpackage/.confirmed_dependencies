@@ -1677,7 +1677,18 @@
 		],
 		"resources": [
 			"my_material/my_material_list.html",
-			"css/mui.picker.css"
+			"css/mui.picker.css",
+			"js/upload_qy.js",
+			"images/iconfont-tianjia.png",
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/my_project_fhys_xz.css"
 		]
 	},
 	"my_material/camera_image.html": {

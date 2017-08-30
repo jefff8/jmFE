@@ -306,7 +306,7 @@
 				Edit.addEventListener('tap',function(){
 					var myform = document.getElementById("myform").getElementsByTagName("input");
 					var jcdw = document.getElementById("jcdw");
-					Edit.remove();
+					Edit.classList.add("my_none");
 					save.classList.remove("my_none");
 					jcdw.removeAttribute("readonly");
   					for(i=1;i<11;i++){
