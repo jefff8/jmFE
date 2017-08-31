@@ -255,6 +255,61 @@
 						}
 					  }
 					);
+				}else if(status=='不合格'){
+					mui.ajax(url+'check.php',{
+					data:{
+						mobile:mobile
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var units = data[0]['单位']; //获取单位信息
+						if(units=='监理单位'||units=='管理员'){
+							var btnArray = [
+							{title:"监理处理"}
+							]; 
+							plus.nativeUI.actionSheet({
+								title:"操作", 
+								cancel:"取消",
+								buttons:btnArray
+							},function(e){
+								var index = e.index;	
+								switch (index){
+									case 1://监理处理
+										mui.openWindow({
+											url:"insp2_supvr.html",
+											extras:{
+												ulId:ulId
+											},
+											show:{
+												autoShow:true,//页面loaded事件发生后自动显示
+												aniShow:'slide-in-right',//页面显示动画
+												duration:'100'//页面动画持续时间
+											},
+											waiting:{
+												autoShow:false,//自动显示等待框
+											}
+										});
+										break;
+								}	
+							 });
+						}else{
+							var btnArray = [
+								{title:"抱歉，您没有操作权限"}
+							]; 
+							plus.nativeUI.actionSheet({
+								title:"操作", 
+								cancel:"取消",
+								buttons:btnArray
+							},function(e){
+							});
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
 				}
 			},
 			error:function(){

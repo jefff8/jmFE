@@ -43,10 +43,10 @@
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 		ul.id = id;
-		if(state=='新增复检'||state=='取样复检'||state=='收样复检'){
+		if(state=='新增复检'||state=='取样复检'||state=='收样复检'||state=='复检不合格'){
 			ul.style.borderColor = "red";	
 		}
-		
+		  
 		var send = document.getElementById("send");
 		if(state=='新增'||state=='取样'||state=='取样复检'||state=='未见证'||state=='未见证复检'||state=='已见证'||state=='已见证复检'){
 			var my_href = "../my_material/my_material_samDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
@@ -373,7 +373,7 @@
 							}
 							
 							break;
-							case 2://不合格
+							case 2:
 							if(status=='收样'){
 								var btnArray = ['是', '否'];
 								mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
@@ -473,6 +473,129 @@
 						}	
 					  }
 					);
+				}else if(status=='不合格'){
+					var btnArray = [
+					{title:"复检"},
+					{title:"监理处理"}
+					]; 
+					plus.nativeUI.actionSheet({
+						title:"操作", 
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						//var nextpage='';
+						switch (index){
+							case 1://复检
+								mui.ajax(url+'my_task/my_send.php',{
+									data:{
+										flag:"复检",
+										ulId:ulId
+									},
+									dataType:'json', 
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+//										alert(data); 
+										mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
+										location.reload();//刷新本页面
+									},
+									error:function(xhr,type,errorThrown){
+										mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
+										location.reload();//刷新本页面
+//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});	
+								break;
+							case 2://监理处理
+								mui.openWindow({
+									url:"send_supvr.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								})
+								break;
+						}	
+					 });
+				}else if(status=='待审批'){
+					var btnArray = [
+					{title:"确认(监督机构)"}
+					]; 
+					plus.nativeUI.actionSheet({
+						title:"操作", 
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						//var nextpage='';
+						switch (index){
+							case 1://审批通过
+								mui.ajax(url+'my_task/my_send.php',{
+									data:{
+										flag:"审批通过",
+										ulId:ulId
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+//													alert(data.结果);
+										mui.toast('操作完成！',{ duration:'long', type:'div' })
+										location.reload();//刷新本页面
+									},
+									error:function(xhr,type,errorThrown){
+//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});	
+								break;
+						}	
+					 });
+				}else if(status=='复检不合格'){
+					var btnArray = [
+					{title:"监理处理"}
+					]; 
+					plus.nativeUI.actionSheet({
+						title:"操作", 
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	 
+						//var nextpage='';
+						switch (index){
+							case 1://监理处理
+								mui.openWindow({
+									url:"send_supvr.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+						}	
+					});
 				}
 			},
 			error:function(xhr,type,errorThrown){

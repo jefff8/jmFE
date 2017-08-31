@@ -1804,7 +1804,8 @@
 			"my_task/self_inspection2.js",
 			"my_insp_material/my_inspection_detail.html",
 			"my_task/commission.js",
-			"my_commission/my_entity_readmassage.html"
+			"my_commission/my_entity_readmassage.html",
+			"my_material/my_material_samDetEdit.html"
 		],
 		"refer": [
 			"my_material/my_material_samDet.html",
@@ -1817,7 +1818,11 @@
 			"my_task/send_fail.html",
 			"my_material/my_material_resDet.html",
 			"my_insp_entity/my_inspection_entitydetail_bresult.html",
-			"my_commission/my_entity_readmessage.html"
+			"my_commission/my_entity_readmessage.html",
+			"my_material/my_material_samDetEdit.html",
+			"my_material/my_material_supvr.html",
+			"my_task/send_supvr.html",
+			"my_task/commission_supvr.html"
 		]
 	},
 	"my_task/deliver.html": {
@@ -1887,6 +1892,19 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		]
+	},
+	"my_task/send_supvr.html": {
+		"resources": [
+			"js/upload_jlcl.js"
+		]
+	},
+	"my_task/commission_supvr.html": {
+		"resources": [
+			"js/native.js",
+			"js/mui.poppicker.js",
+			"js/upload_enreschge.js",
+			"images/iconfont-tianjia.png"
 		]
 	}
 }
