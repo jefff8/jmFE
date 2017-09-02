@@ -12,14 +12,14 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
-		    <h1 class="mui-title">不合格处理</h1>
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()" ></a>
+		    <h1 class="mui-title">监理处理</h1>
 		</header>
 		<div class="mui-content" style="margin-top:10px;">
 		    <div id="myform">
-				&nbsp;&nbsp;<label >退场记录：</label>
+				&nbsp;&nbsp;<label >处理记录：</label>
 			    <div class="mui-input-row" >
-					<textarea id="tcjv" rows="5" placeholder="请输入退场记录"></textarea>
+					<textarea id="tcjv" rows="5" placeholder="请输入处理记录"></textarea>
 				</div>
 			</div>
 			<div class="mui-input-row my_none ">
@@ -38,10 +38,10 @@
 	        	<br/>
 	        	<div><img id="newUpload5" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 	        </div>
-	         <div class="mui-input-group" >
+	        <div class="mui-input-group" >
 	        	<div  class="mui-input-row">
-		            <label>处理图片说明:</label>
-		            <input id="disposeText" type="text" class="mui-input-clear" placeholder="请输入处理照片说明">
+		            <label>处理照片说明:</label>
+		            <input id="Text5" type="text" class="mui-input-clear" placeholder="请输入说明">
 	        	</div>
 	        </div>
 	        <div>
@@ -57,10 +57,8 @@
 	    </form>
 		<!-------------------------------------------处理图片------------------------------------------>
 		<script src="../js/mui.min.js"></script>
-		<!--<script src="../js/common.js"></script>
-		<script src="../js/immersed.js" ></script>	-->
 		<script src="../js/service.js"></script>
-		<script src="../js/upload_jlcl.js"></script>
+		<script src="../js/upload_entity_insp_supvr.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -71,93 +69,67 @@
 				var tcjv = doc.getElementById("tcjv");
 				var save = doc.getElementById("save");
 				var sjc = doc.getElementById("sjc");
-				
-				
-				//异步获取材料送检时间戳
-				mui.ajax(url+'my_plus/material_detail.php',{
+				mui.ajax(url+'my_task/self_inspection2.php',{
 					data:{
-						gcid:ulId				
+						flag:'获取时间戳',
+						ulId:ulId
 					},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
 					success:function(data){
-						var length=data.length;
-						for (var i=0;i<length-1;i++) {
-							sjc.value=data[i].时间戳;
-						}
+						sjc.value = data.时间戳;
 					},
-					error:function(xhr,type,errorThrown){
-						//异常处理；
-						//alert('ajax错误'+type);
-						return callback('ajax错误'+type+errorThrown);
+					error:function(xhr,type,errThrown){
+						alert("ajax错误！");
 					}
-					
-				});	
+				})
 				//保存按钮
 				save.addEventListener('tap',function(){
-					var mydata = {
-						tcjv:tcjv.value,
-						gcid:ulId
-					};
-					ajaxform(mydata,function(err){
-						if (err) {
-							plus.nativeUI.toast(err);
-							return;
-						}
-						var btnArray = ['是', '否'];
-						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
-							if (e.index == 0) {
-								var myform=document.getElementById('myform');
-								var img_content=document.getElementById('img_content');
-								var formbtn=document.getElementById("formbtn");
-								myform.classList.add('my_none');
-								formbtn.classList.add('my_none');
-								img_content.classList.remove('my_none');
-							} else {
-								//返回父页面刷新
-								var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
-								target.reload(true);
-								mui.back();
-							}
-						});
-					});
-				});
-				//异步传值保存
-				var ajaxform = function(mydata, callback) {
-					callback = callback || $.noop;
-					mydata = mydata || {};
-					mydata.tcjv = mydata.tcjv || '';
-					mydata.gcid = mydata.gcid || '';
-					mui.ajax(url+'my_plus/my_material_supvr.php',{
+					mui.ajax(url+'my_plus/my_entity_insp_supvr.php',{
 						data:{
-							tcjv:mydata.tcjv,
-							gcid:mydata.gcid
+							tcjv:tcjv.value,
+							ulid:ulId
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							//alert(data.result);
-							if (data.result=='success') {
-								return callback();
-							} else{
-								return callback('服务器返回error');	
-							}
+//							if (data.result=='success') {
+//								return callback();
+//							} else{
+//								return callback('服务器返回error');	
+//							}
 						},
 						error:function(xhr,type,errorThrown){
-							//异常处理；
-							//alert('ajax错误'+type);
-							return callback('ajax错误'+type+errorThrown);
+//							alert('ajax错误'+type+errorThrown);
 						}
 					});
-				};
+					var btnArray = ['是', '否'];
+					mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+						if (e.index == 0) {
+							var myform=document.getElementById('myform');
+							var img_content=document.getElementById('img_content');
+							var formbtn=document.getElementById("formbtn");
+							myform.classList.add('my_none');
+							formbtn.classList.add('my_none');
+							img_content.classList.remove('my_none');
+						} else {
+							//返回父页面刷新
+							var target=plus.webview.getWebviewById('my_task/task_list.html');
+							target.reload(true);
+							mui.back();
+						}
+					});
+				});
+				
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+				var target=plus.webview.getWebviewById('my_task/task_list.html');
 				target.reload(true);
 				mui.back();
+//				location.reload();
 			}
 		</script>
 	</body>

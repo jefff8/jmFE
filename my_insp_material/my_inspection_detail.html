@@ -77,10 +77,6 @@
 		            <label>见证人:</label>
 		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入备注" readonly="readonly">
 		        </div>
-		        <!--<div class="mui-input-row" id="testNum">
-		            <label>检测报告编号:</label>
-		            <input id="jcbgbh" type="text" class="mui-input-clear" placeholder="请输入检测报告编号" readonly="readonly">
-		        </div>-->
 		        <div id="hide" class="mui-input-row my_none">
 		            <label>处理情况:</label>
 		            <input id="clqk"  type="text" class="mui-input-clear" placeholder="请输入处理情况">
@@ -161,10 +157,10 @@
 					timeout:10000,
 					success:function(data){
 //						alert(data);
-						if(data.工程单状态=="确定自测" || data.工程单状态=="合格"){
+						if(data.工程单状态=="确定自测" || data.工程单状态=="合格" || data.工程单状态=="取样送检"){
 							var myform2 = document.getElementById('myform2');
 							myform2.classList.remove("my_none");
-						}else if(data.工程单状态=="不合格"){
+						}else if(data.工程单状态=="不合格" || data.工程单状态=="确定自测不合格"){
 							var myform2 = document.getElementById('myform2');
 							var hide = document.getElementById("hide");
 							hide.classList.remove("my_none");

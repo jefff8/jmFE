@@ -253,6 +253,136 @@
 						}	
 					  }
 					);
+				}else if(status=='不合格'){
+					var btnArray = [
+					{title:"扩大检测"},
+					{title:"验证检测"},
+					{title:"设计复核"},
+					{title:"返工"}
+					]; 
+					plus.nativeUI.actionSheet({
+						title:"操作", 
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						//var nextpage='';
+						switch (index){
+							case 1://扩大检测
+								mui.openWindow({
+									url:'commission_supvr.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+							case 2://验证检测
+								mui.openWindow({
+									url:'commission_supvr.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+							case 3://设计复核
+								mui.openWindow({
+									url:'commission_supvr.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+							case 4://返工
+								mui.openWindow({
+									url:'commission_supvr.html',
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+						}	
+					 });
+				}else if(status=='待审批'){
+					var btnArray = [
+					{title:"确认(监督机构)"}
+					]; 
+					plus.nativeUI.actionSheet({
+						title:"操作", 
+						cancel:"取消",
+						buttons:btnArray
+					},function(e){
+						var index = e.index;	
+						//var nextpage='';
+						switch (index){
+							case 1://审批通过
+								mui.ajax(url+'my_plus/my_entity_result.php',{
+									data:{
+										flag:"审批通过",
+										ulId:ulId
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+//										alert(data);
+										mui.toast('操作完成！',{ duration:'long', type:'div' });
+										location.reload();//刷新本页面
+									},
+									error:function(xhr,type,errorThrown){
+										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});	
+								break;
+						}	
+					});
 				}
 			},
 			error:function(xhr,type,errorThrown){

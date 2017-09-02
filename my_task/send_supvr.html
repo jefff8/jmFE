@@ -123,7 +123,7 @@
 						});
 					});
 				});
-				//异步传值保存
+				//异步传值
 				var ajaxform = function(mydata, callback) {
 					callback = callback || $.noop;
 					mydata = mydata || {};
@@ -155,7 +155,7 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+				var target=plus.webview.getWebviewById('my_task/task_list.html');
 				target.reload(true);
 				mui.back();
 			}

@@ -90,7 +90,7 @@
 				mobile = self.mobile;
 				my_name = self.my_name;
 	            gcmc = self.gcmc;
-	            timestamp = self.timestamp;
+	            timestamp = self.timestamp;//工程时间戳
 				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
 				my_name = encodeURI(encodeURI(my_name)); //获取用户名
 				
@@ -331,7 +331,7 @@
 														});	
 														break;
 												}	
-											 });
+											});
 										}
 									},
 									error:function(xhr,type,errorThrown){

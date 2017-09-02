@@ -30,6 +30,9 @@
 								<a id="" class="mui-control-item"  href="#item2">
 									不合格
 								</a>
+								<a id="" class="mui-control-item"  href="#item3">
+									初检单
+								</a>
 		         		   </div>
 		      		  	</div>
 		   			</div>
@@ -54,6 +57,16 @@
 			   </div>
 			</div>
 			<!---------------------------------不合格------------------------------------------->
+			
+			<!---------------------------------初检单------------------------------------------->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="first" class="mui-scroll rwdiv">
+	    				
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------初检单------------------------------------------->
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -99,6 +112,14 @@
 						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
+					}else if(zt=="取样送检不合格"){
+						var choujian = document.getElementById("fail");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.style.borderColor = "red";	
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						choujian.appendChild(ul);						
 					}
 					else if(zt=="已处理"){
 						var choujian = document.getElementById("fail");
@@ -116,6 +137,16 @@
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}
+				}
+				
+				//初检单
+				function first_test(gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc){
+					var first = document.getElementById("first");
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'fail_first'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ zjlx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ qyrq +'</p></li>';
+					first.appendChild(ul);
 				}
 				
 				
@@ -151,6 +182,38 @@
 					}
 				});
 				
+				//初检单
+				mui.ajax(url+'my_plus/my_inspection_material.php',{
+					data:{
+						flag:"初检单",
+						gcmc:gcmc,
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].卡项id;
+								var gcdzt = data[i].工程单状态;
+								var zjlx = data[i].自检自测类型;
+								var gg = data[i].备注;
+								var sl = data[i].数量;
+								var jcbw = data[i].检测部位;
+								var qyr = data[i].检测人;
+								var qyrq = data[i].检测日期;
+								var sjc = data[i].时间戳;
+								first_test(gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc)
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
 				//长按不合格照片
 				mui("#fail").on('longtap','ul',function(){
 					var ulid = this.id;
@@ -163,7 +226,7 @@
 						timeout:10000,
 						success:function(data){
 							var units = data[0]['单位']; //获取单位信息
-							if(units=='监理单位'||units=='管理员'){
+							if(units=='监理单位'||units=='管理员'||units=='监督机构'){
 								mui.ajax(url+'my_plus/my_inspection_material.php',{
 									data:{
 										flag:"获取状态",
@@ -175,9 +238,10 @@
 									success:function(data){
 										var gcdzt = data.工程单状态;
 										var timestamp = data.时间戳;
-										if(gcdzt=='不合格'){
+										if(gcdzt=='不合格' &&(units=='监理单位'||units=='管理员')){
 											var btnArray = [
-											{title:"监理处理"}
+											{title:"监理处理"},
+											{title:"取样送检"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -195,8 +259,86 @@
 															}
 														});
 														break;
+													case 2://取样送检
+														mui.ajax(url+'my_plus/my_inspection_material.php',{
+															data:{
+																flag:"取样送检",
+																ulid:ulid,
+																gcmc:gcmc
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+//																alert(data.结果);
+																mui.toast('取样送检成功请回看',{ duration:'long', type:'div' });
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});	
+														break;	
 												}	
 											 });
+										}else if(gcdzt=='待审批' &&(units=='监督机构'||units=='管理员')){
+											var btnArray = [
+											{title:"确认(监督机构)"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://审批通过
+														mui.ajax(url+'my_plus/my_inspection_material.php',{
+															data:{
+																flag:"审批通过",
+																ulid:ulid,
+																gcmc:gcmc
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+					//													alert(data.结果);
+																mui.toast('操作完成！',{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+			//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																mui.toast('操作完成！',{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															}
+														});	
+														break;
+												}	
+											 });
+										}else if(gcdzt=='取样送检不合格' &&(units=='监理单位'||units=='管理员')){
+											var btnArray = [
+											{title:"监理处理"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://监理处理
+														mui.openWindow({
+															url:"my_insp_supvr.html",
+															extras:{
+																ulid:ulid,
+																timestamp:timestamp
+															}
+														});
+													break;
+												}	
+											});
 										}
 									},
 									error:function(xhr,type,errorThrown){
