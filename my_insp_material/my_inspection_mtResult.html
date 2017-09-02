@@ -281,42 +281,6 @@
 														break;	
 												}	
 											 });
-										}else if(gcdzt=='待审批' &&(units=='监督机构'||units=='管理员')){
-											var btnArray = [
-											{title:"确认(监督机构)"}
-											]; 
-											plus.nativeUI.actionSheet({
-												title:"操作", 
-												cancel:"取消",
-												buttons:btnArray
-											},function(e){
-												var index = e.index;	
-												//var nextpage='';
-												switch (index){
-													case 1://审批通过
-														mui.ajax(url+'my_plus/my_inspection_material.php',{
-															data:{
-																flag:"审批通过",
-																ulid:ulid,
-																gcmc:gcmc
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-					//													alert(data.结果);
-																mui.toast('操作完成！',{ duration:'long', type:'div' })
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-			//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-																mui.toast('操作完成！',{ duration:'long', type:'div' })
-																location.reload();//刷新本页面
-															}
-														});	
-														break;
-												}	
-											 });
 										}else if(gcdzt=='取样送检不合格' &&(units=='监理单位'||units=='管理员')){
 											var btnArray = [
 											{title:"监理处理"}
