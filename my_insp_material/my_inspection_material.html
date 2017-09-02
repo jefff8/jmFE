@@ -15,7 +15,13 @@
 				top:35%;
 				/*position:relative;*/
 				left:9%;
-
+			}
+			#recPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
 			}
 			#btnPopover{
 				min-width: 300px;
@@ -62,6 +68,22 @@
 					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
 				</div>
 			</div>
+		<!--取样送检验证码-->
+			<div id="recPopover" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>验证码:</label>
+        				<input id="code_recheck" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+        			</div>    			
+        		</form>
+				<div id="recheck"  class="mui-button-row my_margintop10px">
+					<button   type="button" class="mui-btn mui-btn-primary" onclick="recheck(this)">确定</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+				</div>
+			</div>
+		<!--取样送检验证码-->
 			<form class="mui-input-group my_none">
 			    <div class="mui-input-row my_none">
 			        <label>企业ID</label>
@@ -161,37 +183,38 @@
 				var addNew = doc.getElementById("addNew");
 				//验证码
 				var code = doc.getElementById('code');
+				var code_recheck = doc.getElementById('code_recheck');
 				var sendMsg = doc.getElementById("sendMsg");
 				/*卡项列表*/
 				//函数
 				function inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc){
 					var zt_c = encodeURI(encodeURI(zt));
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					if(zt=="取样送检"||zt=="取样送检准备材料" ||zt=="取样送检提交见证" ||zt=="取样送检确定自测"){
+					ul.style.borderColor = "red";	
+					}
+					
 					if(zt=="新增"){
 						var choujian = document.getElementById("draft");
-						var ul = document.createElement("ul");
-						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
-					}else if(zt=="准备材料"){
+					}else if(zt=="取样送检" ){
+						var quyang = document.getElementById("draft");
+						ul.style.borderColor = "red";
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detailDetEdit.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+Position+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						quyang.appendChild(ul);
+					}else if(zt=="准备材料" || zt=="取样送检准备材料"){
 						var choujian = document.getElementById("draft");
-						var ul = document.createElement("ul");
-						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
-					}else if(zt=="提交见证"){
+					}else if(zt=="提交见证" ||zt=="取样送检提交见证"){
 						var jianli =  document.getElementById("witness");
-						var ul = document.createElement("ul");
-						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						jianli.appendChild(ul);
-					}else if(zt=="确定自测"){
+					}else if(zt=="确定自测" || zt == "取样送检确定自测"){
 						var jianli =  document.getElementById("witness");
-						var ul = document.createElement("ul");
-						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
-						ul.id = id;
 						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人/见证人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						jianli.appendChild(ul);
 					}				
@@ -295,7 +318,7 @@
 										var status = data.工程单状态;
 										var timestamp_self = data.时间戳;
 										
-										if(status == "新增"){
+										if(status == "新增" ||status == "取样送检"){
 											var btnArray = [
 											{title:"取样"},
 											{title:"删除"}
@@ -309,6 +332,7 @@
 												//var nextpage='';
 												switch (index){
 													case 1://准备材料
+													if(status == "新增"){
 														mui.ajax(url+'my_plus/my_inspection_material.php',{
 															data:{
 																flag:"准备材料",
@@ -318,16 +342,34 @@
 															dataType:'json',
 															timeout:10000,
 															success:function(data){
-					//											alert("ajax success!");
 																mui.toast(data.result,{ duration:'long', type:'div' });
 																location.reload();//刷新本页面
 															},
 															error:function(){
-																mui.toast("取样成功",{ duration:'long', type:'div' });
+																mui.toast("取样失败",{ duration:'long', type:'div' });
 																location.reload();//刷新本页面
 															}
 														});
-														break;
+													}else if(status == "取样送检"){
+														mui.ajax(url+'my_plus/my_inspection_material.php',{
+															data:{
+																flag:"取样送检准备材料",
+																ulid:ULid
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+													}
+													break;
 													case 2://删除
 														mui.ajax(url+'my_plus/my_inspection_material.php',{
 															data:{
@@ -347,11 +389,11 @@
 																location.reload();//刷新本页面
 															}
 														});
-														break;
+													break;
 												}	
 											  }
 											);
-										}else if(status == "准备材料"){
+										}else if(status == "准备材料" ||status == "取样送检准备材料"){
 											var btnArray = [
 											{title:"提交见证"},
 											{title:"撤销取样"}
@@ -365,44 +407,82 @@
 												//var nextpage='';
 												switch (index){
 													case 1://提交见证
-													
-														mui.ajax(url+'my_plus/my_inspection_material.php',{
-															data:{
-																flag:"提交见证",
-																gcdId:ULid
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-																mui.toast(data.result,{ duration:'long', type:'div' }) 
-																location.reload();
-															},
-															error:function(xhr,type,errorThrown){
-																alert('ajax错误'+type+'---'+errorThrown);
-															}
-														});
-														break;
+														if(status == "准备材料"){
+															mui.ajax(url+'my_plus/my_inspection_material.php',{
+																data:{
+																	flag:"提交见证",
+																	gcdId:ULid
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+																	mui.toast(data.result,{ duration:'long', type:'div' }) 
+																	location.reload();
+																},
+																error:function(xhr,type,errorThrown){
+																	alert('ajax错误'+type+'---'+errorThrown);
+																}
+															});
+														}else if(status == "取样送检准备材料"){
+															mui.ajax(url+'my_plus/my_inspection_material.php',{
+																data:{
+																	flag:"取样送检提交见证",
+																	gcdId:ULid
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+																	mui.toast(data.result,{ duration:'long', type:'div' }) 
+																	location.reload();
+																},
+																error:function(xhr,type,errorThrown){
+																	alert('ajax错误'+type+'---'+errorThrown);
+																}
+															});
+														}
+													break;
 													case 2://撤销准备材料
-														mui.ajax(url+'my_plus/my_inspection_material.php',{
-															data:{
-																flag:"撤销取样",
-																ulid:ULid
-															},
-															type:'post',
-															dataType:'json',
-															timeout:10000,
-															success:function(data){
-					//											alert("ajax success!");
-																mui.toast(data.result,{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
-															},
-															error:function(){
-																mui.toast("撤销失败+ajax error!",{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
-															}
-														});
-														break;
+														if(status == "准备材料"){
+															mui.ajax(url+'my_plus/my_inspection_material.php',{
+																data:{
+																	flag:"撤销取样",
+																	ulid:ULid
+																},
+																type:'post',
+																dataType:'json',
+																timeout:10000,
+																success:function(data){
+						//											alert("ajax success!");
+																	mui.toast(data.result,{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																},
+																error:function(){
+																	mui.toast("撤销失败+ajax error!",{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																}
+															});
+														}else if(status == "取样送检准备材料"){
+															mui.ajax(url+'my_plus/my_inspection_material.php',{
+																data:{
+																	flag:"撤销取样送检准备材料",
+																	ulid:ULid
+																},
+																type:'post',
+																dataType:'json',
+																timeout:10000,
+																success:function(data){
+																	mui.toast(data.result,{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																},
+																error:function(){
+																	mui.toast("撤销失败+ajax error!",{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																}
+															});
+														}
+													break;
 												}	
 											  }
 											);
@@ -458,7 +538,7 @@
 									success:function(data){
 										var status = data.工程单状态;
 										var self_timestamp = data.时间戳;
-										if(status == "提交见证"){
+										if(status == "提交见证" || status == "取样送检提交见证"){
 											var btnArray = [
 												{title:"确定见证"},
 												];
@@ -471,14 +551,20 @@
 													//var nextpage='';
 													switch (index){
 														case 1://确定自测:输入验证码
+															if(status == "提交见证" ){
 															mui("#zuyPopover").popover("toggle");
 															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
 															but_id.id=ULid;
-															break;
+															}else if(status == "取样送检提交见证" ){
+															mui("#recPopover").popover("toggle");
+															var but_id=document.getElementById("recheck").getElementsByTagName('button')[0];
+															but_id.id=ULid;
+															}
+														break;
 													}	
 												  }
 												);
-										}else if(status == "确定自测"){
+										}else if(status == "确定自测" || status == "取样送检确定自测"){
 											var btnArray = [
 												{title:"合格"},
 												{title:"不合格"}
@@ -507,8 +593,9 @@
 																	mui.toast("ajax error!",{ duration:'long', type:'div' });
 																}
 															});
-															break;
+														break;
 														case 2://不合格
+														if(status == "确定自测"){
 															var btnArray = ['是', '否'];
 															mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 																if (e.index == 0) {
@@ -516,7 +603,8 @@
 																		url:"my_inspection_disqualification.html",
 																		extras:{
 																			//传递参数
-																			self_timestamp:self_timestamp
+																			self_timestamp:self_timestamp,
+																			status:"确定自测"
 																		},
 																		show: {
 																			aniShow:"pop-in"
@@ -530,8 +618,31 @@
 																	
 																}
 															});
-															
-															break;
+														}else if(status == "取样送检确定自测"){
+															var btnArray = ['是', '否'];
+															mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+																if (e.index == 0) {
+																	mui.openWindow({
+																		url:"my_inspection_disqualification.html",
+																		extras:{
+																			//传递参数
+																			self_timestamp:self_timestamp,
+																			status:"取样送检确定自测"
+																		},
+																		show: {
+																			aniShow:"pop-in"
+																		},
+																		waiting: {
+																			autoShow: false
+																		}
+																	});
+																	
+																} else {
+																	
+																}
+															});
+														}
+														break;
 													}	
 												  }
 												);
@@ -620,6 +731,58 @@
 				}else if(code.value==""){
 					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==yzm.value){
+					mui.ajax(url+'my_plus/my_inspection_material.php',{
+						data:{
+							flag:"获取状态",
+							ulid:jzid
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							var timestamp_self = data.时间戳;
+							mui.openWindow({
+								url:'my_inspection_deliver.html',
+								styles: {
+									hardwareAccelerated:false
+								},
+								extras:{
+									//传递参数
+									ulid:jzid,
+									timestamp_self:timestamp_self,
+									my_name:my_name,
+									constr:constr,
+									supvision:supvision,
+									detect:detect
+								},
+								show:{
+									autoShow:true,//页面loaded事件发生后自动显示
+									aniShow:'slide-in-right',//页面显示动画
+									duration:'100'//页面动画持续时间
+								},
+								waiting:{
+									autoShow:false,//自动显示等待框
+								}
+							});	
+						},
+						error:function(xhr,type,errorThrown){
+							alert("获取验证码失败！");
+						}
+					});
+				}else{
+					mui.toast('验证码不正确',{ duration:'long', type:'div' }) 
+				}
+			}
+			
+			//复检验证码
+			function recheck(jzid){
+				var jzid = jzid.id;
+				if(yzm.value==""){
+					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
+				}else if(code_recheck.value==""){
+					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
+				}else if(code_recheck.value==yzm.value){
 					mui.ajax(url+'my_plus/my_inspection_material.php',{
 						data:{
 							flag:"获取状态",

@@ -18,7 +18,7 @@
 		<div class="mui-content">
 			<form id="myform">
 				<div>
-					<label> 处理情况：</label>
+					<label> 处理记录：</label>
 					<br />
 					<textarea id="content" rows="5" cols="200"></textarea>
 				</div>
@@ -40,7 +40,8 @@
 			mui.init()
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
-	      		self_timestamp = self.self_timestamp; 
+	      		self_timestamp = self.self_timestamp;
+	      		self_status = self.status; 
 				var doc = document;
 				var sjc = doc.getElementById("sjc");
 				sjc.value = self_timestamp;
@@ -52,6 +53,7 @@
 					mui.ajax(url+'my_plus/my_inspection_disqualification.php',{
 						data:{
 							self_timestamp:self_timestamp,
+							self_status:self_status,
 							data_sent:content.value
 						},
 						type:'post',
