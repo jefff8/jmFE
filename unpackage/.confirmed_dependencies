@@ -1270,12 +1270,15 @@
 			"fonts/mui.ttf",
 			"css/mui.min.css",
 			"css/my_project_fhys_xz.css",
-			"my_insp_material/my_inspection_detail.html"
+			"my_insp_material/my_inspection_detail.html",
+			"my_insp_material/my_inspection_detailDetEdit.html"
 		],
 		"refer": [
 			"my_insp_material/my_inspection_add.html",
 			"my_insp_material/my_inspection_detail.html",
-			"my_insp_material/my_inspection_deliver.html"
+			"my_insp_material/my_inspection_deliver.html",
+			"my_insp_material/my_inspection_disqualification.html",
+			"my_insp_material/my_inspection_detailDetEdit.html"
 		]
 	},
 	"my_material/my_material_add.html": {
@@ -1376,12 +1379,14 @@
 			"css/mui.poppicker.css",
 			"css/mui.picker.min.css",
 			"css/my_project_fhys_xz.css",
-			"my_insp_material/my_inspection_detail.html"
+			"my_insp_material/my_inspection_detail.html",
+			"my_insp_material/my_inspection_mResDet.html"
 		],
 		"refer": [
 			"my_plus/my_inspection_results.html",
 			"my_insp_material/my_insp_supvr.html",
-			"my_insp_material/my_inspection_detail.html"
+			"my_insp_material/my_inspection_detail.html",
+			"my_insp_material/my_inspection_mResDet.html"
 		]
 	},
 	"my_material/readimage.html": {
@@ -1887,6 +1892,40 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		]
+	},
+	"my_insp_material/my_inspection_mResDet.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/common.js",
+			"my_insp_material/my_inspection_mtResult.html"
+		],
+		"refer": [
+			"my_insp_material/my_inspection_mtResult.html",
+			"my_insp_material/readimage_inspection.html"
+		]
+	},
+	"my_insp_material/my_inspection_detailDetEdit.html": {
+		"resources": [
+			"css/mui.min.css",
+			"my_insp_material/my_inspection_material.html",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/pic_upload_SelfTest.js",
+			"images/iconfont-tianjia.png"
+		],
+		"refer": [
+			"my_insp_material/my_inspection_material.html",
+			"my_insp_material/readimage_inspection.html"
+		]
+	},
+	"my_insp_material/my_inspection_disqualification.html": {
+		"resources": [
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
 		]
 	}
 }

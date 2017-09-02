@@ -1547,11 +1547,13 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/my_project_fhys_xz.css",
-					"my_insp_material/my_inspection_detail.html"
+					"my_insp_material/my_inspection_detail.html",
+					"my_insp_material/my_inspection_detailDetEdit.html"
 				],
 				"refer": [
 					"my_insp_material/my_inspection_add.html",
-					"my_insp_material/my_inspection_deliver.html"
+					"my_insp_material/my_inspection_deliver.html",
+					"my_insp_material/my_inspection_disqualification.html"
 				],
 				"priority": 0
 			},
@@ -1581,7 +1583,10 @@
 					"js/immersed.js",
 					"my_material/my_material_list.html",
 					"js/upload_qy.js",
-					"images/iconfont-tianjia.png"
+					"images/iconfont-tianjia.png",
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css",
+					"css/my_css.css"
 				],
 				"refer": [
 					"my_material/readimage.html"
@@ -1628,7 +1633,8 @@
 					"js/upload_encomadd.js",
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"images/iconfont-tianjia.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1654,7 +1660,8 @@
 					"css/mui.poppicker.css",
 					"css/mui.picker.min.css",
 					"css/my_project_fhys_xz.css",
-					"my_insp_material/my_inspection_detail.html"
+					"my_insp_material/my_inspection_detail.html",
+					"my_insp_material/my_inspection_mResDet.html"
 				],
 				"refer": [
 					"my_insp_material/my_insp_supvr.html"
@@ -2177,6 +2184,42 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_insp_material/my_inspection_mResDet.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/common.js",
+					"my_insp_material/my_inspection_mtResult.html"
+				],
+				"refer": [
+					"my_insp_material/readimage_inspection.html"
+				],
+				"priority": 0
+			},
+			"my_insp_material/my_inspection_detailDetEdit.html": {
+				"resources": [
+					"css/mui.min.css",
+					"my_insp_material/my_inspection_material.html",
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/pic_upload_SelfTest.js",
+					"images/iconfont-tianjia.png"
+				],
+				"refer": [
+					"my_insp_material/readimage_inspection.html"
+				],
+				"priority": 0
+			},
+			"my_insp_material/my_inspection_disqualification.html": {
+				"resources": [
+					"css/my_css.css",
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],
 				"priority": 0
