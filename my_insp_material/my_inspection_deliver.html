@@ -49,6 +49,10 @@
 					<label> 时间戳：</label>
 					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>
+				<div class="mui-input-row my_none">
+					<label> 工程单状态：</label>
+					<input id='status' type="text" placeholder="" readonly="readonly">						
+				</div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-primary" onclick="back()">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,7 +110,8 @@
 				var jzdw = doc.getElementById('jzdw');
 				var shouydw = doc.getElementById('shouydw');
 				var jzr = doc.getElementById('jzr');
-//				var jcbgbh = doc.getElementById('jcbgbh');
+				var save = doc.getElementById("save");
+				var status = doc.getElementById('status');
 				var sjc = doc.getElementById('sjc');
 				jzr.value = my_name;
 				sjc.value = timestamp_self;
@@ -139,7 +144,7 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
-						var status = data.工程单状态;
+						status.value = data.工程单状态;
 //						syr.value = data.送样人; //送样人(取样人)
 					},
 					error:function(xhr,type,errorThrown){
@@ -149,10 +154,10 @@
 				
 				//保存
 				save.addEventListener('tap',function(){
-					if(status == "提交见证" ){
+					if(status.value == "提交见证" ){
 						mui.ajax(url+'my_plus/my_inspection_deliver.php',{
 							data:{
-								flag:"保存信息",
+								flag:"保存信息", 
 								id:ulid,
 								songyrq:songyrq.value,
 								shouyrq:shouyrq.value,
@@ -187,7 +192,7 @@
 								alert("ajax error!");
 							}
 						});
-					}else if(status == "取样送检提交见证" ){
+					}else if(status.value == "取样送检提交见证" ){
 						mui.ajax(url+'my_plus/my_inspection_deliver.php',{
 							data:{
 								flag:"取样送检保存信息",
