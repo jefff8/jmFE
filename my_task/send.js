@@ -43,7 +43,7 @@
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 		ul.id = id;
-		if(state=='新增复检'||state=='取样复检'||state=='收样复检'||state=='复检不合格'){
+		if(state=='新增复检'||state=='取样复检'||state=='未见证复检'||state=='收样复检'||state=='复检不合格'){
 			ul.style.borderColor = "red";	
 		}
 		  

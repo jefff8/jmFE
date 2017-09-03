@@ -202,10 +202,10 @@
 						timeout:10000,
 						success:function(data){
 	//						alert(data);
-							if(data.工程单状态=="确定自测" || data.工程单状态=="合格" || data.工程单状态=="取样送检"){
+							if(data.工程单状态=="确定自测" || data.工程单状态=="合格" || data.工程单状态=="取样送检"||data.工程单状态=="取样送检确定自测"){
 								var myform2 = document.getElementById('myform2');
 								myform2.classList.remove("my_none");
-							}else if(data.工程单状态=="不合格" || data.工程单状态=="确定自测不合格"){
+							}else if(data.工程单状态=="不合格" || data.工程单状态=="取样送检不合格"){
 								var myform2 = document.getElementById('myform2');
 								var hide = document.getElementById("hide");
 								hide.classList.remove("my_none");

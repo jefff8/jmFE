@@ -49,6 +49,10 @@
 					<label> 时间戳：</label>
 					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>
+				<div class="mui-input-row my_none">
+					<label> 工程单状态：</label>
+					<input id='status' type="text" placeholder="" readonly="readonly">						
+				</div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-primary" onclick="back()">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -102,8 +106,8 @@
 				var jzdw = doc.getElementById('jzdw');
 				var shouydw = doc.getElementById('shouydw');
 				var jzr = doc.getElementById('jzr');
-//				var jcbgbh = doc.getElementById('jcbgbh');
 				var sjc = doc.getElementById('sjc');
+				var status = doc.getElementById("status");
 				sjc.value = timestamp_self;
 				jzr.value = my_name;
 				//获取当前日期
@@ -133,7 +137,8 @@
 					timeout:10000,
 					success:function(data){
 //						alert(data);
-						var pj_timestamp = data.工程时间戳; 
+						var pj_timestamp = data.工程时间戳;
+						status.value = data.工程单状态;
 						units(pj_timestamp);
 					},
 					error:function(xhr,type,errorThrown){
@@ -163,6 +168,7 @@
 				
 				//保存
 				save.addEventListener('tap',function(){
+					if(status.value=='提交见证'){
 						mui.ajax(url+'my_plus/my_inspection_deliver.php',{
 							data:{
 								flag:"保存信息",
@@ -201,6 +207,46 @@
 								alert("ajax error!");
 							}
 						});
+					}else if(status.value=='取样送检提交见证'){
+						mui.ajax(url+'my_plus/my_inspection_deliver.php',{
+							data:{
+								flag:"取样送检保存信息",
+								id:ulId,
+								songyrq:songyrq.value,
+								shouyrq:shouyrq.value,
+								songydw:songydw.value,
+								jzdw:jzdw.value,
+								shouydw:shouydw.value,
+								jzr:jzr.value,
+//								jcbgbh:jcbgbh.value,
+							},
+							type:'post',
+							dataType:'json',
+							timeout:10000,
+							success:function(data){
+								var btnArray = ['是', '否'];
+								mui.confirm(data.result+'是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+									if (e.index == 0) {
+										var myform=document.getElementById('myform');
+										var img_content=document.getElementById('img_content');
+										var formbtn=document.getElementById("formbtn");
+										myform.classList.add('my_none');
+										formbtn.classList.add('my_none');			
+										img_content.classList.remove('my_none');
+									} else {
+										//返回父页面刷新
+										var target=plus.webview.getWebviewById('my_task/task_list.html');
+										target.reload(true);
+										mui.back();
+									}
+								});
+							},
+							error:function(){
+								alert("ajax error!");
+							}
+						});
+					}
+						
 				});	
 			});
 				

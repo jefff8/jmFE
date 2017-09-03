@@ -41,6 +41,7 @@
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
+	      		self_status = self.status;
 				var doc = document;
 				var sjc = doc.getElementById("sjc");
 				var content = doc.getElementById("content");
@@ -66,6 +67,7 @@
 					mui.ajax(url+'my_plus/my_inspection_disqualification.php',{
 						data:{
 							self_timestamp:sjc.value,
+							self_status:self_status,
 							data_sent:content.value
 						},
 						type:'post',
