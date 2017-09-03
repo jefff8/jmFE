@@ -239,6 +239,7 @@
 			var Text3 = self.Text3;
 			var Text4 = self.Text4;
 			var Text5 = self.Text5;
+			var state = self.state;
 			var fj1Text = document.getElementById("fj1Text");
 			var fj2Text = document.getElementById("fj2Text");
 			var fj3Text = document.getElementById("fj3Text");
@@ -292,7 +293,7 @@
 				createtex('rwfj3');
 			}
 			//自测照片
-			if(status_self == "确定自测"||status_self == "不合格"){
+			if(status_self == "确定自测"||status_self == "不合格" ||status_self == "取样送检"){
 				var selfcheck_ph = document.getElementById("selfcheck_ph");
 				selfcheck_ph.classList.remove("my_none");
 				if(Text4){

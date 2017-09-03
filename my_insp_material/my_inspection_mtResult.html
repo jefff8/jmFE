@@ -103,14 +103,14 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'qualified'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}else if(zt=="不合格"){
 						var choujian = document.getElementById("fail");
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'fail'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}else if(zt=="取样送检不合格"){
 						var choujian = document.getElementById("fail");
@@ -118,7 +118,7 @@
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.style.borderColor = "red";	
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'+&state='+'fail'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);						
 					}
 					else if(zt=="已处理"){
@@ -126,7 +126,7 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'processed'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}
 					else if(zt=="待审批"){
@@ -134,13 +134,14 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+processed+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}
 				}
 				
 				//初检单
-				function first_test(gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc){
+				function first_test(zt,gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc){
+//					var zt_c = encodeURI(encodeURI(zt));
 					var first = document.getElementById("first");
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
@@ -196,6 +197,7 @@
 						var length=data.length;
 						if (length>=1) {
 							for (var i=0;i<=length-1;i++){
+								var zt = data[i].工程单状态;
 								var id = data[i].卡项id;
 								var gcdzt = data[i].工程单状态;
 								var zjlx = data[i].自检自测类型;
@@ -205,7 +207,7 @@
 								var qyr = data[i].检测人;
 								var qyrq = data[i].检测日期;
 								var sjc = data[i].时间戳;
-								first_test(gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc)
+								first_test(zt,gcdzt,id,zjlx,gg,sl,jcbw,qyr,qyrq,sjc)
 							}
 						}
 					},
