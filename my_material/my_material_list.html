@@ -862,18 +862,18 @@
 																	}
 																});	
 																//不合格推送通知
-																var server=url+"push/fail_push.php";
-																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-																	//推送完成
-																	if(status==200){
-								//										alert("发送成功");
-																	}else{
-																		alert("失败");
-																	}
-																});
-																task.addData("title",'江门市建设工程施工质量管理系统');
-																task.addData("notice",'出现新的不合格项目,请注意查收！');
-																task.start();
+//																var server=url+"push/fail_push.php";
+//																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+//																	//推送完成
+//																	if(status==200){
+//								//										alert("发送成功");
+//																	}else{
+//																		alert("失败");
+//																	}
+//																});
+//																task.addData("title",'江门市建设工程施工质量管理系统');
+//																task.addData("notice",'出现新的不合格项目,请注意查收！');
+//																task.start();
 																mui.openWindow({
 																	url:'my_material_fail.html',
 																	styles: {
