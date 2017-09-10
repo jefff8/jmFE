@@ -81,7 +81,7 @@
 	<body>
 	    <header class="mui-bar mui-bar-nav">
 	        <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
-	        <h1 class="mui-title">任务列表</h1>
+	        <h1 id="refresh" class="mui-title">任务列表</h1>
 	    </header>
 	    <div class="mui-content">
 	   		<div style="padding: 10px 10px;">
@@ -338,7 +338,13 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
+			});
+			var refresh = document.getElementById("refresh");
+			//监听标题栏的双击事件(刷新页面)
+			refresh.addEventListener('doubletap',function () {
+				window.location.reload();
 			});
 			function plusReady(){
 				// 弹出系统等待对话框

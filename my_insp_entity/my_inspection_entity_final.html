@@ -39,7 +39,7 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->	
-		    <h1 class="mui-title">实体自检结果</h1>
+		    <h1 id="refresh" class="mui-title">实体自检结果</h1>
 		</header>
 		<div class="mui-content">
 		    <div style="padding: 10px 10px;">
@@ -47,10 +47,10 @@
 					<div class="mui-slider">
 		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
 		        		   	<div class="mui-slider-item">
-		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
+		         		       <a id="a4" class="mui-control-item  "  href="#item1">
 									合格
 								</a>
-								<a id="a5" class="mui-control-item"  href="#item2">
+								<a id="a5" class="mui-control-item mui-active"  href="#item2">
 									不合格
 								</a>
 		         		   </div>
@@ -59,7 +59,7 @@
 				</div> 
 			</div>
 			
-			<div id="item1" class="mui-control-content  mui-active">
+			<div id="item1" class="mui-control-content  ">
 			    <div id="scroll" class="mui-scroll-wrapper">
 			    	<div id="draft" class="mui-scroll rwdiv">
 	    				
@@ -68,7 +68,7 @@
 			    </div>
 			</div>
 			
-			<div id="item2" class="mui-control-content">
+			<div id="item2" class="mui-control-content mui-active">
 				<div id="scroll" class="mui-scroll-wrapper">
 			    	<div id="witness" class="mui-scroll rwdiv">
 			    		
@@ -83,6 +83,7 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
 			
 			});
@@ -108,7 +109,11 @@
 				//验证码
 				var code =doc.getElementById('code');
 				var sendMsg = doc.getElementById('sendMsg');
-				
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 				
 			function mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc){
 					if(zjzt=="合格"){

@@ -39,7 +39,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
-		    <h1 class="mui-title">我的工程</h1>
+		    <h1 id="refresh" class="mui-title">我的工程</h1>
 		</header>
 		<div id="gongcheng" class="mui-content">
 			
@@ -47,7 +47,16 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js" ></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				gestureConfig:{					
+						doubletap: true
+					}
+			});
+			var refresh = document.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+			});
 			mui.plusReady(function(){
 				//获取url参数值
 				function geturl(name){

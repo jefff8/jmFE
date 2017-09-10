@@ -15,7 +15,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">材料送检结果</h1>
+		    <h1 id="refresh" class="mui-title">材料送检结果</h1>
 		</header>
 		<div class="mui-content">
 		    <div style="padding: 10px 10px;">
@@ -23,10 +23,10 @@
 					<div class="mui-slider">
 		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
 		        		   	<div class="mui-slider-item">
-		         		       <a id="" class="mui-control-item  mui-active"  href="#item1">
+		         		       <a id="" class="mui-control-item"  href="#item1">
 									合格
 								</a>
-								<a id="" class="mui-control-item"  href="#item2">
+								<a id="" class="mui-control-item mui-active"  href="#item2">
 									不合格
 								</a>
 								<a id="" class="mui-control-item"  href="#item3">
@@ -38,7 +38,7 @@
 				</div> 
 			</div>
 			<!---------------------------------合格------------------------------------------->
-			<div id="item1" class="mui-control-content  mui-active">
+			<div id="item1" class="mui-control-content  ">
 			    <div id="scroll" class="mui-scroll-wrapper">
 			    	<div id="qualified" class="mui-scroll rwdiv">
 			    		
@@ -49,7 +49,7 @@
 			<!---------------------------------合格------------------------------------------->
 			
 			<!---------------------------------不合格------------------------------------------->
-			<div id="item2" class="mui-control-content">
+			<div id="item2" class="mui-control-content mui-active">
 				<div id="scroll" class="mui-scroll-wrapper">
 			    	<div id="fail" class="mui-scroll rwdiv">
 			    		
@@ -79,6 +79,7 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
 			});
 			//区域滚动,需手动初始化scroll控件
@@ -98,6 +99,11 @@
 				var qualified = doc.getElementById("qualified");
 				var fail = doc.getElementById("fail");
 				var first = doc.getElementById("first");
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 				//动态创建函数
 				function result(gcdzt,id,qylx,gg,sl,sccj,qyr,qyrq,sjc){
 					id_c = encodeURI(encodeURI(id));

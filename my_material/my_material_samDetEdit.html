@@ -181,10 +181,9 @@
 				var sjc_send = geturl("sjc");
 				var gcid = geturl("gcid");
 				var gcmc_in = geturl("gcmc");
+				var mobile = geturl("mobile");
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
-//				alert(gcmc.value);
 				sjc_in.value = sjc_send;
-//				alert(sjc_send);
 				
 				//异步取值填写
 				mui.ajax(url+'my_plus/my_material_detail.php',{
@@ -261,62 +260,70 @@
 					}
 				});	
 				
-				//附件查看
-//				fjck.addEventListener('tap',function(){
-//					mui.openWindow({
-//						url: 'readimage.html',
-//						id:'readimage.html',
-//						extras:{
-//							sjc:sjc.value,
-//							scene_photo:scene_photo,
-//							sample_photo:sample_photo,
-//							sceneText:sceneText,
-//							sampleText:sampleText
-//						},
-//						show:{							
-//							aniShow:'slide-in-right',//页面显示动画
-//							duration:'100'//页面动画持续时间
-//						},
-//						waiting:{
-//							autoShow:false,//自动显示等待框
-//						}
-//					})
-//				});
-				
 				//附件更新
 				fjgx.addEventListener('tap',function(){
-//					var btnArray = ['是', '否'];
-//					mui.confirm('更新后会覆盖原有附件，确定更新吗？', '江门建筑管理系统', btnArray, function(e) {
-//						if (e.index == 0) {
-							var myform=document.getElementById('myform');
-							var myform2=document.getElementById('myform2');
-							var img_content=document.getElementById('img_content');
-							var formbtn=document.getElementById("formbtn");
-							myform.classList.add('my_none');
-							myform2.classList.add('my_none');
-							formbtn.classList.add('my_none');			
-							img_content.classList.remove('my_none');
-//						} else {
-//							
-//						}
-//					});
+					mui.ajax(url+'check.php',{
+						data:{
+							mobile:mobile
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+								var myform=document.getElementById('myform');
+								var myform2=document.getElementById('myform2');
+								var img_content=document.getElementById('img_content');
+								var formbtn=document.getElementById("formbtn");
+								myform.classList.add('my_none');
+								myform2.classList.add('my_none');
+								formbtn.classList.add('my_none');			
+								img_content.classList.remove('my_none');
+							}else{
+								mui.toast("抱歉您无权限操作!");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+	//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+					
 				});
 				
 				//修改按钮监听
 				Edit.addEventListener('tap',function(){
-					var myform = document.getElementById("myform").getElementsByTagName("input");
-					var jcdw = document.getElementById("jcdw");
-					Edit.classList.add("my_none");
-					save.classList.remove("my_none");
-					jcdw.removeAttribute("readonly");
-  					for(i=1;i<11;i++){
-  						myform[i].removeAttribute("readonly");
-  					}
-  					for(i=0;i<11;i++){
-  						myform[i].removeAttribute("disabled");
-  					}
-					mui.toast("现在可以修改您的信息");
+					mui.ajax(url+'check.php',{
+						data:{
+							mobile:mobile
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+								var myform = document.getElementById("myform").getElementsByTagName("input");
+								var jcdw = document.getElementById("jcdw");
+								Edit.classList.add("my_none");
+								save.classList.remove("my_none");
+								jcdw.removeAttribute("readonly");
+			  					for(i=1;i<11;i++){
+			  						myform[i].removeAttribute("readonly");
+			  					}
+			  					for(i=0;i<11;i++){
+			  						myform[i].removeAttribute("disabled");
+			  					}
+								mui.toast("现在可以修改您的信息");
+							}else{
+								mui.toast("抱歉您无权限操作!");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+	//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
 				});
+				
+				
 				
 				function typeAll(data,data2){
 //					alert(data[0]);

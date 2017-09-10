@@ -63,14 +63,14 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">材料送检</h1>
+		    <h1 id="refresh" class="mui-title">材料送检</h1>
 		</header>
 		<div>
 			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
             	<span class="mui-icon mui-icon-plusempty"></span>
        		</button>
 		</div>
-		<div class="mui-content">
+		<div id="refreshContainer" class="mui-content">
 		    <div style="padding: 10px 10px;">
 				<div id="segmentedControl" class="mui-segmented-control">
 					<div class="mui-slider">
@@ -92,7 +92,7 @@
 			</div>
 			<!---------------------------------取样------------------------------------------->
 			<div id="item1" class="mui-control-content  mui-active">
-			    <div id="scroll" class="mui-scroll-wrapper">
+			    <div  class="mui-scroll-wrapper">
 			    	<div id="draft" class="mui-scroll rwdiv">
 
 					</div>
@@ -107,7 +107,6 @@
 	
 					</div>
 			    </div>
-			  
 			</div>
 			<!--新增按钮菜单-->
 			<div id="btnPopover" class="mui-popover">
@@ -230,17 +229,35 @@
 		<script src="../js/native.js"></script>
 		<script src="../js/service.js"></script>
 		<script type="text/javascript">
-			mui.init({
-				gestureConfig:{					
-					longtap: true, //长按默认为false	
-				}
-			});
+			
 			
 			//区域滚动,需手动初始化scroll控件
 			mui('.mui-scroll-wrapper').scroll({
 				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 			});
 			mui.plusReady(function(){
+				mui.init({
+					gestureConfig:{					
+						longtap: true, //长按默认为false
+						doubletap: true
+					},
+					pullRefresh : {
+						container : '#refreshContainer', //一个功能的一部分
+//						up : {
+//						      height:50,//可选.默认50.触发上拉加载拖动距离
+//						      auto:true,//可选,默认false.自动上拉加载一次
+//						      contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+//						      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+//						      callback :pullfresh
+//						    }
+					}
+				});
+				function pullfresh() {
+				     //业务逻辑代码，比如通过ajax从服务器获取新数据；
+				     //注意，加载完新数据后，必须执行如下代码，注意：若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
+//				     mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+				     this.endPullupToRefresh(true|false); 
+				}
 				var doc = document;
 				//获取传值
 				var self = plus.webview.currentWebview();
@@ -267,6 +284,11 @@
 				var jdcj = doc.getElementById("jdcj");
 				var myDate = new Date();//获取系统当前时间
 				mytime=myDate.toLocaleString();//获取日期与时间
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 				//新增按钮
 				addNew.addEventListener('tap',function(){
 					mui("#btnPopover").popover("toggle");

@@ -279,25 +279,25 @@
 						},
 						error:function(xhr,type,errorThrown){
 							//异常处理；
-							alert('ajax错误'+type);
+							alert('更新失败出现异常！');
 						}
 					});
 				});
 				
 				//二维码扫一扫
-				qr.addEventListener("tap",function(event){		
-					mui.openWindow({
-						url: "../barcode_scan.html",
-						id: this.href,
-						waiting:{
-							autoShow:false
-						},
-						extras:{
-							
-						}
-					});
-					return;
-				});
+//				qr.addEventListener("tap",function(event){		
+//					mui.openWindow({
+//						url: "../barcode_scan.html",
+//						id: this.href,
+//						waiting:{
+//							autoShow:false
+//						},
+//						extras:{
+//							
+//						}
+//					});
+//					return;
+//				});
 				
 				//退出操作******************
 				exit.addEventListener('tap', function() {	
@@ -320,22 +320,22 @@
 				}, false);
 				//我的账户
 				var wdzh=document.getElementById("wdzh");
-				wdzh.addEventListener("tap",function(event){
-					mui.openWindow({
-						url: "my_setting_wdzh.html",
-						id: this.href,
-						styles: {
-							hardwareAccelerated:false
-						},
-						waiting:{
-							autoShow:false
-						},
-						extras:{							
-							mobile:mobile
-						}
-					});
-					return;
-				});
+//				wdzh.addEventListener("tap",function(event){
+//					mui.openWindow({
+//						url: "my_setting_wdzh.html",
+//						id: this.href,
+//						styles: {
+//							hardwareAccelerated:false
+//						},
+//						waiting:{
+//							autoShow:false
+//						},
+//						extras:{							
+//							mobile:mobile
+//						}
+//					});
+//					return;
+//				});
 			});
 			
 			//二维码扫描成功的跳转页面

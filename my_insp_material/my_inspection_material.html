@@ -44,7 +44,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">材料自检</h1>
+		    <h1 id="refresh" class="mui-title">材料自检</h1>
 		</header>
 		<!--悬浮按钮-->
 		<div>
@@ -158,6 +158,7 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
 			});
 			
@@ -185,6 +186,11 @@
 				var code = doc.getElementById('code');
 				var code_recheck = doc.getElementById('code_recheck');
 				var sendMsg = doc.getElementById("sendMsg");
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 				/*卡项列表*/
 				//函数
 				function inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc){

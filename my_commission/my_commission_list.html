@@ -49,7 +49,7 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->	
-		    <h1 class="mui-title">现场实体第三方检测</h1>
+		    <h1 id="refresh" class="mui-title">现场实体第三方检测</h1>
 		</header>
 		<!--------------------------------------新增按钮--------------------------------------------->
 		<div>
@@ -197,6 +197,7 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
 			});
 			
@@ -222,8 +223,12 @@
 				var draft = doc.getElementById("draft");
 				var witness = doc.getElementById("witness");
 				var result = doc.getElementById("result");
-				
 				var addnew = doc.getElementById('addNew');
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 				
 				addnew.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
@@ -234,7 +239,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+							if(data[0]['单位']=='检测单位'||data[0]['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_commission_add.html",
 									extras:{
@@ -374,7 +379,7 @@
 										//判断状态并根据状态执行改变状态的任务
 										if(gcdzt_pd=='新建'){
 											var btnArray = [
-											{title:"取样"},
+											{title:"提交检测"},
 											{title:"删除"}
 											]; 
 											plus.nativeUI.actionSheet({

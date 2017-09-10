@@ -1,1 +1,311 @@
-null
+{
+	"index.html": {
+		"resources": [
+			"js/my_js_index.js",
+			"my.html",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"fonts/iconfont.ttf",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"my.html",
+			"team.html",
+			"info.html"
+		]
+	},
+	"my.html": {
+		"resources": [
+			"js/my_js_nextpage.js",
+			"images/clsj.png",
+			"images/setting.png",
+			"images/xxfb.png",
+			"images/jdcy.png",
+			"images/stjc.png",
+			"images/xmzj.png",
+			"images/notice.png",
+			"images/my_pj.png",
+			"js/service.js",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"my_plus/my_project_list.html",
+			"my_task/task_list.html",
+			"my_material/my_time_select.html",
+			"my_commission/my_time_select.html",
+			"my_plus/my_setting.html",
+			"my_info/information_list.html"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"js/app.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/mui.enterfocus.js"
+		],
+		"refer": [
+			"index.html"
+		]
+	},
+	"team.html": {
+		"resources": [
+			"images/xzmc.png"
+		]
+	},
+	"my_plus/my_project_list.html": {
+		"resources": [
+			"images/xmmc.png",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"my_plus/my_project.html"
+		]
+	},
+	"my_material/my_material_results.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/native.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"my_plus/my_result.html": {
+		"refer": [
+			"my_material/my_material_results.html",
+			"my_insp_material/my_inspection_mtResult.html",
+			"my_commission/my_entity_results.html",
+			"my_insp_entity/my_inspection_entity_final.html"
+		]
+	},
+	"my_plus/my_project.html": {
+		"refer": [
+			"my_plus/my_result.html",
+			"my_material/my_material_list.html",
+			"my_plus/my_inspection.html",
+			"my_commission/my_commission_list.html"
+		]
+	},
+	"my_material/my_material_list.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/native.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"my_material/my_material_add.html",
+			"my_material/my_material_samDet.html"
+		]
+	},
+	"my_material/my_material_add.html": {
+		"resources": [
+			"js/upload_qy.js",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png"
+		]
+	},
+	"my_material/my_material_samDet.html": {
+		"resources": [
+			"js/common.js",
+			"js/immersed.js",
+			"js/upload_qy.js",
+			"images/iconfont-tianjia.png"
+		],
+		"refer": [
+			"my_material/readimage.html"
+		]
+	},
+	"my_task/task_list.html": {
+		"resources": [
+			"my_task/self_inspection1.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"my_task/send.js",
+			"my_task/commission.js",
+			"my_task/self_inspection2.js",
+			"css/my_project_fhys_xz.css",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"info.html": {
+		"resources": [
+			"images/appDownload.png"
+		]
+	},
+	"my_plus/my_setting.html": {
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
+		]
+	},
+	"my_info/information_add.html": {
+		"resources": [
+			"js/common.js",
+			"js/immersed.js"
+		]
+	},
+	"my_info/information_list.html": {
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		],
+		"refer": [
+			"my_info/information_add.html"
+		]
+	},
+	"my_material/readimage.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
+		]
+	},
+	"my_plus/my_inspection.html": {
+		"refer": [
+			"my_insp_material/my_inspection_material.html",
+			"my_insp_entity/my_inspection_entity.html"
+		]
+	},
+	"my_insp_material/my_inspection_material.html": {
+		"refer": [
+			"my_insp_material/my_inspection_add.html"
+		],
+		"resources": [
+			"js/service.js",
+			"js/common.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/immersed.js",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_material/my_inspection_add.html": {
+		"resources": [
+			"js/pic_upload_SelfTest.js",
+			"css/mui.picker.css"
+		]
+	},
+	"my_commission/my_entity_results.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_entity/my_inspection_entity_final.html": {
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_material/my_inspection_mtResult.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_entity/my_inspection_new.html": {
+		"resources": [
+			"js/pic_upload_entity.js",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png"
+		]
+	},
+	"my_insp_entity/my_inspection_entity.html": {
+		"refer": [
+			"my_insp_entity/my_inspection_new.html"
+		],
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_commission/my_commission_add.html": {
+		"resources": [
+			"js/upload_encomadd.js"
+		]
+	},
+	"my_commission/my_commission_list.html": {
+		"refer": [
+			"my_commission/my_commission_add.html"
+		],
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	}
+}

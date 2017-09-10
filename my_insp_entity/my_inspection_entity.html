@@ -38,7 +38,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">实体自检</h1>
+		    <h1 id="refresh" class="mui-title">实体自检</h1>
 		</header>
 		<!--悬浮按钮-->
 		<div>
@@ -135,6 +135,7 @@
 			mui.init({
 				gestureConfig:{					
 					longtap: true, //长按默认为false	
+					doubletap: true
 				}
 			});
 			
@@ -160,7 +161,11 @@
 				//验证码
 				var code =doc.getElementById('code');
 				var sendMsg = doc.getElementById('sendMsg');
-				
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
 			function mymaterial(zjzt,id,jclx,num,Position,jcr,jcrq,sjc){
 					id_c = encodeURI(encodeURI(id));
 					zjzt_c = encodeURI(encodeURI(zjzt));
@@ -303,7 +308,7 @@
 										//判断状态并根据状态执行改变状态的任务
 										if(zjzt_pd=='新增'){
 											var btnArray = [
-											{title:"取样"},
+											{title:"提交自检"},
 											{title:"删除"}
 											]; 
 											plus.nativeUI.actionSheet({
