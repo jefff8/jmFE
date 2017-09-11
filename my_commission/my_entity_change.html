@@ -26,6 +26,10 @@
 		            <label>处理记录:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入处理记录" id="test_txt">
 		        </div>
+		        <div class="mui-input-row">
+		            <label>处理类型:</label>
+		            <input type="text" class="mui-input-clear" placeholder="" id="type">
+		        </div>
 		    </form>
 			
 			<!--处理图片-->
@@ -80,13 +84,14 @@
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 ulid = self.ulId;
+                type = self.type; //处理类型
 				var doc = document;
 				var sjc = doc.getElementById("sjc");
 				var progcmc = doc.getElementById('gcmc');
+				doc.getElementById("type").value = type;
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('ulid');
 				protimesp.value = ulid;
-				
 				mui.ajax(url+'my_plus/my_entity_detail.php',{
 					data:{
 						flag:"获取信息",

@@ -1863,7 +1863,15 @@
 			"my_commission/my_entity_change.html": {
 				"resources": [
 					"js/upload_enreschge.js",
-					"images/iconfont-tianjia.png"
+					"images/iconfont-tianjia.png",
+					"js/service.js",
+					"js/native.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"js/mui.poppicker.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2155,7 +2163,13 @@
 				"resources": [
 					"js/mui.picker.js",
 					"js/native.js",
-					"js/mui.poppicker.js"
+					"js/mui.poppicker.js",
+					"js/mui.min.js",
+					"js/service.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [
 					"my_commission/my_entity_readimage.html"

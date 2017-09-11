@@ -216,6 +216,7 @@ function upload(lx,clean){
 	task.addData("gcmc",getName());
 	task.addData("Text6",text6());
 	task.addData("lx",lx);
+	task.addData("process_type",process_type());
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
 	task.addData("id",getid());
@@ -261,5 +262,10 @@ function getreport(){
 function text6(){
 	var Text6 = document.getElementById("Text6").value;
 	return Text6;
+}
+//处理类型
+function process_type(){
+	var process_type = document.getElementById("type").value;
+	return process_type;
 }
 ////////////上传文件/////////////////////////////////////////////

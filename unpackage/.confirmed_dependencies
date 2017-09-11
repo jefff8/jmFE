@@ -49,7 +49,8 @@
 			"css/my_css.css",
 			"css/mui.min.css",
 			"css/style.css",
-			"js/mui.enterfocus.js"
+			"js/mui.enterfocus.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"index.html"
@@ -67,7 +68,8 @@
 			"js/mui.min.js",
 			"css/my_css.css",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"my_plus/my_project.html"
 		],
 		"refer": [
 			"my_plus/my_project.html"
@@ -86,6 +88,9 @@
 			"css/my_css.css",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"my_material/my_material_resDet.html"
 		]
 	},
 	"my_plus/my_result.html": {
@@ -238,6 +243,10 @@
 			"css/mui.poppicker.css",
 			"css/mui.picker.min.css",
 			"css/my_project_fhys_xz.css"
+		],
+		"refer": [
+			"my_commission/my_entity_change.html",
+			"my_commission/my_entity_readmessage.html"
 		]
 	},
 	"my_insp_entity/my_inspection_entity_final.html": {
@@ -305,6 +314,38 @@
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
 			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_material/my_material_resDet.html": {
+		"refer": [
+			"my_material/readimage.html"
+		]
+	},
+	"my_commission/my_entity_change.html": {
+		"resources": [
+			"js/upload_enreschge.js",
+			"images/iconfont-tianjia.png",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_commission/my_entity_readmessage.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
 			"css/my_project_fhys_xz.css"
 		]
 	}
