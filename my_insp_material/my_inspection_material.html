@@ -193,7 +193,7 @@
 				});
 				/*卡项列表*/
 				//函数
-				function inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc){
+				function inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc,operation_supvision){
 					var zt_c = encodeURI(encodeURI(zt));
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
@@ -217,11 +217,11 @@
 						choujian.appendChild(ul);
 					}else if(zt=="提交见证" ||zt=="取样送检提交见证"){
 						var jianli =  document.getElementById("witness");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+ operation_supvision +'</p></li>';
 						jianli.appendChild(ul);
 					}else if(zt=="确定自测" || zt == "取样送检确定自测"){
 						var jianli =  document.getElementById("witness");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人/见证人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人/见证人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+ operation_supvision +'</p></li>';
 						jianli.appendChild(ul);
 					}				
 				}
@@ -236,9 +236,7 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
-//						alert(data);
 //						alert(data.length+data[0].自检自测类型);
-
 						for(i=0;i<data.length;i++){
 							var zt = data[i].工程单状态;
 							var id = data[i].id;
@@ -248,7 +246,8 @@
 						    var jcr = data[i].检测人;
 							var jcrq = data[i].检测日期;
 							var sjc = data[i].时间戳;
-							inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc);
+							var operation_supvision = data[i].监理操作单位;
+							inspection(zt,id,jclx,sl,Position,jcr,jcrq,sjc,operation_supvision);
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -262,13 +261,14 @@
 				addNew.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:"",
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_inspection_add.html",
 									extras:{
@@ -276,7 +276,8 @@
 										project_name:gcmc,
 										timestamp:timestamp,
 										my_name:my_name,
-										detect:detect
+										detect:detect,
+										supvision:supvision
 									},
 									show: {
 										aniShow:"pop-in"
@@ -304,13 +305,14 @@
 //					alert(ULid);
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:ULid,
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
 								//异步获取当前卡项的“工程单状态”
 								mui.ajax(url+'my_plus/my_inspection_material.php',{
 									data:{
@@ -525,13 +527,14 @@
 //					alert(ULid);
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:ULid,
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
+							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){
 								//异步获取当前卡项的“工程单状态”
 								mui.ajax(url+'my_plus/my_inspection_material.php',{
 									data:{

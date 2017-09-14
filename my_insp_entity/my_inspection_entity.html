@@ -166,7 +166,7 @@
 				refresh.addEventListener('doubletap',function () {
 					window.location.reload();
 				});
-			function mymaterial(zjzt,id,jclx,num,Position,jcr,jcrq,sjc){
+			function mymaterial(zjzt,id,jclx,num,Position,jcr,jcrq,sjc,operation_supvision){
 					id_c = encodeURI(encodeURI(id));
 					zjzt_c = encodeURI(encodeURI(zjzt));
 					jclx_c = encodeURI(encodeURI(jclx));
@@ -195,14 +195,14 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_entitydetail_full.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+Position+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_entitydetail_full.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+Position+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+operation_supvision+'</p></li>';
 						witness.appendChild(ul);						
 					}else if(zjzt=="确定检测"){
 						var witness = document.getElementById("witness");
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_entitydetail_full.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+Position+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_green2"><a class="a_color" href="my_inspection_entitydetail_full.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+Position+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+operation_supvision+'</p></li>';
 						witness.appendChild(ul);						
 					}
 				}
@@ -230,7 +230,8 @@
 								var jcr = data[i].检测人;
 								var jcrq = data[i].检测日期;
 								var sjc = data[i].时间戳;
-								mymaterial(zjzt,id,jclx,num,Position,jcr,jcrq,sjc)
+								var operation_supvision = data[i].监理操作单位;
+								mymaterial(zjzt,id,jclx,num,Position,jcr,jcrq,sjc,operation_supvision)
 							}
 						}else{
 //							alert("暂无数据");
@@ -246,13 +247,14 @@
 				addNew.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:"",
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_inspection_new.html",
 									extras:{
@@ -260,7 +262,8 @@
 										project_name:gcmc,
 										timestamp:timestamp,
 										my_name:my_name,
-										detect:detect
+										detect:detect,
+										supvision:supvision
 									},
 									show: {
 										aniShow:"pop-in"
@@ -281,16 +284,16 @@
 				////////////////////////////实体检测（施工单位）//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
-					
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:ulId,
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='施工单位'||data[0]['单位']=='管理员'){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
 								//取样&&提交操作
 								mui.ajax(url+'my_plus/my_inspection_entity.php',{
 									data:{
@@ -448,13 +451,14 @@
 					var ulId = this.id;
 					mui.ajax(url+'check.php',{
 						data:{
+							ulId:ulId,
 							mobile:mobile
 						},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data[0]['单位']=='监理单位'||data[0]['单位']=='管理员'){
+							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){
 								//监理单位见证&&合格不合格操作
 								mui.ajax(url+'my_plus/my_inspection_entity.php',{
 									data:{

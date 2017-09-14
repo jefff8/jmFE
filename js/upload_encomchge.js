@@ -214,6 +214,7 @@ function upload(lx,clean){
 		}
 	});
 	task.addData("gcmc",getName());
+	task.addData("operation_unit",operation_unit());
 	task.addData("Text4",text4());
 	task.addData("lx",lx);
 	task.addData("files1",strs);
@@ -264,5 +265,10 @@ function dataAll(){
 function text4(){
 	var Text4 = document.getElementById("Text4").value;
 	return Text4;
+}
+//检测操作单位
+function operation_unit(){
+	var operation_unit = document.getElementById("operation_unit").value;
+	return operation_unit;
 }
 ////////////上传文件/////////////////////////////////////////////

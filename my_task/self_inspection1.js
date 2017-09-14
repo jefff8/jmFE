@@ -346,13 +346,14 @@
 				}else if(status=='不合格'){
 					mui.ajax(url+'check.php',{
 					data:{
+						ulId:ulId,
 						mobile:mobile
 					},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
 					success:function(data){
-						var units = data[0]['单位']; //获取单位信息
+						var units = data['单位']; //获取单位信息
 						if(units=='监理单位'||units=='管理员'){
 							var btnArray = [
 							{title:"监理处理"},

@@ -1551,7 +1551,8 @@
 				],
 				"refer": [
 					"my_insp_material/my_inspection_add.html",
-					"my_insp_material/my_inspection_deliver.html"
+					"my_insp_material/my_inspection_deliver.html",
+					"my_insp_material/my_inspection_disqualification.html"
 				],
 				"priority": 0
 			},
@@ -1628,7 +1629,16 @@
 					"js/upload_encomadd.js",
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"images/iconfont-tianjia.png",
+					"js/mui.picker.js",
+					"js/service.js",
+					"js/native.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"js/mui.poppicker.js",
+					"fonts/mui.ttf",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -1797,7 +1807,8 @@
 				"refer": [
 					"my_commission/my_commssion_fail.html",
 					"my_commission/my_commission_add.html",
-					"my_commission/my_entity_readmessage.html"
+					"my_commission/my_entity_readmessage.html",
+					"my_commission/my_commission_change.html"
 				],
 				"priority": 0
 			},
@@ -2036,7 +2047,13 @@
 			"my_material/my_material_recheckDeliver.html": {
 				"resources": [
 					"js/upload_sy.js",
-					"images/iconfont-tianjia.png"
+					"images/iconfont-tianjia.png",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -2212,6 +2229,23 @@
 					"js/mui.poppicker.js",
 					"js/upload_enreschge.js",
 					"images/iconfont-tianjia.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_commission/my_commission_change.html": {
+				"resources": [
+					"js/upload_encomchge.js",
+					"js/mui.picker.js",
+					"js/service.js",
+					"js/native.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"js/mui.poppicker.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"images/iconfont-tianjia.png",
+					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],
 				"priority": 0

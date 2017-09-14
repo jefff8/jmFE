@@ -364,10 +364,11 @@
 			});
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
-				uid = self.uid;
-				mobile = self.mobile;
-				my_name = self.my_name;
-				unit = self.unit;
+				uid = self.uid;//用户id
+				mobile = self.mobile;//手机号
+				my_name = self.my_name;//姓名
+				unit = self.unit;//单位
+				unitName = self.unitName; //单位名称
 				my_name = decodeURI(decodeURI(my_name));
 				unit = decodeURI(decodeURI(unit)); 
 				mui.ajax(url+'my_task/task_list.php',{

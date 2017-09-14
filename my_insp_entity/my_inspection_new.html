@@ -44,6 +44,10 @@
 		            <label>备注:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入备注信息">
 		        </div>
+		        <div  class="mui-input-row">
+		            <label>监理操作单位:</label>
+		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		        </div>
 		        <div class="mui-input-row my_none">
 		            <label>检测单位:</label>
 		           <input id="testUnit" type="text" class="mui-input-clear" placeholder="请输入检测单位">
@@ -147,9 +151,10 @@
 				timestamp = self.timestamp;
 				detect = self.detect;
 				my_name = self.my_name;
+				supvision = self.supvision;
 				my_name = decodeURI(decodeURI(my_name));
 				detect = decodeURI(decodeURI(detect));
-//				alert(project_name+timestamp);
+				supvision = decodeURI(decodeURI(supvision));
 				var doc = document;
 				var my_popover = doc.getElementById("my_popover");
 				var qyrq = doc.getElementById("qyrq");
@@ -162,7 +167,16 @@
 				var inspector = doc.getElementById("inspector");
 				var sampling_peo = doc.getElementById("sampling_peo");
 				var testUnit = doc.getElementById("testUnit");
+				var operation_unit = doc.getElementById("operation_unit");
 				testUnit.value = detect;
+				
+				//动态添加监理操作单位
+				var opera = supvision.split(",");
+				for(var i=0;i<opera.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = opera[i];
+					operation_unit.appendChild(option);
+				}
 				//自动添加当前时间戳,附件上传时会用到
 				var myDate=new Date();
 				var mytime=myDate.getTime();
@@ -245,11 +259,13 @@
 					//获取信息并合并为字符窜Str,从上到下顺序获取,注意时间戳也在里面
 					var F_select = zjlx.value;
 					var F_input = myform.getElementsByTagName("input");
+					var unit = document.getElementById("operation_unit").value;
 					
 					var Str = "";
 					for(i=0;i<8;i++){
 						Str = Str + F_input[i].value + "|";
 					}
+					Str= Str+unit;
 //					alert(Str);
 					//异步传值并保存
 					mui.ajax(url+'my_plus/my_inspection_new.php',{

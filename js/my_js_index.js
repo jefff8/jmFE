@@ -21,12 +21,14 @@ mui.plusReady(function() {
 	var my_name = self.my_name;
 	var uid = self.uid;
 	var unit = self.unit;
+	var unitName = self.unitName;
 	//传值
 	var subpage_extras = {
 		mobile:mobile,
 		my_name:my_name,
 		uid:uid,
-		unit:unit
+		unit:unit,
+		unitName:unitName
 	};	
 	setTimeout(function() {
 		//关闭等待框

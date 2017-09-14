@@ -33,6 +33,7 @@
 					document.getElementById("my_name").value=data.my_name;
 					document.getElementById("uid").value=data.uid;
 					document.getElementById("unit").value=data.unit;
+					document.getElementById("unitName").value=data.unitName;
 					return callback();
 				} else{					
 					return callback('用户名或密码错误');				

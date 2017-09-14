@@ -70,6 +70,10 @@
 		    </form>
 		    <br/>
 		    <form  id="myform2" class="mui-input-group" >
+		    	<div  class="mui-input-row">
+		            <label>监理操作单位:</label>
+		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		        </div>
 		        <div  class="mui-input-row">
 		            <label>检测单位:</label>
 		            <input id="qcdy" type="text" class="mui-input-clear" placeholder="请输入检测单位">
@@ -152,9 +156,11 @@
                 my_name = self.my_name;
                 timestamp = self.timestamp;
                 detect = self.detect;
+                supvision = self.supvision; 
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
 				detect = decodeURI(decodeURI(detect));
+				supvision = decodeURI(decodeURI(supvision));
 				var doc = document;
 				var save = doc.getElementById("save");
 				var qyrq = doc.getElementById("qyrq");
@@ -166,7 +172,8 @@
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
 				var qylx = doc.getElementById("qylx");
-				var F_qcdw = document.getElementById('qcdy');
+				var F_qcdw = doc.getElementById('qcdy');
+				var operation_unit = doc.getElementById("operation_unit");
 				F_qcdw.value = detect;
 				qyr.value = my_name; //取样人默认为账号姓名
 				//自动添加当前时间戳,附件上传时会用到
@@ -175,6 +182,13 @@
 				qyrq.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
 				sjc.value=mytime;
 				
+				//动态添加监理操作单位
+				var opera = supvision.split(",");
+				for(var i=0;i<opera.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = opera[i];
+					operation_unit.appendChild(option);
+				}
 				//日期监听
 				qyrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -190,6 +204,7 @@
                     interDate.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
+				
 				
 				function typeAll(data,data2){
 //					alert(data[0]);
@@ -254,11 +269,12 @@
 				save.addEventListener('tap',function(){
 					var F_input = document.getElementById('myform').getElementsByTagName('input');
 					var F_qcdw = document.getElementById('qcdy').value;
+					var unit = document.getElementById("operation_unit").value;
 					var Str="";
 					for(i=0;i<11;i++){
 						var Str = Str + F_input[i].value+"|";
 					}
-					Str= Str+F_qcdw;
+					Str= Str+F_qcdw+"|"+unit;
 //					alert(Str);
 					//材料送检
 					mui.ajax(url+'my_plus/my_material_add.php',{

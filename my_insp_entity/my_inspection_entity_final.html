@@ -115,7 +115,7 @@
 					window.location.reload();
 				});
 				
-			function mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc){
+			function mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc,operation_supvision){
 					if(zjzt=="合格"){
 						var quyang = document.getElementById("draft");
 						var ul = document.createElement("ul");
@@ -128,7 +128,7 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_entitydetail_bresult.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_red"><a class="a_color" href="my_inspection_entitydetail_bresult.html?sjc='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+jclx+'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+jcr+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+jcrq+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+operation_supvision+'</p></li>';
 						witness.appendChild(ul);						
 					}else if(zjzt=="已处理"){
 						var witness = document.getElementById("witness");
@@ -168,7 +168,8 @@
 								var jcr = data[i].检测人;
 								var jcrq = data[i].检测日期;
 								var sjc = data[i].时间戳;
-								mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc)
+								var operation_supvision = data[i].监理操作单位;
+								mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc,operation_supvision)
 							}
 						}
 					},
@@ -182,14 +183,17 @@
 				var ulid = this.id;
 				mui.ajax(url+'check.php',{
 					data:{
+						ulId:ulid,
 						mobile:mobile
 					},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
 					success:function(data){
-						var units = data[0]['单位']; //获取单位信息
-						if(units=='监理单位'||units=='管理员'){
+						var units = data['单位']; //获取单位信息
+						var unitName = data['单位名称'];
+						var operation_supvision = data['监理操作单位'];
+						if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
 							mui.ajax(url+'my_plus/my_inspection_entity.php',{
 								data:{
 									flag:"获取状态",

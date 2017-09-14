@@ -119,6 +119,10 @@
 					<label>单位</label>
 					<input id='unit' type="text" class="mui-input-clear mui-input" placeholder="" value="">
 				</div>
+				<div class="mui-input-row my_none">
+					<label>单位名称</label>
+					<input id='unitName' type="text" class="mui-input-clear mui-input" placeholder="" value="">
+				</div>
 			</form>
 			<form class="mui-input-group">
 				<ul class="mui-table-view mui-table-view-chevron">
@@ -155,6 +159,7 @@
 						var mobile = document.getElementById("shji");
 						var my_name = document.getElementById("my_name");
 						var uid = document.getElementById("uid");
+						var unitName = document.getElementById("unitName");
 						setTimeout(function() {
 							$.openWindow({
 								url: 'index.html',
@@ -167,7 +172,8 @@
 									mobile:mobile.value,
 									my_name:my_name.value,
 									uid:uid.value,
-									unit:unit.value
+									unit:unit.value,
+									unitName:unitName.value
 								},
 								waiting: {								
 									autoShow: true,

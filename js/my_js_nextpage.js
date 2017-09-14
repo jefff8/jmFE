@@ -104,7 +104,8 @@ mui('.my_list').on('tap', 'a', function() {
 				mobile:mobile,
 				my_name:my_name,
 				unit:unit,
-				uid:uid
+				uid:uid,
+				unitName:unitName
 			},
 			show: {		
 				//autoShow:false,
