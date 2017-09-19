@@ -107,6 +107,9 @@
 					var my_name = doc.getElementById("my_name");
 					var units = doc.getElementById("units");
 					var unitName = doc.getElementById("unitName");
+					//获取cid(每台设备指定一个)
+					var cid = plus.push.getClientInfo().clientid;
+//					var vInfoData = JSON.stringify(vInfo);
 					regButton.addEventListener('tap', function(event) {
 						var regInfo = {
 							account: accountBox.value,
@@ -115,7 +118,8 @@
 							mobile:mobile.value,
 							my_name:my_name.value,
 							units:units.value,
-							unitName:unitName.value
+							unitName:unitName.value,
+							cid:cid
 						};
 						var passwordConfirm = passwordConfirmBox.value;
 						if (passwordConfirm != regInfo.password) {
@@ -136,7 +140,8 @@
 										mobile:regInfo.mobile,
 										my_name:regInfo.my_name,
 										units:regInfo.units,
-										unitName:regInfo.unitName
+										unitName:regInfo.unitName,
+										cid:cid
 									},
 									dataType:'json',
 									type:'POST', 

@@ -105,9 +105,9 @@
 					
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	<button id="clean1" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
 		        <!--样品照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -127,9 +127,9 @@
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	<button id="clean2" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>
+		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -263,59 +263,16 @@
 					});
 				}, false);
 							
-								
-				
-				
 				save.addEventListener('tap',function(){
-					var F_input = document.getElementById('myform').getElementsByTagName('input');
-					var F_qcdw = document.getElementById('qcdy').value;
-					var unit = document.getElementById("operation_unit").value;
-					var Str="";
-					for(i=0;i<11;i++){
-						var Str = Str + F_input[i].value+"|";
-					}
-					Str= Str+F_qcdw+"|"+unit;
-//					alert(Str);
-					//材料送检
-					mui.ajax(url+'my_plus/my_material_add.php',{
-						data:{
-							str:Str,
-							sjc:mytime,
-							gcmc:gcmc,
-							timestamp:timestamp
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data){
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							//alert('ajax错误'+type);
-							return callback('ajax错误'+type+errorThrown);
-						}
-					});
-					
-					var btnArray = ['是', '否'];
-					mui.confirm('保存成功！下一步操作需要上传照片', '江门建筑管理系统', btnArray, function(e) {
-						if (e.index == 0) {
-							var myform=document.getElementById('myform');
-							var myform2=document.getElementById('myform2');
-							var img_content=document.getElementById('img_content');
-							var formbtn=document.getElementById("formbtn");
-							myform.classList.add('my_none');
-							myform2.classList.add('my_none');
-							formbtn.classList.add('my_none');			
-							img_content.classList.remove('my_none');
-						} else {
-							//返回父页面刷新
-							var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
-							target.reload(true);
-							mui.toast('新增成功',{ duration:'long', type:'div' })
-							mui.back();
-							
-						}
-					});
+					var myform=document.getElementById('myform');
+					var myform2=document.getElementById('myform2');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 			});
 			//返回父页面刷新

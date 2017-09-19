@@ -53,7 +53,8 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"index.html"
+			"index.html",
+			"reg.html"
 		]
 	},
 	"team.html": {
@@ -91,7 +92,8 @@
 		],
 		"refer": [
 			"my_material/my_material_resDet.html",
-			"my_material/my_material_supvr.html"
+			"my_material/my_material_supvr.html",
+			"my_material/my_material_recheckDet.html"
 		]
 	},
 	"my_plus/my_result.html": {
@@ -111,6 +113,13 @@
 			"my_material/my_material_list.html",
 			"my_plus/my_inspection.html",
 			"my_commission/my_commission_list.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"my_material/my_material_list.html": {
@@ -134,7 +143,8 @@
 			"my_material/my_material_samDetEdit.html",
 			"my_material/my_material_deliver.html",
 			"my_material/my_material_recheckDeliver.html",
-			"my_material/my_material_fail.html"
+			"my_material/my_material_fail.html",
+			"my_material/my_material_recheckDet.html"
 		]
 	},
 	"my_material/my_material_add.html": {
@@ -151,6 +161,9 @@
 			"css/mui.min.css",
 			"css/mui.poppicker.css",
 			"css/my_project_fhys_xz.css"
+		],
+		"refer": [
+			"my_material/camera_image.html"
 		]
 	},
 	"my_material/my_material_samDet.html": {
@@ -158,7 +171,8 @@
 			"js/common.js",
 			"js/immersed.js",
 			"js/upload_qy.js",
-			"images/iconfont-tianjia.png"
+			"images/iconfont-tianjia.png",
+			"js/mui.min.js"
 		],
 		"refer": [
 			"my_material/readimage.html"
@@ -225,6 +239,13 @@
 		"refer": [
 			"my_insp_material/my_inspection_material.html",
 			"my_insp_entity/my_inspection_entity.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
 		]
 	},
 	"my_insp_material/my_inspection_material.html": {
@@ -324,7 +345,8 @@
 	},
 	"my_insp_entity/my_inspection_entity.html": {
 		"refer": [
-			"my_insp_entity/my_inspection_new.html"
+			"my_insp_entity/my_inspection_new.html",
+			"my_insp_entity/my_inspection_entityhandleinformation.html"
 		],
 		"resources": [
 			"js/service.js",
@@ -375,6 +397,9 @@
 	"my_material/my_material_resDet.html": {
 		"refer": [
 			"my_material/readimage.html"
+		],
+		"resources": [
+			"js/mui.min.js"
 		]
 	},
 	"my_commission/my_entity_change.html": {
@@ -455,7 +480,8 @@
 	},
 	"my_material/my_material_fail.html": {
 		"resources": [
-			"js/upload_shy.js"
+			"js/upload_shy.js",
+			"images/iconfont-tianjia.png"
 		]
 	},
 	"my_commission/my_commission_change.html": {
@@ -476,6 +502,30 @@
 	"my_commission/my_commssion_fail.html": {
 		"resources": [
 			"js/upload_encomfail.js"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/app.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/style.css"
+		]
+	},
+	"my_material/camera_image.html": {
+		"resources": [
+			"js/common.js"
+		]
+	},
+	"my_material/my_material_recheckDet.html": {
+		"resources": [
+			"js/upload_qy.js",
+			"js/upload_sy.js"
+		],
+		"refer": [
+			"my_material/readimage.html"
 		]
 	}
 }

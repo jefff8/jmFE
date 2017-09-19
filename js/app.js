@@ -67,6 +67,7 @@
 		regInfo.my_name = regInfo.my_name || '';
 		regInfo.units = regInfo.units || '';
 		regInfo.unitName = regInfo.unitName || '';
+		regInfo.cid = regInfo.cid || '';
 		if (regInfo.account.length < 5) {
 			return callback('用户名最短需要 5 个字符');
 		}

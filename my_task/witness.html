@@ -41,6 +41,10 @@
 		            <label>见证人:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入见证人" id="wipe" disabled="disabled">
 		        </div>
+		        <div  class="mui-input-row">
+		            <label>检测操作单位:</label>
+		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		        </div>
 		    </form>			
 			<!--处理图片-->
 		    <form id="img_content" >
@@ -102,6 +106,7 @@
 				var reun = document.getElementById('reun');
 				var wipe = document.getElementById('wipe');
 				var self_id = document.getElementById("ulid");
+				var operation_unit = doc.getElementById("operation_unit"); 
 				self_id.value = ulid;
 				wipe.value = my_name;
 				//日期监听
@@ -160,6 +165,15 @@
 						alert('ajax错误'+type+errorThrown);
 					}
 				});
+			}
+			
+			//动态添加检测操作单位
+			var detect = reun.value;
+			var opera = detect.split(",");
+			for(var i=0;i<opera.length;i++){
+				var option = doc.createElement("option");
+				option.innerHTML = opera[i];
+				operation_unit.appendChild(option);
 			}
 			//返回父页面刷新
 			function back(){

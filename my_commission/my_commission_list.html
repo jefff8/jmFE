@@ -209,6 +209,7 @@
 				//获取传值
 				var self = plus.webview.currentWebview();
 				//全局变量mobile
+				pj_id = self.pj_id;//工程id
 				mobile = self.mobile;
 				my_name = self.my_name;
 	            gcmc = self.gcmc;
@@ -665,6 +666,20 @@
 															});
 														break;
 													case 2://不合格
+														//不合格推送通知
+														var server=url+"push/push.php";
+														var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+															//推送完成
+															if(status==200){
+																alert("不合格出现!将通知各单位");
+															}else{
+																alert("失败");
+															}
+														});
+														task.addData("title",'江门市建设工程施工质量管理系统');
+														task.addData("notice",gcmc+'——（实体检测）出现新的不合格项目！');
+														task.addData("pj_id",pj_id);
+														task.start();
 														mui.openWindow({
 															url:'my_commssion_fail.html',
 															styles: {

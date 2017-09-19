@@ -169,6 +169,7 @@
 			mui.plusReady(function(){
 				//获取上一个页面（mui.openwindow）传来的值
 				var self = plus.webview.currentWebview();
+				pj_id = self.pj_id;//工程id
 				gcmc = self.gcmc; //工程名称
 				constr = self.constr; //施工单位
 	            supvision = self.supvision; //监理单位
@@ -608,6 +609,20 @@
 															var btnArray = ['是', '否'];
 															mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 																if (e.index == 0) {
+																	//不合格推送通知
+																	var server=url+"push/push.php";
+																	var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+																		//推送完成
+																		if(status==200){
+																			alert("不合格出现!将通知各单位");
+																		}else{
+																			alert("失败");
+																		}
+																	});
+																	task.addData("title",'江门市建设工程施工质量管理系统');
+																	task.addData("notice",gcmc+'——（材料自检）出现新的不合格项目！');
+																	task.addData("pj_id",pj_id);
+																	task.start();
 																	mui.openWindow({
 																		url:"my_inspection_disqualification.html",
 																		extras:{

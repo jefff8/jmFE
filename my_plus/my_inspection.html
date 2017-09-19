@@ -36,6 +36,7 @@
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
 				//全局变量mobile
+				pj_id = self.pj_id;//工程id
 				mobile = self.mobile;
 				my_name = self.my_name;
 				constr = self.constr;
@@ -66,7 +67,8 @@
 							timestamp:timestamp,
 							constr:constr,
 							supvision:supvision,
-							detect:detect
+							detect:detect,
+							pj_id:pj_id
 						},
 						show: {
 							aniShow:"pop-in"

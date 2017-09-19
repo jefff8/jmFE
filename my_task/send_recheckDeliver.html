@@ -27,27 +27,39 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>送样单位:</label>
-		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位">
+		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>见证单位:</label>
-		            <input id="jzdw" type="text" class="mui-input-clear" placeholder="请输入见证单位">
+		            <input id="jzdw" type="text" class="mui-input-clear" placeholder="请输入见证单位" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>收样单位:</label>
-		            <input id="shydw" type="text" class="mui-input-clear" placeholder="请输入收样单位">
+		            <input id="shydw" type="text" class="mui-input-clear" placeholder="请输入收样单位" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>送样人:</label>
-		            <input id="syr" type="text" class="mui-input-clear" placeholder="请输入送样人" readonly="readonly" disabled="disabled">
+		            <input id="syr" type="text" class="mui-input-clear" placeholder="请输入送样人" >
 		        </div>
 		         <div class="mui-input-row">
 		            <label>见证人:</label>
-		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly" disabled="disabled">
+		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样数量:</label>
+		            <input id="samplingNum" type="text" class="mui-input-clear" placeholder="请输入取样数量" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样部位:</label>
+		            <input id="samplingPart" type="text" class="mui-input-clear" placeholder="请输入取样部位" readonly="readonly" >
 		        </div>
 		         <div class="mui-input-row">
+		            <label>初检编号:</label>
+		            <input id="ypbh" type="text" class="mui-input-clear" readonly="readonly" placeholder="请输入初检编号">
+		        </div> 
+		        <div class="mui-input-row">
 		            <label>样品编号(由检测单位提供):</label>
-		            <input id="ypbh" type="text" class="mui-input-clear" placeholder="请输入样品编号">
+		            <input id="second_num" type="text" class="mui-input-clear" placeholder="原检测报告编号(无需填写)">
 		        </div>
 		        <div  class="mui-input-row">
 		            <label>检测操作单位:</label>
@@ -101,26 +113,25 @@
 	      		var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
 	      		my_name = self.my_name;
-	      		constr = self.constr;
-	      		supvision = self.supvision;
-	      		detect = self.detect;
                 my_name = decodeURI(decodeURI(my_name));
 				var doc=document;
+				var shyrq=doc.getElementById("shyrq");
+				var soyrq=doc.getElementById("soyrq");
+				var sydw=doc.getElementById("sydw");
+				var jzdw=doc.getElementById("jzdw");
+				var shydw=doc.getElementById("shydw");
+				var syr=doc.getElementById("syr");
+				var jzr=doc.getElementById("jzr");
 				var save=doc.getElementById("save");
+				var ypbh=doc.getElementById("ypbh");
 				var sjc = doc.getElementById("sjc");
+				var samplingNum = doc.getElementById("samplingNum");
+				var samplingPart = doc.getElementById("samplingPart");
+				var second_num = doc.getElementById("second_num");
 				var operation_unit = doc.getElementById("operation_unit");
-				jzr.value = my_name;  //见证人默认为账号姓名
-				sydw.value = constr;
-				jzdw.value = supvision;
-				shydw.value = detect;
+				jzr.value = my_name  //见证人默认为账号姓名
 				
-				//动态添加监理操作单位
-				var opera = detect.split(",");
-				for(var i=0;i<opera.length;i++){
-					var option = doc.createElement("option");
-					option.innerHTML = opera[i];
-					operation_unit.appendChild(option);
-				}
+				
 				//获取当前日期
 				var myDate=new Date();
 				shyrq.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
@@ -145,28 +156,139 @@
 						var length=data.length;
 						for (var i=0;i<length-1;i++) {
 							sjc.value=data[i].时间戳;
-							syr.value=data[i].取样人;//“送样人”为上一步的“取样人”
-							samplingNum.value=data[i].数量;
-							samplingPart.value=data[i].使用部位;
+							syr.value=data[i].取样人;   //“送样人”为上一步的“取样人”
 						}
 					},
 					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
 						return callback('ajax错误'+type+errorThrown);
 					}
 					
+				});
+				
+				
+				//异步获取送样信息
+				mui.ajax(url+'my_plus/material_detail.php',{
+					data:{
+						gcid:ulId
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sydw.value=data[i].送样单位;
+							jzdw.value=data[i].见证单位;	
+							shydw.value=data[i].收样单位;
+							samplingNum.value=data[i].数量;
+							samplingPart.value=data[i].使用部位;
+							ypbh.value=data[i].检测报告编号;
+						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+						return callback('ajax错误'+type+errorThrown);
+					}
 				});	
-			
+				
+				//动态添加监理操作单位
+				var detect = shydw.value;
+				var opera = detect.split(",");
+				for(var i=0;i<opera.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = opera[i];
+					operation_unit.appendChild(option);
+				}
+				
+				
 				//保存
 				save.addEventListener('tap',function(){
-					var myform=document.getElementById('myform');
-					var img_content=document.getElementById('img_content');
-					var formbtn=document.getElementById("formbtn");
-					myform.classList.add('my_none');
-					formbtn.classList.add('my_none');			
-					img_content.classList.remove('my_none');
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
-				});
+					var mydata = {
+						ulId:ulId,
+						shyrq:shyrq.value,
+						soyrq:soyrq.value,
+						sydw:sydw.value,
+						jzdw:jzdw.value,
+						shydw:shydw.value,
+						syr:syr.value,
+						jzr:jzr.value,
+						second_num:second_num.value,
+						operation_unit:operation_unit.value
+					};
+					songyang(mydata,function(err){
+						if (err) {
+							plus.nativeUI.toast(err);
+							return;
+						}
+						  
+						var btnArray = ['是', '否'];
+						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+							if (e.index == 0) {
+								var myform=document.getElementById('myform');
+								var img_content=document.getElementById('img_content');
+								var formbtn=document.getElementById("formbtn");
+								myform.classList.add('my_none');
+								formbtn.classList.add('my_none');			
+								img_content.classList.remove('my_none');
+							} else {
+								//返回父页面刷新
+								var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
+								target.reload(true);
+								mui.back();
+							}
+						});
+					});
+				});	
 			});
+				
+				//送样信息异步
+				var songyang = function(mydata,callback){
+					callback = callback || $.noop;
+					mydata = mydata || {};
+					mydata.ulId = mydata.ulId || '';
+					mydata.shyrq = mydata.shyrq || '';
+					mydata.soyrq = mydata.soyrq || '';
+					mydata.sydw = mydata.sydw || '';
+					mydata.jzdw = mydata.jzdw || '';
+					mydata.shydw = mydata.shydw || '';
+					mydata.syr = mydata.syr || '';
+					mydata.jzr = mydata.jzr || '';
+					mydata.second_num = mydata.second_num || '';
+					mydata.operation_unit = mydata.operation_unit || '';
+					mui.ajax(url+'my_plus/my_material_recheckDeliver.php',{
+						data:{
+							ulId:mydata.ulId,
+							shyrq:mydata.shyrq,
+							soyrq:mydata.soyrq,
+							sydw:mydata.sydw,
+							jzdw:mydata.jzdw,
+							shydw:mydata.shydw,
+							syr:mydata.syr,
+							jzr:mydata.jzr,
+							second_num:mydata.second_num,
+							operation_unit:mydata.operation_unit
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if (data.result=='success') {
+								return callback();
+							} else{
+								return callback('服务器返回error');	
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							//alert('ajax错误'+type);
+							return callback('ajax错误'+type+errorThrown);
+						}
+					});
+				}
 			//返回父页面刷新
 			function back(){
 				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');

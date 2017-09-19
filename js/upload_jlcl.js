@@ -232,8 +232,9 @@ function upload4(lx,clean){
 	task.addData("disposeText",getText());
 	task.addData("files1",strs);
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
+	task.addData("records_back",records_back());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
 		task.addFile(f.path,{key:f.name});
@@ -255,5 +256,10 @@ function mchen(){
 function getText(){
 	var disposeText = document.getElementById("disposeText").value;
 	return disposeText;
+}
+//退厂记录
+function records_back(){
+	var records_back = document.getElementById("tcjv").value;
+	return records_back;
 }
 ////////////上传文件/////////////////////////////////////////////

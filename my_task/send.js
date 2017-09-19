@@ -311,7 +311,7 @@
 								})
 							}else if(status=='已见证复检'){
 								mui.openWindow({
-									url:'../my_material/my_material_recheckDeliver.html',
+									url:'send_recheckDeliver.html',
 									styles: {
 										hardwareAccelerated:false
 									},

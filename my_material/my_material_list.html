@@ -262,6 +262,7 @@
 				//获取传值
 				var self = plus.webview.currentWebview();
 				//全局变量mobile
+				pj_id = self.pj_id;//工程id
 				mobile = self.mobile;//手机号码
 				my_name = self.my_name;//用户姓名
 	            gcmc = self.gcmc; //工程名称
@@ -451,7 +452,7 @@
 			//							alert(gcdzt_pd);
 			
 										//判断状态并根据状态执行改变状态的任务
-										if(gcdzt_pd=='新增' || gcdzt_pd=='新增复检'){
+										if(gcdzt_pd=='新增'){
 											var btnArray = [
 											{title:"取样(施工单位)"},
 											{title:"删除"}
@@ -465,7 +466,6 @@
 												//var nextpage='';
 												switch (index){
 													case 1://取样
-													if(gcdzt_pd=='新增'){
 														mui.ajax(url+'my_plus/my_material_list.php',{
 															data:{
 																flag:"改取样状态",
@@ -485,28 +485,6 @@
 					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
 															}
 														});
-													}else if(gcdzt_pd=='新增复检'){
-														mui.ajax(url+'my_plus/my_material_list.php',{
-															data:{
-																flag:"取样复检",
-																ulid:ulId,
-																gcmc:gcmc,
-																timestamp:timestamp
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-			//													alert(data.结果);
-																mui.toast(data.结果,{ duration:'long', type:'div' })
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-															}
-														});
-													}
-															
 														break;
 													case 2://删除
 														mui.ajax(url+'my_plus/my_material_list.php',{
@@ -875,35 +853,20 @@
 														var btnArray = ['是', '否'];
 														mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 															if (e.index == 0) {
-																mui.ajax(url+'my_plus/my_material_list.php',{
-																	data:{
-																		flag:"不合格",
-																		ulid:ulId,
-																		gcmc:gcmc,
-																		timestamp:timestamp
-																	},
-																	dataType:'json',
-																	type:'POST', 
-																	timeout:10000,
-																	success:function(data){
-																	},
-																	error:function(xhr,type,errorThrown){
-							//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-																	}
-																});	
 																//不合格推送通知
-//																var server=url+"push/fail_push.php";
-//																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-//																	//推送完成
-//																	if(status==200){
-//								//										alert("发送成功");
-//																	}else{
-//																		alert("失败");
-//																	}
-//																});
-//																task.addData("title",'江门市建设工程施工质量管理系统');
-//																task.addData("notice",'出现新的不合格项目,请注意查收！');
-//																task.start();
+																var server=url+"push/push.php";
+																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+																	//推送完成
+																	if(status==200){
+																		alert("不合格出现!将通知各单位");
+																	}else{
+																		alert("失败");
+																	}
+																});
+																task.addData("title",'江门市建设工程施工质量管理系统');
+																task.addData("notice",gcmc+'——（材料送检）出现新的不合格项目！');
+																task.addData("pj_id",pj_id);
+																task.start();
 																mui.openWindow({
 																	url:'my_material_fail.html',
 																	styles: {
@@ -931,45 +894,40 @@
 														var btnArray = ['是', '否'];
 														mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 															if (e.index == 0) {
-																mui.ajax(url+'my_plus/my_material_list.php',{
-																	data:{
-																		flag:"复检不合格",
-																		ulid:ulId,
-																		gcmc:gcmc,
-																		timestamp:timestamp,
-																		recheckNum:""
-																	},
-																	dataType:'json',
-																	type:'POST', 
-																	timeout:10000,
-																	success:function(data){
-																		if(data.result=='success'){
-																			mui.openWindow({
-																				url:'my_material_fail.html',
-																				styles: {
-																					hardwareAccelerated:false
-																				},
-																				extras:{
-																					//传递参数
-																					ulId:ulId,
-																					timestamp:timestamp,
-																					state:'recheck'
-																				},
-																				show:{
-																					autoShow:true,//页面loaded事件发生后自动显示
-																					aniShow:'slide-in-right',//页面显示动画
-																					duration:'100'//页面动画持续时间
-																				},
-																				waiting:{
-																					autoShow:false,//自动显示等待框
-																				}
-																			});
-																		}
-																	},
-																	error:function(xhr,type,errorThrown){
-																		alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																//不合格推送通知
+																var server=url+"push/push.php";
+																var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+																	//推送完成
+																	if(status==200){
+																		alert("不合格出现!将通知各单位");
+																	}else{
+																		alert("失败");
 																	}
-																});	
+																});
+																task.addData("title",'江门市建设工程施工质量管理系统');
+																task.addData("notice",gcmc+'——（材料送检）出现新的不合格项目！');
+																task.addData("pj_id",pj_id);
+																task.start();
+																mui.openWindow({
+																	url:'my_material_fail.html',
+																	styles: {
+																		hardwareAccelerated:false
+																	},
+																	extras:{
+																		//传递参数
+																		ulId:ulId,
+																		timestamp:timestamp,
+																		state:'recheck'
+																	},
+																	show:{
+																		autoShow:true,//页面loaded事件发生后自动显示
+																		aniShow:'slide-in-right',//页面显示动画
+																		duration:'100'//页面动画持续时间
+																	},
+																	waiting:{
+																		autoShow:false,//自动显示等待框
+																	}
+																});
 															}
 														});
 													}

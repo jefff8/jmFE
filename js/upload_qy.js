@@ -239,19 +239,21 @@ function cleanHistory(lx) {
 //上传
 var server=url+"my_plus/fileupload.php";
 //var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
-var files=[];
+var files1=[];
+var files2=[];
 var files_cjzp=[];
 var files_ypzp=[];
-function upload(lx,clean){	
-	if (lx=='cjzp') {		
-		files=files_cjzp;	
-		var strs=","+f1Base64.join();
-	}else if(lx=='ypzp'){
-		files=files_ypzp;
-		var strs=","+f2Base64.join();
+function upload(lx){	
+	files1=files_cjzp;	
+	var strs1=","+f1Base64.join(); //场景照片
+	files2=files_ypzp;
+	var strs2=","+f2Base64.join(); //样品照片
+	if(files1.length<=0){
+		plus.nativeUI.alert("场景照片没有上传的文件！");
+		return;
 	}
-	if(files.length<=0){
-		plus.nativeUI.alert("没有添加上传文件！");
+	if(files2.length<=0){
+		plus.nativeUI.alert("样品照片没有上传的文件！");
 		return;
 	}
 //	outSet("开始上传：")
@@ -262,9 +264,11 @@ function upload(lx,clean){
 //			outLine("上传成功："+t.responseText);
 			wt.close();
 			var button_lx=document.getElementById(lx);
-			var button_clean=document.getElementById(clean);
+			var button_clean1=document.getElementById('clean1');
+			var button_clean2=document.getElementById('clean2');
 			button_lx.disabled=true;
-			button_clean.disabled=true;
+			button_clean1.disabled=true;
+			button_clean2.disabled=true;
 			button_lx.innerText="上传成功";				
 		}else{
 			outLine("上传失败："+status);
@@ -275,17 +279,28 @@ function upload(lx,clean){
 	task.addData("sceneText",getScene());
 	task.addData("sampleText",getSample());
 	task.addData("lx",lx);
-	task.addData("files1",strs);
+	task.addData("files1",strs1);
+	task.addData("files2",strs2);
 	task.addData("uid",getUid());	
-	nub=files.length.toString();
-	task.addData("nub",nub);
+	nub1=files1.length.toString();
+	nub2=files2.length.toString();
+	task.addData("nub1",nub1);
+	task.addData("nub2",nub2);
 	task.addData("mchen",mchen());
-	for(var i=0;i<files.length;i++){
-		var f=files[i];
-		task.addFile(f.path,{key:f.name});
+	task.addData("pj_name",gcmc);
+	task.addData("pj_timestamp",timestamp);
+	task.addData("myInfo",myInfo());
+	for(var i=0;i<files1.length;i++){
+		var f1=files1[i];
+		task.addFile(f1.path,{key:f1.name});
+	}
+	for(var i=0;i<files2.length;i++){
+		var f2=files2[i];
+		task.addFile(f2.path,{key:f2.name});
 	}
 	task.start();
-	files=[];
+//	files1=[];
+//	files2=[];
 }
 
 
@@ -313,5 +328,17 @@ function getScene(){
 function getSample(){
 	var sampleText = document.getElementById("sampleText").value;
 	return sampleText;
+}
+//信息保存
+function myInfo(){
+	var F_input = document.getElementById('myform').getElementsByTagName('input');
+	var F_qcdw = document.getElementById('qcdy').value;
+	var unit = document.getElementById("operation_unit").value;
+	var Str="";
+	for(i=0;i<11;i++){
+		var Str = Str + F_input[i].value+"|";
+	}
+	Str= Str+F_qcdw+"|"+unit;
+	return Str
 }
 ////////////上传文件/////////////////////////////////////////////

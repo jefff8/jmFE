@@ -82,7 +82,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
-		            <input id="jcdw" type="text" class="mui-input-clear" placeholder="请输入检测单位" readonly="readonly" >
+		            <input id="qcdy" type="text" class="mui-input-clear" placeholder="请输入检测单位" readonly="readonly" >
 		        </div>
 		    </form>	
 		    <div id="formbtn" class="mui-button-row">
@@ -114,9 +114,9 @@
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	<button id="clean1" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
 		        <!--样品照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -136,9 +136,9 @@
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	<button id="clean2" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>
+		        	<button id="step2" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -155,6 +155,8 @@
 			mui.init()
 			mui.plusReady(function(){
 				var doc = document;
+				timestamp = "";
+				gcmc = "";
 				var my_popover = doc.getElementById("my_popover");
 				
 				var qylx = doc.getElementById('qylx');
@@ -163,7 +165,7 @@
 				var sccj = doc.getElementById('sccj');
 				var qyr = doc.getElementById('qyr');
 				var qyrq = doc.getElementById("qyrq");
-				var jcdw = doc.getElementById("jcdw");
+				var F_qcdw = doc.getElementById("qcdy");
 				var rwfj = doc.getElementById("rwfj");
 //				var fjck = doc.getElementById("fjck");
 				var fjgx = doc.getElementById("fjgx");
@@ -223,7 +225,7 @@
 						dealer_units.value = data[0].经销商单位;
 						remark.value = data[0].备注;
 						qyrq.value = data[0].取样日期;
-						jcdw.value = data[0].检测单位;
+						F_qcdw.value = data[0].检测单位;
 					},
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -247,34 +249,6 @@
 				});
 				
 				
-				//获取材料送检信息
-				var scene_photo=[];
-				var sample_photo=[];
-				var sceneText;
-				var sampleText;
-				mui.ajax(url+'my_plus/material_detail.php',{
-					data:{
-						gcid:gcid
-					},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					success:function(data){
-						var length=data.length;
-						for (var i=0;i<length-1;i++) {
-							sjc.value=data[i].时间戳;
-							scene_photo=data[i].场景照片.split("~*^*~");
-							sample_photo=data[i].样品照片.split("~*^*~");
-							sceneText=data[i].场景照片说明;
-							sampleText=data[i].样品照片说明;
-						}
-					},
-					error:function(xhr,type,errorThrown){
-						//异常处理；
-						//alert('ajax错误'+type);
-//						return callback('ajax错误'+type+errorThrown);
-					}
-				});	
 				
 				//附件更新
 				fjgx.addEventListener('tap',function(){
@@ -320,10 +294,10 @@
 						success:function(data){
 							if(data['单位']=='施工单位'||data['单位']=='管理员'){
 								var myform = document.getElementById("myform").getElementsByTagName("input");
-								var jcdw = document.getElementById("jcdw");
+								var F_qcdw = document.getElementById("qcdy");
 								Edit.classList.add("my_none");
 								save.classList.remove("my_none");
-								jcdw.removeAttribute("readonly");
+								F_qcdw.removeAttribute("readonly");
 			  					for(i=1;i<11;i++){
 			  						myform[i].removeAttribute("readonly");
 			  					}
@@ -401,34 +375,39 @@
 				
 				//保存按钮监听
 				save.addEventListener('tap',function(){
-					var F_input = document.getElementById('myform').getElementsByTagName('input');
-					var F_jcdw = document.getElementById('jcdw').value;
-					var unit = document.getElementById("operation_unit").value;
-					var Str="";
-					for(i=0;i<11;i++){
-						var Str = Str + F_input[i].value+"|";
-					}
-					Str= Str+F_jcdw+"|"+unit;
-					mui.ajax(url+'my_plus/my_material_samDetEdit.php',{
-						data:{
-							self_id:gcid,
-							Str:Str
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data){
-							mui.toast("信息保存成功,需要上传附件!");
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							//alert('ajax错误'+type);
-							return callback('ajax错误'+type+errorThrown);
-						}
-					});
+//					var F_input = document.getElementById('myform').getElementsByTagName('input');
+//					var F_jcdw = document.getElementById('jcdw').value;
+//					var unit = document.getElementById("operation_unit").value;
+//					var Str="";
+//					for(i=0;i<11;i++){
+//						var Str = Str + F_input[i].value+"|";
+//					}
+//					Str= Str+F_jcdw+"|"+unit;
+//					mui.ajax(url+'my_plus/my_material_samDetEdit.php',{
+//						data:{
+//							self_id:gcid,
+//							Str:Str
+//						},
+//						dataType:'json',
+//						type:'post',
+//						timeout:10000,
+//						success:function(data){
+					var myform=document.getElementById('myform');
+					var myform2=document.getElementById('myform2');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast("信息保存成功,需要上传附件!");
+//						},
+//						error:function(xhr,type,errorThrown){
+//							//异常处理；
+//							//alert('ajax错误'+type);
+//							return callback('ajax错误'+type+errorThrown);
+//						}
 				});
-				
-	
 			});
 		</script>
 	</body>

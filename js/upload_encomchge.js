@@ -252,7 +252,7 @@ function getName(){
 	var gcmc = document.getElementById("gcmc");
 	return gcmc;
 }
-//获取获取实测时间
+//获取填写信息
 function dataAll(){
 	var F_input = document.getElementById('myform2').getElementsByTagName('input');
 	var Str = "";

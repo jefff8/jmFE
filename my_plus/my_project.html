@@ -70,11 +70,12 @@
 					if(r!=null)return  unescape(r[2]);
 					return null;
 				}
-				//获取工程名称
-				var gcmc = geturl("gcmc");
-				var constr = geturl("constr");
-				var supvision = geturl("supvision");
-				var detect = geturl("detect");
+				
+				var gcmc = geturl("gcmc");//获取工程名称
+				var constr = geturl("constr");//获取施工单位名称
+				var supvision = geturl("supvision");//获取监理单位名称
+				var detect = geturl("detect");//获取检测单位名称
+				var pj_id = geturl("id");
 				gcmc = decodeURI(gcmc);
 				//施工单位
 				constr = decodeURI(constr);
@@ -83,7 +84,6 @@
 				//检测单位
 				detect = decodeURI(detect);
 				var timestamp = geturl("timestamp");
-//				alert(timestamp);
 				document.getElementById('H_name').innerHTML=gcmc;//标题名称
 				
 				//主列表点击事件 ,把项目id传到所有子页面中
@@ -107,7 +107,8 @@
 							timestamp:timestamp,
 							constr:constr,
 							supvision:supvision,
-							detect:detect
+							detect:detect,
+							pj_id:pj_id
 						},
 						show: {
 							aniShow:"pop-in"

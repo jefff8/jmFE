@@ -1582,7 +1582,8 @@
 					"js/immersed.js",
 					"my_material/my_material_list.html",
 					"js/upload_qy.js",
-					"images/iconfont-tianjia.png"
+					"images/iconfont-tianjia.png",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"my_material/readimage.html"

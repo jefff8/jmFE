@@ -57,6 +57,10 @@
 		            <label>样品编号:</label>
 		            <input id="ypbh" type="text" class="mui-input-clear" placeholder="请输入样品编号">
 		        </div> 
+		        <div  class="mui-input-row">
+		            <label>检测操作单位:</label>
+		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		        </div>
 		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
@@ -120,6 +124,7 @@
 				var sjc = doc.getElementById("sjc");
 				var samplingNum = doc.getElementById("samplingNum");
 				var samplingPart = doc.getElementById("samplingPart");
+				var operation_unit = doc.getElementById("operation_unit");
 				jzr.value = my_name;  //见证人默认为账号姓名
 				//获取当前日期
 				var myDate=new Date();
@@ -195,7 +200,14 @@
 						}
 					});
 				}
-			
+				//动态添加监理操作单位
+				var detect = shydw.value;
+				var opera = detect.split(",");
+				for(var i=0;i<opera.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = opera[i];
+					operation_unit.appendChild(option);
+				}
 				//保存
 				save.addEventListener('tap',function(){
 					var mydata = {

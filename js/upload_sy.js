@@ -206,9 +206,7 @@ var files=[];
 var files_syzp=[];
 function upload2(lx,clean){	
 	var strs=","+f1Base64.join();
-	if (lx=='syzp') {		
-		files=files_syzp;	
-	}
+	files=files_syzp;	
 	if(files.length<=0){
 		plus.nativeUI.alert("没有添加上传文件！");
 		return;
@@ -235,8 +233,9 @@ function upload2(lx,clean){
 	task.addData("uid",getUid());
 	task.addData("files1",strs);
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
+	task.addData("myInfo",myInfo());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
 		task.addFile(f.path,{key:f.name});
@@ -258,5 +257,16 @@ function mchen(){
 function getText(){
 	var receivedText = document.getElementById("receivedText").value;
 	return receivedText;
+}
+//信息保存
+function myInfo(){
+	var my_input = document.getElementById("myform").getElementsByTagName("input");
+	var length = my_input.length;
+	var myInfo = "";
+	for(var i=0;i<length-1;i++){
+		myInfo+=my_input[i].value + "|"; 
+	}
+	myInfo += operation_unit.value;
+	return myInfo;
 }
 ////////////上传文件/////////////////////////////////////////////

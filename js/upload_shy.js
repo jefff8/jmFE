@@ -244,7 +244,7 @@ function upload3(lx,clean){
 	task.addData("uid",getUid());
 	task.addData("files1",strs);
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
