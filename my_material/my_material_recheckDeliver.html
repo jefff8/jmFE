@@ -60,7 +60,7 @@
 		    </form>
 		    <form id="myform2" class="mui-input-group">
 		        <div class="mui-input-row">
-		            <label>初检编号:</label>
+		            <label>初检编号(原检测报告编号):</label>
 		            <input id="ypbh" type="text" class="mui-input-clear" readonly="readonly" placeholder="原检测报告编号(无需填写)">
 		        </div>
 		    </form>
@@ -182,7 +182,7 @@
 							sydw.value=data[i].送样单位;
 							jzdw.value=data[i].见证单位;	
 							shydw.value=data[i].收样单位;
-							ypbh.value=data[i].检测报告编号;
+							ypbh.value=data[i].复检编号;
 						}
 						
 					},
@@ -196,91 +196,18 @@
 				
 				//保存
 				save.addEventListener('tap',function(){
-//					var mydata = {
-//						ulId:ulId,
-//						shyrq:shyrq.value,
-//						soyrq:soyrq.value,
-//						sydw:sydw.value,
-//						jzdw:jzdw.value,
-//						shydw:shydw.value,
-//						syr:syr.value,
-//						jzr:jzr.value,
-//						second_num:second_num.value,
-//						operation_unit:operation_unit.value
-//					};
-//					songyang(mydata,function(err){
-//						if (err) {
-//							plus.nativeUI.toast(err);
-//							return;
-//						}
-//						  
-//						var btnArray = ['是', '否'];
-//						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
-//							if (e.index == 0) {
-								var myform=document.getElementById('myform');
-								var myform2=document.getElementById("myform2");
-								var img_content=document.getElementById('img_content');
-								var formbtn=document.getElementById("formbtn");
-								myform.classList.add('my_none');
-								myform2.classList.add('my_none');
-								formbtn.classList.add('my_none');			
-								img_content.classList.remove('my_none');
-								
-//							} else {
-//								//返回父页面刷新
-//								var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
-//								target.reload(true);
-//								mui.back();
-//							}
-//						});
-//					});
+					var myform=document.getElementById('myform');
+					var myform2=document.getElementById("myform2");
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});	
 			});
 				
-//				//送样信息异步
-//				var songyang = function(mydata,callback){
-//					callback = callback || $.noop;
-//					mydata = mydata || {};
-//					mydata.ulId = mydata.ulId || '';
-//					mydata.shyrq = mydata.shyrq || '';
-//					mydata.soyrq = mydata.soyrq || '';
-//					mydata.sydw = mydata.sydw || '';
-//					mydata.jzdw = mydata.jzdw || '';
-//					mydata.shydw = mydata.shydw || '';
-//					mydata.syr = mydata.syr || '';
-//					mydata.jzr = mydata.jzr || '';
-//					mydata.second_num = mydata.second_num || '';
-//					mydata.operation_unit = mydata.operation_unit || '';
-//					mui.ajax(url+'my_plus/my_material_recheckDeliver.php',{
-//						data:{
-//							ulId:mydata.ulId,
-//							shyrq:mydata.shyrq,
-//							soyrq:mydata.soyrq,
-//							sydw:mydata.sydw,
-//							jzdw:mydata.jzdw,
-//							shydw:mydata.shydw,
-//							syr:mydata.syr,
-//							jzr:mydata.jzr,
-//							second_num:mydata.second_num,
-//							operation_unit:mydata.operation_unit
-//						},
-//						dataType:'json',
-//						type:'post',
-//						timeout:10000,
-//						success:function(data){
-//							if (data.result=='success') {
-//								return callback();
-//							} else{
-//								return callback('服务器返回error');	
-//							}
-//						},
-//						error:function(xhr,type,errorThrown){
-//							//异常处理；
-//							//alert('ajax错误'+type);
-//							return callback('ajax错误'+type+errorThrown);
-//						}
-//					});
-//				}
 			//返回父页面刷新
 			function back(){
 				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');

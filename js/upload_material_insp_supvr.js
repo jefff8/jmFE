@@ -232,8 +232,9 @@ function upload4(lx,clean){
 	task.addData("uid",getUid());
 	task.addData("files1",strs);
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
+	task.addData("HandleRecord",getHandleRecord());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
 		task.addFile(f.path,{key:f.name});
@@ -255,5 +256,10 @@ function mchen(){
 function text5(){
 	var Text5 = document.getElementById("Text5").value;
 	return Text5;
+}
+//处理记录
+function getHandleRecord(){
+	var HandleRecord = document.getElementById("tcjv").value;
+	return HandleRecord;
 }
 ////////////上传文件/////////////////////////////////////////////

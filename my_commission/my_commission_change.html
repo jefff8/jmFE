@@ -41,9 +41,9 @@
 		            <label>见证人:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入见证人" id="wipe" disabled="disabled">
 		        </div>
-		        <div  class="mui-input-row">
+		        <div  class="mui-input-row my_none">
 		            <label>检测操作单位:</label>
-		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		            <input id="operation_unit" type="text" class="mui-input-clear" placeholder="">
 		        </div>
 		    </form>			
 			<!--处理图片-->
@@ -110,19 +110,18 @@
 				var reun = doc.getElementById('reun');
 				var wipe = doc.getElementById('wipe');
 				var operation_unit = doc.getElementById("operation_unit"); 
-				
+				var sjc = doc.getElementById("sjc");
 				wipe.value = my_name;
 				seun.value = constr;
 				wiun.value = supvision;
-				reun.value = detect;
 				
 				//动态添加检测操作单位
-				var opera = detect.split(",");
-				for(var i=0;i<opera.length;i++){
-					var option = doc.createElement("option");
-					option.innerHTML = opera[i];
-					operation_unit.appendChild(option);
-				}
+//				var opera = detect.split(",");
+//				for(var i=0;i<opera.length;i++){
+//					var option = doc.createElement("option");
+//					option.innerHTML = opera[i];
+//					operation_unit.appendChild(option);
+//				}
 				//日期监听
 				sedate.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -143,9 +142,6 @@
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('ulid');
 				protimesp.value = ulid;
-				var protimesp = doc.getElementById('sjc');
-				protimesp.value = timestamp;
-				
 				mui.ajax(url+'my_plus/my_entity_detail.php',{
 					data:{
 						flag:"获取信息",
@@ -153,12 +149,13 @@
 					},
 					type:'post',
 					dataType:'json',
-					timeout:10000,
 					success:function(data){
-//						sepe.value = data[0].取样人;
+						sjc.value = data[0].时间戳;
+						reun.value = data[0].检测单位;
+						operation_unit.value = data[0].检测单位;
 					},
 					error:function(xhr,type,errorThrown){
-						alert("ajax错误:"+type+"----"+errorThrown); 
+						alert('ajax错误'+type+errorThrown);
 					}
 				});
 			});

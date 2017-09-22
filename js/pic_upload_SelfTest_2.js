@@ -225,8 +225,9 @@ function upload2(lx,clean){
 	task.addData("files1",strs);
 	task.addData("uid",getUid());
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
+	task.addData("myInfo",saveInfo());
 	for(var i=0;i<files.length;i++){
 		var f=files[i];
 		task.addFile(f.path,{key:f.name});
@@ -255,5 +256,15 @@ function getName(){
 function text4(){
 	var Text4 = document.getElementById("Text4").value;
 	return Text4;
+}
+//信息保存
+function saveInfo(){
+	var myform=document.getElementById('myform');
+	var F_input = myform.getElementsByTagName("input");
+	var Str = "";
+	for(i=0;i<6;i++){
+		Str = Str + F_input[i].value + "|";
+	}
+	return Str;
 }
 ////////////上传文件/////////////////////////////////////////////

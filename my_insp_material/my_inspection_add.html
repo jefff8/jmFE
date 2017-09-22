@@ -45,10 +45,6 @@
 		            <label>备注:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入备注">
 		        </div>
-		        <div class="mui-input-row my_none" >
-		            <label>检测单位:</label>
-		           <input type="text" id="testUnint" class="mui-input-clear" placeholder="请输入检测单位">
-		        </div>
 		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input id='sjc' type="text" hidden="hidden" placeholder="时间戳" readonly="readonly">						
@@ -88,7 +84,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
 		        <!--检测实施过程照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -110,7 +106,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>
+		        	<!--<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>-->
 		        </div>
 		        <!--检测设备照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -132,7 +128,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_sb" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('sbzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="sbzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_sb');">附件上传</button>
+		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_sb');">附件上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -167,10 +163,8 @@
 				var sjc = doc.getElementById("sjc");
 				var save = doc.getElementById("save");
 				var inspector = doc.getElementById("inspector");
-				var testUnint = doc.getElementById("testUnint");
 				var operation_unit = doc.getElementById("operation_unit");
 				inspector.value = my_name;//检测人关联手机号姓名
-				testUnint.value = detect;//关联检测单位
 				
 				//动态添加监理操作单位
 				var opera = supvision.split(",");
@@ -242,53 +236,12 @@
 				
 				//信息保存
 				save.addEventListener('tap',function(){
-					
-					//获取信息并合并为字符窜Str,从上到下顺序获取,注意时间戳也在里面
-//					var F_select = zjlx.value;
-					var F_input = myform.getElementsByTagName("input");
-					var Str = "";
-					var unit = document.getElementById("operation_unit").value;
-					for(i=0;i<8;i++){
-						Str = Str + F_input[i].value + "|";
-					}
-					Str= Str+unit;
-					//异步传值并保存 
-					mui.ajax(url+'my_plus/my_inspection_add.php',{
-						data:{
-							flag:"保存信息",
-							project_name:project_name,
-							timestamp:timestamp,
-							str_send:Str
-						},
-						dataType:'json',
-						type:'POST',
-						timeout:10000,
-						success:function(data){
-							var btnArray = ['是', '否'];
-							mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
-								if (e.index == 0) {
-									var myform=document.getElementById('myform');
-//									var myform2=document.getElementById('myform2');
-									var img_content=document.getElementById('img_content');
-									var formbtn=document.getElementById("formbtn");
-									myform.classList.add('my_none');
-//									myform2.classList.add('my_none');
-									formbtn.classList.add('my_none');			
-									img_content.classList.remove('my_none');
-								} else {
-									//返回父页面刷新
-									var target=plus.webview.getWebviewById('../my_insp_material/my_inspection_material.html');
-									target.reload(true);
-									mui.toast('新增成功',{ duration:'long', type:'div' });
-									mui.back();
-									
-								}
-							});
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type);
-						}
-					});
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 				
 			});

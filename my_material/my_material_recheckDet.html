@@ -74,15 +74,15 @@
 		    <form id="myform2" class="mui-input-group">
 		    	<div class="mui-input-row ">
 		            <label>初检编号:</label>
-		            <input  id="first_num" type="text" class="mui-input-clear" placeholder="请输入样片编号" readonly="readonly" disabled="disabled">
+		            <input  id="first_num" type="text" class="mui-input-clear" placeholder="" readonly="readonly" >
 		        </div>
-		        <div class="mui-input-row ">
+		        <div id="Numdiv" class="mui-input-row my_none">
 		            <label>检测报告编号:</label>
-		            <input  id="testNum" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input  id="testNum" type="text" class="mui-input-clear" placeholder="" readonly="readonly" >
 		        </div>
-		    	 <div class="mui-input-row ">
+		    	<div class="mui-input-row ">
 		            <label>样品编号:</label>
-		            <input  id="ypbh" type="text" class="mui-input-clear" placeholder="请输入样片编号" readonly="readonly" disabled="disabled">
+		            <input  id="ypbh" type="text" class="mui-input-clear" placeholder="请输入样片编号" readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>送样日期:</label>
@@ -220,6 +220,7 @@
 				var remark = doc.getElementById("remark");
 				var first_num = doc.getElementById("first_num");
 				var testNum = doc.getElementById("testNum");
+				var Numdiv = doc.getElementById("Numdiv");
 				//日期监听
 				qyrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -276,7 +277,7 @@
 							shydw.value=data[i].收样单位;
 							syr.value=data[i].送样人;
 							jzr.value=data[i].见证人;
-							first_num.value=data[i].检测报告编号;
+							first_num.value=data[i].检测报告编号; 
 							interDate.value=data[i].进场日期;
 							qualifiedNum.value=data[i].合格证编号;
 							usedPart.value=data[i].使用部位;
@@ -286,12 +287,15 @@
 							sample_photo=data[i].样品照片.split("~*^*~");
 							received_photo=data[i].收样照片.split("~*^*~");
 							detection_photo=data[i].检测照片.split("~*^*~");
-							testNum.value=data[i].复检编号;
 							sceneText=data[i].场景照片说明;
 							sampleText=data[i].样品照片说明;
 							receivedText=data[i].收样照片说明;
 							report=data[i].检测报告照片说明;
-							disposeText=data[i].处理照片说明;
+							disposeText=data[i].处理照片说明; 
+							if(data[i].复检编号){ 
+								Numdiv.classList.remove("my_none");
+							} 
+							testNum.value=data[i].复检编号;
 						}
 						
 					},

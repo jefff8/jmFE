@@ -249,7 +249,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:"",
-							mobile:mobile
+							mobile:mobile,
+							flag:"self_inspection2"
 						},
 						dataType:'json',
 						type:'post',
@@ -278,7 +279,7 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
@@ -288,7 +289,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
-							mobile:mobile
+							mobile:mobile,
+							flag:"self_inspection2"
 						},
 						dataType:'json',
 						type:'post',
@@ -453,7 +455,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
-							mobile:mobile
+							mobile:mobile,
+							flag:"self_inspection2"
 						},
 						dataType:'json',
 						type:'post',

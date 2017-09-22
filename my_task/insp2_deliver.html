@@ -166,51 +166,13 @@
 		
 				//保存
 				save.addEventListener('tap',function(){
-					if(sydw.value.length != 0){
-						mui.ajax(url+'my_plus/my_inspection_entitydeliver.php',{
-							data:{
-								flag:"保存信息",
-								id:ulid,
-								timestamp_self:timestamp_self,
-								selfchek_zcrq:zcrq.value,
-								selfchek_syrq:syrq.value,
-								selfchek_sydw:sydw.value,
-								selfchek_jzdw:jzdw.value,
-								selfchek_sdw:sdw.value,
-								selfchek_jzr:jzr.value
-//								selfchek_jcbh:jcbh.value,
-
-							},
-							type:'post',
-							dataType:'json',
-							timeout:10000,
-							success:function(data){
-//								alert(data);
-								var btnArray = ['是', '否'];
-								mui.confirm(data.result+'是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
-									if (e.index == 0) {
-										var myform=document.getElementById('myform');
-										var img_content=document.getElementById('img_content');
-										var formbtn=document.getElementById("formbtn");
-										myform.classList.add('my_none');
-										formbtn.classList.add('my_none');			
-										img_content.classList.remove('my_none');
-									} else {
-										//返回父页面刷新
-										var target=plus.webview.getWebviewById('my_task/task_list.html');
-										target.reload(true);
-										mui.back();
-									}
-								});
-							},
-							error:function(){
-								alert("ajax error!");
-							}
-						});
-					}else{
-						alert("请检测信息是否完整");
-					}
-					
+					var myform=document.getElementById('myform');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});	
 			});
 				

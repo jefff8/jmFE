@@ -1,4 +1,5 @@
 	//根据对应工程查询任务
+	a2_account = 0;
 	function taskList2(pj_timestamp){
 		mui.ajax(url+'my_task/task_list.php',{
 			data:{
@@ -11,9 +12,10 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				a2_account+= length;
 				var a2 = document.getElementById("a2");
 				for(var i=0;i<length;i++){
-					a2.innerHTML = "材料自检("+length+")";
+					a2.innerHTML = "材料自检("+a2_account+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;
@@ -69,6 +71,8 @@
 			timeout:10000,
 			success:function(data){
 				var status = data.工程单状态;
+				var pj_name = data.工程名称;
+				var pj_id = data.id; //工程id
 				if(status == "新增"||status == "取样送检"){
 					var btnArray = [
 					{title:"取样"},
@@ -296,6 +300,20 @@
 									var btnArray = ['是', '否'];
 									mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 										if (e.index == 0) {
+											//不合格推送通知
+											var server=url+"push/push.php";
+											var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+												//推送完成
+												if(status==200){
+													alert("不合格出现!将通知各单位");
+												}else{
+													alert("失败");
+												}
+											});
+											task.addData("title",'江门市建设工程施工质量管理系统');
+											task.addData("notice",pj_name+'——（材料自检）出现新的不合格项目！');
+											task.addData("pj_id",pj_id);
+											task.start();
 											mui.openWindow({
 												url:"insp1_fail.html",
 												extras:{
@@ -347,7 +365,8 @@
 					mui.ajax(url+'check.php',{
 					data:{
 						ulId:ulId,
-						mobile:mobile
+						mobile:mobile,
+						flag:"self_inspection1"
 					},
 					dataType:'json',
 					type:'post',

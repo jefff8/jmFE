@@ -41,9 +41,9 @@
 		            <label>见证人:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入见证人" id="wipe" disabled="disabled">
 		        </div>
-		        <div  class="mui-input-row">
+		        <div  class="mui-input-row my_none">
 		            <label>检测操作单位:</label>
-		            <select id="operation_unit" style="font-size: 14px;" ></select>
+		            <input id="operation_unit" type="text" class="mui-input-clear" placeholder="">
 		        </div>
 		    </form>			
 			<!--处理图片-->
@@ -138,6 +138,8 @@
 					timeout:10000,
 					success:function(data){
 						var pj_timestamp = data[0].工程时间戳;
+						reun.value = data[0].检测单位;
+						operation_unit.value = data[0].检测单位;
 						units(pj_timestamp);
 					},
 					error:function(xhr,type,errorThrown){
@@ -159,7 +161,14 @@
 //							alert(data);
 						seun.value = data[0].施工单位;
 						wiun.value = data[0].监理单位;
-						reun.value = data[0].检测单位;					
+						//动态添加检测操作单位
+//						var detect = reun.value;
+//						var opera = detect.split(",");
+//						for(var i=0;i<opera.length;i++){
+//							var option = doc.createElement("option");
+//							option.innerHTML = opera[i];
+//							operation_unit.appendChild(option);
+//						}
 					},
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+errorThrown);
@@ -167,14 +176,7 @@
 				});
 			}
 			
-			//动态添加检测操作单位
-			var detect = reun.value;
-			var opera = detect.split(",");
-			for(var i=0;i<opera.length;i++){
-				var option = doc.createElement("option");
-				option.innerHTML = opera[i];
-				operation_unit.appendChild(option);
-			}
+			
 			//返回父页面刷新
 			function back(){
 				var target=plus.webview.getWebviewById('my_task/task_list.html');

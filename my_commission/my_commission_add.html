@@ -51,7 +51,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
-		            <input type="text" class="mui-input-clear" placeholder="请输入检测单位" id="test_dpm">
+		            <select id="test_dpm" style="font-size: 14px;" ></select>
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
@@ -80,7 +80,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
 		        <!--检测实施过程照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -102,7 +102,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>
+		        	<!--<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>-->
 		        </div>
 		        <!--检测设备照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
@@ -124,7 +124,7 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_teqm" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('teqm');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="teqm" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_teqm');">附件上传</button>
+		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_teqm');">附件上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -178,7 +178,6 @@
 				progcmc.value = gcmc;
 				var protimesp = doc.getElementById('sjc');
 				protimesp.value = timesp;
-				tdpm.value = detect;
 				
 				//动态添加监理操作单位
 				var opera = supvision.split(",");
@@ -186,6 +185,13 @@
 					var option = doc.createElement("option");
 					option.innerHTML = opera[i];
 					operation_unit.appendChild(option);
+				}
+				//动态添加检测单位
+				var detection_unit = detect.split(",");
+				for(var i=0;i<detection_unit.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = detection_unit[i];
+					tdpm.appendChild(option);
 				}
 				//日期监听
 				jcrq.addEventListener('tap',function(){
@@ -252,55 +258,17 @@
 					});
 				}, false);
 
-				
-				
-				
-				
-				
-				
 				//保存按钮
 				data_save.addEventListener('tap',function(){
-					mui.ajax(url+'my_plus/my_commission_add.php',{
-						data:{
-							test_type:type.value,//检测类型
-							jcbw:jcbw.value,//检测部位
-							num:num.value,//检测数量
-							jcr:jcr.value,//检测人
-							jcrq:jcrq.value,//检测日期
-							rmark:rmark.value,//备注
-							test_dpm:tdpm.value,//检测单位
-							owtst:timesp,//時間戳
-							prots:timestamp,//工程时间戳
-							proname:gcmc,//工程名称
-							operation_unit:operation_unit.value
-						},
-//						dataType:'json',
-						type:'post', 
-						timeout:10000,
-						success:function(data){
-						},
-						error:function(xhr,type,errorThrown){
-//							return callback('ajax mistake'+type+errorThrown);
-						}
-					});
-					var btnArray = ['是', '否'];
-					mui.confirm('保存成功！下一步操作上传照片', '江门建筑管理系统', btnArray, function(e) {
-						if (e.index == 0) {
-							var myform=document.getElementById('myform');
-							var myform2=document.getElementById('myform2');
-							var img_content=document.getElementById('img_content');
-							var formbtn=document.getElementById("formbtn");
-							myform.classList.add('my_none');
-							myform2.classList.add('my_none');
-							formbtn.classList.add('my_none');			
-							img_content.classList.remove('my_none');
-						} else {
-							//返回父页面刷新
-							var target=plus.webview.getWebviewById('../my_commission/my_commission_list.html');
-							target.reload(true);
-							mui.toast('新增成功',{ duration:'long', type:'div' })
-						}
-					});
+					var myform=document.getElementById('myform');
+					var myform2=document.getElementById('myform2');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 			});
 			//返回父页面刷新

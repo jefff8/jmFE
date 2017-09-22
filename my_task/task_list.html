@@ -101,7 +101,7 @@
 								<a class=" mui-icon mui-icon-arrowleft mui-pull-left" style="bottom: 18px;"></a>
 		         		    </div>-->
 		         		    <div class="mui-slider-item">
-								<a id="a1" class="mui-control-item  mui-active"  href="#item1">
+								<a id="a1" class="mui-control-item  mui-active" href="#item1">
 									材料送检(0)
 								</a>
 								<a id="a2" class="mui-control-item"  href="#item2">
@@ -351,7 +351,7 @@
 				plus.nativeUI.showWaiting( "正在拼命加载中..." );
 				setTimeout( function(){
 					plus.nativeUI.closeWaiting();
-				}, 2500 );
+				}, 1500 );
 			}
 			if(window.plus){
 				plusReady();
@@ -370,7 +370,8 @@
 				unit = self.unit;//单位
 				unitName = self.unitName; //单位名称
 				my_name = decodeURI(decodeURI(my_name));
-				unit = decodeURI(decodeURI(unit)); 
+				unit = decodeURI(decodeURI(unit));
+				
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',

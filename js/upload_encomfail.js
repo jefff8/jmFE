@@ -218,7 +218,7 @@ function upload(lx,clean){
 	task.addData("uid",getUid());
 	task.addData("id",getid());
 	nub=files.length.toString();
-	task.addData("nub",nub);
+	task.addData("nub1",nub);
 	task.addData("mchen",mchen());
 	task.addData("tresult",gettresult());
 	task.addData("testNum",gettestNum());

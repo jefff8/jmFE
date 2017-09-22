@@ -42,10 +42,6 @@
 		            <input id="bz" type="text" class="mui-input-clear" placeholder="请输入备注信息" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row my_none">
-		            <label>检测单位:</label>
-		            <input id="jcdw" type="text" class="mui-input-clear" readonly="readonly">
-		        </div>
-		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>
@@ -116,7 +112,6 @@
 				var jcr = doc.getElementById("jcr");
 				var jcrq = doc.getElementById("jcrq");
 				var bz = doc.getElementById("bz");	
-				var jcdw = doc.getElementById("jcdw");
 				var syrq = doc.getElementById("syrq");
 				var srq = doc.getElementById("srq");
 				var sydw = doc.getElementById("sydw");
@@ -160,7 +155,6 @@
 						jcrq.value = data.检测日期;
 						jcbw.value = data.检测部位;
 						bz.value = data.备注;
-						jcdw.value = data.检测单位;
 						syrq.value = data.送样日期;
 						srq.value = data.收样日期;
 						sydw.value = data.送样单位;

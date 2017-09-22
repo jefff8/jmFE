@@ -65,6 +65,7 @@
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId;
 	      		state = self.state;
+	      		flag = self.flag;
 	      		if(state=='recheck'){
 	      			document.getElementById("allbtn").getElementsByTagName("button")[1].id="jczp2";
 	      		}
@@ -94,9 +95,16 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
-				target.reload(true);
-				mui.back();
+				if(flag=='task'){
+					var target=plus.webview.getWebviewById('my_task/task_list.html');
+					target.reload(true);
+					mui.back();
+				}else{
+					var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
+					target.reload(true);
+					mui.back();
+				}
+				
 			}	
 		</script>
 	</body>

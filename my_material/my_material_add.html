@@ -76,7 +76,7 @@
 		        </div>
 		        <div  class="mui-input-row">
 		            <label>检测单位:</label>
-		            <input id="qcdy" type="text" class="mui-input-clear" placeholder="请输入检测单位">
+		            <select id="qcdy" style="font-size: 14px;" ></select>
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
@@ -174,7 +174,6 @@
 				var qylx = doc.getElementById("qylx");
 				var F_qcdw = doc.getElementById('qcdy');
 				var operation_unit = doc.getElementById("operation_unit");
-				F_qcdw.value = detect;
 				qyr.value = my_name; //取样人默认为账号姓名
 				//自动添加当前时间戳,附件上传时会用到
 				var myDate=new Date();
@@ -188,6 +187,13 @@
 					var option = doc.createElement("option");
 					option.innerHTML = opera[i];
 					operation_unit.appendChild(option);
+				}
+				//动态添加检测单位
+				var detection_unit = detect.split(",");
+				for(var i=0;i<detection_unit.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = detection_unit[i];
+					F_qcdw.appendChild(option);
 				}
 				//日期监听
 				qyrq.addEventListener('tap',function(){

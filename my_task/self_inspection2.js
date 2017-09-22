@@ -1,4 +1,5 @@
 	//根据对应工程查询任务
+	a3_account = 0;
 	function taskList3(pj_timestamp){
 		mui.ajax(url+'my_task/task_list.php',{
 			data:{
@@ -11,9 +12,10 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				a3_account+= length;
 				var a3 = document.getElementById("a3");
 				for(var i=0;i<length;i++){
-					a3.innerHTML = "实体自检("+length+")";
+					a3.innerHTML = "实体自检("+a3_account+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;
@@ -68,6 +70,8 @@
 			timeout:10000,
 			success:function(data){
 				var status = data.工程单状态;
+				var pj_name = data.工程名称;
+				var pj_id = data.id; //工程id
 				if(status=='新增'){
 					var btnArray = [
 					{title:"取样"},
@@ -229,7 +233,21 @@
 					break;
 					case 2:
 							var btnArray =['是', '否'];
-							mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) 										{
+							mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e){
+								//不合格推送通知
+								var server=url+"push/push.php";
+								var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+									//推送完成
+									if(status==200){
+										alert("不合格出现!将通知各单位");
+									}else{
+										alert("失败");
+									}
+								});
+								task.addData("title",'江门市建设工程施工质量管理系统');
+								task.addData("notice",pj_name+'——（实体自检）出现新的不合格项目！');
+								task.addData("pj_id",pj_id);
+								task.start();
 								if (e.index == 0) {
 									mui.openWindow({
 										url:'insp2_fail.html',
@@ -258,13 +276,15 @@
 				}else if(status=='不合格'){
 					mui.ajax(url+'check.php',{
 					data:{
-						mobile:mobile
+						mobile:mobile,
+						ulId:"",
+						flag:"self_inspection2"
 					},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
 					success:function(data){
-						var units = data[0]['单位']; //获取单位信息
+						var units = data['单位']; //获取单位信息
 						if(units=='监理单位'||units=='管理员'){
 							var btnArray = [
 							{title:"监理处理"}
@@ -307,7 +327,7 @@
 						}
 					},
 					error:function(xhr,type,errorThrown){
-//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
 				}

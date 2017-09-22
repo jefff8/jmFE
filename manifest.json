@@ -2038,7 +2038,8 @@
 			"my_insp_entity/my_inspection_entitydetail_full.html": {
 				"resources": [
 					"js/common.js",
-					"my_insp_entity/my_inspection_entity.html"
+					"my_insp_entity/my_inspection_entity.html",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"my_insp_entity/readimage_inspection_entity.html"
@@ -2118,7 +2119,9 @@
 					"my_insp_material/my_inspection_detail.html",
 					"my_task/commission.js",
 					"my_commission/my_entity_readmassage.html",
-					"my_material/my_material_samDetEdit.html"
+					"my_material/my_material_samDetEdit.html",
+					"my_material/my_material_recheckDet.html",
+					"my_insp_entity/my_inspection_entitydetail_bresult.html"
 				],
 				"refer": [
 					"my_task/deliver.html",
@@ -2127,11 +2130,18 @@
 					"my_material/my_material_rcvdDet.html",
 					"my_task/send_fail.html",
 					"my_material/my_material_resDet.html",
-					"my_insp_entity/my_inspection_entitydetail_bresult.html",
 					"my_commission/my_entity_readmessage.html",
 					"my_material/my_material_supvr.html",
 					"my_task/send_supvr.html",
-					"my_task/commission_supvr.html"
+					"my_task/commission_supvr.html",
+					"my_task/insp1_fail.html",
+					"my_task/commission_fail.html",
+					"my_task/send_recheckDeliver.html",
+					"my_material/my_material_fail.html",
+					"my_task/insp1_deliver.html",
+					"my_task/insp1_supvr.html",
+					"my_task/insp2_deliver.html",
+					"my_task/insp2_supvr.html"
 				],
 				"priority": 0
 			},
@@ -2246,6 +2256,64 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"images/iconfont-tianjia.png",
+					"css/my_project_fhys_xz.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/commission_fail.html": {
+				"resources": [
+					"js/upload_encomfail.js",
+					"images/iconfont-tianjia.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/send_recheckDeliver.html": {
+				"resources": [
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/upload_sy.js",
+					"images/iconfont-tianjia.png",
+					"css/my_project_fhys_xz.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/insp1_deliver.html": {
+				"resources": [
+					"js/pic_upload_SelfTest_2.js",
+					"images/iconfont-tianjia.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/insp1_supvr.html": {
+				"resources": [
+					"js/upload_material_insp_supvr.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/insp2_deliver.html": {
+				"resources": [
+					"js/pic_upload_entity_2.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/insp2_supvr.html": {
+				"resources": [
+					"js/upload_entity_insp_supvr.js",
+					"images/iconfont-tianjia.png",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
 					"css/my_project_fhys_xz.css"
 				],
 				"refer": [],

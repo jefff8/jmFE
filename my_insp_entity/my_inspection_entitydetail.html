@@ -42,10 +42,6 @@
 		            <input id="bz" type="text" class="mui-input-clear" placeholder="请输入备注信息" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row my_none">
-		            <label>检测单位:</label>
-		            <input id="tdpm" type="text" class="mui-input-clear" readonly="readonly">
-		        </div>
-		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>
@@ -77,7 +73,6 @@
 				var jcbw = doc.getElementById("jcbw");
 				var bz = doc.getElementById("bz");
 				var sjc_in = doc.getElementById("sjc");
-				var tdpm = doc.getElementById("tdpm");
 				
 				//获取url参数值
 				function geturl(name){
@@ -106,7 +101,6 @@
 						jcr.value = data.检测人;
 						jcrq.value = data.检测日期;
 						jcbw.value = data.检测部位;
-						tdpm.value = data.检测单位;
 						bz.value = data.备注;
 					},
 					error:function(xhr,type,errorThrown){

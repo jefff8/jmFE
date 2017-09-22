@@ -299,7 +299,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:"",
-							mobile:mobile
+							mobile:mobile,
+							flag:"send"
 						},
 						dataType:'json',
 						type:'post',
@@ -429,7 +430,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
-							mobile:mobile
+							mobile:mobile,
+							flag:"send"
 						},
 						dataType:'json',
 						type:'post',
@@ -645,7 +647,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
-							mobile:mobile
+							mobile:mobile,
+							flag:"send"
 						},
 						type:'post',
 						dataType:'json',
@@ -793,7 +796,8 @@
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
-							mobile:mobile
+							mobile:mobile,
+							flag:"send"
 						},
 						dataType:'json',
 						type:'POST', 
@@ -917,7 +921,8 @@
 																		//传递参数
 																		ulId:ulId,
 																		timestamp:timestamp,
-																		state:'recheck'
+																		state:'recheck',
+																		flag:''
 																	},
 																	show:{
 																		autoShow:true,//页面loaded事件发生后自动显示

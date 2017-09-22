@@ -280,24 +280,27 @@ function cleanHistory(lx) {
 //上传
 var server=url+"my_plus/entity_upload.php";
 //var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
-var files=[];
+var files1=[];
+var files2=[];
+var files3=[];
 var files_cjzp=[];
 var files_ypzp=[];
 var files_teqm=[];
 function upload(lx,clean){	
-	
-	if (lx=='cjzp') {		
-		files=files_cjzp;
-		var strs=","+f1Base64.join();
-	}else if(lx=='ypzp'){
-		files=files_ypzp;
-		var strs=","+f2Base64.join();
-	}else if(lx=='teqm'){
-		files=files_teqm;
-		var strs=","+f3Base64.join();
-	}
-	if(files.length<=0){
-		plus.nativeUI.alert("没有添加上传文件！");
+	files1=files_cjzp;
+	var strs1=","+f1Base64.join();
+	files2=files_ypzp;
+	var strs2=","+f2Base64.join();
+	files3=files_teqm;
+	var strs3=","+f3Base64.join();
+	if(files1.length<=0){
+		plus.nativeUI.alert("没有添加场景照片！");
+		return;
+	}else if(files2.length<=0){
+		plus.nativeUI.alert("没有添加检测实施过程照片！");
+		return;
+	}else if(files3.length<=0){
+		plus.nativeUI.alert("没有添加检测设备照片！");
 		return;
 	}
 //	outSet("开始上传：")
@@ -308,9 +311,13 @@ function upload(lx,clean){
 //			outLine("上传成功："+t.responseText);
 			wt.close();
 			var button_lx=document.getElementById(lx);
-			var button_clean=document.getElementById(clean);
+			var button_clean1=document.getElementById("clean_cj");
+			var button_clean2=document.getElementById("clean_yp");
+			var button_clean3=document.getElementById("clean_teqm");
 			button_lx.disabled=true;
-			button_clean.disabled=true;
+			button_clean1.disabled=true;
+			button_clean2.disabled=true;
+			button_clean3.disabled=true;
 			button_lx.innerText="上传成功";				
 		}else{
 			outLine("上传失败："+status);
@@ -322,17 +329,34 @@ function upload(lx,clean){
 	task.addData("Text2",text2());
 	task.addData("Text3",text3());
 	task.addData("lx",lx);
-	task.addData("files1",strs);
+	task.addData("files1",strs1);
+	task.addData("files2",strs2);
+	task.addData("files3",strs3);
 	task.addData("uid",getUid());	
-	nub=files.length.toString();
-	task.addData("nub",nub);
+	nub1=files1.length.toString();
+	nub2=files2.length.toString();
+	nub3=files3.length.toString();
+	task.addData("nub1",nub1);
+	task.addData("nub2",nub2);
+	task.addData("nub3",nub3);
 	task.addData("mchen",mchen());
-	for(var i=0;i<files.length;i++){
-		var f=files[i];
-		task.addFile(f.path,{key:f.name});
+	task.addData("pj_name",gcmc);
+	task.addData("pj_timestamp",timestamp);
+	task.addData("myInfo",saveInfo());
+	for(var i=0;i<files1.length;i++){
+		var f1=files1[i];
+		task.addFile(f1.path,{key:f1.name});
+	}
+	for(var i=0;i<files2.length;i++){
+		var f2=files2[i];
+		task.addFile(f2.path,{key:f2.name});
+	}
+	for(var i=0;i<files3.length;i++){
+		var f3=files3[i];
+		task.addFile(f3.path,{key:f3.name});
 	}
 	task.start();
-	files=[];
+//	files=[];
 }
 
 // 产生一个随机数
@@ -364,5 +388,17 @@ function text2(){
 function text3(){
 	var Text3 = document.getElementById("Text3").value;
 	return Text3;
+}
+//信息保存
+function saveInfo(){
+	var my_input = document.getElementById("myform").getElementsByTagName("input");
+	var unit = document.getElementById("operation_unit").value;
+	var test_dpm = document.getElementById("test_dpm").value;
+	var Str = "";
+	for(var i=0;i<6;i++){
+		Str = Str + my_input[i].value + "|";
+	}
+	Str = Str + test_dpm+"|"+unit;
+	return Str;
 }
 ////////////上传文件/////////////////////////////////////////////

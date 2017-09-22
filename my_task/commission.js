@@ -1,4 +1,5 @@
 	//根据对应工程查询任务
+	a4_account = 0;
 	function taskList4(pj_timestamp){
 		mui.ajax(url+'my_task/task_list.php',{
 			data:{
@@ -11,9 +12,10 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				a4_account+= length;
 				var a4 = document.getElementById("a4");
 				for(var i=0;i<length;i++){
-					a4.innerHTML = "实体检测("+length+")";
+					a4.innerHTML = "实体检测("+a4_account+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;
@@ -63,6 +65,8 @@
 			timeout:10000,
 			success:function(data){
 				var status = data.工程单状态;
+				var pj_name = data.工程名称;
+				var pj_id = data.id; //工程id
 				//判断状态并根据状态执行改变状态的任务
 				if(status=='新建'){
 					var btnArray = [
@@ -231,6 +235,20 @@
 									});
 								break;
 							case 2://不合格
+								//不合格推送通知
+								var server=url+"push/push.php";
+								var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+									//推送完成
+									if(status==200){
+										alert("不合格出现!将通知各单位");
+									}else{
+										alert("失败");
+									}
+								});
+								task.addData("title",'江门市建设工程施工质量管理系统');
+								task.addData("notice",pj_name+'——（实体检测）出现新的不合格项目！');
+								task.addData("pj_id",pj_id);
+								task.start();
 								mui.openWindow({
 									url:'commission_fail.html',
 									styles: {

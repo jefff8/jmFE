@@ -42,10 +42,6 @@
 		            <input id="bz" type="text" class="mui-input-clear" placeholder="请输入备注" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row my_none">
-		            <label>检测单位:</label>
-		            <input id="tdpm" type="text" class="mui-input-clear" placeholder="请输入检测单位" readonly="readonly">
-		        </div>
-		        <div class="mui-input-row my_none">
 					<label> 时间戳：</label>
 					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>
@@ -116,7 +112,6 @@
 				var jcbw = doc.getElementById("jcbw");
 				var jcr = doc.getElementById("jcr");
 				var jcrq = doc.getElementById("jcrq");
-				var tdpm = doc.getElementById("tdpm");
 				var sjc_in = doc.getElementById("sjc");
 				var qyrq = doc.getElementById("qyrq");
 				var hgzbh = doc.getElementById("hgzbh");
@@ -175,7 +170,6 @@
 							jcr.value = data.检测人;
 							jcrq.value = data.检测日期;
 							bz.value = data.备注;
-							tdpm.value = data.检测单位
 							songyrq.value = data.送样日期;
 							shouyrq.value = data.收样日期;
 							songydw.value = data.送样单位;
@@ -223,7 +217,6 @@
 							jcr.value = data.检测人;
 							jcrq.value = data.检测日期;
 							bz.value = data.备注;
-							tdpm.value = data.检测单位
 							songyrq.value = data.送样日期;
 							shouyrq.value = data.收样日期;
 							songydw.value = data.送样单位;

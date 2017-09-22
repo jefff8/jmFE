@@ -1,4 +1,5 @@
 	//根据对应工程查询任务
+	a1_account = 0;
 	function taskList1(pj_timestamp){
 		mui.ajax(url+'my_task/task_list.php',{
 			data:{
@@ -12,9 +13,10 @@
 			timeout:10000,
 			success:function(data){
 				var length = data.length;
+				a1_account+= length;
 				var a1 = document.getElementById("a1");
 				for(var i=0;i<length;i++){
-					a1.innerHTML = "材料送检("+length+")";
+					a1.innerHTML = "材料送检("+a1_account+")";
 					var id = data[i].id;
 					var sjc = data[i].时间戳;
 					var pj_name = data[i].工程名称;
@@ -55,7 +57,7 @@
 			var my_href = "../my_material/my_material_samDetEdit.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
 		}else if(state=='收样'){
 			var my_href = "../my_material/my_material_rcvdDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
-		}else if(state=='收样复检'){
+		}else if(state=='收样复检'||state=='复检不合格'){
 			var my_href = "../my_material/my_material_recheckDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
 		}else if(state=='待审批'){
 			var my_href = "../my_material/my_material_resDet.html?sjc="+sjc+"&gcid="+id+"&state="+'processed'+"";
@@ -64,7 +66,9 @@
 		}
 		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+my_href+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+scale+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+getGuy+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+getDate+'</p></li>';
 		send.appendChild(ul);
+		
 	}
+	
 	//材料送检操作
 	mui("#send").on('longtap','ul',function(){
 		var ulId = this.id;//获取当前的卡项的id
@@ -76,8 +80,9 @@
 			type:'post',
 			dataType:'json',
 			success:function(data){
-//							alert(data);
 				var status = data.工程单状态;
+				var pj_name = data.工程名称;
+				var pj_id = data.id; //工程id
 				if(status=='新增' || status=='新增复检'){
 					var btnArray = [
 					{title:"取样(施工单位)"},
@@ -379,33 +384,20 @@
 								var btnArray = ['是', '否'];
 								mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 									if (e.index == 0) {
-										mui.ajax(url+'my_task/my_send.php',{
-											data:{
-												flag:"不合格",
-												ulId:ulId
-											},
-											dataType:'json',
-											type:'POST', 
-											timeout:10000,
-											success:function(data){
-											},
-											error:function(xhr,type,errorThrown){
-	//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-											}
-										});	
 										//不合格推送通知
-//										var server=url+"push/fail_push.php";
-//										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-//											//推送完成
-//											if(status==200){
-//		//										alert("发送成功");
-//											}else{
-//												alert("失败");
-//											}
-//										});
-//										task.addData("title",'江门市建设工程施工质量管理系统');
-//										task.addData("notice",'出现新的不合格项目,请注意查收！');
-//										task.start();
+										var server=url+"push/push.php";
+										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+											//推送完成
+											if(status==200){
+												alert("不合格出现!将通知各单位");
+											}else{
+												alert("失败");
+											}
+										});
+										task.addData("title",'江门市建设工程施工质量管理系统');
+										task.addData("notice",pj_name+'——（材料送检）出现新的不合格项目！');
+										task.addData("pj_id",pj_id);
+										task.start();
 										mui.openWindow({
 											url:'send_fail.html',
 											styles: {
@@ -432,42 +424,40 @@
 								var btnArray = ['是', '否'];
 								mui.confirm('确定将该复检项目鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
 									if (e.index == 0) {
-										mui.ajax(url+'my_task/my_send.php',{
-											data:{
-												flag:"复检不合格",
-												ulId:ulId,
-												recheckNum:""
-											},
-											dataType:'json',
-											type:'POST', 
-											timeout:10000,
-											success:function(data){
-												mui.openWindow({
-													url:'../my_material/my_material_fail.html',
-													styles: {
-														hardwareAccelerated:false
-													},
-													extras:{
-														//传递参数
-														ulId:ulId,
-														state:'recheck'
-													},
-													show:{
-														autoShow:true,//页面loaded事件发生后自动显示
-														aniShow:'slide-in-right',//页面显示动画
-														duration:'100'//页面动画持续时间
-													},
-													waiting:{
-														autoShow:false,//自动显示等待框
-													}
-												});
-											},
-											error:function(xhr,type,errorThrown){
-												alert('ajax错误'+type+'---'+errorThrown+"失败！");
+										//不合格推送通知
+										var server=url+"push/push.php";
+										var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+											//推送完成
+											if(status==200){
+												alert("不合格出现!将通知各单位");
+											}else{
+												alert("失败");
 											}
-										});	
-										
-									} 
+										});
+										task.addData("title",'江门市建设工程施工质量管理系统');
+										task.addData("notice",pj_name+'——（材料送检）出现新的不合格项目！');
+										task.addData("pj_id",pj_id);
+										task.start();
+										mui.openWindow({
+											url:'../my_material/my_material_fail.html',
+											styles: {
+												hardwareAccelerated:false
+											},
+											extras:{
+												//传递参数
+												ulId:ulId,
+												state:'recheck',
+												flag:'task'
+											},
+											show:{
+												autoShow:true,//页面loaded事件发生后自动显示
+												aniShow:'slide-in-right',//页面显示动画
+												duration:'100'//页面动画持续时间
+											},
+											waiting:{
+												autoShow:false,//自动显示等待框
+											}
+										});
 								});
 							}
 							break;
