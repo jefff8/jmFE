@@ -455,9 +455,10 @@
 												duration:'100'//页面动画持续时间
 											},
 											waiting:{
-												autoShow:false,//自动显示等待框
+												autoShow:false//自动显示等待框 
 											}
 										});
+									}	
 								});
 							}
 							break;

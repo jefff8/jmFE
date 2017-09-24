@@ -346,7 +346,7 @@
 					qyr_c = encodeURI(encodeURI(qyr));
 					qyrq_c = encodeURI(encodeURI(qyrq));
 					supvision_c = encodeURI(encodeURI(supvision));
-//					alert(id);
+					detect_c = encodeURI(encodeURI(detect));
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 					ul.id = id;
@@ -359,7 +359,7 @@
 						quyang.appendChild(ul);
 					}else if(gcdzt=="新增复检"){
 						var quyang = document.getElementById("draft");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_material_samDetEdit.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc_c+'&supvision='+supvision_c+'&mobile='+mobile+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_material_samDetEdit.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc_c+'&supvision='+supvision_c+'&mobile='+mobile+'&detect='+detect_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
 						quyang.appendChild(ul);
 					}else if(gcdzt=="取样"||gcdzt=="取样复检"){
 						var draft = document.getElementById("draft");
