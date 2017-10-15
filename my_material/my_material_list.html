@@ -991,15 +991,12 @@
 								serverIP:serverIP.value,
 								mobPhone:mobPhone.value,
 								smsContent:smsContent.value
-//								gcmc:gcmc,
-//								mytime:mytime,
-//								myName:myName,
-//								send:'材料送检'
 							},
-							dataType:'json',
+							dataType:'json', 
 							type:'POST', 
 							timeout:10000,
 							success:function(data){
+//								alert(data);
 								if(data.result=='success'){
 //									alert(data.smsContent);
 									yzm.value = data.yzm; //获取验证码数字
