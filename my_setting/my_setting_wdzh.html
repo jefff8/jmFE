@@ -7,7 +7,9 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">		
 		<link href="../css/mui.min.css" rel="stylesheet"/>    
-		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />		
 		<style>
 			
 		</style>
@@ -23,24 +25,29 @@
 				<form id="formAjax" class="mui-input-group">
 					<div class="mui-input-row">
 						<label>账号：</label>
-						<input id="account" type="text" class="" placeholder="账号" readonly="readonly" >
+						<input id="account" type="text" class="" placeholder="账号" readonly="readonly" disabled="disabled">
 					</div>
 					<div class="mui-input-row">
 						<label>密码：</label>
-						<input id="passWord" type="password" class="" placeholder="密码" readonly="readonly">
+						<input id="passWord" type="password" class="" placeholder="密码" readonly="readonly" disabled="disabled">
 					</div>					
 					<div class="mui-input-row">
 						<label>邮箱：</label>
-						<input id="email" type="text" class="" placeholder="邮箱" readonly="readonly">
+						<input id="email" type="text" class="" placeholder="邮箱" readonly="readonly" disabled="disabled">
 					</div>
 					<div class="mui-input-row">
 						<label>手机：</label>
-						<input id="Telephone" type="text" class="" placeholder="手机" readonly="readonly">
+						<input id="Telephone" type="text" class="" placeholder="手机" readonly="readonly" disabled="disabled">
 					</div>
+					
 					<div class="mui-input-row">
 						<label>单位名称：</label>
-						<input id="Company" type="text" class="" placeholder="单位名称" readonly="readonly">
+						<input id="Company" type="text" class="" placeholder="单位名称" readonly="readonly" disabled="disabled">
 					</div>
+					<div class="mui-input-row">
+			            <label>单位:</label>
+			            <input id="unit"  type="text" class="" readonly="readonly" placeholder="请选择单位" disabled="disabled">
+		        	</div>
 				</form>
 				<!--<div id="sureButton" class="mui-content-padded">
 					<button id='sureRevise' class="mui-btn mui-btn-block mui-btn-primary">修改</button>
@@ -53,6 +60,8 @@
 			
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>	
 		<script src="../js/service.js" ></script>
 		<script>
 			mui.init();
@@ -70,8 +79,53 @@
 				var email=document.getElementById("email");
 				var Telephone=document.getElementById("Telephone");
 				var revise=document.getElementById('revise');
+				var unit=document.getElementById('unit');
 				var Company=document.getElementById('Company');				
 				//异步传值进行判断
+				
+				function typeAll(data){
+					//初始化popPicker组件
+					var userPicker = new mui.PopPicker();
+					var length = data.length;
+					var arr_4 = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[i] = new Array();
+						arr_4[i]['text'] = data[i];
+					}
+					userPicker.setData(arr_4);  //给picker对象添加数据
+					userPicker.show(function(items) {
+						unit.value = items[0].text;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					}, false);
+				}
+				
+				//自检自测类型
+				unit.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"单位"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							var length = data.length;
+							var typeData = new Array();
+							typeData[0] = "";
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].单位);
+							}
+							typeAll(typeData);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+				
 				//获取账户信息
 				mui.ajax(url+'my_setting/my_setting_wdzh.php',{
 					data:{
@@ -90,6 +144,7 @@
 							passWord.value=data[i].密码;
 							email.value=data[i].邮箱;
 							Company.value=data[i].单位名称;
+							unit.value=data[i].单位;
 							Telephone.value=data[i].手机;
 						}
 					},
@@ -104,6 +159,9 @@
 					save.classList.remove("my_none");
   					for(i=0;i<5;i++){
   						forminput[i].removeAttribute("readonly");
+  					}
+  					for(i=0;i<6;i++){
+  						forminput[i].removeAttribute("disabled");
   					}
   					mui.toast("现在可以修改您的信息");
 				});
