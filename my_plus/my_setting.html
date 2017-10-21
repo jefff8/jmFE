@@ -149,6 +149,7 @@
 				//获取传值
 				var self = plus.webview.currentWebview();			
 				mobile = self.mobile;
+				uid = self.uid;
 				curWebId=self.id;
 				bumen=self.bumen;
 				//alert(bumen);
@@ -320,22 +321,23 @@
 				}, false);
 				//我的账户
 				var wdzh=document.getElementById("wdzh");
-//				wdzh.addEventListener("tap",function(event){
-//					mui.openWindow({
-//						url: "my_setting_wdzh.html",
-//						id: this.href,
-//						styles: {
-//							hardwareAccelerated:false
-//						},
-//						waiting:{
-//							autoShow:false
-//						},
-//						extras:{							
-//							mobile:mobile
-//						}
-//					});
-//					return;
-//				});
+				wdzh.addEventListener("tap",function(event){
+					mui.openWindow({
+						url: "../my_setting/my_setting_wdzh.html",
+						id: this.href,
+						styles: {
+							hardwareAccelerated:false
+						},
+						waiting:{
+							autoShow:false
+						},
+						extras:{	
+							uid:uid,
+							mobile:mobile
+						}
+					});
+					return;
+				});
 			});
 			
 			//二维码扫描成功的跳转页面

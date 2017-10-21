@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">		
+		<link href="../css/mui.min.css" rel="stylesheet"/>    
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<a id="revise" class="mui-icon mui-icon-bars mui-pull-right"></a>-->
+			<h1 class="mui-title">账户信息</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+				<form id="formAjax" class="mui-input-group">
+					<div class="mui-input-row">
+						<label>账号：</label>
+						<input id="account" type="text" class="" placeholder="账号" readonly="readonly" >
+					</div>
+					<div class="mui-input-row">
+						<label>密码：</label>
+						<input id="passWord" type="password" class="" placeholder="密码" readonly="readonly">
+					</div>					
+					<div class="mui-input-row">
+						<label>邮箱：</label>
+						<input id="email" type="text" class="" placeholder="邮箱" readonly="readonly">
+					</div>
+					<div class="mui-input-row">
+						<label>手机：</label>
+						<input id="Telephone" type="text" class="" placeholder="手机" readonly="readonly">
+					</div>
+					<div class="mui-input-row">
+						<label>单位名称：</label>
+						<input id="Company" type="text" class="" placeholder="单位名称" readonly="readonly">
+					</div>
+				</form>
+				<!--<div id="sureButton" class="mui-content-padded">
+					<button id='sureRevise' class="mui-btn mui-btn-block mui-btn-primary">修改</button>
+				</div>-->
+				<div id="sureButton" class="mui-content-padded">
+					<button id="Edit" type="button" class="mui-btn mui-btn-block mui-btn-primary">修改信息</button>
+					<button id="save" type="button" class="mui-btn mui-btn-block mui-btn-primary my_none">保存信息</button>
+				</div>
+	        </div>
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js" ></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {				
+				//接收上个界面中openwindow的extras传递过来的参数
+				var self = plus.webview.currentWebview();			
+				mobile = self.mobile;
+//				console.log(mobile);
+				uid = self.uid;
+				
+				//获取各个input框id
+				var forminput=document.getElementById("formAjax").getElementsByTagName("input");
+				var account=document.getElementById("account");
+				var passWord=document.getElementById("passWord");
+				var email=document.getElementById("email");
+				var Telephone=document.getElementById("Telephone");
+				var revise=document.getElementById('revise');
+				var Company=document.getElementById('Company');				
+				//异步传值进行判断
+				//获取账户信息
+				mui.ajax(url+'my_setting/my_setting_wdzh.php',{
+					data:{
+						uid:uid,
+						flag:"获取"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+						for (var i=0;i<length;i++) {
+							zhid=data[i].id;
+							account.value=data[i].账号;
+							passWord.value=data[i].密码;
+							email.value=data[i].邮箱;
+							Company.value=data[i].单位名称;
+							Telephone.value=data[i].手机;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误1'+type+'---'+errorThrown);
+					}
+				});
+				
+				//修改按钮监听
+				Edit.addEventListener('tap',function(){
+					Edit.classList.add("my_none");
+					save.classList.remove("my_none");
+  					for(i=0;i<5;i++){
+  						forminput[i].removeAttribute("readonly");
+  					}
+  					mui.toast("现在可以修改您的信息");
+				});
+				
+				
+				//保存信息
+				save.addEventListener('tap', function() {
+					mui.ajax(url+'my_setting/my_setting_wdzh.php',{
+						data:{
+							uid: uid,
+							account: account.value,
+							passWord: passWord.value,
+							email: email.value,
+							Telephone: Telephone.value,
+							Company: Company.value,
+							flag:"保存信息"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+//							alert(data.result);
+							if (data.result=='success') {
+								mui.toast("修改成功");
+								for(i=0;i<5;i++){
+									forminput[i].setAttribute('readonly','readonly');
+								}
+								Edit.classList.remove("my_none");
+								save.classList.add("my_none");
+							} else{
+								mui.toast("服务器返回error");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							alert('ajax错误'+type);
+//							return callback('ajax错误'+type+errorThrown);
+						}
+					});
+				});
+			});
+			
+			
+		</script>
+	</body>
+
+</html>
