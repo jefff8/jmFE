@@ -36,6 +36,8 @@
 	}
 	//动态创建项目
 	function send(sjc,id,pj_name,type,scale,quantity,getGuy,getDate,state){
+		var state_c = encodeURI(encodeURI(state));
+		var pj_name_c = encodeURI(encodeURI(pj_name));
 		if(state=='新增'||state=='新增复检'||state=='未见证'||state=='待审批'){
 			color = 'blue2';
 		}else if(state=='不合格'){
@@ -52,13 +54,13 @@
 		  
 		var send = document.getElementById("send");
 		if(state=='新增'||state=='取样'||state=='取样复检'||state=='未见证'||state=='未见证复检'||state=='已见证'||state=='已见证复检'){
-			var my_href = "../my_material/my_material_samDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+			var my_href = "../my_material/my_material_samDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name_c+"";
 		}else if(state=='新增复检'){
-			var my_href = "../my_material/my_material_samDetEdit.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+			var my_href = "../my_material/my_material_samDetEdit.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name_c+"";
 		}else if(state=='收样'){
-			var my_href = "../my_material/my_material_rcvdDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+			var my_href = "../my_material/my_material_rcvdDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name_c+"&flag="+'task'+"&mobile="+mobile+"";
 		}else if(state=='收样复检'||state=='复检不合格'){
-			var my_href = "../my_material/my_material_recheckDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name+"";
+			var my_href = "../my_material/my_material_recheckDet.html?sjc="+sjc+"&gcid="+id+"&gcmc="+pj_name_c+"&status="+state_c+"&mobile="+mobile+"&flag="+'task'+"";
 		}else if(state=='待审批'){
 			var my_href = "../my_material/my_material_resDet.html?sjc="+sjc+"&gcid="+id+"&state="+'processed'+"";
 		}else if(state=='不合格'){

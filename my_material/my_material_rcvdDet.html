@@ -8,6 +8,15 @@
 		<link rel="stylesheet" href="../css/mui.min.css">	
 		<link rel="stylesheet" href="../css/my_css.css">	
 		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<style>
+			#consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:70%;
+				/*position:relative;*/
+				left:9%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -106,10 +115,17 @@
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
-				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
-				&nbsp;&nbsp;
+		    	<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>
+		    	&nbsp;&nbsp;
+		    	<button id="qualified" type="button" class="mui-btn mui-btn-success">合格</button>
+		    	&nbsp;&nbsp;
+				<button id="fail" type="button" class="mui-btn mui-btn-danger">不合格</button>
+				
 				<!--<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>-->		
 			</div>
+			<div class="mui-button-row">
+				
+			</div> 
 			
 			<!--处理图片-->
 		    <form id="img_content" class="my_none" >
@@ -160,17 +176,31 @@
 		        	<button id="clean_syzp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('syzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="syzp" type="button" class="mui-btn mui-btn-primary" onclick="upload2(this.id,'clean_syzp');">附件上传</button>
-		        </div>
+		        </div> 
 		    </form>
 		    <!--处理图片-->
-		    
+		    <!--合格-->
+		    <div id="consigncode" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="testNum" type="text" class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="code_act"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" >确认</button> 
+				</div>
+			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<!--<script src="../js/common.js"></script>
 		<script src="../js/immersed.js" ></script>	-->
 		<script src="../js/service.js"></script>
-		<script src="../js/upload_qy.js"></script>
-		<script src="../js/upload_sy.js"></script>
+		<!--<script src="../js/upload_qy.js"></script>
+		<script src="../js/upload_sy.js"></script>-->
 		<script type="text/javascript">
 			mui.init({
 				 
@@ -184,9 +214,13 @@
 					return null;
 				}
 				//获取URL上的时间戳
-				var sjc_send = geturl("sjc");
-				var gcid = geturl("gcid");
-				
+				var sjc_send = geturl("sjc");//该卡项时间戳
+				var gcid = geturl("gcid"); //该卡项id
+				var pj_name = geturl("gcmc"); //
+				var pj_id = geturl("pj_id"); //工程id
+				pj_name = decodeURI(decodeURI(pj_name));//工程名称
+				var flag = geturl("flag");
+				var mobile = geturl("mobile");
 				var doc = document;
 				var xiugai = doc.getElementById("xiugai");
 				var fjck = doc.getElementById("fjck");
@@ -211,6 +245,10 @@
 				var usedPart = doc.getElementById("usedPart");
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
+				var qualified = doc.getElementById("qualified"),
+					fail = doc.getElementById("fail"),
+					code_sure = doc.getElementById("code_sure");
+					
 				//日期监听
 				qyrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -312,8 +350,115 @@
 							autoShow:false,//自动显示等待框
 						}
 					})
+				}); 
+				//合格按钮监听
+				qualified.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"send"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if((data['单位']== '检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
+								mui("#consigncode").popover("toggle");
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+					
 				});
-				
+				//不合格按钮监听
+				fail.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"send"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if((data['单位']== '检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
+							var btnArray = ['是', '否'];
+							mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e) {
+								if (e.index == 0) {
+									//不合格推送通知
+									var server=url+"push/push.php";
+									var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+										//推送完成
+										if(status==200){
+											alert("不合格出现!将通知各单位");
+										}else{
+											alert("失败");
+										}
+									});
+									task.addData("title",'江门市建设工程施工质量管理系统');
+									task.addData("notice",pj_name+'——（材料送检）出现新的不合格项目！');
+									task.addData("pj_id",pj_id);
+									task.start();
+									mui.openWindow({
+										url:'my_material_fail.html',
+										styles: {
+											hardwareAccelerated:false
+										},
+										extras:{
+											//传递参数
+											ulId:gcid,
+											flag:flag
+										},
+										show:{
+											autoShow:true,//页面loaded事件发生后自动显示
+											aniShow:'slide-in-right',//页面显示动画
+											duration:'100'//页面动画持续时间
+										},
+										waiting:{
+											autoShow:false,//自动显示等待框
+										}
+									});
+								}
+							});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+					
+				});
+				//检测报告编号
+				code_sure.addEventListener('tap',function(){
+					var testNum = document.getElementById('testNum').value;
+					mui.ajax(url+'my_plus/my_material_list.php',{
+						data:{
+							flag:"合格",
+							ulid:gcid,
+							gcmc:pj_name,
+							testNum:testNum
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							mui.toast('处理完成,请返回查看',{ duration:'long', type:'div' });
+							mui.back();//刷新本页面
+//							location.reload();
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				});
 				//附件更新
 //				fjgx.addEventListener('tap',function(){
 //					var btnArray = ['是', '否'];

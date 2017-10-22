@@ -46,7 +46,13 @@
 					</div>
 					<div class="mui-input-row">
 			            <label>单位:</label>
-			            <input id="unit"  type="text" class="" readonly="readonly" placeholder="请选择单位" disabled="disabled">
+			            <select id="unit" disabled="disabled">
+							<option></option>
+							<option>施工单位</option>
+							<option>监理单位</option>
+							<option>检测单位</option>
+							<option>监督机构</option>
+						</select>
 		        	</div>
 				</form>
 				<!--<div id="sureButton" class="mui-content-padded">
@@ -101,30 +107,30 @@
 				}
 				
 				//自检自测类型
-				unit.addEventListener('tap', function(event) {
-					//异步类型
-					mui.ajax(url+'my_plus/proType.php',{
-						data:{
-							pj_type:"单位"
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data){
-//							alert(data);
-							var length = data.length;
-							var typeData = new Array();
-							typeData[0] = "";
-							for(var i=0;i<=length-1;i++){
-								typeData.push(data[i].单位);
-							}
-							typeAll(typeData);
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+errorThrown);
-						}
-					});
-				}, false);
+//				unit.addEventListener('tap', function(event) {
+//					//异步类型
+//					mui.ajax(url+'my_plus/proType.php',{
+//						data:{
+//							pj_type:"单位"
+//						},
+//						dataType:'json',
+//						type:'post',
+//						timeout:10000,
+//						success:function(data){
+////							alert(data);
+//							var length = data.length;
+//							var typeData = new Array();
+//							typeData[0] = "";
+//							for(var i=0;i<=length-1;i++){
+//								typeData.push(data[i].单位);
+//							}
+//							typeAll(typeData);
+//						},
+//						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+errorThrown);
+//						}
+//					});
+//				}, false);
 				
 				//获取账户信息
 				mui.ajax(url+'my_setting/my_setting_wdzh.php',{
@@ -157,6 +163,7 @@
 				Edit.addEventListener('tap',function(){
 					Edit.classList.add("my_none");
 					save.classList.remove("my_none");
+					unit.removeAttribute('disabled');
   					for(i=0;i<5;i++){
   						forminput[i].removeAttribute("readonly");
   					}
@@ -177,6 +184,7 @@
 							email: email.value,
 							Telephone: Telephone.value,
 							Company: Company.value,
+							unit:unit.value,
 							flag:"保存信息"
 						},
 						dataType:'json',

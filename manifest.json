@@ -1331,7 +1331,9 @@
 					"css/mui.min.css",
 					"fonts/iconfont.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"my_setting/my_setting_wdzh.html"
+				],
 				"priority": 0
 			},
 			"my_plus/my_inspection_entity.html": {
@@ -1801,12 +1803,12 @@
 					"css/my_css.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"my_commission/my_entity_readmassage.html"
+					"my_commission/my_entity_readmassage.html",
+					"my_commission/my_entity_readmessage.html"
 				],
 				"refer": [
 					"my_commission/my_commssion_fail.html",
 					"my_commission/my_commission_add.html",
-					"my_commission/my_entity_readmessage.html",
 					"my_commission/my_commission_change.html"
 				],
 				"priority": 0
@@ -2019,10 +2021,12 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"images/iconfont-tianjia.png",
-					"css/my_project_fhys_xz.css"
+					"css/my_project_fhys_xz.css",
+					"my_task/task_list.html"
 				],
 				"refer": [
-					"my_material/readimage.html"
+					"my_material/readimage.html",
+					"my_material/my_material_fail.html"
 				],
 				"priority": 0
 			},
@@ -2070,10 +2074,12 @@
 					"css/my_css.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/my_project_fhys_xz.css"
+					"css/my_project_fhys_xz.css",
+					"my_task/task_list.html"
 				],
 				"refer": [
-					"my_material/readimage.html"
+					"my_material/readimage.html",
+					"my_material/my_material_fail.html"
 				],
 				"priority": 0
 			},
@@ -2085,7 +2091,8 @@
 					"css/my_css.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"css/my_project_fhys_xz.css"
+					"css/my_project_fhys_xz.css",
+					"my_task/task_list.html"
 				],
 				"refer": [
 					"my_material/readimage.html"
@@ -2119,15 +2126,15 @@
 					"my_commission/my_entity_readmassage.html",
 					"my_material/my_material_samDetEdit.html",
 					"my_material/my_material_recheckDet.html",
-					"my_insp_entity/my_inspection_entitydetail_bresult.html"
+					"my_insp_entity/my_inspection_entitydetail_bresult.html",
+					"my_material/my_material_resDet.html",
+					"my_material/my_material_rcvdDet.html"
 				],
 				"refer": [
 					"my_task/deliver.html",
 					"my_insp_entity/my_inspection_entitydetail_full.html",
 					"my_task/insp2_fail.html",
-					"my_material/my_material_rcvdDet.html",
 					"my_task/send_fail.html",
-					"my_material/my_material_resDet.html",
 					"my_commission/my_entity_readmessage.html",
 					"my_material/my_material_supvr.html",
 					"my_task/send_supvr.html",
@@ -2313,6 +2320,21 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/my_project_fhys_xz.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_setting/my_setting_wdzh.html": {
+				"resources": [
+					"css/mui.picker.css",
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
