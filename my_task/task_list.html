@@ -371,6 +371,8 @@
 				unitName = self.unitName; //单位名称
 				my_name = decodeURI(decodeURI(my_name));
 				unit = decodeURI(decodeURI(unit));
+				var myDate = new Date();//获取系统当前时间
+				mytime=myDate.toLocaleString();//获取日期与时间
 				
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
@@ -394,7 +396,32 @@
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
+				
+				//获取对应手机短信验证码
+				mui.ajax(url+'send_Sms/AddSms.php',{
+					data:{
+						flag:'read',
+						mobile:mobile,
+						gcmc:'任务通知',
+						submodule:'任务通知'
+					},
+					dataType:'json',  
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var dataLength = data.length;
+						var SecurityCode = data[dataLength-1].验证码;
+						var yzm = document.getElementById("yzm");
+						if(SecurityCode){
+							yzm.value = SecurityCode;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
 			});
+			
 			
 			//验证码监听
 			var wait = 60;
@@ -431,6 +458,27 @@
 								if(data.result=='success'){
 		//									alert(data.smsContent);
 									yzm.value = data.yzm; //获取验证码数字
+									//添加短信记录								
+									mui.ajax(url+'send_Sms/AddSms.php',{
+										data:{
+											flag:'add',
+											SecurityCode:data.yzm,
+											submodule:'任务通知',
+											gcmc:'任务通知',
+											mytime:mytime,
+											my_name:my_name,
+											mobile:mobile
+										},
+										dataType:'json',
+										type:'POST',
+										timeout:10000,
+										success:function(data){
+//											alert(data.result);
+										},
+										error:function(xhr,type,errorThrown){
+											alert('ajax错误'+type+'---'+errorThrown);
+										}
+									});
 								}
 							},
 							error:function(xhr,type,errorThrown){

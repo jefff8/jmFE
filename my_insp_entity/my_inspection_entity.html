@@ -149,15 +149,18 @@
 				var draft = doc.getElementById("draft");
 				var witness = doc.getElementById("witness");
 				var addNew = doc.getElementById('addNew');
+				var myDate = new Date();//获取系统当前时间
+				mytime=myDate.toLocaleString();//获取日期与时间
 				var self = plus.webview.currentWebview();
-				gcmc = self.gcmc;
+				gcmc = self.gcmc;//工程名称
 				pj_id = self.pj_id;//工程id
 				constr = self.constr; //施工单位
 	            supvision = self.supvision; //监理单位
 	            detect = self.detect; //检测单位
 				timestamp = self.timestamp;
-				mobile = self.mobile;
-				my_name = self.my_name;
+				mobile = self.mobile;//手机号码
+				my_name = self.my_name;//用户姓名
+				my_name = decodeURI(decodeURI(my_name)); //获取用户名
 				
 				//验证码
 				var code =doc.getElementById('code');
@@ -282,6 +285,30 @@
 							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
+				});
+				
+				//获取对应手机短信验证码
+				mui.ajax(url+'send_Sms/AddSms.php',{
+					data:{
+						flag:'read',
+						mobile:mobile,
+						gcmc:gcmc,
+						submodule:'实体自检'
+					},
+					dataType:'json',  
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var dataLength = data.length;
+						var SecurityCode = data[dataLength-1].验证码;
+						var yzm = doc.getElementById("yzm");
+						if(SecurityCode){
+							yzm.value = SecurityCode;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
 				});
 				////////////////////////////实体检测（施工单位）//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
@@ -642,6 +669,27 @@
 								if(data.result=='success'){
 //									alert(data.smsContent);
 									yzm.value = data.yzm; //获取验证码数字
+									//添加短信记录								
+									mui.ajax(url+'send_Sms/AddSms.php',{
+										data:{
+											flag:'add',
+											SecurityCode:data.yzm,
+											submodule:'实体自检',
+											gcmc:gcmc,
+											mytime:mytime,
+											my_name:my_name,
+											mobile:mobile
+										},
+										dataType:'json',
+										type:'POST',
+										timeout:10000,
+										success:function(data){
+//											alert(data.result);
+										},
+										error:function(xhr,type,errorThrown){
+											alert('ajax错误'+type+'---'+errorThrown);
+										}
+									});
 								}
 							},
 							error:function(xhr,type,errorThrown){
@@ -660,7 +708,6 @@
 			//验证验证码
 			function qdjz(jzid){
 				var jzid = jzid.id;
-//				alert(jzid);
 				if(yzm.value==""){
 					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==""){

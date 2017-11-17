@@ -241,20 +241,21 @@
 					}, false);
 					//忘记密码监听事件
 					forgetButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'forget_password.html',
-							id: 'forget_password',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
+//						$.openWindow({
+//							url: 'forget_password.html',
+//							id: 'forget_password',
+//							preload: true,
+//							show: {
+//								aniShow: 'pop-in'
+//							},
+//							styles: {
+//								popGesture: 'hide'
+//							},
+//							waiting: {
+//								autoShow: false
+//							}
+//						});
+						alert("暂未开发");
 					}, false);
 					//检查是否自动登录
 					//参考http://www.html5plus.org/doc/zh_cn/storage.html
@@ -282,9 +283,9 @@
 						}else{							
 							plus.storage.setItem("autoLoginState","false");
 						}
-						alert(autoLoginState);
+//						alert(autoLoginState);
 						var foo = plus.storage.getItem("www");						
-						alert(foo);
+//						alert(foo);
 					});
 					
 				});

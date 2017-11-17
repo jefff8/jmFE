@@ -66,8 +66,6 @@
 			
 		</div>
 		<script src="../js/mui.min.js"></script>
-		<script src="../js/mui.picker.js"></script>
-		<script src="../js/mui.poppicker.js"></script>	
 		<script src="../js/service.js" ></script>
 		<script>
 			mui.init();
@@ -87,50 +85,7 @@
 				var revise=document.getElementById('revise');
 				var unit=document.getElementById('unit');
 				var Company=document.getElementById('Company');				
-				//异步传值进行判断
 				
-				function typeAll(data){
-					//初始化popPicker组件
-					var userPicker = new mui.PopPicker();
-					var length = data.length;
-					var arr_4 = new Array();
-					for(i=0;i<data.length;i++){
-						arr_4[i] = new Array();
-						arr_4[i]['text'] = data[i];
-					}
-					userPicker.setData(arr_4);  //给picker对象添加数据
-					userPicker.show(function(items) {
-						unit.value = items[0].text;
-						//返回 false 可以阻止选择框的关闭
-						//return false;
-					}, false);
-				}
-				
-				//自检自测类型
-//				unit.addEventListener('tap', function(event) {
-//					//异步类型
-//					mui.ajax(url+'my_plus/proType.php',{
-//						data:{
-//							pj_type:"单位"
-//						},
-//						dataType:'json',
-//						type:'post',
-//						timeout:10000,
-//						success:function(data){
-////							alert(data);
-//							var length = data.length;
-//							var typeData = new Array();
-//							typeData[0] = "";
-//							for(var i=0;i<=length-1;i++){
-//								typeData.push(data[i].单位);
-//							}
-//							typeAll(typeData);
-//						},
-//						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+errorThrown);
-//						}
-//					});
-//				}, false);
 				
 				//获取账户信息
 				mui.ajax(url+'my_setting/my_setting_wdzh.php',{

@@ -355,7 +355,7 @@
 				qualified.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
 						data:{
-							ulId:"",
+							ulId:gcid,
 							mobile:mobile,
 							flag:"send"
 						},
@@ -366,7 +366,7 @@
 							if((data['单位']== '检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
 								mui("#consigncode").popover("toggle");
 							}else{
-								alert("抱歉，您没有新建卡项的权限");
+								alert("抱歉，您没有权限");
 							}
 						},
 						error:function(xhr,type,errorThrown){
@@ -379,7 +379,7 @@
 				fail.addEventListener('tap',function(){
 					mui.ajax(url+'check.php',{
 						data:{
-							ulId:"",
+							ulId:gcid,
 							mobile:mobile,
 							flag:"send"
 						},

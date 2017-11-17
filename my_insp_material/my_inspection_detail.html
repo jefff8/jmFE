@@ -148,7 +148,6 @@
 				var gcid = geturl("gcid");
 				var state = geturl("state");
 				sjc_in.value = sjc_send;
-				
 				//异步取值填写
 				if(state=='fail_first'){
 					mui.ajax(url+'my_plus/my_inspection_first.php',{
@@ -161,7 +160,7 @@
 						type:'POST', 
 						timeout:10000,
 						success:function(data){
-	//						alert(data);
+//							alert(data);
 							var myform2 = document.getElementById('myform2');
 							myform2.classList.remove("my_none");
 							zjlx.value = data.自检自测类型;
@@ -181,7 +180,7 @@
 						},	
 							
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				}else{
