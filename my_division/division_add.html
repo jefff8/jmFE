@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+		<style>
+			#data_save{
+				margin-left: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">分部验收申请</h1>
+		</header>
+		<div class="mui-content">
+		    <form class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>分部类型:</label>
+		            <select id="divisionType" style="font-size: 14px;">
+		            	<option></option>
+		            	<option>地基基础</option>
+		            	<option>主体结构</option>
+		            	<option>建筑节能</option>
+		            	<option>装饰工程</option>
+		            	<option>屋面工程</option>
+		            	<option>分部工程</option>
+		            </select>
+		        </div>
+		        <div class="mui-input-row">
+		        	<label>申请人:</label>
+		        	<input id="proposer" type="text" class="mui-input-clear" placeholder="请输入申请人" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>申请时间:</label>
+		            <input id="applicationTime" type="text" placeholder="请选择申请时间" readonly="readonly">
+		        </div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back" id="data_close">关闭</button>
+				<button type="button" class="mui-btn mui-btn-primary" id="data_save">保存</button>
+			</div>	
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取传值 
+				var self = plus.webview.currentWebview();
+				my_name = self.my_name;//用户姓名
+				pj_name = self.pj_name;//工程名称
+				pj_name = decodeURI(decodeURI(pj_name));//解码工程名称
+				pj_timestamp = self.pj_timestamp;//工程时间戳
+				var doc = document;
+				var divisionType = doc.getElementById("divisionType");
+				var	applicationTime = doc.getElementById("applicationTime");
+				var proposer = doc.getElementById("proposer");
+				var data_save = doc.getElementById("data_save");
+				//申请人
+				proposer.value = my_name;
+				//当前日期
+				var myDate=new Date();
+				var mytime=myDate.getTime();
+				applicationTime.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				//日期监听
+				applicationTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+		                applicationTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//当前时间戳
+				var myDate=new Date();
+				var mytime=myDate.getTime();
+				var timestamp = mytime;
+				//信息保存
+				data_save.addEventListener('tap',function(){
+					mui.ajax(url+'my_division/division_add.php',{
+						data:{
+							divisionType:divisionType.value,
+							proposer:proposer.value,
+							applicationTime:applicationTime.value,
+							timestamp:timestamp,
+							pj_timestamp:pj_timestamp,
+							pj_name:pj_name
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							if(data.result=='success'){
+								alert("添加成功");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

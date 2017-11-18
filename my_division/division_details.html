@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">分部验收详情</h1>
+		</header>
+		<div class="mui-content">
+		    <form class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>分部类型:</label>
+		            <select id="divisionType" style="font-size: 14px;" disabled="disabled">
+		            	<option></option>
+		            	<option>地基基础</option>
+		            	<option>主体结构</option>
+		            	<option>建筑节能</option>
+		            	<option>装饰工程</option>
+		            	<option>屋面工程</option>
+		            	<option>分部工程</option>
+		            </select>
+		        </div>
+		        <div class="mui-input-row">
+		        	<label>申请人:</label>
+		        	<input id="proposer" type="text" class="mui-input-clear" placeholder="请输入申请人" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>申请时间:</label>
+		            <input id="applicationTime" type="text" placeholder="请选择申请时间" readonly="readonly" disabled="disabled">
+		        </div>
+		    </form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				var my_id = geturl("id");//项目id
+				var doc = document;
+				var divisionType = doc.getElementById("divisionType");
+				var proposer = doc.getElementById("proposer");
+				var applicationTime = doc.getElementById("applicationTime");
+				mui.ajax(url+'my_division/division_list.php',{
+					data:{
+						flag:"details",
+						my_id:my_id
+					},
+					type:'post',
+					dataType:'json',  
+					success:function(data){
+						divisionType.value = data[0].分部类型;
+						proposer.value = data[0].申请人;
+						applicationTime.value = data[0].申请时间;
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

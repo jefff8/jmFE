@@ -121,7 +121,8 @@
 			"my_plus/my_inspection.html",
 			"my_commission/my_commission_list.html",
 			"my_plus/my_project_list.html",
-			"my_plus/my_query.html"
+			"my_plus/my_query.html",
+			"my_division/division_list.html"
 		],
 		"resources": [
 			"js/mui.min.js",
@@ -832,6 +833,11 @@
 	"my_commission/camera_image.html": {
 		"resources": [
 			"js/common.js"
+		]
+	},
+	"my_division/division_list.html": {
+		"refer": [
+			"my_division/division_add.html"
 		]
 	}
 }

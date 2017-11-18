@@ -405,7 +405,8 @@
 					"my_plus/my_result.html",
 					"my_material/my_material_list.html",
 					"my_commission/my_commisson_list.html",
-					"my_commission/my_commission_list.html"
+					"my_commission/my_commission_list.html",
+					"my_division/division_list.html"
 				],
 				"priority": 0
 			},
@@ -2339,6 +2340,13 @@
 					"css/mui.min.css"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"my_division/division_list.html": {
+				"resources": [],
+				"refer": [
+					"my_division/division_add.html"
+				],
 				"priority": 0
 			}
 		},
