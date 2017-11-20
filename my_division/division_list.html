@@ -173,21 +173,31 @@
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 					ul.id = id;
+					var apply = document.getElementById("apply");
+					var confirm = document.getElementById("confirm");
+					var approval = document.getElementById("approval");
 					var divisionType = "分部类型:"+divisionType;
 					var proposer = "申请人:"+proposer;
 					var applicationTime = "申请时间:"+applicationTime;
 					if(status=='施工申请'||status=='监理确认1'){
 						var color = "blue2";
+					}else if(status=='监理确认2'){
+						var color = "orange";
+					}else if(status=='监理确认3'||status=='审批'){
+						var color = "green2";
+					}else if(status=='审批通过'){
+						var color = "grey";
 					}
 					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="division_details.html?id='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ divisionType +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+proposer+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+applicationTime+'</p></li>';
 					switch(status){
 						case "施工申请":
-							var apply = document.getElementById("apply");
 							apply.appendChild(ul); 
 							break;
-						case "监理确认1":
-							var confirm = document.getElementById("confirm");
+						case "监理确认1":case "监理确认2":case "监理确认3":
 							confirm.appendChild(ul); 
+							break;
+						case "审批":case "审批通过":
+							approval.appendChild(ul);
 							break;
 					}
 				}
@@ -281,21 +291,160 @@
 						timeout:10000,
 						success:function(data){
 							if(data['单位']=='监理单位'||data['单位']=='管理员'){
-								var btnArray = [
-									{title:"监理确认"}
-								]; 
-								plus.nativeUI.actionSheet({
-									title:"操作", 
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									//var nextpage='';
-									switch (index){
-										case 1://监理确认
-											break;
-									}	
-								 });
+								mui.ajax(url+'my_division/division_list.php',{
+									data:{
+										flag:"details",
+										ulId:ulId
+									},
+									type:'post',
+									dataType:'json',
+									success:function(data){
+										var status = data[0].工程单状态;
+										switch(status){
+											case "监理确认1":
+												var btnArray = [
+													{title:"监理确认1"}
+												]; 
+												plus.nativeUI.actionSheet({
+													title:"操作", 
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://监理确认
+															mui.openWindow({
+																url:"supervision1.html"
+															});
+															break;
+													}	
+												 });
+												break;
+											case "监理确认2":
+												var btnArray = [
+													{title:"监理确认2"}
+												]; 
+												plus.nativeUI.actionSheet({
+													title:"操作", 
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://监理确认
+															mui.openWindow({
+																url:"supervision2.html"
+															});
+															break;
+													}	
+												 });
+												break;
+											case "监理确认3":
+												var btnArray = [
+													{title:"监理确认3"}
+												]; 
+												plus.nativeUI.actionSheet({
+													title:"操作", 
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://监理确认
+															mui.openWindow({
+																url:"supervision3.html"
+															});
+															break;
+													}	
+												 });
+												break;
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										alert("发生错误");
+									}
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//审批（监督站）操作
+				mui("#approval").on('longtap','ul',function(){
+					var ulId = this.id;//当前项目id
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
+								mui.ajax(url+'my_division/division_list.php',{
+									data:{
+										flag:"details",
+										ulId:ulId
+									},
+									type:'post',
+									dataType:'json',
+									success:function(data){
+										var status = data[0].工程单状态;
+										if(status!='审批通过'){
+											var btnArray = [
+												{title:"审批通过"},
+												{title:"资料完善"},
+												{title:"重新组织验收"}
+											]; 
+										plus.nativeUI.actionSheet({
+											title:"操作", 
+											cancel:"取消",
+											buttons:btnArray
+										},function(e){
+											var index = e.index;	
+											//var nextpage='';
+											switch (index){
+												case 1://审批通过
+													mui.ajax(url+'my_division/division_list.php',{
+														data:{
+															flag:"审批通过",
+															ulId:ulId
+														},
+														dataType:'json',
+														type:'POST', 
+														timeout:10000,
+														success:function(data){
+															mui.toast('操作完成！',{ duration:'long', type:'div' })
+															location.reload();//刷新本页面
+														},
+														error:function(xhr,type,errorThrown){
+				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
+													break;
+												case 2://资料完善
+													break;
+												case 3://重新组织验收
+													break;
+											}	
+										 });
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										
+									}
+								});
+								
 							}else{
 								alert("抱歉，您没有新建卡项的权限");
 							}

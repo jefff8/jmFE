@@ -837,7 +837,10 @@
 	},
 	"my_division/division_list.html": {
 		"refer": [
-			"my_division/division_add.html"
+			"my_division/division_add.html",
+			"my_division/division_details.html",
+			"my_division/supervision1.html",
+			"my_division/supervision3.html"
 		]
 	}
 }

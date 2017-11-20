@@ -49,7 +49,7 @@
 					if(r!=null)return  unescape(r[2]);
 					return null;
 				}
-				var my_id = geturl("id");//项目id
+				var ulId = geturl("id");//项目id
 				var doc = document;
 				var divisionType = doc.getElementById("divisionType");
 				var proposer = doc.getElementById("proposer");
@@ -57,7 +57,7 @@
 				mui.ajax(url+'my_division/division_list.php',{
 					data:{
 						flag:"details",
-						my_id:my_id
+						ulId:ulId
 					},
 					type:'post',
 					dataType:'json',  
