@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">拒收</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;">
+			<label style="margin-left:10px;">拒收理由：</label>
+		    <div class="mui-input-row" >
+				<textarea id="rejection" rows="4" placeholder="请输入拒收理由"></textarea>
+			</div>
+			<div id="formbtn" class="mui-button-row">
+				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="save" type="button" class="mui-btn mui-btn-primary">提交</button>
+			</div>	
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+	      		ulId = self.ulId; //项目id
+	      		var doc = document;
+				var save = doc.getElementById("save");
+				var rejection = doc.getElementById("rejection");
+				save.addEventListener('tap',function(){
+					mui.ajax(url+'my_plus/my_rejection.php',{
+						data:{
+							flag:"material",
+							ulId:ulId,
+							rejection:rejection.value
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+							target.reload(true);
+							mui.toast('提交完成!',{ duration:'long', type:'div' });
+							mui.back();
+						},
+						error:function(xhr,type,errorThrown){
+							alert("异步错误");
+						}
+					});
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>

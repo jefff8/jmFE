@@ -134,6 +134,7 @@ function galleryImgs(lx){
 			paths = path.files[i];
 			plus.io.resolveLocalFileSystemURL( paths, function ( entry ) {
 				appendFile(entry.toLocalURL(),entry,lx);
+				
 			}, function ( e ) {
 				alert("读取拍照文件错误："+e.message);
 	//			outLine( "读取拍照文件错误："+e.message );
@@ -180,6 +181,7 @@ var f1Base64=[];
 var f2Base64=[];
 var f3Base64=[];
 function appendFile(path,entry,lx){
+	
 	if(lx=='cjzp'){
 		var img = new Image();
 		img.src = path; // 传过来的图片路径在这里用。                                              ///////////// 用canvas画布对照片像素进行处理

@@ -32,6 +32,9 @@
 								<a id="" class="mui-control-item"  href="#item3">
 									初检
 								</a>
+								<a id="" class="mui-control-item"  href="#item4">
+									拒收
+								</a>
 		         		   </div>
 		      		  	</div>
 		   			</div>
@@ -69,6 +72,17 @@
 			   </div>
 			</div>
 			<!---------------------------------初检------------------------------------------->
+			
+			<!---------------------------------拒收------------------------------------------->
+			<div id="item4" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="rejection" class="mui-scroll rwdiv">
+			    		
+			    		
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------拒收------------------------------------------->
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -161,6 +175,16 @@
 					first.appendChild(ul);
 				}
 				
+				//拒收
+				function show_rejection(id,type,reason,sjc){
+					var rejection = document.getElementById("rejection");
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_material_resDet.html?sjc='+sjc+'&gcid='+id+'&state='+'processed'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ type +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">拒收理由：'+ reason +'</p></li>';
+					rejection.appendChild(ul);
+				}
+				
 				//异步取值并创建卡项
 				mui.ajax(url+'my_plus/my_material_list.php',{
 					data:{
@@ -226,6 +250,32 @@
 					}
 				});
 				
+				//拒收
+				mui.ajax(url+'my_plus/my_rejection.php',{
+					data:{
+						flag:"material_rejection",
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].id;
+								var sjc = data[i].时间戳;
+								var type = data[i].取样类型;
+								var reason = data[i].拒收理由;
+								show_rejection(id,type,reason,sjc)
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
 				
 				//长按合格卡片
 				mui("#qualified").on('longtap','ul',function(){
@@ -261,10 +311,11 @@
 									timeout:10000,
 									success:function(data){
 										var gcdzt_pd = data.工程单状态;
-										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+										if(gcdzt_pd=='不合格'){
 											var btnArray = [
 											{title:"复检"},
-											{title:"监理处理"}
+											{title:"监理处理"},
+											{title:"拒收"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -275,45 +326,76 @@
 												//var nextpage='';
 												switch (index){
 													case 1://复检
-														mui.ajax(url+'my_plus/my_material_list.php',{
-															data:{
-																flag:"复检",
-																ulid:ulId,
-																gcmc:gcmc
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-//																		alert(data.结果);
-																mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
-															}
-														});	
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
+															mui.ajax(url+'my_plus/my_material_list.php',{
+																data:{
+																	flag:"复检",
+																	ulid:ulId,
+																	gcmc:gcmc
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+	//																		alert(data.结果);
+																	mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+	//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});	
+														}else{
+															alert("抱歉,您无权限操作！");
+														}
 														break;
 													case 2://监理处理
-														mui.openWindow({
-															url:"my_material_supvr.html",
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																ulId:ulId
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														})
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
+															mui.openWindow({
+																url:"my_material_supvr.html",
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+														}else{
+															alert("抱歉,您无权限操作！");
+														}
 														break;
+													case 3://拒收
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='检测单位'){
+															mui.openWindow({
+																url:"my_rejection.html",
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+														}else{
+															alert("抱歉,您无权限操作！");
+														}
 												}	
 											 });
 										}else if(gcdzt_pd=='待审批'&&(units=='监督机构'||units=='管理员')){

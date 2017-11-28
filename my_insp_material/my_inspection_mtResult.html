@@ -33,6 +33,9 @@
 								<a id="" class="mui-control-item"  href="#item3">
 									初检单
 								</a>
+								<a id="" class="mui-control-item"  href="#item4">
+									拒收
+								</a>
 		         		   </div>
 		      		  	</div>
 		   			</div>
@@ -67,6 +70,16 @@
 			   </div>
 			</div>
 			<!---------------------------------初检单------------------------------------------->
+			
+			<!---------------------------------拒收------------------------------------------->
+			<div id="item4" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="rejection" class="mui-scroll rwdiv">
+	    				
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------拒收------------------------------------------->
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -102,7 +115,7 @@
 					window.location.reload();
 				});
 				//动态创建函数
-				function inspection(zt,id,jclx,sl,jcbw,jcr,jcrq,sjc){
+				function inspection(zt,id,jclx,sl,jcbw,jcr,jcrq,sjc,reason){
 					var zt_c = encodeURI(encodeURI(zt));
 					if(zt=="合格"){
 						var choujian = document.getElementById("qualified");
@@ -140,8 +153,15 @@
 						var ul = document.createElement("ul");
 						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 						ul.id = id;
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+processed+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'processed'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ jcbw +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
+					}else if(zt=="拒收"){
+						var rejection = document.getElementById("rejection");
+						var ul = document.createElement("ul");
+						ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+						ul.id = id;
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&state='+'processed'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">拒收理由：'+ reason +'</p></li>';
+						rejection.appendChild(ul);
 					}
 				}
 				
@@ -181,7 +201,8 @@
 						    var jcr = data[i].检测人;
 							var jcrq = data[i].检测日期;
 							var sjc = data[i].时间戳;
-							inspection(zt,id,jclx,sl,jcbw,jcr,jcrq,sjc);
+							var rejection = data[i].拒收理由;
+							inspection(zt,id,jclx,sl,jcbw,jcr,jcrq,sjc,rejection);
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -250,10 +271,11 @@
 									success:function(data){
 										var gcdzt = data.工程单状态;
 										var timestamp = data.时间戳;
-										if(gcdzt=='不合格' &&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+										if(gcdzt=='不合格'){
 											var btnArray = [
 											{title:"监理处理"},
-											{title:"取样送检"}
+											{title:"取样送检"},
+											{title:"拒收"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -263,34 +285,67 @@
 												var index = e.index;	
 												switch (index){
 													case 1://监理处理
-														mui.openWindow({
-															url:"my_insp_supvr.html",
-															extras:{
-																ulid:ulid,
-																timestamp:timestamp
-															}
-														});
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
+															mui.openWindow({
+																url:"my_insp_supvr.html",
+																extras:{
+																	ulid:ulid,
+																	timestamp:timestamp
+																}
+															});
+														}else{
+															alert("抱歉,您无权限操作");
+														}
+														
 														break;
 													case 2://取样送检
-														mui.ajax(url+'my_plus/my_inspection_material.php',{
-															data:{
-																flag:"取样送检",
-																ulid:ulid,
-																gcmc:gcmc
-															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-//																alert(data.结果);
-																mui.toast('取样送检成功请回看',{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
-															},
-															error:function(xhr,type,errorThrown){
-																alert('ajax错误'+type+'---'+errorThrown+"失败！");
-															}
-														});	
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
+															mui.ajax(url+'my_plus/my_inspection_material.php',{
+																data:{
+																	flag:"取样送检",
+																	ulid:ulid,
+																	gcmc:gcmc
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+	//																alert(data.结果);
+																	mui.toast('取样送检成功请回看',{ duration:'long', type:'div' });
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+																	alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});	
+														}else{
+															alert("抱歉,您无权限操作");
+														}
 														break;	
+													case 3://拒收
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='检测单位'){
+															mui.openWindow({
+																url:"my_rejection.html",
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulid
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+														}else{
+															alert("抱歉,您无权限操作！");
+														}
+														break;
 												}	
 											 });
 										}else if(gcdzt=='取样送检不合格' &&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){

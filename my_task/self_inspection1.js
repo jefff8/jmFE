@@ -373,10 +373,11 @@
 					timeout:10000,
 					success:function(data){
 						var units = data['单位']; //获取单位信息
-						if(units=='监理单位'||units=='管理员'){
+						if(units=='监理单位'||units=='管理员'||untis=='检测单位'){
 							var btnArray = [
 							{title:"监理处理"},
-							{title:"取样送检"}
+							{title:"取样送检"},
+							{title:"拒收"}
 							]; 
 							plus.nativeUI.actionSheet({
 								title:"操作", 
@@ -419,6 +420,27 @@
 												alert('ajax错误'+type+'---'+errorThrown+"失败！");
 											}
 										});	
+										break;
+									case 3://拒收
+										mui.openWindow({
+											url:"my_rejection.html",
+											styles: {
+												hardwareAccelerated:false
+											},
+											extras:{
+												//传递参数
+												ulId:ulId,
+												flag:"insp_material"
+											},
+											show:{
+												autoShow:true,//页面loaded事件发生后自动显示
+												aniShow:'slide-in-right',//页面显示动画
+												duration:'100'//页面动画持续时间
+											},
+											waiting:{
+												autoShow:false,//自动显示等待框
+											}
+										})
 										break;
 								}	
 							 });

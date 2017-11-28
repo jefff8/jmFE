@@ -276,7 +276,8 @@
 					{title:"扩大检测"},
 					{title:"验证检测"},
 					{title:"设计复核"},
-					{title:"返工"}
+					{title:"返工"},
+					{title:"拒收"}
 					]; 
 					plus.nativeUI.actionSheet({
 						title:"操作", 
@@ -365,6 +366,27 @@
 										autoShow:false,//自动显示等待框
 									}
 								});
+								break;
+							case 5://拒收 
+								mui.openWindow({
+									url:"my_rejection.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										flag:"commission"
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								})
 								break;
 						}	
 					 });

@@ -406,7 +406,8 @@
 					"my_material/my_material_list.html",
 					"my_commission/my_commisson_list.html",
 					"my_commission/my_commission_list.html",
-					"my_division/division_list.html"
+					"my_division/division_list.html",
+					"my_household/my_checkB.html"
 				],
 				"priority": 0
 			},

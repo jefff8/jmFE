@@ -122,7 +122,8 @@
 			"my_commission/my_commission_list.html",
 			"my_plus/my_project_list.html",
 			"my_plus/my_query.html",
-			"my_division/division_list.html"
+			"my_division/division_list.html",
+			"my_household/my_checkB.html"
 		],
 		"resources": [
 			"js/mui.min.js",

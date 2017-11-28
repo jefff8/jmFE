@@ -87,6 +87,12 @@
 					<textarea id="tcjv" rows="5" ></textarea>
 				</div>
 			</form>
+			<form id="myform6" class="my_none">
+				&nbsp;&nbsp;<label >拒收理由：</label>
+			    <div class="mui-input-row" >
+					<textarea id="rejection" rows="5" ></textarea>
+				</div>
+			</form>
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
 				&nbsp;&nbsp;
@@ -120,6 +126,7 @@
 				var jzr = doc.getElementById("jzr");
 //				var jcbh = doc.getElementById("jcbh");
 				var tcjv = doc.getElementById("tcjv");
+				var rejection = doc.getElementById("rejection");
 				//获取url参数值
 				function geturl(name){
 					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -161,12 +168,16 @@
 						jzdw.value = data.见证单位;
 						sdw.value = data.收样单位;
 						jzr.value = data.见证人;
-//						jcbh.value = data.检测报告编号;
 						clqk.value = data.处理情况;
 						tcjv.value = data.退场记录;
 						if(tcjv.value.length>0){
 							var myform5 = document.getElementById('myform5');
 							myform5.classList.remove("my_none");
+						}
+						if(data.拒收理由){
+							var myform6 = document.getElementById('myform6');
+							myform6.classList.remove("my_none");
+							rejection.value = data.拒收理由;
 						}
 					},
 					error:function(xhr,type,errorThrown){

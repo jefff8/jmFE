@@ -231,7 +231,7 @@
 						}	
 					});
 					break;
-					case 2:
+							case 2:
 							var btnArray =['是', '否'];
 							mui.confirm('确定将该送检鉴定为不合格？', '江门建筑管理系统', btnArray, function(e){
 								//不合格推送通知
@@ -285,9 +285,10 @@
 					timeout:10000,
 					success:function(data){
 						var units = data['单位']; //获取单位信息
-						if(units=='监理单位'||units=='管理员'){
+						if(units=='监理单位'||units=='管理员'||units=='检测单位'){
 							var btnArray = [
-							{title:"监理处理"}
+							{title:"监理处理"},
+							{title:"拒收"}
 							]; 
 							plus.nativeUI.actionSheet({
 								title:"操作", 
@@ -312,6 +313,26 @@
 											}
 										});
 										break;
+									case 2://拒收
+										mui.openWindow({
+											url:"my_rejection.html",
+											styles: {
+												hardwareAccelerated:false
+											},
+											extras:{
+												//传递参数
+												ulId:ulId,
+												flag:"insp_entity"
+											},
+											show:{
+												autoShow:true,//页面loaded事件发生后自动显示
+												aniShow:'slide-in-right',//页面显示动画
+												duration:'100'//页面动画持续时间
+											},
+											waiting:{
+												autoShow:false,//自动显示等待框
+											}
+										})
 								}	
 							 });
 						}else{
