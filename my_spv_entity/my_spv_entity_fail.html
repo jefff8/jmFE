@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市建设工程施工质量管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">不合格处理</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;">
+		  
+		</div>
+		<div class="mui-input-row my_none">
+			<label> 时间戳：</label>
+			<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+		</div>
+		<div class="mui-input-row my_none">
+			<label> 工程单状态：</label>
+			<input id='gcdzt' type="text" placeholder="工程单状态" readonly="readonly">						
+		</div>
+		<form class="mui-input-group">
+		    <div class="mui-input-row">
+		        <label>检测报告编号:</label>
+		        <input id="testNum" type="text" class="mui-input-clear" placeholder="请输入检测报告编号">
+		    </div>
+		</form>
+		
+		<!-------------------------------------------处理图片------------------------------------------>
+	   <form id="img_content" class="" >
+        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+	        	<span style="padding-bottom: 10px;">报告照片(结论页)</span>
+	        	<br/>
+	        	<div><img id="newUpload4" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+	        </div>
+	        <div class="mui-input-group" >
+	        	<div  class="mui-input-row">
+		            <label>报告照片说明:</label>
+		            <input id="report" type="text" class="mui-input-clear" placeholder="请输入报告照片说明">
+	        	</div>
+	        </div>
+	        <div id="allbtn">
+	        	<ul id="history_jczp" class="dlist" style="text-align:left;">
+					<li id="empty_jczp" class="ditem-empty">无历史记录</li>
+				</ul>
+	        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        	<button id="clean_jczp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('jczp');">清空记录</button>
+	        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        	<button id="jczp" type="button" class="mui-btn mui-btn-primary" onclick="upload3(this.id,'clean_jczp');">保存上传</button>
+	        </div>
+	    </form>
+		<!-------------------------------------------处理图片------------------------------------------>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
+		<script src="../js/service.js"></script>
+		<script src="../js/my_spv_entity_upload_fail.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+	      		ulId = self.ulId;
+	      		gcdzt = self.gcdzt;
+	      		state = self.state;
+	      		flag = self.flag;
+	      		if(state=='recheck'){
+	      			document.getElementById("allbtn").getElementsByTagName("button")[1].id="jczp2";
+	      		}
+				var doc = document;
+				var sjc = doc.getElementById("sjc");
+				var gcdzt = doc.getElementById("gcdzt");
+				//异步获取材料送检时间戳
+				mui.ajax(url+'my_plus/my_spv_entity_detail.php',{
+					data:{
+						flag:'获取信息',
+						myid:ulId
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length;i++) {
+							sjc.value=data[i].时间戳;
+							gcdzt.value=data[i].工程单状态;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						//alert('ajax错误'+type);
+						return callback('ajax错误'+type+errorThrown);
+					}
+					
+				});	
+			});
+			//返回父页面刷新
+			function back(){
+				if(flag=='task'){
+					var target=plus.webview.getWebviewById('my_task/task_list.html');
+					target.reload(true);
+					mui.back();
+				}else{
+					var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity.html');
+					target.reload(true);
+					mui.back(); 
+				}
+				
+			}	
+		</script>
+	</body>
+
+</html>

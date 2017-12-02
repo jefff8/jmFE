@@ -23,7 +23,7 @@
 	            	</a>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-	            	<a href="../my_spv_entity/my_supervision_entity.html">
+	            	<a href="../my_spv_entity/my_spv_entity_list.html">
 	                    <span class="mui-icon iconfont icon-yanshoutongguo"></span>
 	                    <div class="mui-media-body">实体抽检</div>
 	            	</a>
@@ -36,6 +36,14 @@
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
 				gcmc = self.gcmc;
+				mobile = self.mobile;
+				my_name = self.my_name;
+				timestamp = self.timestamp;
+				supvision = self.supvision;
+				constr = self.constr; //施工单位
+				detect = self.detect;
+				pj_id = self.pj_id;
+//				console.log(my_name);
 				document.getElementById('H_name').innerHTML=gcmc;//标题名称
 				
 				//主列表点击事件 ,把项目id传到所有子页面中
@@ -53,7 +61,13 @@
 						url: this.href,
 						styles: webview_style,
 						extras:{
-							gcmc:gcmc
+							gcmc:gcmc,
+							mobile:mobile,
+							my_name:my_name,
+							timestamp:timestamp,
+							supvision:supvision,
+							constr:constr,
+							detect:detect
 						},
 						show: {
 							aniShow:"pop-in"

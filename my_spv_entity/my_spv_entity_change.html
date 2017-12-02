@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->
+		    <h1 class="mui-title">委托检测-监理处理</h1>
+		</header>
+		<div class="mui-content">
+		    <form class="mui-input-group" id="myform2">
+		        <!--<div class="mui-input-row">
+		            <label>实测日期:</label>
+		            <input id="date" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" value="2017-07-09">
+		        </div>-->
+		        <div class="mui-input-row">
+		            <label>处理记录:</label>
+		            <input type="text" class="mui-input-clear" placeholder="请输入处理记录" id="test_txt">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>处理类型:</label>
+		            <input type="text" class="mui-input-clear" placeholder="" id="type" readonly="readonly">
+		        </div>
+		    </form>
+			
+			<!--处理图片-->
+		    <form id="img_content" >
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">处理图片</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>处理图片说明:</label>
+			            <input id="Text6" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
+		         <div class="mui-button-row">
+		        	<ul id="history_cj" class="dlist" style="text-align:left;">
+						<li id="empty_cj" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('wtjc');">清空记录</button>
+					<button id="wtjc" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">保存及上传</button>
+		        </div>
+		    </form>
+		    <!--处理图片-->
+			<input id="ulid" class="my_none" value="" />
+			<input id="gcmc" class="my_none" value="" />
+			<input id="sjc" class="my_none" value="" />
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/mui.picker.js"></script>-->
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/my_spv_entity_upload_enreschge.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					alert(name);
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取工程名称
+				var self = plus.webview.currentWebview();
+                gcmc_c = self.gcmc_c;
+                my_name = self.my_name;
+                timestamp = self.timestamp;
+                my_name = decodeURI(decodeURI(my_name));
+                gcmc = decodeURI(decodeURI(gcmc_c));
+                ulid = self.ulId;
+                type = self.type; //处理类型
+				var doc = document;
+				var sjc = doc.getElementById("sjc");
+				var progcmc = doc.getElementById('gcmc');
+				doc.getElementById("type").value = type;
+				progcmc.value = gcmc;
+				var protimesp = doc.getElementById('ulid');
+				protimesp.value = ulid;
+				mui.ajax(url+'my_plus/my_spv_entity_detail.php',{
+					data:{
+						flag:"获取信息",
+						myid:ulid
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+//						alert(data);
+						sjc.value = data[0].时间戳;
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+errorThrown);
+					}
+				});
+//				alert(ulid);
+//				new data save
+//				data_save.addEventListener('tap',function(){
+////					alert(timestamp+'/'+time+'/'+tpart+'/'+ulid);
+//					mui.ajax(url+'my_plus/my_entity_result.php',{
+//						data:{
+//							flag:"监理处理",
+//							ulid:ulid,
+//							ttxt:ttxt,
+//							timestamp:timestamp
+//						},
+////						dataType:'json',
+//						type:'POST', 
+//						timeout:10000,
+//						success:function(data){
+////							alert(data.结果);
+//							var target=plus.webview.getWebviewById('my_entity_results.html');
+//							target.reload(true);
+//							mui.toast('操作成功',{ duration:'long', type:'div' })
+//						},
+//						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//						}
+//					});	
+////					var btnArray = ['是', '否'];
+////					mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
+////						if (e.index == 0) {
+////							var myform=document.getElementById('myform');
+////							var myform2=document.getElementById('myform2');
+////							var img_content=document.getElementById('img_content');
+////							var formbtn=document.getElementById("formbtn");
+////							myform.classList.add('my_none');
+////							myform2.classList.add('my_none');
+////							formbtn.classList.add('my_none');			
+////							img_content.classList.remove('my_none');
+////						} else {
+////							//返回父页面刷新
+////							var target=plus.webview.getWebviewById('my_entity_list.html');
+////							target.reload(true);
+////							mui.toast('新增成功',{ duration:'long', type:'div' })
+////							old_back();
+////						}
+////					});
+//				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity_results.html');
+				target.reload(true);
+				mui.back();
+				mui.toast('保存成功',{ duration:'long', type:'div' });
+			}
+		</script>
+	</body> 
+
+</html>

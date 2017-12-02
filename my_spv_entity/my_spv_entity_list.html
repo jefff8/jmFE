@@ -1,0 +1,811 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
+		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
+		<style>
+			#consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			#consigncode2{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			
+			#zuyPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			
+			#addNew{
+				position:fixed;
+				right:10px;
+				bottom:50px;
+				/*background-color:transparent;*/
+		        z-index: 998 ;
+		    }
+		   
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <!--<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>-->	
+		    <h1 id="refresh" class="mui-title">实体监督抽检</h1>
+		</header>
+		<!--------------------------------------新增按钮--------------------------------------------->
+		<div>
+			<span id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
+            <span class="mui-icon mui-icon-plusempty"></span>
+       		</span>
+		</div>
+		<!--------------------------------------新增按钮--------------------------------------------->
+		<!--委托编号-->
+		<div id="consigncode" class="mui-popover">
+    		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+    			<div class="mui-input-row">
+    				<label>委托编号:</label>
+    				<input id="code_input"  class="mui-input-clear" placeholder="输入委托编号">
+    			</div>    			
+    		</form>
+			<div id="code_act"  class="mui-button-row my_margintop10px">
+				<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode(this)">确认</button>
+			</div>
+		</div>
+		<!--委托编号-->
+		<!--验证码-->
+			<div id="zuyPopover" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>验证码:</label>
+        				<input id="code" type="number" class="mui-input-clear" placeholder="输入验证码" value="">
+        			</div>    			
+        		</form>
+				<div id="comfirm"  class="mui-button-row my_margintop10px">
+					<button   type="button" class="mui-btn mui-btn-primary" onclick="qdjz(this)">确定</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="sendMsg" type="button" class="mui-btn mui-btn-primary" onclick="time(this)">获取验证码</button>
+				</div>
+			</div>
+			<form class="mui-input-group my_none">
+			    <div class="mui-input-row my_none">
+			        <label>企业ID</label>
+			        <input name="CorpID"  type="text" id="CorpID" class="mui-input-clear" value="101781">
+			    </div>
+			    <div class="mui-input-row my_none">
+			        <label>登录名</label>
+			        <input name="LoginName" type="text" id="LoginName" class="mui-input-clear" value="Admin">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>密码</label>
+			        <input name="pwd" type="text" id="pwd" class="mui-input-clear" value="174012" >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>服务器地址</label>
+			        <input name="serverIP" type="text" id="serverIP" class="mui-input-clear"  value="http://sms.mobset.com:8080/Api?wsdl">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>手机号码</label>
+			        <input name="mobPhone" type="text" id="mobPhone" class="mui-input-clear"  >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>短信内容</label>
+			        <input name="smsContent" type="text" id="smsContent" class="mui-input-clear" value="验证码：">
+			    </div>
+			     <div class="mui-input-row  my_none">
+			        <label>验证码</label>
+			        <input name="yzm" type="text" id="yzm" class="mui-input-clear" >
+			    </div>
+			</form>
+		<!--验证码-->
+		<div class="mui-content">
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
+									委托检测(检测单位)
+								</a>
+								<!--<a id="a5" class="mui-control-item"  href="#item2">
+									监理见证(监理单位)
+								</a>-->
+								<a id="a6" class="mui-control-item"  href="#item3">
+									检测结果(检测单位)
+								</a>
+								<!--<a class=" mui-icon mui-icon-arrowright mui-pull-right" style="bottom: 18px;"></a>-->
+								<!--<a class=" mui-icon mui-icon-arrowleft mui-pull-left" style="bottom: 18px;"></a>-->
+		         		   </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			
+			<!--------------------------------------委托检测----------------------------->
+			<div id="item1" class="mui-control-content  mui-active">
+			    <div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="draft" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
+			</div>
+			<!--------------------------------------委托检测----------------------------->
+			
+			
+			
+			<!--------------------------------------结果----------------------------->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="result" class="mui-scroll rwdiv">
+	    				
+					</div>
+			    </div>
+			</div>
+			<div id="consigncode2" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="testNum"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="code_act1"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode1(this)">确认</button>
+				</div>
+			</div>
+			<!--------------------------------------结果----------------------------->
+			
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false	
+					doubletap: true
+				}
+			});
+			
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				pj_id = self.pj_id;//工程id
+				mobile = self.mobile;//手机号码
+				my_name = self.my_name;//用户姓名
+				my_name = decodeURI(decodeURI(my_name)); //获取用户名
+	            gcmc = self.gcmc;//工程名称
+	            timestamp = self.timestamp;//工程时间戳
+	            constr = self.constr; //施工单位
+	            supvision = self.supvision; //监理单位
+	            detect = self.detect; //检测单位
+				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
+				
+				var doc = document;
+				var my_popover = doc.getElementById("my_popover");
+				var draft = doc.getElementById("draft");
+				var witness = doc.getElementById("witness");
+				var result = doc.getElementById("result");
+				var addnew = doc.getElementById('addNew');
+				var refresh = doc.getElementById("refresh");
+				var myDate = new Date();//获取系统当前时间
+				mytime=myDate.toLocaleString();//获取日期与时间
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
+				
+				addnew.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"commission"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='检测单位'||data['单位']=='管理员'){
+								mui.openWindow({
+									url:"my_spv_entity_add.html",
+									extras:{
+										//传递参数
+										gcmc_c:gcmc_c,
+										my_name:my_name,
+										timestamp:timestamp,
+										detect:detect,
+										supvision:supvision
+									},
+									show: {
+										aniShow:"pop-in"
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//creat active massagebox				
+				function mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp,operation_supvision,operation_detect){
+					proatt_c = encodeURI(encodeURI(proatt));
+					ttype_c = encodeURI(encodeURI(ttype));
+					tepe_c = encodeURI(encodeURI(jcr));
+					
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					if(proatt=='扩大抽检'||proatt=='扩大抽检准备'||proatt=='扩大抽检检测'){
+						ul.style.borderColor = "red";
+					}
+					var draft = document.getElementById("draft");
+					var result = document.getElementById("result");
+					
+					//通过判断工程单状态判断颜色
+					if(proatt=='新建'||proatt=='扩大抽检'||proatt=='提交检测'||proatt=="扩大抽检检测"){
+						var color = "blue2";
+					}else if(proatt=="准备"||proatt=="扩大抽检准备"){
+						var color = "green2";
+					}
+					
+					var url = "my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
+					
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+					
+					switch(proatt){
+						case "新建":case "准备":case "扩大抽检":case "扩大抽检准备":
+							draft.appendChild(ul); 
+							break;
+						case "提交检测":case "扩大抽检检测":
+							result.appendChild(ul);
+							break;
+					}
+				}
+				//异步取值并创建卡项
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"创建卡项",
+						gcmc:gcmc,
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data);
+						var length=data.length;
+//						alert(length+","+data[0].idd);
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								
+								var id = data[i].卡项id;
+								var owtsp = data[i].时间戳;
+								var gcmc = data[i].工程名称;
+								var proatt = data[i].工程单状态;
+								var ttype = data[i].检测类型;
+								var jcbw = data[i].检测部位;
+								var num=data[i].检测数量;
+								var jcr=data[i].检测人;	
+								var jcrq=data[i].检测日期;
+								var rmark=data[i].备注;
+								var test_dpm=data[i].检测单位;
+								var operation_supvision = data[i].监理操作单位;
+								var operation_detect = data[i].检测操作单位;
+								mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp,operation_supvision,operation_detect);
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax卡项错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				//获取对应手机短信验证码
+				mui.ajax(url+'send_Sms/AddSms.php',{
+					data:{
+						flag:'read',
+						mobile:mobile,
+						gcmc:gcmc,
+						submodule:'实体检测'
+					},
+					dataType:'json',  
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var dataLength = data.length;
+						var SecurityCode = data[dataLength-1].验证码;
+						var yzm = doc.getElementById("yzm");
+						if(SecurityCode){
+							yzm.value = SecurityCode;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				////////////////////////////委托检测//////////////////////////////
+				mui('#draft').on('longtap','ul',function(){
+					var ulId = this.id;//获取当前的卡项的id
+					 mui.ajax(url+'check.php',{
+						data:{
+							ulId:ulId,
+							mobile:mobile,
+							flag:"commission"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='检测单位'||data['单位']=='管理员'){
+								mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+			
+										//判断状态并根据状态执行改变状态的任务
+										if(gcdzt_pd=='新建'||gcdzt_pd=='扩大抽检'){
+											var btnArray = [
+											{title:"准备"},
+											{title:"删除"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://准备
+														if(gcdzt_pd=='扩大抽检'){//直接进入"准备"状态，无需输入委托编号
+															mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+																data:{
+																	flag:"扩大抽检准备",
+																	ulid:ulId
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+																	mui.toast(data.结果,{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+																	alert('ajax扩大抽检准备错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+														}else{
+															//输入委托编号
+															mui("#consigncode").popover("toggle");
+															var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+															but_id.id=ulId;
+														}
+														break;
+													case 2://删除
+														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+															data:{
+																flag:"删除",
+																ulid:ulId,
+																gcmc:gcmc,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+			//													alert(data.结果);
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+														break;
+												}	
+											 });
+										}else if(gcdzt_pd=='准备'||gcdzt_pd=='扩大抽检准备'){
+											var btnArray = [
+											{title:"提交检测"},
+											{title:"撤销取样"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://提交检测
+														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+															data:{
+																flag:"提交检测",
+																gcdzt:gcdzt_pd,
+																gcdId:ulId
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();
+															},
+															error:function(xhr,type,errorThrown){
+																alert('ajax准备错误'+type+'---'+errorThrown);
+															}
+														});
+														break;
+													case 2://撤销准备
+														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+															data:{
+																flag:"撤销准备",
+																ulid:ulId,
+																gcmc:gcmc,
+																gcdzt:gcdzt_pd,
+																timestamp:timestamp
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+																mui.toast(data.结果,{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+					//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});
+														break;
+												}	
+											  }
+											);
+										}
+									},
+									error:function(xhr,type,errorThrown){
+//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
+								var btnArray = [
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				////////////////////////////委托检测//////////////////////////////
+				
+				////////////////////////////结果//////////////////////////////
+				mui("#result").on('longtap','ul',function(){
+					var ulId = this.id;
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:ulId,
+							mobile:mobile,
+							flag:"commission"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if((data['单位']== '检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
+								mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+										if(gcdzt_pd=='提交检测'||gcdzt_pd=='扩大抽检检测'){
+											var btnArray = [
+											{title:"合格"},
+											{title:"不合格"}
+											];
+											plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://合格
+														var btnArray = ['是', '否'];
+															mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
+																if (e.index == 0) {
+																	//输入检测报告编号
+																	mui("#consigncode2").popover("toggle");
+																	var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
+																	but_id.id=ulId;
+																}	
+															});
+														break;
+													case 2://不合格
+														//不合格推送通知
+														var server=url+"push/push.php";
+														var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+															//推送完成
+															if(status==200){
+																alert("不合格出现!将通知各单位");
+															}else{
+																alert("失败");
+															}
+														});
+														task.addData("title",'江门市建设工程施工质量管理系统');
+														task.addData("notice",gcmc+'——（实体检测）出现新的不合格项目！');
+														task.addData("pj_id",pj_id);
+														task.start();
+														mui.openWindow({
+															url:'my_spv_entity_fail.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
+																gcdzt:gcdzt_pd
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+												}	
+											  }
+											);
+										}
+										
+									},
+									error:function(xhr,type,errorThrown){
+//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
+								var btnArray = [
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				});
+				////////////////////////////结果//////////////////////////////
+			});
+			
+			
+			//委托编号
+			function inpcode(obj){
+				var ulId = obj.id;
+				var code = document.getElementById('code_input').value;
+//				alert(code);
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"准备",
+						code:code,
+						ulid:ulId
+					},
+//					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data.结果);
+						mui.toast('操作成功',{ duration:'long', type:'div' }) 
+						location.reload();
+					},
+					error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+			}
+			function inpcode1(obj){
+				var ulId = obj.id;
+				var testNum = document.getElementById('testNum').value;
+//				alert(testNum);
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"合格",
+						ulid:ulId,
+						gcmc:gcmc,
+						timestamp:timestamp,
+						testNum:testNum,
+						gcdzt:gcdzt_pd
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data.结果);
+						mui.toast('操作成功',{ duration:'long', type:'div' }) 
+						location.reload();
+					},
+					error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+			}
+			//验证码监听
+			var wait = 60;
+			function time(o){
+				 if (wait == 0) {  
+		            o.removeAttribute("disabled");
+		            o.innerHTML="获取验证码";  
+		            wait = 60;  
+		        }else{
+		        	if(wait == 60){
+		        		//短信发送
+						var sendMsg = document.getElementById("sendMsg");
+						var CorpID = document.getElementById("CorpID");
+						var LoginName = document.getElementById("LoginName");
+						var pwd = document.getElementById("pwd");
+						var serverIP = document.getElementById("serverIP");
+						var mobPhone = document.getElementById("mobPhone");
+						var smsContent = document.getElementById("smsContent");
+						mobPhone.value = mobile;
+						yzm = document.getElementById("yzm");
+						mui.ajax(url+'send_Sms/SendSms.php',{
+							data:{
+								CorpID:CorpID.value,
+								LoginName:LoginName.value,
+								pwd:pwd.value,
+								serverIP:serverIP.value,
+								mobPhone:mobPhone.value,
+								smsContent:smsContent.value
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+								if(data.result=='success'){
+//									alert(data.smsContent);
+									yzm.value = data.yzm; //获取验证码数字
+									//添加短信记录								
+									mui.ajax(url+'send_Sms/AddSms.php',{
+										data:{
+											flag:'add',
+											SecurityCode:data.yzm,
+											submodule:'实体检测',
+											gcmc:gcmc,
+											mytime:mytime,
+											my_name:my_name,
+											mobile:mobile
+										},
+										dataType:'json',
+										type:'POST',
+										timeout:10000,
+										success:function(data){
+//											alert(data.result);
+										},
+										error:function(xhr,type,errorThrown){
+											alert('ajax错误'+type+'---'+errorThrown);
+										}
+									});
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown);
+							}
+						});
+		        	}
+		            o.setAttribute("disabled", true);  
+		            o.innerHTML="重新发送(" + wait + ")";  
+		            wait--;  
+		            setTimeout(function() {  
+		                time(o)  
+		            },1000)  
+		        }  
+			}
+			//验证验证码
+			function qdjz(jzid){
+				var jzid = jzid.id;
+				if(yzm.value==""){
+					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
+				}else if(code.value==""){
+					mui.toast('请输入验证码',{ duration:'long', type:'div' }) 
+				}else if(code.value==yzm.value){
+					//确定见证
+					mui.openWindow({
+						url:'my_commission_change.html',
+						styles: {
+							hardwareAccelerated:false
+						},
+						extras:{
+							//传递参数
+							ulId:jzid,
+							timestamp:timestamp,
+							my_name:my_name,
+							constr:constr,
+							supvision:supvision,
+							detect:detect
+						},
+						show:{
+							autoShow:true,//页面loaded事件发生后自动显示
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
+						}
+					});
+				}else{
+					mui.toast('验证码不正确',{ duration:'long', type:'div' }) 
+				}
+			}
+		</script>
+	</body>
+
+</html>

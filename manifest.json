@@ -704,14 +704,14 @@
 					"css/iconfont.css",
 					"css/mui.min.css",
 					"fonts/iconfont.ttf",
-					"my_plus/my_inspection_material.html"
+					"my_plus/my_inspection_material.html",
+					"my_insp_material/my_inspection_material.html"
 				],
 				"refer": [
 					"my_plus/my_inspection_list.html",
 					"my_plus/my_inspection_clzj.html",
 					"my_plus/my_inspection_stzj.html",
 					"my_plus/my_inspection_entity.html",
-					"my_insp_material/my_inspection_material.html",
 					"my_insp_entity/my_inspection_entity.html"
 				],
 				"priority": 0
@@ -765,14 +765,21 @@
 				"priority": 0
 			},
 			"my_plus/my_supervision.html": {
-				"resources": [],
+				"resources": [
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"fonts/iconfont.ttf",
+					"my_spv_material/my_supervision_material.html",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
 				"refer": [
 					"my_plus/my_supervision_stcj.html",
 					"my_plus/my_supervision_clcj.html",
 					"my_plus/my_supervision_entity.html",
 					"my_plus/my_supervision_material.html",
-					"my_spv_material/my_supervision_material.html",
-					"my_spv_entity/my_supervision_entity.html"
+					"my_spv_entity/my_supervision_entity.html",
+					"my_spv_entity/my_spv_entity_list.html"
 				],
 				"priority": 0
 			},
@@ -1487,7 +1494,9 @@
 					"my_commission/my_entity_results.html",
 					"my_inspection/my_inspection_results.html",
 					"my_insp_entity/my_inspection_entity_final.html",
-					"my_insp_material/my_inspection_mtResult.html"
+					"my_insp_material/my_inspection_mtResult.html",
+					"my_spv_material/my_spv_material_results.html",
+					"my_spv_entity/my_spv_entity_results.html"
 				],
 				"priority": 0
 			},
@@ -1548,7 +1557,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"css/my_project_fhys_xz.css",
-					"my_insp_material/my_inspection_detail.html"
+					"my_insp_material/my_inspection_detail.html",
+					"my_plus/my_inspection.html"
 				],
 				"refer": [
 					"my_insp_material/my_inspection_add.html",
@@ -2349,6 +2359,120 @@
 					"my_division/division_details.html",
 					"my_division/supervision1.html",
 					"my_division/supervision3.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_supervision_material.html": {
+				"resources": [
+					"css/my_project_fhys_xz.css",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"my_plus/my_supervision.html",
+					"js/service.js"
+				],
+				"refer": [
+					"my_spv_material/my_spv_material_add.html",
+					"my_spv_material/my_spv_material_detail.html",
+					"my_spv_material/my_spv_material_deliver.html",
+					"my_spv_material/my_spv_material_fail.html",
+					"my_spv_material/my_spv_material_review_detail.html",
+					"my_spv_material/my_spv_material_recheckDeliver.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_add.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/pic_upload_SelfTest.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"images/iconfont-tianjia.png",
+					"css/mui.min.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/my_project_fhys_xz.css",
+					"js/upload_qy.js"
+				],
+				"refer": [
+					"my_spv_material/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_detail.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/my_supervision_material.html",
+					"my_spv_material/readimage.html",
+					"my_spv_material/my_spv_material_results.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_review_detail.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/my_supervision_material.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_recheckDeliver.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_results.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/my_spv_material_detail.html",
+					"my_spv_material/my_spv_material_supvr.html"
+				],
+				"priority": 0
+			},
+			"my_spv_material/my_spv_material_fail.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_spv_entity/my_spv_entity_list.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_entity/my_spv_entity_add.html",
+					"my_spv_entity/my_spv_entity_readmessage.html",
+					"my_spv_entity/my_spv_entity_supvr.html",
+					"my_spv_entity/my_spv_entity_fail.html"
+				],
+				"priority": 0
+			},
+			"my_spv_entity/my_spv_entity_readmessage.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_entity/my_spv_entity_list.html",
+					"my_spv_entity/my_spv_entity_readimage.html",
+					"my_spv_entity/my_spv_entity_results.html"
+				],
+				"priority": 0
+			},
+			"my_spv_entity/my_spv_entity_results.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_entity/my_spv_entity_readmessage.html",
+					"my_spv_entity/my_spv_entity_change.html",
+					"my_spv_entity/my_spv_entity_supvr.html"
+				],
+				"priority": 0
+			},
+			"my_spv_entity/my_spv_entity_fail.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_entity/camera_image.html"
 				],
 				"priority": 0
 			}

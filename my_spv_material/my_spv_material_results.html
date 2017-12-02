@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门市建设工程施工质量管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
+		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 id="refresh" class="mui-title">材料抽检结果</h1>
+		</header>
+		<div class="mui-content">
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+		         		       <a id="" class="mui-control-item"  href="#item1">
+									合格
+								</a>
+								<a id="" class="mui-control-item mui-active"  href="#item2">
+									不合格
+								</a>
+								<a id="" class="mui-control-item"  href="#item3">
+									初检
+								</a>
+		         		   </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			<!---------------------------------合格------------------------------------------->
+			<div id="item1" class="mui-control-content  ">
+			    <div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="qualified" class="mui-scroll rwdiv">
+			    		
+			    		
+					</div>
+			    </div> 
+			</div>
+			<!---------------------------------合格------------------------------------------->
+			
+			<!---------------------------------不合格------------------------------------------->
+			<div id="item2" class="mui-control-content mui-active">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="fail" class="mui-scroll rwdiv">
+			    		
+			    		
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------不合格------------------------------------------->
+			
+			<!---------------------------------初检------------------------------------------->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="first" class="mui-scroll rwdiv">
+			    		
+			    		
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------初检------------------------------------------->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/native.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false	
+					doubletap: true
+				}
+			});
+			//区域滚动,需手动初始化scroll控件
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui.plusReady(function(){
+				//获取传值
+				var self = plus.webview.currentWebview();
+				//全局变量mobile
+				mobile = self.mobile;
+				gcmc = self.gcmc;
+				var timestamp = self.timestamp;
+				gcmc_c = encodeURI(encodeURI(gcmc));
+//				alert(gcmc);
+				var doc = document;
+				var qualified = doc.getElementById("qualified");
+				var fail = doc.getElementById("fail");
+				var first = doc.getElementById("first");
+				var refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
+				//动态创建函数
+				function result(gcdzt,id,qylx,gg,sl,sccj,qyr,qyrq,sjc,operation_supvision){
+					id_c = encodeURI(encodeURI(id));
+					qylx_c = encodeURI(encodeURI(qylx));
+					gg_c = encodeURI(encodeURI(gg));
+					sl_c = encodeURI(encodeURI(sl));
+					sccj_c = encodeURI(encodeURI(sccj));
+					qyr_c = encodeURI(encodeURI(qyr));
+					qyrq_c = encodeURI(encodeURI(qyrq));
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					var qualified = document.getElementById("qualified");
+					var fail = document.getElementById("fail");
+					if(gcdzt=='合格'){
+						var color = "green2";
+					}else if(gcdzt=='不合格'||gcdzt=='复检不合格'){
+						var color = "red";
+					}else if(gcdzt=='已处理'){
+						var color = "grey";
+					}
+					else if(gcdzt=='待审批'){
+						var color = "blue2";
+					}
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="my_spv_material_detail.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
+					switch(gcdzt){
+						case "合格":
+							qualified.appendChild(ul); 
+							break;
+						case "不合格":case "已处理":case "待审批":case "复检不合格":
+							fail.appendChild(ul);
+							break;
+					}
+				}
+				//初检单
+				function first_test(gcdzt,id,qylx,gg,sl,sccj,qyr,qyrq,sjc){
+					var first = document.getElementById("first");
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_material_resDet.html?sjc='+sjc+'&gcid='+id+'&state='+'fail_first'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
+					first.appendChild(ul);
+				}
+				
+				//异步取值并创建卡项
+				mui.ajax(url+'my_plus/my_spv_material_list.php',{
+					data:{
+						flag:"创建卡项",
+						gcmc:gcmc,
+						pj_timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].卡项id;
+								var gcdzt = data[i].工程单状态;
+								var qylx = data[i].取样类型;
+								var gg = data[i].规格;
+								var sl = data[i].数量;
+								var sccj = data[i].生产厂家;
+								var qyr = data[i].取样人;
+								var qyrq = data[i].取样日期;
+								var sjc = data[i].时间戳;
+								var operation_supvision = data[i].监理操作单位;
+								result(gcdzt,id,qylx,gg,sl,sccj,qyr,qyrq,sjc,operation_supvision)
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				//初检单
+				mui.ajax(url+'my_plus/my_spv_material_list.php',{
+					data:{
+						flag:"初检单",
+						gcmc:gcmc,
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].卡项id;
+								var gcdzt = data[i].工程单状态;
+								var qylx = data[i].取样类型;
+								var gg = data[i].规格;
+								var sl = data[i].数量;
+								var sccj = data[i].生产厂家;
+								var qyr = data[i].取样人;
+								var qyrq = data[i].取样日期;
+								var sjc = data[i].时间戳;
+								first_test(gcdzt,id,qylx,gg,sl,sccj,qyr,qyrq,sjc)
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				
+				//长按合格卡片
+				mui("#qualified").on('longtap','ul',function(){
+					var ulId = this.id;//获取当前的卡项的id
+				})
+				
+				//长按不合格卡片
+				mui("#fail").on('longtap','ul',function(){
+					var ulId = this.id;//获取当前的卡项的id
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:ulId,
+							mobile:mobile,
+							flag:"send"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							var units = data['单位']; //获取单位信息
+							var unitName = data['单位名称'];
+							var operation_supvision = data['监理操作单位'];
+							if(units=='监理单位'||units=='管理员'||units=='监督机构'){
+								mui.ajax(url+'my_plus/my_spv_material_list.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulId,
+										gcmc:gcmc,
+										timestamp:timestamp
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+										var gcdzt_pd = data.工程单状态;
+										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+											var btnArray = [
+											{title:"复检"},
+											{title:"监理处理"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://复检
+														mui.ajax(url+'my_plus/my_spv_material_list.php',{
+															data:{
+																flag:"复检",
+																ulid:ulId,
+																gcmc:gcmc
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+//																		alert(data.结果);
+																mui.toast('复检提交成功请回看',{ duration:'long', type:'div' });
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															}
+														});	
+														break;
+													case 2://监理处理
+														mui.openWindow({
+															url:"my_spv_material_supvr.html",
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														})
+														break;
+												}	
+											 });
+										}else if(gcdzt_pd=='待审批'&&(units=='监督机构'||units=='管理员')){
+											var btnArray = [
+											{title:"确认(监督机构)"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://审批通过
+														mui.ajax(url+'my_plus/my_spv_material_list.php',{
+															data:{
+																flag:"审批通过",
+																ulid:ulId,
+																gcmc:gcmc
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+					//													alert(data.结果);
+																mui.toast('操作完成！',{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+			//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																mui.toast('操作完成！',{ duration:'long', type:'div' })
+																location.reload();//刷新本页面
+															}
+														});	
+														break;
+												}	
+											 });
+										}else if(gcdzt_pd=='复检不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+											var btnArray = [
+											{title:"监理处理"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://监理处理
+														mui.openWindow({
+															url:"my_spv_material_supvr.html",
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+												}	
+											 });
+										}else{
+											var btnArray = [
+												{title:"抱歉，您没有操作权限"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+											});
+										}
+									},
+									error:function(xhr,type,errorThrown){
+			//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
+								var btnArray = [
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				});
+			});
+		</script>
+	</body>
+
+</html>
