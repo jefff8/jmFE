@@ -6,19 +6,436 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<style>
+			#addNew{
+				position:fixed;
+				right:10px;
+				bottom:50px;
+				/*background-color:transparent;*/
+		        z-index: 998 ;
+		    }
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">分户验收</h1>
+		    <h1 id="refresh" class="mui-title">分户验收</h1>
 		</header>
+		<div>
+			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
+            	<span class="mui-icon mui-icon-plusempty"></span>
+       		</button>
+		</div>
 		<div class="mui-content">
-		    
+		    <!--选项卡-->
+		    <div style="padding: 10px 10px;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<div class="mui-slider">
+		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
+		        		   	<div class="mui-slider-item">
+		         		       <a id="" class="mui-control-item  mui-active"  href="#item1">
+									申请(施工单位)
+								</a>
+								<a id="" class="mui-control-item"  href="#item2">
+									确认(监理单位)
+								</a>
+								<a id="" class="mui-control-item"  href="#item3">
+									审批(监督站)
+								</a>
+		         		   </div>
+		      		  	</div>
+		   			</div>
+				</div> 
+			</div>
+			<!--申请(施工单位)-->
+			<div id="item1" class="mui-control-content  mui-active">
+			    <div  class="mui-scroll-wrapper">
+			    	<div id="apply" class="mui-scroll rwdiv">
+			    		
+					</div>
+			    </div>
+			</div>
+			<!--确认(监理单位)-->
+			<div id="item2" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="confirm" class="mui-scroll rwdiv">
+	
+					</div>
+			    </div>
+			</div>
+			<!--审批(监督站)-->
+			<div id="item3" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="approval" class="mui-scroll rwdiv">
+	
+					</div>
+			    </div>
+			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			});
+			mui.plusReady(function(){
+				//获取传值 
+				var self = plus.webview.currentWebview();
+				mobile = self.mobile;//手机号码
+				my_name = self.my_name;//用户姓名
+				pj_timestamp = self.timestamp;//工程时间戳
+				pj_name = self.gcmc;//工程名称
+				my_name = decodeURI(decodeURI(my_name));//解码用户姓名
+				pj_name = decodeURI(decodeURI(pj_name));//解码工程名称
+				var doc = document;
+				var addNew = doc.getElementById("addNew");
+				var	refresh = doc.getElementById("refresh");
+				//监听标题栏的双击事件(刷新页面)
+				refresh.addEventListener('doubletap',function () {
+					window.location.reload();
+				});
+				//新增（施工单位）
+				addNew.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
+								mui.openWindow({
+									url:"household_add.html",
+									extras:{
+										pj_name:pj_name,
+										pj_timestamp:pj_timestamp
+									},
+									show: {
+										aniShow:"pop-in"
+									},
+									waiting: {
+										autoShow: true
+									}
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});	
+				});
+				//全部项目异步
+				mui.ajax(url+'my_household/household_list.php',{
+					data:{
+						flag:"list",
+						pj_timestamp:pj_timestamp
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+						var length = data.length;
+						for(var i=0;i<length;i++){
+							var id = data[i].id;
+							var status = data[i].工程单状态;
+							var buildingNum = data[i].栋号;
+							var floor = data[i].楼层;
+							var households = data[i].户数;
+							var acceptanceTime = data[i].验收时间;
+							showList(id,status,buildingNum,floor,households,acceptanceTime);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				
+				function showList(id,status,buildingNum,floor,households,acceptanceTime){
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					var apply = document.getElementById("apply");
+					var confirm = document.getElementById("confirm");
+					var approval = document.getElementById("approval");
+					var buildingNum = "栋号:"+buildingNum;
+					var floor = "楼层:"+floor;
+					var households = "户数:"+households;
+					var acceptanceTime = "验收时间:"+acceptanceTime;
+					if(status=='施工申请'){
+						var color = "blue2";
+						var myhref = 'construction_detail.html?id='+id+'';
+					}else if(status=='监理确认'){
+						var color = "blue2";
+						var myhref = 'all_floor.html?id='+id+'&mobile='+mobile+'';
+					}else if(status=='待审批'){
+						var color = "blue2";
+						var myhref = 'final_view.html?id='+id+'';
+					}else if(status=='审批通过'||status=='审批不通过'){
+						if(status=='审批通过'){
+							var color = "green2";
+						}else{
+							var color = "red";
+						}
+						var myhref = 'final_view.html?id='+id+'';
+					}
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+myhref+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ buildingNum +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+floor+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+households+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+acceptanceTime+'</p></li>';
+					switch(status){
+						case "施工申请":
+							apply.appendChild(ul); 
+							break;
+						case "监理确认":
+							confirm.appendChild(ul); 
+							break;
+						case "待审批":case "审批通过":case "审批不通过":
+							approval.appendChild(ul);
+							break;
+					}
+				}
+				
+				//申请（施工单位）操作
+				mui("#apply").on('longtap','ul',function(){
+					var ulId = this.id;//当前项目id
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='施工单位'||data['单位']=='管理员'){
+								var btnArray = [
+									{title:"提交申请"},
+									{title:"删除"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://提交申请
+											mui.ajax(url+'my_household/household_list.php',{
+												data:{
+													flag:"提交申请",
+													ulId:ulId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													mui.toast('提交成功！',{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+										case 2://删除
+											mui.ajax(url+'my_household/household_list.php',{
+												data:{
+													flag:"delete",
+													ulId:ulId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+//													alert(data.结果);
+													mui.toast('删除成功！',{ duration:'long', type:'div' })
+													location.reload();//刷新本页面
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+									}	
+								 });
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//确认（监理单位）操作
+				mui("#confirm").on('longtap','ul',function(){
+					var ulId = this.id;//当前项目id
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+								mui.ajax(url+'my_household/household_list.php',{
+									data:{
+										flag:"details",
+										ulId:ulId
+									},
+									type:'post',
+									dataType:'json',
+									success:function(data){
+										var status = data[0].工程单状态;
+										switch(status){
+											case "监理确认":
+												var btnArray = [
+													{title:"监理确认"}
+												]; 
+												plus.nativeUI.actionSheet({
+													title:"操作", 
+													cancel:"取消",
+													buttons:btnArray
+												},function(e){
+													var index = e.index;	
+													//var nextpage='';
+													switch (index){
+														case 1://监理确认
+															mui.ajax(url+'my_household/household_list.php',{
+																data:{
+																	flag:"监理确认",
+																	ulId:ulId
+																},
+																dataType:'json',
+																type:'POST', 
+																timeout:10000,
+																success:function(data){
+																	mui.toast('操作完成！',{ duration:'long', type:'div' })
+																	location.reload();//刷新本页面
+																},
+																error:function(xhr,type,errorThrown){
+						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																}
+															});
+															break;
+													}	
+												});
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										alert("发生错误");
+									}
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//审批（监督站）操作
+				mui("#approval").on('longtap','ul',function(){
+					var ulId = this.id;//当前项目id
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
+								mui.ajax(url+'my_household/household_list.php',{
+									data:{
+										flag:"details",
+										ulId:ulId
+									},
+									type:'post',
+									dataType:'json',
+									success:function(data){
+										var status = data[0].工程单状态;
+										if(status=='待审批'){
+											var btnArray = [
+												{title:"通过"},
+												{title:"不通过"}
+											]; 
+										plus.nativeUI.actionSheet({
+											title:"操作", 
+											cancel:"取消",
+											buttons:btnArray
+										},function(e){
+											var index = e.index;	
+											//var nextpage='';
+											switch (index){
+												case 1://审批通过
+													mui.ajax(url+'my_household/household_list.php',{
+														data:{
+															flag:"审批通过",
+															ulId:ulId
+														},
+														dataType:'json',
+														type:'POST', 
+														timeout:10000,
+														success:function(data){
+															mui.toast('操作完成！',{ duration:'long', type:'div' })
+															location.reload();//刷新本页面
+														},
+														error:function(xhr,type,errorThrown){
+				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
+													break;
+												case 2://不通过
+													mui.openWindow({
+														url:"fail.html",
+														extras:{
+															ulId:ulId
+														},
+														show: {
+															aniShow:"pop-in"
+														},
+														waiting: {
+															autoShow: false
+														}
+													});
+													break;
+											}	
+										 });
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										
+									}
+								});
+								
+							}else{
+								alert("抱歉，您无权限操作！");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+			});
 		</script>
 	</body>
 

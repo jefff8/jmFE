@@ -23,7 +23,7 @@
 		<div class="mui-content">
 		    <form class="mui-input-group">
 		        <div class="mui-input-row">
-		            <label>分部类型:</label>
+		            <label>分部工程名称:</label>
 		            <select id="divisionType" style="font-size: 14px;">
 		            	<option></option>
 		            	<option>地基基础</option>
@@ -35,12 +35,24 @@
 		            </select>
 		        </div>
 		        <div class="mui-input-row">
-		        	<label>申请人:</label>
-		        	<input id="proposer" type="text" class="mui-input-clear" placeholder="请输入申请人" >
+		        	<label>发起时间:</label>
+		        	<input id="applicationTime" type="text" class="mui-input-clear" placeholder="请输入发起时间" readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
-		            <label>申请时间:</label>
-		            <input id="applicationTime" type="text" placeholder="请选择申请时间" readonly="readonly">
+		            <label>发起单位:</label>
+		            <input id="constructionUnits" type="text" placeholder="请选择发起单位" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>监理单位:</label>
+		            <input id="supervision" type="text" placeholder="请输入监理单位" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>勘察单位:</label>
+		            <input id="prospectingUnits" type="text" placeholder="请输入勘察单位" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>设计单位:</label>
+		            <input id="designUnits" type="text" placeholder="请输入设计单位" >
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
@@ -55,20 +67,25 @@
 			mui.plusReady(function(){
 				//获取传值 
 				var self = plus.webview.currentWebview();
-				my_name = self.my_name;//用户姓名
 				pj_name = self.pj_name;//工程名称
 				pj_name = decodeURI(decodeURI(pj_name));//解码工程名称
 				pj_timestamp = self.pj_timestamp;//工程时间戳
+				constr = self.constr//施工单位
+				supvision = self.supvision;//监理单位
 				var doc = document;
 				var divisionType = doc.getElementById("divisionType");
 				var	applicationTime = doc.getElementById("applicationTime");
-				var proposer = doc.getElementById("proposer");
 				var data_save = doc.getElementById("data_save");
-				//申请人
-				proposer.value = my_name;
+				var constructionUnits = doc.getElementById("constructionUnits");
+				constructionUnits.value = constr;
+				var supervision = doc.getElementById("supervision");
+				supervision.value = supvision;
+				var prospectingUnits = doc.getElementById("prospectingUnits");
+				var designUnits = doc.getElementById("designUnits");
 				//当前日期
 				var myDate=new Date();
 				var mytime=myDate.getTime();
+				var timestamp = mytime;//当前时间戳
 				applicationTime.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
 				//日期监听
 				applicationTime.addEventListener('tap',function(){
@@ -77,27 +94,27 @@
 		                applicationTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
-				//当前时间戳
-				var myDate=new Date();
-				var mytime=myDate.getTime();
-				var timestamp = mytime;
 				//信息保存
 				data_save.addEventListener('tap',function(){
 					mui.ajax(url+'my_division/division_add.php',{
 						data:{
 							divisionType:divisionType.value,
-							proposer:proposer.value,
 							applicationTime:applicationTime.value,
 							timestamp:timestamp,
 							pj_timestamp:pj_timestamp,
-							pj_name:pj_name
+							pj_name:pj_name,
+							constructionUnits:constructionUnits.value,
+							supervision:supervision.value,
+							prospectingUnits:prospectingUnits.value,
+							designUnits:designUnits.value
 						},
 						type:'post',
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
 							if(data.result=='success'){
-								alert("添加成功");
+								mui.back();
+								mui.toast('保存成功！',{ duration:'long', type:'div' });
 							}
 						},
 						error:function(xhr,type,errorThrown){

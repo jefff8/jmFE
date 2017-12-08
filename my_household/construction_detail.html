@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			#floorTab{
+				text-align: center;
+			}
+			#floorTab button:hover{
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1  class="mui-title">详情</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+			    <form class="mui-input-group">
+				    <div class="mui-input-row">
+				        <label>栋号:</label>
+				        <input type="text" id="buildingNum"  class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>楼层:</label>
+				        <input type="number" id="floor" class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>户数:</label>
+				        <input type="number" id="households" class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>起始层:</label>
+				        <input type="number" id="beginFloor" class="mui-input-clear" readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>验收时间:</label>
+				        <input type="text" id="acceptanceTime" class="mui-input-clear"   readonly="readonly" >
+				    </div>
+				</form> 
+			</form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			}); 
+			mui.plusReady(function(){
+				//获取传值 
+//				var self = plus.webview.currentWebview();
+//				var itemId = self.ulId;
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				var itemId = geturl("id");//项目id
+				var doc = document;
+				var buildingNum = doc.getElementById("buildingNum");
+				var floor = doc.getElementById("floor");
+				var households = doc.getElementById("households");
+				var beginFloor = doc.getElementById("beginFloor");
+				var acceptanceTime = doc.getElementById("acceptanceTime");
+				mui.ajax(url+'my_household/household_list.php',{
+					data:{
+						flag:'details',
+						ulId:itemId
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+						var length = data.length;
+						buildingNum.value = data[0].栋号;
+						floor.value = data[0].楼层
+						households.value = data[0].户数;
+						beginFloor.value = data[0].起始层;
+						acceptanceTime.value = data[0].验收时间; 
+					},
+					error:function(type,xhr,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

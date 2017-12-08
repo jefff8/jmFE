@@ -6,6 +6,8 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -14,7 +16,7 @@
 		    <h1 class="mui-title">分部验收详情</h1>
 		</header>
 		<div class="mui-content">
-		    <form class="mui-input-group">
+		    <form id="myInfo" class="mui-input-group" >
 		        <div class="mui-input-row">
 		            <label>分部类型:</label>
 		            <select id="divisionType" style="font-size: 14px;" disabled="disabled">
@@ -28,14 +30,34 @@
 		            </select>
 		        </div>
 		        <div class="mui-input-row">
-		        	<label>申请人:</label>
-		        	<input id="proposer" type="text" class="mui-input-clear" placeholder="请输入申请人" readonly="readonly" >
+		        	<label>发起时间:</label>
+		        	<input id="applicationTime" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled" >
 		        </div>
 		        <div class="mui-input-row">
-		            <label>申请时间:</label>
-		            <input id="applicationTime" type="text" placeholder="请选择申请时间" readonly="readonly" disabled="disabled">
+		            <label>发起单位:</label>
+		            <input id="constructionUnits" type="text" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>监理单位:</label>
+		            <input id="supervision" type="text"readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>勘察单位:</label>
+		            <input id="prospectingUnits" type="text" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>设计单位:</label>
+		            <input id="designUnits" type="text" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>验收时间:</label>
+		            <input id="acceptanceTime" type="text"  readonly="readonly" disabled="disabled">
 		        </div>
 		    </form>
+		    <div id="formbtn" class="mui-button-row ">
+		    	<button id="Edit" type="button" class="mui-btn mui-btn-primary my_none">编辑/修改</button>	
+				<button id="viewImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看</button>	
+			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
@@ -52,8 +74,34 @@
 				var ulId = geturl("id");//项目id
 				var doc = document;
 				var divisionType = doc.getElementById("divisionType");
-				var proposer = doc.getElementById("proposer");
 				var applicationTime = doc.getElementById("applicationTime");
+				var constructionUnits = doc.getElementById("constructionUnits");
+				var designUnits = doc.getElementById("designUnits");
+				var supervision = doc.getElementById("supervision");
+				var prospectingUnits = doc.getElementById("prospectingUnits");
+				var viewImage = doc.getElementById("viewImage");
+				var formbtn = doc.getElementById("formbtn");
+				var Edit = doc.getElementById("Edit");
+				var acceptanceTime = doc.getElementById("acceptanceTime");
+				var acceptancePhoto = [];
+				var meettingPhoto = [];
+				var signinPhoto = [];
+				var reportPhoto = [];
+				
+				//验收日期
+				acceptanceTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    acceptanceTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//发起日期
+				applicationTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    applicationTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
 				mui.ajax(url+'my_division/division_list.php',{
 					data:{
 						flag:"details",
@@ -62,13 +110,65 @@
 					type:'post',
 					dataType:'json',  
 					success:function(data){
-						divisionType.value = data[0].分部类型;
-						proposer.value = data[0].申请人;
-						applicationTime.value = data[0].申请时间;
+//						alert(data);
+						var status = data[0].工程单状态;
+						divisionType.value = data[0].分部工程名称;
+						applicationTime.value = data[0].发起时间;
+						constructionUnits.value = data[0].发起单位;
+						supervision.value = data[0].监理单位;
+						prospectingUnits.value = data[0].勘察单位;
+						designUnits.value = data[0].设计单位;
+						if(status!='施工申请'){
+							if(status=='资料完善'||status=='重新组织验收'){
+								Edit.classList.remove("my_none");
+							}
+							viewImage.classList.remove("my_none");
+							acceptanceText = data[0].验收通知说明;
+							meettingText = data[0].会议照片说明;
+							signinText = data[0].签到记录表说明;
+							reportText = data[0].验收报告说明;
+							acceptancePhoto = data[0].验收通知.split("~*^*~");
+							meettingPhoto = data[0].会议照片.split("~*^*~");
+							signinPhoto = data[0].签到记录表.split("~*^*~");
+							reportPhoto = data[0].验收报告.split("~*^*~");
+						}
 					},
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
+				});
+				viewImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'readimage.html',
+						id:'readimage.html',
+						extras:{
+							acceptancePhoto:acceptancePhoto,
+							meettingPhoto:meettingPhoto,
+							signinPhoto:signinPhoto,
+							reportPhoto:reportPhoto,
+							acceptanceText:acceptanceText,
+							meettingText:meettingText,
+							signinText:signinText,
+							reportText:reportText
+						},
+						show:{							
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
+						}
+					});
+				});
+				Edit.addEventListener('tap',function(){
+					var allInfo = document.getElementById("myInfo").getElementsByTagName("input");
+					for(var i=0;i<allInfo.length;i++){
+						allInfo[i].removeAttribute("readonly");
+					}
+					acceptanceTime.removeAttribute("disabled");
+					applicationTime.removeAttribute("disabled");
+					divisionType.removeAttribute("disabled");
+					mui.toast("现可进行信息修改!");
 				});
 			});
 		</script>
