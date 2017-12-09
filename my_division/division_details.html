@@ -55,7 +55,6 @@
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row ">
-		    	<button id="Edit" type="button" class="mui-btn mui-btn-primary my_none">编辑/修改</button>	
 				<button id="viewImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看</button>	
 			</div>
 		</div>
@@ -81,7 +80,6 @@
 				var prospectingUnits = doc.getElementById("prospectingUnits");
 				var viewImage = doc.getElementById("viewImage");
 				var formbtn = doc.getElementById("formbtn");
-				var Edit = doc.getElementById("Edit");
 				var acceptanceTime = doc.getElementById("acceptanceTime");
 				var acceptancePhoto = [];
 				var meettingPhoto = [];
@@ -118,10 +116,8 @@
 						supervision.value = data[0].监理单位;
 						prospectingUnits.value = data[0].勘察单位;
 						designUnits.value = data[0].设计单位;
+						acceptanceTime.value = data[0].验收时间;
 						if(status!='施工申请'){
-							if(status=='资料完善'||status=='重新组织验收'){
-								Edit.classList.remove("my_none");
-							}
 							viewImage.classList.remove("my_none");
 							acceptanceText = data[0].验收通知说明;
 							meettingText = data[0].会议照片说明;
@@ -159,16 +155,6 @@
 							autoShow:false,//自动显示等待框
 						}
 					});
-				});
-				Edit.addEventListener('tap',function(){
-					var allInfo = document.getElementById("myInfo").getElementsByTagName("input");
-					for(var i=0;i<allInfo.length;i++){
-						allInfo[i].removeAttribute("readonly");
-					}
-					acceptanceTime.removeAttribute("disabled");
-					applicationTime.removeAttribute("disabled");
-					divisionType.removeAttribute("disabled");
-					mui.toast("现可进行信息修改!");
 				});
 			});
 		</script>

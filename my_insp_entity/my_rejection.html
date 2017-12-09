@@ -12,7 +12,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" ></a>
 		    <h1 class="mui-title">拒收</h1>
 		</header>
 		<div class="mui-content" style="margin-top:10px;">
@@ -32,6 +32,7 @@
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; //项目id
+	      		urlId = self.urlId;
 	      		var doc = document;
 				var save = doc.getElementById("save");
 				var rejection = doc.getElementById("rejection");
@@ -45,7 +46,7 @@
 						type:'post',
 						dataType:'json',
 						success:function(data){
-							var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity_final.html');
+							var target=plus.webview.getWebviewById(urlId);
 							target.reload(true);
 							mui.toast('提交完成!',{ duration:'long', type:'div' });
 							mui.back();
@@ -56,12 +57,6 @@
 					});
 				});
 			});
-			//返回父页面刷新
-			function back(){
-				var target=plus.webview.getWebviewById('../my_insp_entity/my_inspection_entity_final.html');
-				target.reload(true);
-				mui.back();
-			}
 		</script>
 	</body>
 
