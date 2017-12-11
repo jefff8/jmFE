@@ -270,6 +270,8 @@
 					proatt_c = encodeURI(encodeURI(proatt));
 					ttype_c = encodeURI(encodeURI(ttype));
 					tepe_c = encodeURI(encodeURI(jcr));
+					detect_c = encodeURI(encodeURI(detect));
+					supvision_c = encodeURI(encodeURI(supvision));
 					
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
@@ -286,9 +288,11 @@
 					}else if(proatt=="准备"||proatt=="扩大抽检准备"){
 						var color = "green2";
 					}
-					
-					var url = "my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
-					
+					if(proatt=='扩大抽检'){
+						var url = "my_spv_entity_review_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c+"&mobile="+mobile+"&detect="+detect_c+"&supvision="+supvision_c;
+					}else{
+						var url = "my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
+					}
 					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 					
 					switch(proatt){
