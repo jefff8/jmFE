@@ -39,12 +39,14 @@
 		        	<input id="applicationTime" type="text" class="mui-input-clear" placeholder="请输入发起时间" readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
-		            <label>发起单位:</label>
-		            <input id="constructionUnits" type="text" placeholder="请选择发起单位" readonly="readonly" >
+		            <div  class="mui-input-row">
+		            	<label>发起单位:</label>
+			            <select id="constructionUnits" style="font-size: 14px;" ></select>
+			        </div>
 		        </div>
 		        <div class="mui-input-row">
 		            <label>监理单位:</label>
-		            <input id="supervision" type="text" placeholder="请输入监理单位" readonly="readonly">
+		            <select id="supervision" style="font-size: 14px;" ></select>
 		        </div>
 		        <div class="mui-input-row">
 		            <label>勘察单位:</label>
@@ -77,9 +79,7 @@
 				var	applicationTime = doc.getElementById("applicationTime");
 				var data_save = doc.getElementById("data_save");
 				var constructionUnits = doc.getElementById("constructionUnits");
-				constructionUnits.value = constr;
 				var supervision = doc.getElementById("supervision");
-				supervision.value = supvision;
 				var prospectingUnits = doc.getElementById("prospectingUnits");
 				var designUnits = doc.getElementById("designUnits");
 				//当前日期
@@ -87,6 +87,23 @@
 				var mytime=myDate.getTime();
 				var timestamp = mytime;//当前时间戳
 				applicationTime.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+				
+				//动态添加发起单位
+				var constrs = constr.split(",");
+				for(var i=0;i<constrs.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = constrs[i];
+					constructionUnits.appendChild(option);
+				}
+				
+				//动态添加监理单位
+				var supervisions = supvision.split(",");
+				for(var i=0;i<constrs.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = supervisions[i];
+					supervision.appendChild(option);
+				}
+				
 				//日期监听
 				applicationTime.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -113,6 +130,8 @@
 						timeout:10000,
 						success:function(data){
 							if(data.result=='success'){
+								var target=plus.webview.getWebviewById('../my_division/division_list.html');
+								target.reload(true);
 								mui.back();
 								mui.toast('保存成功！',{ duration:'long', type:'div' });
 							}

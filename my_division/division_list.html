@@ -147,10 +147,12 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});	
 				});
+				
+				//全部项目
 				mui.ajax(url+'my_division/division_list.php',{
 					data:{
 						flag:"list",
@@ -284,7 +286,7 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
@@ -341,6 +343,7 @@
 															break;
 													}	
 												});
+												break;
 											case "资料完善":
 												var btnArray = [
 													{title:"资料完善"}
@@ -410,7 +413,7 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
@@ -520,7 +523,7 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});

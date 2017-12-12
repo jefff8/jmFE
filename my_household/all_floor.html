@@ -19,6 +19,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
 		    <h1  class="mui-title">户号查看</h1>
 		</header>
 		<div class="mui-content">
@@ -75,12 +76,16 @@
 					if(r!=null)return  unescape(r[2]);
 					return null;
 				}
-				var itemId = geturl("id");//项目id
+				itemId = geturl("id");//项目id
 				mobile = geturl("mobile");//手机号码
 				var doc = document;
-				window.addEventListener('refresh', function(e){//执行刷新
+				var menu = doc.getElementById("menu");
+				
+				//执行刷新
+				window.addEventListener('refresh', function(e){
 				  	location.reload(); 
 				});
+				
 				var acceptanceForm = [];
 				var acceptancePhoto = [];
 				var acceptanceSummary = [];
@@ -239,6 +244,60 @@
 						},
 						error:function(type,xhr,errorThrown){
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//右上角菜单
+				menu.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+								var btnArray = [
+									{title:"监理确认"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://监理确认
+											mui.ajax(url+'my_household/household_list.php',{
+												data:{
+													flag:"监理确认",
+													ulId:itemId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													mui.back();
+													mui.toast('保存成功！',{ duration:'long', type:'div' });
+												},
+												error:function(xhr,type,errorThrown){
+													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+									}	
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});

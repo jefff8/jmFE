@@ -206,8 +206,8 @@
 						//app是在app.js文件自定义的对象，login是该文件中的登录函数
 						app.login(loginInfo, function(err) {
 							if (err) {
-								plus.nativeUI.toast(err);
-//								mui.toast("登陆异常！");
+//								plus.nativeUI.toast(err);
+								mui.toast("用户名或密码错误！");
 								return;
 							}
 							//账号密码存到本地

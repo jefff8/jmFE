@@ -25,6 +25,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
 		    <h1  class="mui-title">户号查看</h1>
 		</header>
 		<div class="mui-content">
@@ -90,13 +91,14 @@
 					if(r!=null)return  unescape(r[2]);
 					return null;
 				}
-				var itemId = geturl("id");//项目id
+				itemId = geturl("id");//项目id
 				mobile = geturl("mobile");//手机号码
 				var acceptanceForm = [];
 				var acceptancePhoto = [];
 				var acceptanceSummary = [];
 				var rectification = [];
 				var doc = document;
+				var menu = doc.getElementById("menu");
 				var fj1Text = doc.getElementById("fj1Text");
 				var rwfj1_content = doc.getElementById("rwfj1_content");
 				window.addEventListener('refresh', function(e){//执行刷新
@@ -248,8 +250,74 @@
 					var fuys=document.getElementById(tplx);
 					fuys.innerHTML='<p class="myp2">该项未上传附件！</p>';			
 				};
-				
-				
+				//右上角按钮
+				menu.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
+								var btnArray = [
+									{title:"通过"},
+									{title:"不通过"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://审批通过
+											mui.ajax(url+'my_household/household_list.php',{
+												data:{
+													flag:"审批通过",
+													ulId:itemId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													mui.back();
+													mui.toast('操作完成！',{ duration:'long', type:'div' })
+												},
+												error:function(xhr,type,errorThrown){
+		//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+										case 2:
+											mui.openWindow({
+												url:"fail.html",
+												extras:{
+													ulId:itemId
+												},
+												show: {
+													aniShow:"pop-in"
+												},
+												waiting: {
+													autoShow: false
+												}
+											});
+											break;
+									}	
+								});
+							}else{
+								alert("抱歉，您没有操作权限或项目已审核过");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
 			});
 		</script>
 	</body>
