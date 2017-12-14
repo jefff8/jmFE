@@ -98,11 +98,15 @@
 				//获取传值 
 				var self = plus.webview.currentWebview();
 				mobile = self.mobile;//手机号码
-				my_name = self.my_name;//用户姓名
-				pj_timestamp = self.timestamp;//工程时间戳
-				pj_name = self.gcmc;//工程名称
+				var my_name = self.my_name;//用户姓名
+				var pj_timestamp = self.timestamp;//工程时间戳
+				var pj_name = self.gcmc;//工程名称
+				var constr = self.constr//施工单位
+				supvision = self.supvision//监理单位
 				my_name = decodeURI(decodeURI(my_name));//解码用户姓名
 				pj_name = decodeURI(decodeURI(pj_name));//解码工程名称
+				constr = decodeURI(decodeURI(constr));//解码施工单位
+				supvision = decodeURI(decodeURI(supvision));//解码监理单位
 				var doc = document;
 				var	refresh = doc.getElementById("refresh");
 				var	addNew = doc.getElementById("addNew");
@@ -126,9 +130,10 @@
 								mui.openWindow({
 									url:"division_add.html",
 									extras:{
-										my_name:my_name,
 										pj_name:pj_name,
-										pj_timestamp:pj_timestamp
+										pj_timestamp:pj_timestamp,
+										constr:constr,
+										supvision:supvision
 									},
 									show: {
 										aniShow:"pop-in"
@@ -142,10 +147,12 @@
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});	
 				});
+				
+				//全部项目
 				mui.ajax(url+'my_division/division_list.php',{
 					data:{
 						flag:"list",
@@ -158,10 +165,11 @@
 						for(var i=0;i<length;i++){
 							var id = data[i].id;
 							var status = data[i].工程单状态;
-							var divisionType = data[i].分部类型;
-							var proposer = data[i].申请人;
-							var applicationTime = data[i].申请时间;
-							myList(id,status,divisionType,proposer,applicationTime);
+							var divisionType = data[i].分部工程名称;
+							var constructionUnits = data[i].发起单位;
+							var applicationTime = data[i].发起时间;
+							var supervision = data[i].监理单位;
+							myList(id,status,divisionType,constructionUnits,applicationTime,supervision);
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -169,34 +177,40 @@
 					}
 				});
 				
-				function myList(id,status,divisionType,proposer,applicationTime){
+				function myList(id,status,divisionType,constructionUnits,applicationTime,supervision){
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 					ul.id = id;
 					var apply = document.getElementById("apply");
 					var confirm = document.getElementById("confirm");
 					var approval = document.getElementById("approval");
-					var divisionType = "分部类型:"+divisionType;
-					var proposer = "申请人:"+proposer;
+					var divisionType = "分部工程名称:"+divisionType;
+					var constructionUnits = "发起单位:"+constructionUnits;
 					var applicationTime = "申请时间:"+applicationTime;
-					if(status=='施工申请'||status=='监理确认1'){
+					var supervision = "监理单位:"+supervision;
+					if(status=='施工申请'||status=='监理确认'){
 						var color = "blue2";
-					}else if(status=='监理确认2'){
-						var color = "orange";
-					}else if(status=='监理确认3'||status=='审批'){
+						var myhref = 'division_details.html?id='+id+'';
+					}else if(status=='待审批'){
 						var color = "green2";
+						var myhref = 'division_details.html?id='+id+'';
 					}else if(status=='审批通过'){
 						var color = "grey";
+						var myhref = 'division_details.html?id='+id+'';
+					}else if(status=='资料完善'||status=='重新组织验收'){
+						var color = "blue2";
+						ul.style.borderColor = "red";
+						var myhref = 'division_details.html?id='+id+'';
 					}
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="division_details.html?id='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ divisionType +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+proposer+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+applicationTime+'</p></li>';
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+myhref+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ divisionType +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+applicationTime+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+constructionUnits+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+supervision+'</p></li>';
 					switch(status){
 						case "施工申请":
 							apply.appendChild(ul); 
 							break;
-						case "监理确认1":case "监理确认2":case "监理确认3":
+						case "监理确认":case "资料完善":case "重新组织验收":
 							confirm.appendChild(ul); 
 							break;
-						case "审批":case "审批通过":
+						case "待审批":case "审批通过":
 							approval.appendChild(ul);
 							break;
 					}
@@ -268,11 +282,11 @@
 									}	
 								 });
 							}else{
-								alert("抱歉，您没有新建卡项的权限");
+								alert("抱歉，您无权限操作！");
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
@@ -301,9 +315,9 @@
 									success:function(data){
 										var status = data[0].工程单状态;
 										switch(status){
-											case "监理确认1":
+											case "监理确认":
 												var btnArray = [
-													{title:"监理确认1"}
+													{title:"监理确认"}
 												]; 
 												plus.nativeUI.actionSheet({
 													title:"操作", 
@@ -315,16 +329,25 @@
 													switch (index){
 														case 1://监理确认
 															mui.openWindow({
-																url:"supervision1.html"
+																url:"supervision.html",
+																extras:{
+																	ulId:ulId
+																},
+																show: {
+																	aniShow:"pop-in"
+																},
+																waiting: {
+																	autoShow: false
+																}
 															});
 															break;
 													}	
-												 });
+												});
 												break;
-											case "监理确认2":
+											case "资料完善":
 												var btnArray = [
-													{title:"监理确认2"}
-												]; 
+													{title:"资料完善"}
+												];
 												plus.nativeUI.actionSheet({
 													title:"操作", 
 													cancel:"取消",
@@ -333,18 +356,27 @@
 													var index = e.index;	
 													//var nextpage='';
 													switch (index){
-														case 1://监理确认
+														case 1://资料完善
 															mui.openWindow({
-																url:"supervision2.html"
+																url:"perfect_info.html",
+																extras:{
+																	ulId:ulId
+																},
+																show: {
+																	aniShow:"pop-in"
+																},
+																waiting: {
+																	autoShow: false
+																}
 															});
 															break;
 													}	
-												 });
+												});
 												break;
-											case "监理确认3":
+											case "重新组织验收":
 												var btnArray = [
-													{title:"监理确认3"}
-												]; 
+													{title:"重新组织验收"}
+												];
 												plus.nativeUI.actionSheet({
 													title:"操作", 
 													cancel:"取消",
@@ -353,13 +385,22 @@
 													var index = e.index;	
 													//var nextpage='';
 													switch (index){
-														case 1://监理确认
+														case 1://重新组织验收
 															mui.openWindow({
-																url:"supervision3.html"
+																url:"organize_info.html",
+																extras:{
+																	ulId:ulId
+																},
+																show: {
+																	aniShow:"pop-in"
+																},
+																waiting: {
+																	autoShow: false
+																}
 															});
 															break;
 													}	
-												 });
+												});
 												break;
 										}
 									},
@@ -368,11 +409,11 @@
 									}
 								});
 							}else{
-								alert("抱歉，您没有新建卡项的权限");
+								alert("抱歉，您无权限操作！");
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});
@@ -400,7 +441,7 @@
 									dataType:'json',
 									success:function(data){
 										var status = data[0].工程单状态;
-										if(status!='审批通过'){
+										if(status=='待审批'){
 											var btnArray = [
 												{title:"审批通过"},
 												{title:"资料完善"},
@@ -433,8 +474,40 @@
 													});
 													break;
 												case 2://资料完善
+													mui.ajax(url+'my_division/division_list.php',{
+														data:{
+															flag:"资料完善",
+															ulId:ulId
+														},
+														dataType:'json',
+														type:'POST', 
+														timeout:10000,
+														success:function(data){
+															mui.toast('操作完成！',{ duration:'long', type:'div' })
+															location.reload();//刷新本页面
+														},
+														error:function(xhr,type,errorThrown){
+				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
 													break;
 												case 3://重新组织验收
+													mui.ajax(url+'my_division/division_list.php',{
+														data:{
+															flag:"重新组织验收",
+															ulId:ulId
+														},
+														dataType:'json',
+														type:'POST', 
+														timeout:10000,
+														success:function(data){
+															mui.toast('操作完成！',{ duration:'long', type:'div' })
+															location.reload();//刷新本页面
+														},
+														error:function(xhr,type,errorThrown){
+				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+														}
+													});
 													break;
 											}	
 										 });
@@ -446,11 +519,11 @@
 								});
 								
 							}else{
-								alert("抱歉，您没有新建卡项的权限");
+								alert("抱歉，您无权限操作！");
 							}
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				});

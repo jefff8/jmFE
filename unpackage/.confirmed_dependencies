@@ -125,7 +125,11 @@
 			"my_plus/my_project_list.html",
 			"my_plus/my_query.html",
 			"my_division/division_list.html",
+<<<<<<< HEAD
 			"my_plus/my_supervision.html"
+=======
+			"my_household/my_checkB.html"
+>>>>>>> c8df973c49e4134a20a649d3ffc34e4606d568b2
 		],
 		"resources": [
 			"js/mui.min.js",

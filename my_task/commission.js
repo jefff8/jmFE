@@ -160,7 +160,8 @@
 					);
 				}else if(status=='待确认'){
 					var btnArray = [
-					{title:"确认见证"}
+					{title:"确认见证"},
+					{title:"拒收"}
 					];
 					plus.nativeUI.actionSheet({
 						title:"操作",
@@ -176,12 +177,33 @@
 								var but_id=document.getElementById("comConfirm").getElementsByTagName('button')[0];
 								but_id.id=ulId;
 								break;
+							case 2://拒收
+								mui.openWindow({
+									url:"../my_commission/my_rejection.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										urlId:"my_task/task_list.html"
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
 						}	
 					  }
 					);
 				}else if(status=='已确认'){
 					var btnArray = [
-						{title:"提交结果"},
+						{title:"提交结果"}
 					];
 					plus.nativeUI.actionSheet({
 						title:"操作",
@@ -214,7 +236,8 @@
 				}else if(status=='提交结果'){
 					var btnArray = [
 						{title:"合格"},
-						{title:"不合格"}
+						{title:"不合格"},
+						{title:"拒收"}
 					];
 					plus.nativeUI.actionSheet({
 						title:"操作",
@@ -257,6 +280,27 @@
 									extras:{
 										//传递参数
 										ulId:ulId
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
+								break;
+							case 3:
+								mui.openWindow({
+									url:"../my_commission/my_rejection.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										urlId:"my_task/task_list.html"
 									},
 									show:{
 										autoShow:true,//页面loaded事件发生后自动显示

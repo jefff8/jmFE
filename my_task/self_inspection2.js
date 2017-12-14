@@ -177,7 +177,8 @@
 					);
 				}else if(status=='未检测'){
 					var btnArray = [
-						{title:"确定见证"}
+						{title:"确定见证"},
+						{title:"拒收"}
 					];
 					plus.nativeUI.actionSheet({
 						title:"操作",
@@ -192,6 +193,27 @@
 								mui("#inspect2_code").popover("toggle");
 								var but_id=document.getElementById("insConfirm2").getElementsByTagName('button')[0];
 								but_id.id=ulId;
+								break;
+							case 2:
+								mui.openWindow({
+									url:"../my_insp_entity/my_rejection.html",
+									styles: {
+										hardwareAccelerated:false
+									},
+									extras:{
+										//传递参数
+										ulId:ulId,
+										urlId:"my_task/task_list.html"
+									},
+									show:{
+										autoShow:true,//页面loaded事件发生后自动显示
+										aniShow:'slide-in-right',//页面显示动画
+										duration:'100'//页面动画持续时间
+									},
+									waiting:{
+										autoShow:false,//自动显示等待框
+									}
+								});
 								break;
 						}	
 					  }

@@ -406,7 +406,7 @@ function getUid(){
 // 获取该工程时间戳
 function mchen(){
 	var sjc=document.getElementById('sjc').value;
-//	alert(sjc);
+//	console.log(sjc);
 	return sjc;
 }
 //获取owntsp

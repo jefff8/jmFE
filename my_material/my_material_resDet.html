@@ -120,6 +120,12 @@
 					<textarea  id="tcjv" rows="5"  readonly="readonly"></textarea>
 				</div>
 			</div>
+			<div id="myform5" class="my_none">
+				&nbsp;&nbsp;<label >拒收理由：</label>
+			    <div class="mui-input-row" >
+					<textarea  id="rejection" rows="5"  readonly="readonly"></textarea>
+				</div>
+			</div>
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
 				&nbsp;&nbsp;
@@ -254,11 +260,10 @@
 							report=data[i].检测报告照片说明;
 							disposeText=data[i].处理照片说明;
 						}
-						
 					},
 					error:function(xhr,type,errorThrown){
 						//异常处理；
-//						alert('ajax错误'+type);
+						alert('ajax错误'+type);
 //						return callback('ajax错误'+type+errorThrown);
 					}
 				});	
@@ -303,6 +308,12 @@
 							}else{
 								test_num.value=data[i].检测报告编号;
 							}
+							if(data[i].拒收理由){
+								var myform5 = document.getElementById("myform5");
+								var rejection = document.getElementById("rejection");
+								myform5.classList.remove("my_none");
+								rejection.value = data[i].拒收理由;
+							}
 							scene_photo=data[i].场景照片.split("~*^*~");
 							sample_photo=data[i].样品照片.split("~*^*~");
 							received_photo=data[i].收样照片.split("~*^*~");
@@ -317,8 +328,8 @@
 					},
 					error:function(xhr,type,errorThrown){
 						//异常处理；
-						//alert('ajax错误'+type);
-						return callback('ajax错误'+type+errorThrown);
+						alert('ajax错误'+type);
+//						return callback('ajax错误'+type+errorThrown);
 					}
 				});	
 				}

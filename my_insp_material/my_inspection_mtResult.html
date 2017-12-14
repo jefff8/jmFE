@@ -291,6 +291,34 @@
 															}
 														});	
 														break;	
+<<<<<<< HEAD
+=======
+													case 3://拒收
+														if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='检测单位'){
+															mui.openWindow({
+																url:"my_rejection.html",
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulid,
+																	urlId:"../my_insp_material/my_inspection_mtResult.html"
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
+														}else{
+															alert("抱歉,您无权限操作！");
+														}
+														break;
+>>>>>>> 16115d2dfb4c93938897030c5d43358478400aef
 												}	
 											 });
 										}else if(gcdzt=='取样送检不合格' &&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){

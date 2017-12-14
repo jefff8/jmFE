@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			#floorTab{
+				text-align: center;
+			}
+			#floorTab button:hover{
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
+		    <h1  class="mui-title">户号查看</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+			    <form class="mui-input-group">
+				    <div class="mui-input-row">
+				        <label>栋号:</label>
+				        <input type="text" id="buildingNum"  class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>楼层:</label>
+				        <input type="number" id="floor" class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>户数:</label>
+				        <input type="number" id="households" class="mui-input-clear" readonly="readonly"  >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>起始层:</label>
+				        <input type="number" id="beginFloor" class="mui-input-clear" readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>验收时间:</label>
+				        <input type="text" id="acceptanceTime" class="mui-input-clear"   readonly="readonly" >
+				    </div>
+				</form> 
+			</form>
+			<p style="text-align: center;">以下为该项目的所有楼层,单击户号进行查看\操作</p>
+			<p style="text-align: center;">注：绿色背景表示该楼层已上传附件</p>
+			<!--楼盘div-->
+		    <div id="tabContent">
+				<div id="floorTab">
+					
+				</div>
+		    </div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			}); 
+			mui.plusReady(function(){
+				//获取传值 
+//				var self = plus.webview.currentWebview();
+//				var itemId = self.ulId;
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				itemId = geturl("id");//项目id
+				mobile = geturl("mobile");//手机号码
+				var doc = document;
+				var menu = doc.getElementById("menu");
+				
+				//执行刷新
+				window.addEventListener('refresh', function(e){
+				  	location.reload(); 
+				});
+				
+				var acceptanceForm = [];
+				var acceptancePhoto = [];
+				var acceptanceSummary = [];
+				
+				mui.ajax(url+'my_household/household_list.php',{
+					data:{
+						flag:'details',
+						ulId:itemId
+					},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+						var length = data.length;
+						buildingNum.value = data[0].栋号;
+						floor.value = data[0].楼层
+						households.value = data[0].户数;
+						beginFloor.value = data[0].起始层;
+						acceptanceTime.value = data[0].验收时间; 
+					},
+					error:function(type,xhr,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				mui.ajax(url+'my_household/household_list.php',{
+					data:{
+						flag:"查看户号",
+						itemId:itemId
+					},
+					type:'post',
+					dataType:'json',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						for(var i=0;i<length;i++){
+							var id = data[i].id ;
+							var houseNum = data[i].户号 ;
+							var status = data[i].上传状态;
+							ShowTab(id,houseNum,status);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				//显示表格
+				function ShowTab(id,houseNum,status){
+					var floorTab = document.getElementById("floorTab");
+					var newButton = document.createElement('button');
+					var textNode = document.createTextNode(houseNum);
+					newButton.id = id;
+					if(status=='已上传'){
+						newButton.style.cssText = "margin:2px;width:60px;height:60px;background-color:limegreen;";
+					}else{
+						newButton.style.cssText = "margin:2px;width:60px;height:60px;";
+					}
+					newButton.appendChild(textNode);
+					floorTab.appendChild(newButton);
+				}
+				//户号操作
+				mui("#floorTab").on('tap','button',function(){
+					var houseId = this.id;
+					var innerText = this.innerText;
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+								mui.ajax(url+'my_household/household_list.php',{
+									data:{
+										flag:"查看附件",
+										houseId:houseId
+									},
+									type:'post',
+									dataType:'json',
+									timeout:10000,
+									success:function(data){
+										acceptanceForm = data[0].验收记录表.split("~*^*~");
+										acceptancePhoto = data[0].验收照片.split("~*^*~");
+										acceptanceSummary = data[0].验收汇总表.split("~*^*~");
+										var recordText = data[0].验收记录表说明;
+										var acceptText = data[0].验收照片说明;
+										var summaryText = data[0].验收汇总表说明;
+										var btnArray = [
+											{title:"查看附件"},
+											{title:"上传附件"}
+										];
+										plus.nativeUI.actionSheet({
+												title:"操作",
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://查看附件
+														mui.openWindow({
+															url:'readimage.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																acceptanceForm:acceptanceForm,
+																acceptancePhoto:acceptancePhoto,
+																acceptanceSummary:acceptanceSummary,
+																recordText:recordText,
+																acceptText:acceptText,
+																summaryText:summaryText
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+													case 2://上传附件
+														mui.openWindow({
+															url:'supervision_upload.html',
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																houseId:houseId,
+																innerText:innerText
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+												}
+											}
+										);
+									},
+									error:function(xhr,type,errorThrown){
+//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+									}
+								});
+							}else{
+								alert("抱歉，您无权限操作");
+							}
+						},
+						error:function(type,xhr,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				//右上角菜单
+				menu.addEventListener('tap',function(){
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:"",
+							mobile:mobile,
+							flag:"division"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+								var btnArray = [
+									{title:"监理确认"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+									var index = e.index;	
+									//var nextpage='';
+									switch (index){
+										case 1://监理确认
+											mui.ajax(url+'my_household/household_list.php',{
+												data:{
+													flag:"监理确认",
+													ulId:itemId
+												},
+												dataType:'json',
+												type:'POST', 
+												timeout:10000,
+												success:function(data){
+													mui.back();
+													mui.toast('保存成功！',{ duration:'long', type:'div' });
+												},
+												error:function(xhr,type,errorThrown){
+													alert('ajax错误'+type+'---'+errorThrown+"失败！");
+												}
+											});
+											break;
+									}	
+								});
+							}else{
+								alert("抱歉，您没有新建卡项的权限");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

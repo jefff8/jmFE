@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<style type="text/css">
+			.mui-control-content {				
+				bottom: 0px;	
+			}
+			/*媒体查询，横屏效果*/
+			@media only screen and (orientation:landscape ) {
+				.mui-control-content {
+					bottom: 0px;
+					}			
+			}
+			html,
+			body,
+			.mui-content {
+				height: 0px;
+				margin: 0px;
+				background-color: #efeff4;
+			}
+			.mui-control-content {				
+				bottom: 0px;	
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+			.btn_size{
+				background:#0000FF;
+				color: white;
+			}
+			#floorTab{
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">分户验收</h1>
+		</header>
+		<div class="mui-content">
+			
+		    <div class="mui-content-padded">
+		    	<div class="mui-indexed-list-search mui-input-row mui-search">
+					<input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索" onchange="searchHouse(this)">
+				</div>
+				<form class="mui-input-group">
+				    <div class="mui-input-row">
+				        <label>栋号</label>
+				        <input type="text" id="buildingNum"  class="mui-input-clear" placeholder="请选择栋号" value="A" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>楼层</label>
+				        <input type="text" id="floor" class="mui-input-clear" placeholder="请选择楼层" value="7" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>户数</label>
+				        <input type="text" id="households" class="mui-input-clear" placeholder="请选择户数" value="2" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>起始层</label>
+				        <input type="text" id="beginFloor" class="mui-input-clear" placeholder="请选择起始层"  value="1">
+				    </div>
+				    
+				</form>
+				<button id="sure" type="button" class="mui-btn mui-btn-success mui-btn-block btn_size" >确定</button>
+			<div id="tabContent">
+				<div id="floorTab">
+					<!--<button id="houseNum">A101</button>
+					<button id="houseNum">A102</button>
+					<button id="houseNum">A103</button>
+					<button id="houseNum">A104</button>-->
+					<!--<button>A201</button>
+					<button>A202</button>
+					<button>A203</button>
+					<button>A101</button>
+					<button>A102</button>
+					<button>A103</button>
+					<button>A104</button>
+					<button>A201</button>
+					<button>A202</button>
+					<button>A203</button> -->
+				</div>
+		    </div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			});
+			mui.plusReady(function(){
+				var doc = document;
+				var sureButton = doc.getElementById("sure");
+				var tabContent = doc.getElementById("tabContent");
+				
+				//确定按钮
+				sureButton.addEventListener('tap',function(){
+					var buildingNum = doc.getElementById("buildingNum").value;
+					var floor = doc.getElementById("floor").value;
+					var households = doc.getElementById("households").value;
+					var beginFloor = doc.getElementById("beginFloor").value;
+					ShowTab(buildingNum,floor,households,beginFloor);
+				});
+				
+				//显示表格
+				function ShowTab(buildingNum,floor,households,beginFloor){
+					var floorTab = document.getElementById("floorTab");
+					floorTab.innerHTML = "";
+					var btnId = 0;
+					for(var i=beginFloor;i<=floor;i++){
+						for(var j=1;j<=households;j++){
+							var newButton = document.createElement('button');
+							var textNode = document.createTextNode(buildingNum+i+'0'+j);
+							newButton.id = 'button'+btnId;
+							newButton.style.cssText = "margin:2px;width:60px;height:60px;";
+							newButton.appendChild(textNode);
+							floorTab.appendChild(newButton);
+							btnId++;
+						}
+					}
+					
+				}
+				mui("#floorTab").on('longtap','button',function(){
+					alert(this.id);
+				});
+			});
+			//搜索楼
+			function searchHouse(h){
+				var view = document.getElementById('view');
+				view.innerHTML="";
+			}
+		</script>
+	</body>
+</html>

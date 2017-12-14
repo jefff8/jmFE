@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title">重新组织验收</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myInfo" class="mui-input-group" >
+		        <div class="mui-input-row">
+		            <label>分部类型:</label>
+		            <select id="divisionType" style="font-size: 14px;" disabled="disabled">
+		            	<option></option>
+		            	<option>地基基础</option>
+		            	<option>主体结构</option>
+		            	<option>建筑节能</option>
+		            	<option>装饰工程</option>
+		            	<option>屋面工程</option>
+		            	<option>分部工程</option>
+		            </select>
+		        </div>
+		        <div class="mui-input-row">
+		        	<label>发起时间:</label>
+		        	<input id="applicationTime" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>发起单位:</label>
+		            <input id="constructionUnits" type="text" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>监理单位:</label>
+		            <input id="supervision" type="text"readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>勘察单位:</label>
+		            <input id="prospectingUnits" type="text" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>设计单位:</label>
+		            <input id="designUnits" type="text" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>验收时间:</label>
+		            <input id="acceptanceTime" type="text" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row my_none">
+		            <label>id:</label>
+		            <input id="selfId" type="text" readonly="readonly" >
+		        </div>
+		    </form>
+		    <div id="formbtn" class="mui-button-row ">
+		    	<button id="edit_save" type="button" class="mui-btn mui-btn-primary ">保存信息</button>
+			</div>
+			<!--处理图片-->
+		    <form id="img_content" class="my_none" >
+	        	<!--验收照片-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">验收通知</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>验收通知说明:</label>
+			            <input id="acceptText" type="text" class="mui-input-clear" placeholder="请输入验收通知说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_ys" class="dlist" style="text-align:left;">
+						<li id="empty_ys" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_ystz" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('ystz');">清空记录</button>
+		        </div>
+		        <!--会议照片-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">会议照片</span>
+		        	<br/>
+		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>会议照片说明:</label>
+			            <input id="meetingText" type="text" class="mui-input-clear" placeholder="请输入会议照片说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_hy" class="dlist" style="text-align:left;">
+						<li id="empty_hy" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_hyzp" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('hyzp');">清空记录</button>
+		        </div>
+		        <!--签到记录表-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">签到记录表</span>
+		        	<br/>
+		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>签到记录表说明:</label>
+			            <input id="signinText" type="text" class="mui-input-clear" placeholder="请输入签到记录表说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_qdjl" class="dlist" style="text-align:left;">
+						<li id="empty_qdjl" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_qdjl" type="button" class="mui-btn mui-btn-block"  onclick="cleanHistory('qdjl');">清空记录</button>
+		        </div>
+		         <!--验收报告-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">验收报告</span>
+		        	<br/>
+		        	<div><img id="newUpload4" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>验收报告说明:</label>
+			            <input id="reportText" type="text" class="mui-input-clear" placeholder="请输入验收报告说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_ysbg" class="dlist" style="text-align:left;">
+						<li id="empty_ysbg" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_ysbg" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('ysbg');">清空记录</button>
+		        	<button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="upload(this.id,'clean');">保存上传</button>
+		        </div>
+		    </form>
+		    <!--处理图片-->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script src="../js/division_upload.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var ulId = self.ulId;//当前项目id
+				var doc = document;
+				var divisionType = doc.getElementById("divisionType");
+				var applicationTime = doc.getElementById("applicationTime");
+				var constructionUnits = doc.getElementById("constructionUnits");
+				var designUnits = doc.getElementById("designUnits");
+				var supervision = doc.getElementById("supervision");
+				var prospectingUnits = doc.getElementById("prospectingUnits");
+				var formbtn = doc.getElementById("formbtn");
+				var acceptanceTime = doc.getElementById("acceptanceTime");
+				var edit_save = doc.getElementById("edit_save");
+				var img_content = doc.getElementById("img_content");
+				var myInfo = doc.getElementById("myInfo");
+				var selfId = doc.getElementById("selfId");
+				selfId.value = ulId;
+				//验收日期
+				acceptanceTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    acceptanceTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//发起日期
+				applicationTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    applicationTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				mui.ajax(url+'my_division/division_list.php',{
+					data:{
+						flag:"details",
+						ulId:ulId
+					},
+					type:'post',
+					dataType:'json',  
+					success:function(data){
+//						alert(data);
+						var status = data[0].工程单状态;
+						divisionType.value = data[0].分部工程名称;
+						applicationTime.value = data[0].发起时间;
+						constructionUnits.value = data[0].发起单位;
+						supervision.value = data[0].监理单位;
+						prospectingUnits.value = data[0].勘察单位;
+						designUnits.value = data[0].设计单位;
+						acceptanceTime.value = data[0].验收时间;
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+				edit_save.addEventListener('tap',function(){
+					mui.ajax(url+'my_division/division_list.php',{
+						data:{
+							flag:"重新组织验收修改",
+							ulId:ulId,
+							acceptanceTime:acceptanceTime.value
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							mui.toast("保存成功！请重新上传附件");
+							img_content.classList.remove("my_none");
+							myInfo.classList.add("my_none");
+							edit_save.classList.add("my_none");
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+			});
+			//返回父页面刷新
+			function back(){
+				var target=plus.webview.getWebviewById('../my_division/division_list.html');
+				target.reload(true);
+				mui.back();
+			}
+		</script>
+	</body>
+
+</html>
