@@ -129,7 +129,7 @@
 		    </form>
 		    <!--处理图片-->
 			<input id="sjc" class="my_none" value="" />
-			<input id="gcmc" class="" value="" />
+			<input id="gcmc" class="my_none" value="" />
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -268,6 +268,10 @@
 					myform2.classList.add('my_none');
 					formbtn.classList.add('my_none');			
 					img_content.classList.remove('my_none');
+					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
+					setTimeout( function(){
+						plus.nativeUI.closeWaiting();
+					}, 1000 );
 					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 			});
