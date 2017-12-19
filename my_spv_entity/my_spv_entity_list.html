@@ -237,7 +237,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位']=='检测单位'||data['单位']=='管理员'){
+							if(data['单位']=='监督单位'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_spv_entity_add.html",
 									extras:{
@@ -283,9 +283,9 @@
 					var result = document.getElementById("result");
 					
 					//通过判断工程单状态判断颜色
-					if(proatt=='新建'||proatt=='扩大抽检'||proatt=='提交检测'||proatt=="扩大抽检检测"){
+					if(proatt=='新建'||proatt=='扩大抽检'||proatt=="扩大抽检检测"){
 						var color = "blue2";
-					}else if(proatt=="准备"||proatt=="扩大抽检准备"){
+					}else if(proatt=="准备"||proatt=="扩大抽检准备"||proatt=='提交检测'){
 						var color = "green2";
 					}
 					if(proatt=='扩大抽检'){
@@ -397,7 +397,7 @@
 										//判断状态并根据状态执行改变状态的任务
 										if(gcdzt_pd=='新建'||gcdzt_pd=='扩大抽检'){
 											var btnArray = [
-											{title:"准备"},
+											{title:"提交检测"},
 											{title:"删除"}
 											]; 
 											plus.nativeUI.actionSheet({

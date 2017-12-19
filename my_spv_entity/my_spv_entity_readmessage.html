@@ -55,7 +55,7 @@
 		        
 		    </form>-->
 		    <form class="mui-input-group my_none" id="myform3">
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>送样日期:</label>
 		            <input id="sedate" type="text" class="mui-input-clear" readonly="readonly" >
 		        </div>
@@ -78,13 +78,11 @@
 		        <div class="mui-input-row">
 		            <label>见证人:</label>
 		            <input type="text" class="mui-input-clear" id="wipe" readonly="readonly">
-		        </div>
+		        </div>-->
 		        <div id="testNum" class="mui-input-row ">
 		            <label>检测报告编号:</label>
 		            <input  type="text" class="mui-input-clear " id="teid" readonly="readonly">
 		        </div>
-		        
-		        
 		    </form>
 		    <form class="mui-input-group my_none" id="myform4" >
 		        <div class="mui-input-row">
@@ -221,12 +219,12 @@
 						tbpho = data[0].检测前照片.split("~*^*~");
 						tipho = data[0].检测实施过程照片.split("~*^*~");
 						tepho = data[0].检测设备照片.split("~*^*~");
-						sedate.value = data[0].送样日期;
-						redate.value = data[0].收样日期;
-						seun.value = data[0].送样单位;
-						wiun.value = data[0].见证单位;
-						reun.value = data[0].收样单位;
-						wipe.value = data[0].见证人 ;
+//						sedate.value = data[0].送样日期;
+//						redate.value = data[0].收样日期;
+//						seun.value = data[0].送样单位;
+//						wiun.value = data[0].见证单位;
+//						reun.value = data[0].收样单位;
+//						wipe.value = data[0].见证人 ;
 						if(!data[0].检测报告编号){
 							testNum.classList.add("my_none");
 						}
