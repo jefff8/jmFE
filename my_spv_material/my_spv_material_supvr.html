@@ -97,63 +97,14 @@
 				});	
 				//保存按钮
 				save.addEventListener('tap',function(){
-//					var mydata = {
-//						tcjv:tcjv.value,
-//						gcid:ulId
-//					};
-//					ajaxform(mydata,function(err){
-//						if (err) {
-//							plus.nativeUI.toast(err);
-//							return;
-//						}
-//						var btnArray = ['是', '否'];
-//						mui.confirm('保存成功！是否继续上传附件？', '江门建筑管理系统', btnArray, function(e) {
-//							if (e.index == 0) {
-								var myform=document.getElementById('myform');
-								var img_content=document.getElementById('img_content');
-								var formbtn=document.getElementById("formbtn");
-								myform.classList.add('my_none');
-								formbtn.classList.add('my_none');
-								img_content.classList.remove('my_none');
-								mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
-//							} else {
-//								//返回父页面刷新
-//								var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
-//								target.reload(true);
-//								mui.back();
-//							}
-//						});
-//					});
+					var myform=document.getElementById('myform');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					formbtn.classList.add('my_none');
+					img_content.classList.remove('my_none');
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
-				//异步传值保存
-//				var ajaxform = function(mydata, callback) {
-//					callback = callback || $.noop;
-//					mydata = mydata || {};
-//					mydata.tcjv = mydata.tcjv || '';
-//					mydata.gcid = mydata.gcid || '';
-//					mui.ajax(url+'my_plus/my_material_supvr.php',{
-//						data:{
-//							tcjv:mydata.tcjv,
-//							gcid:mydata.gcid
-//						},
-//						dataType:'json',
-//						type:'post',
-//						timeout:10000,
-//						success:function(data){
-//							//alert(data.result);
-//							if (data.result=='success') {
-//								return callback();
-//							} else{
-//								return callback('服务器返回error');	
-//							}
-//						},
-//						error:function(xhr,type,errorThrown){
-//							//异常处理；
-//							//alert('ajax错误'+type);
-//							return callback('ajax错误'+type+errorThrown);
-//						}
-//					});
-//				};
 			});
 			//返回父页面刷新
 			function back(){
