@@ -46,7 +46,7 @@
 		            <label>检测单位:</label>
 		            <input id="tdpm" type="text" class="mui-input-clear"  readonly="readonly">
 		        </div>
-		        <div id="myform2" class="mui-input-row my_none">
+		        <div id="myform2" class="mui-input-row ">
 		            <label>委托编号:</label>
 		            <input id="tnum" type="text" class="mui-input-clear" readonly="readonly">
 		        </div>
@@ -176,11 +176,12 @@
 				
 				//设定哪些信息可见
 				function datashow(proatt){
-					if(proatt == '准备' || proatt=='待确认'){
-						myform2.classList.remove('my_none');
+					if(proatt == '新建'){
+						//委托编号显示
+						myform2.classList.add('my_none');
 					}else if(proatt == '已确认'||proatt == '提交结果'){
 						myform2.classList.remove('my_none');
-						myform3.classList.remove('my_none');
+//						myform3.classList.remove('my_none');
 					}else if(proatt == '合格'){
 						myform2.classList.remove('my_none');
 						myform3.classList.remove('my_none');
@@ -190,9 +191,9 @@
 						myform4.classList.remove('my_none');
 					}else if(proatt == '已处理' || proatt == '待审批'){
 						myform2.classList.remove('my_none');
-						myform3.classList.remove('my_none');
-						myform4.classList.remove('my_none');
-						myform5.classList.remove('my_none');
+//						myform3.classList.remove('my_none');//没有对应输入的信息
+//						myform4.classList.remove('my_none');//没有对应输入的信息
+//						myform5.classList.remove('my_none');//没有对应输入的信息
 					}
 				}
 //				alert(gcid);

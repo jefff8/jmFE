@@ -16,9 +16,9 @@
 		    <h1 class="mui-title">材料监督抽检详情</h1>
 		</header>
 		<div class="mui-content">
-		    <form id="myform" class="mui-input-group">
+		    <form id="myform" class="mui-input-group ">
 		        <div class="mui-input-row">
-		            <label>取样类型:</label>
+		            <label>抽检类型:</label>
 		            <input id="qylx" type="text" class="mui-input-clear" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
@@ -70,7 +70,41 @@
 					<input  id='gcmc' type="text" placeholder="时间戳" readonly="readonly">						
 				</div>	
 		    </form>
-		    
+		    <!--//送样基本信息-->
+		    <form id="form_songyang" class="mui-input-group my_none">
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input id="shyrq" type="text" class="mui-input-clear" placeholder="请输入送样日期" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="soyrq" type="text" class="mui-input-clear" placeholder="请输入收样日期" readonly="readonly" >
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input id="sydw"  type="text" class="mui-input-clear" placeholder="请输入送样单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input id="jzdw" type="text" class="mui-input-clear" placeholder="请输入见证单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input id="shydw" type="text" class="mui-input-clear" placeholder="请输入收样单位">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样人:</label>
+		            <input id="syr" type="text" class="mui-input-clear" placeholder="请输入送样人" readonly="readonly" disabled="disabled">
+		        </div>
+		         <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input id="jzr" type="text" class="mui-input-clear" placeholder="请输入见证人" readonly="readonly" disabled="disabled">
+		        </div>
+		         <div class="mui-input-row">
+		            <label>样品编号(由检测单位提供):</label>
+		            <input id="ypbh" type="text" class="mui-input-clear" placeholder="请输入样品编号">
+		        </div>
+		    </form>
 		    <br/>
 		    <form id="myform2" class="mui-input-group">
 		        <div class="mui-input-row">
@@ -150,6 +184,14 @@
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
 				var sjc_in = doc.getElementById("sjc");
+				var shyrq = doc.getElementById("shyrq");
+				var soyrq = doc.getElementById("soyrq");
+				var sydw = doc.getElementById("sydw");
+				var jzdw = doc.getElementById("jzdw");
+				var shydw = doc.getElementById("shydw");
+				var syr = doc.getElementById("syr");
+				var jzr = doc.getElementById("jzr");
+				var ypbh = doc.getElementById("ypbh");
 				//获取url参数值
 				function geturl(name){
 					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -161,6 +203,7 @@
 				var sjc_send = geturl("sjc");
 				var gcid = geturl("gcid");
 				var gcmc_in = geturl("gcmc");
+				var state = decodeURI(decodeURI(geturl("state")));
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
 //				alert(gcmc.value);
 				sjc_in.value = sjc_send;
@@ -188,11 +231,23 @@
 						remark.value = data[0].备注;
 						qyrq.value = data[0].取样日期;
 						jcdw.value = data[0].检测单位;
+						sydw.value = data[0].送样单位;
+						jzdw.value = data[0].见证单位;
+						shydw.value = data[0].收样单位;
+						shyrq.value = data[0].送样日期;
+						soyrq.value = data[0].收样日期;
+						syr.value = data[0].送样人;
+						jzr.value = data[0].见证人;
+						ypbh.value = data[0].样品编号;
 					},
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
-				});				
+				});	
+				
+				if(state=='收样'){
+					form_songyang.classList.remove("my_none");
+				}
 				
 				//日期监听
 				qyrq.addEventListener('tap',function(){

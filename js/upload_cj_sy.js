@@ -229,6 +229,7 @@ function upload2(lx,clean){
 		}
 	});
 	task.addData("lx",lx);
+	task.addData("gcdzt",gcdzt);
 	task.addData("receivedText",getText());
 	task.addData("uid",getUid());
 	task.addData("files1",strs);

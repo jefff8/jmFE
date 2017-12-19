@@ -133,7 +133,7 @@
 						case "合格":
 							witness.appendChild(ul); 
 							break;
-						case "不合格":case "已处理":case "扩大抽检不合格":
+						case "不合格":case "已处理":case "扩大抽检不合格":case "待审批":
 							draft.appendChild(ul);
 							break;
 					}
@@ -257,9 +257,42 @@
 														break;
 												}	
 											 });
-										}else if(gcdzt_pd=='扩大抽检不合格'&&(units=='监督机构'||units=='管理员')){
+										}else if(gcdzt_pd=='扩大抽检不合格'&&(units=='监督单位'||units=='管理员')){
 											var btnArray = [
-											{title:"确认(监督机构)"}
+											{title:"监理处理(监督单位)"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												//var nextpage='';
+												switch (index){
+													case 1://审批通过
+														mui.ajax(url+'my_plus/my_spv_entity_result.php',{
+															data:{
+																flag:"监理处理",
+																ulId:ulId
+															},
+															dataType:'json',
+															type:'POST', 
+															timeout:10000,
+															success:function(data){
+																alert(data);
+																mui.toast('操作完成！',{ duration:'long', type:'div' });
+																location.reload();//刷新本页面
+															},
+															error:function(xhr,type,errorThrown){
+																alert('aja1x错误'+type+'---'+errorThrown+"失败！");
+															}
+														});	
+														break;
+												}	
+											});
+										}else if(gcdzt_pd=='待审批'&&(units=='监理单位'||units=='管理员')){
+											var btnArray = [
+											{title:"确认(监理单位)"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 

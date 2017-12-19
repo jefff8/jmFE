@@ -207,7 +207,8 @@
 //				    }
 //				],
 				gestureConfig:{					
-					longtap: true, //长按默认为false	
+					longtap: true,//长按默认为false	
+					doubletap: true
 				}
 			});
 			
@@ -253,7 +254,7 @@
 						timeout:10000,
 						success:function(data){
 //							alert(data['单位']);
-							if(data['单位']=='施工单位'||data['单位']=='管理员'){
+							if(data['单位']=='监督单位'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_spv_material_add.html",
 									extras:{
@@ -317,26 +318,27 @@
 					gcdzt_c = encodeURI(encodeURI(gcdzt));
 					detect_c = encodeURI(encodeURI(detect));
 					supvision_c = encodeURI(encodeURI(supvision));
+					gcdzt_c = encodeURI(encodeURI(gcdzt));
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 					ul.id = id;
-					if(gcdzt=='新增复检'||gcdzt=='取样复检'||gcdzt=='已委托复检'||gcdzt=='收样复检'){
+					if(gcdzt=='新增复检'||gcdzt=='已取样复检'||gcdzt=='已委托复检'||gcdzt=='收样复检'){
 						ul.style.borderColor = "red";
 					}
 					var draft = document.getElementById("draft");
 					var witness = document.getElementById("witness");
 //					var approval = document.getElementById("approval");
 					//通过判断工程单状态判断颜色
-					if(gcdzt=='新增'||gcdzt=='新增复检'||gcdzt=='已取样'||gcdzt=='取样复检'){
+					if(gcdzt=='新增'||gcdzt=='新增复检'||gcdzt=='已取样'||gcdzt=='已取样复检'){
 						var color = "blue2";
 					}else if(gcdzt=="已委托"||gcdzt=="已委托复检"||gcdzt=="收样"||gcdzt=="收样复检"){
 						var color = "green2";
 					}
 					//通过判断工程单状态判断url
 					if(gcdzt=='新增复检'){
-						var url = "my_spv_material_review_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc_c+"&supvision="+supvision_c+"&mobile="+mobile+"&detect="+detect_c;
+						var url = "my_spv_material_review_detail.html?sjc="+sjc+"&gcid="+id+"&state="+gcdzt_c+"&gcmc="+gcmc_c+"&supvision="+supvision_c+"&mobile="+mobile+"&detect="+detect_c;
 					}else{
-						var url = "my_spv_material_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc;
+						var url = "my_spv_material_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc+"&state="+gcdzt_c;
 					}
 					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
 						
@@ -344,7 +346,7 @@
 						case "新增":case "新增复检":
 							draft.appendChild(ul); 
 							break;
-						case "已取样":case "已取样复检":case "已委托":case "已委托复检":case "取样复检":
+						case "已取样":case "已取样复检":case "已委托":case "已委托复检":
 							witness.appendChild(ul);
 							break;
 						case "收样":case "收样复检":
@@ -365,7 +367,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位'] == '施工单位'||data['单位']=='管理员'){
+							if(data['单位'] == '监督单位'||data['单位']=='管理员'){
 
 								mui.ajax(url+'my_plus/my_spv_material_list.php',{
 									data:{
@@ -379,10 +381,9 @@
 									timeout:10000,
 									success:function(data){
 										var gcdzt_pd = data.工程单状态;
-//										alert(gcdzt_pd);
 			
 										//判断状态并根据状态执行改变状态的任务
-										if(gcdzt_pd=='新增'){
+										if(gcdzt_pd=='新增'||gcdzt_pd=='新增复检'){
 											var btnArray = [
 											{title:"监督抽检(监督单位)"},
 											{title:"删除"}
@@ -401,6 +402,7 @@
 																flag:"改新增状态",
 																ulid:ulId,
 																gcmc:gcmc,
+																gcdzt:gcdzt_pd,
 																timestamp:timestamp
 															},
 															dataType:'json',
@@ -471,6 +473,7 @@
 				//长按委托检测
 				mui("#witness").on('longtap','ul',function(){
 					var ulId = this.id;
+//					console.log(ulId);
 					mui.ajax(url+'check.php',{
 						data:{
 							ulId:ulId,
@@ -481,7 +484,7 @@
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
-							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){
+							if((data['单位']=='检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_spv_material_list.php',{
 									data:{
 										flag:"获取状态",
@@ -494,7 +497,7 @@
 									timeout:10000,
 									success:function(data){
 										var gcdzt_pd = data.工程单状态;
-										if(gcdzt_pd=='已取样'||gcdzt_pd=='取样复检'){
+										if(gcdzt_pd=='已取样'||gcdzt_pd=='已取样复检'){
 											var btnArray = [
 											{title:"委托检测(检测单位)"}
 											];
@@ -509,13 +512,101 @@
 													case 1://确认见证
 														//执行验证码
 														if(gcdzt_pd=='已取样'){
-															mui("#zuyPopover").popover("toggle");
-															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
-															but_id.id=ulId;
-														}else if(gcdzt_pd=='取样复检'){
-															mui("#recPopover").popover("toggle");
-															var but_id=document.getElementById("recheck").getElementsByTagName('button')[0];
-															but_id.id=ulId;
+															//确定见证
+															mui.openWindow({
+																url:'my_spv_material_deliver.html',
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId,
+																	my_name:my_name,
+																	timestamp:timestamp,
+																	constr:constr,
+																	supvision:supvision,
+																	gcdzt:gcdzt_pd,
+																	detect:detect
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															})
+//															mui.ajax(url+'my_plus/my_spv_material_list_longtap.php',{
+//																data:{
+//																	gcdzt:'jzz',
+//																	gcdId:ulId
+//																},
+//																dataType:'json',
+//																type:'POST', 
+//																timeout:10000,
+//																success:function(data){
+//																	if(data.result=='success'){
+//										   								mui.toast('委托成功',{ duration:'long', type:'div' }) 
+//																		location.reload();
+//																	}
+//																},
+//																error:function(xhr,type,errorThrown){
+//																	alert('ajax错3误'+type+'---'+errorThrown);
+//																}
+//															});
+//															mui("#zuyPopover").popover("toggle");
+//															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+//															but_id.id=ulId;
+														}else if(gcdzt_pd=='已取样复检'){
+															
+															mui.openWindow({
+																url:'my_spv_material_deliver.html',
+																styles: {
+																	hardwareAccelerated:false
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId,
+																	my_name:my_name,
+																	timestamp:timestamp,
+																	constr:constr,
+																	supvision:supvision,
+																	gcdzt:gcdzt_pd,
+																	detect:detect
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															})
+															
+//															mui.ajax(url+'my_plus/my_spv_material_list_longtap.php',{
+//																data:{
+//																	gcdzt:'recheck',
+//																	gcdId:ulId
+//																},
+//																dataType:'json',
+//																type:'POST', 
+//																timeout:10000,
+//																success:function(data){
+//																	if(data.result=='success'){
+//										   								mui.toast('见证成功',{ duration:'long', type:'div' }) 
+//																		location.reload();
+//																	}
+//																},
+//																error:function(xhr,type,errorThrown){
+//																	alert('ajax错误'+type+'---'+errorThrown);
+//																}
+//															});
+															
+//															mui("#recPopover").popover("toggle");
+//															var but_id=document.getElementById("recheck").getElementsByTagName('button')[0];
+//															but_id.id=ulId;
 														}
 														break;
 													case 2:
@@ -816,6 +907,7 @@
 			//验证验证码
 			function qdjz(jzid){
 				var jzid = jzid.id;
+				console.log(jzid);
 				if(yzm.value==""){
 					mui.toast('请先获取验证码',{ duration:'long', type:'div' }) 
 				}else if(code.value==""){

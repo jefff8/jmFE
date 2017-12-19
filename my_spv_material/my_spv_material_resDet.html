@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>江门建筑管理系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../css/mui.min.css">	
+		<link rel="stylesheet" href="../css/my_css.css">	
+		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="#"></a>
+		    <h1 class="mui-title">材料监督抽检详情</h1>
+		</header>
+		<div class="mui-content">
+		    <form id="myform" class="mui-input-group">
+		        <div class="mui-input-row">
+		            <label>抽检类型:</label>
+		            <input id="qylx" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>规格:</label>
+		            <input id="gg" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>数量:</label>
+		            <input id="sl" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>生产厂家:</label>
+		            <input id="sccj" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样人:</label>
+		            <input id="qyr" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>进场日期:</label>
+		            <input id="enter_date" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>取样日期:</label>
+		            <input id="qyrq" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>合格证编号:</label>
+		            <input id="qualifiedNum" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>使用部位:</label>
+		            <input id="usedPart" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>经销商单位:</label>
+		            <input id="dealer_units" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>备注:</label>
+		            <input id="remark" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row my_none">
+					<label> 时间戳：</label>
+					<input id='sjc' type="text" placeholder="时间戳" readonly="readonly" readonly="readonly">						
+				</div>	
+				<div class="mui-input-row">
+		            <label>检测单位:</label>
+		            <input id="jcdw" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		   </form>
+		    <br/>
+		    <form id="myform2" class="mui-input-group ">
+		    	<div id="first_num" class="mui-input-row my_none">
+		            <label>初检编号:</label>
+		            <input  id="cjbh" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		    	<div class="mui-input-row">
+		            <label>样品编号:</label>
+		            <input  id="ypbh" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>检测报告编号:</label>
+		            <input id="test_num" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样日期:</label>
+		            <input  id="shyrq" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样日期:</label>
+		            <input id="soyrq" type="text" class="mui-input-clear" placeholder="" readonly="readonly" disabled="disabled">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样单位:</label>
+		            <input id="sydw" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>见证单位:</label>
+		            <input id="jzdw" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收样单位:</label>
+		            <input id="shydw" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		        <div class="mui-input-row">
+		            <label>送样人:</label>
+		            <input id="syr" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		         <div class="mui-input-row">
+		            <label>见证人:</label>
+		            <input id="jzr" type="text" class="mui-input-clear" placeholder="" readonly="readonly">
+		        </div>
+		    </form>
+		    <br/>
+			<div id="myform4">
+				&nbsp;&nbsp;<label >退场记录：</label>
+			    <div class="mui-input-row" >
+					<textarea  id="tcjv" rows="5"  readonly="readonly"></textarea>
+				</div>
+			</div>
+			<div id="myform5" class="my_none">
+				&nbsp;&nbsp;<label >拒收理由：</label>
+			    <div class="mui-input-row" >
+					<textarea  id="rejection" rows="5"  readonly="readonly"></textarea>
+				</div>
+			</div>
+		    <div id="formbtn" class="mui-button-row">
+				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
+				&nbsp;&nbsp;
+			</div>
+			
+		    
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				
+			});
+			mui.plusReady(function(){
+				//获取url参数值
+				function geturl(name){
+					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if(r!=null)return  unescape(r[2]);
+					return null;
+				}
+				//获取URL上的时间戳
+				var sjc_send = geturl("sjc");
+				var gcid = geturl("gcid");
+				var state = geturl("state");
+//				alert(sjc_send);
+				var doc = document;
+				var fjck = doc.getElementById("fjck");
+				var qylx = doc.getElementById("qylx");
+				var gg = doc.getElementById("gg");
+				var sl = doc.getElementById("sl");
+				var sccj = doc.getElementById("sccj");
+				var qyr = doc.getElementById("qyr");
+				var qyrq = doc.getElementById("qyrq");
+				var jcdw = doc.getElementById("jcdw");
+				var shyrq = doc.getElementById("shyrq");
+				var soyrq = doc.getElementById("soyrq");
+				var sjdw = doc.getElementById("sjdw");
+				var sydw = doc.getElementById("sydw");
+				var jzdw = doc.getElementById("jzdw");
+				var shydw = doc.getElementById("shydw");
+				var syr = doc.getElementById("syr");
+				var jzr = doc.getElementById("jzr");
+				var ypbh = doc.getElementById("ypbh");
+				var tcjv = doc.getElementById("tcjv");
+				var enter_date = doc.getElementById("enter_date");
+				var qualifiedNum = doc.getElementById("qualifiedNum");
+				var usedPart = doc.getElementById("usedPart");
+				var dealer_units = doc.getElementById("dealer_units");
+				var remark = doc.getElementById("remark");
+				var test_num = doc.getElementById("test_num");
+				var cjbh = doc.getElementById("cjbh");
+				//日期监听
+				qyrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+	                    qyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   	});
+				});
+				shyrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+	                    shyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   	});
+				});
+				soyrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+	                    soyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   	});
+				});
+				
+				//根据state显示信息
+				if(state=='fail'||state=='qualified'||state=='fail_first'){
+					var myform4 = document.getElementById("myform4")
+					myform4.classList.add("my_none");
+				}
+				
+				//获取材料送检信息
+				var scene_photo=[];
+				var sample_photo=[];
+				var received_photo=[];
+				var detection_photo=[];
+				var dispose_photo=[];
+				var sceneText;
+				var sampleText;
+				var receivedText;
+				var report;
+				var disposeText;
+				if(state=='fail_first'){
+					mui.ajax(url+'my_plus/my_spv_material_first.php',{
+					data:{
+						gcid:gcid				
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sjc.value=data[i].时间戳;
+							qylx.value=data[i].取样类型;
+							gg.value=data[i].规格;
+							sl.value=data[i].数量;
+							sccj.value=data[i].生产厂家;
+							qyr.value=data[i].取样人;
+							qyrq.value=data[i].取样日期;
+							jcdw.value=data[i].检测单位;
+							ypbh.value=data[i].样品编号;
+							shyrq.value=data[i].送样日期;
+							soyrq.value=data[i].收样日期;
+							sydw.value=data[i].送样单位;
+							jzdw.value=data[i].见证单位;	
+							shydw.value=data[i].收样单位;
+							syr.value=data[i].送样人;
+							jzr.value=data[i].见证人;
+							tcjv.value=data[i].退厂记录;
+							enter_date.value=data[i].进场日期;
+							qualifiedNum.value=data[i].合格证编号;
+							usedPart.value=data[i].使用部位;
+							dealer_units.value=data[i].经销商单位;
+							remark.value=data[i].备注;
+							test_num.value=data[i].检测报告编号;
+							scene_photo=data[i].场景照片.split("~*^*~");
+							sample_photo=data[i].样品照片.split("~*^*~");
+							received_photo=data[i].收样照片.split("~*^*~");
+							detection_photo=data[i].检测照片.split("~*^*~");
+							dispose_photo=data[i].处理照片.split("~*^*~");
+							sceneText=data[i].场景照片说明;
+							sampleText=data[i].样品照片说明;
+							receivedText=data[i].收样照片说明;
+							report=data[i].检测报告照片说明;
+							disposeText=data[i].处理照片说明;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						alert('ajax错误'+type);
+//						return callback('ajax错误'+type+errorThrown);
+					}
+				});	
+				}else{
+					mui.ajax(url+'my_plus/material_detail.php',{
+					data:{
+						gcid:gcid				
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						for (var i=0;i<length-1;i++) {
+							sjc.value=data[i].时间戳;
+							qylx.value=data[i].取样类型;
+							gg.value=data[i].规格;
+							sl.value=data[i].数量;
+							sccj.value=data[i].生产厂家;
+							qyr.value=data[i].取样人;
+							qyrq.value=data[i].取样日期;
+							jcdw.value=data[i].检测单位;
+							ypbh.value=data[i].样品编号;
+							shyrq.value=data[i].送样日期;
+							soyrq.value=data[i].收样日期;
+							sydw.value=data[i].送样单位;
+							jzdw.value=data[i].见证单位;	
+							shydw.value=data[i].收样单位;
+							syr.value=data[i].送样人;
+							jzr.value=data[i].见证人;
+							tcjv.value=data[i].退厂记录;
+							enter_date.value=data[i].进场日期;
+							qualifiedNum.value=data[i].合格证编号;
+							usedPart.value=data[i].使用部位;
+							dealer_units.value=data[i].经销商单位;
+							remark.value=data[i].备注;
+							if(data[i].复检编号){
+								var first_num = document.getElementById("first_num");
+								first_num.classList.remove("my_none");
+								cjbh.value=data[i].检测报告编号;
+								test_num.value=data[i].复检编号;
+							}else{
+								test_num.value=data[i].检测报告编号;
+							}
+							if(data[i].拒收理由){
+								var myform5 = document.getElementById("myform5");
+								var rejection = document.getElementById("rejection");
+								myform5.classList.remove("my_none");
+								rejection.value = data[i].拒收理由;
+							}
+							scene_photo=data[i].场景照片.split("~*^*~");
+							sample_photo=data[i].样品照片.split("~*^*~");
+							received_photo=data[i].收样照片.split("~*^*~");
+							detection_photo=data[i].检测照片.split("~*^*~");
+							dispose_photo=data[i].处理照片.split("~*^*~");
+							sceneText=data[i].场景照片说明;
+							sampleText=data[i].样品照片说明;
+							receivedText=data[i].收样照片说明;
+							report=data[i].检测报告照片说明;
+							disposeText=data[i].处理照片说明;
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						alert('ajax错误'+type);
+//						return callback('ajax错误'+type+errorThrown);
+					}
+				});	
+				}
+				
+				
+				//附件查看
+				fjck.addEventListener('tap',function(){
+//					alert(syfj)
+					mui.openWindow({
+						url: 'readimage.html',
+						id:'readimage.html',
+						extras:{
+							sjc:sjc.value,
+							scene_photo:scene_photo,
+							sample_photo:sample_photo,
+							received_photo:received_photo,
+							detection_photo:detection_photo,
+							dispose_photo:dispose_photo,
+							sceneText:sceneText,
+							sampleText:sampleText,
+							receivedText:receivedText,
+							report:report,
+							disposeTetx:disposeText,
+							gcdzt:state
+							
+						},
+						show:{							
+							aniShow:'slide-in-right',//页面显示动画
+							duration:'100'//页面动画持续时间
+						},
+						waiting:{
+							autoShow:false,//自动显示等待框
+						}
+					})
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

@@ -104,6 +104,7 @@
 	      		constr = self.constr;
 	      		supvision = self.supvision;
 	      		detect = self.detect;
+	      		gcdzt = self.gcdzt;
                 my_name = decodeURI(decodeURI(my_name));
 				var doc=document;
 				var save=doc.getElementById("save");
@@ -135,6 +136,7 @@
 				mui.ajax(url+'my_plus/my_spv_material_detail.php',{
 					data:{
 						flag:"获取照片",
+						gcdzt:gcdzt,
 						gcid:ulId				
 					},
 					dataType:'json',
