@@ -206,21 +206,21 @@
 				</p>
 			</div>
 			<div class="mui-content-padded">
-				<p id="dispose_photo_01"  class="myp my_none">实测照片: </p>
+				<p id="dispose_photo_01"  class="myp my_none">报告照片: </p>
 				<p id="rwfj4">
 				<p id="fj4Text">
 					
 				</p>	
 				</p>
 			</div>
-			<div class="mui-content-padded">
+			<!--<div class="mui-content-padded">
 				<p id="dispose_photo_02"  class="myp my_none">不合格报表: </p>
 				<p id="rwfj5">
 				<p id="fj5Text">
 					
 				</p>	
 				</p>
-			</div>
+			</div>-->
 			<div class="mui-content-padded">
 				<p id="dispose_photo_03"  class="myp my_none">处理照片: </p>
 				<p id="rwfj6">
@@ -251,10 +251,11 @@
 			var Text2 = self.Text2;
 			var Text3 = self.Text3;
 			var Text4 = self.Text4;
+			console.log(dwpho);
 			var Text5 = self.Text5;
 			var Text6 = self.Text6;
-			var dispose_photo_01 = document.getElementById("dispose_photo_01");
-			var dispose_photo_02 = document.getElementById("dispose_photo_02");
+//			var dispose_photo_01 = document.getElementById("dispose_photo_01");
+//			var dispose_photo_02 = document.getElementById("dispose_photo_02");
 			var dispose_photo_03 = document.getElementById("dispose_photo_03");
 			var fj1Text = document.getElementById("fj1Text");
 			var fj2Text = document.getElementById("fj2Text");
@@ -324,15 +325,15 @@
 				}
 			}
 			//不合格报表
-			if(proatt=='不合格'){
+			if(proatt=='不合格'||proatt=='扩大抽检不合格'){
 				dispose_photo_01.classList.remove("my_none");
-				dispose_photo_02.classList.remove("my_none");
+//				dispose_photo_02.classList.remove("my_none");
 				if(Text4){
 					fj4Text.innerHTML="实测照片说明："+Text4;
 				}
-				if(Text5){
-					fj5Text.innerHTML="报告照片说明："+Text5;
-				}
+//				if(Text5){
+//					fj5Text.innerHTML="报告照片说明："+Text5;
+//				}
 				if(rtpho.length>1){
 					for(var i=1;i<rtpho.length;i++){
 						createimg('rwfj4',rtpho[i]);
@@ -340,25 +341,25 @@
 				}else{
 					createtex('rwfj4');
 				}
-				if(tfpho.length>1){
-					for(var i=1;i<tfpho.length;i++){
-						createimg('rwfj5',tfpho[i]);
-					}
-				}else{
-					createtex('rwfj5');
-				}
+//				if(tfpho.length>1){
+//					for(var i=1;i<tfpho.length;i++){
+//						createimg('rwfj5',tfpho[i]);
+//					}
+//				}else{
+//					createtex('rwfj5');
+//				}
 			}
 			//处理照片
 			if(proatt=='已处理'||proatt=='待审批'){
 				dispose_photo_01.classList.remove("my_none");
-				dispose_photo_02.classList.remove("my_none");
+//				dispose_photo_02.classList.remove("my_none");
 				dispose_photo_03.classList.remove("my_none");
 				if(Text4){
-					fj4Text.innerHTML="实测照片说明："+Text4;
+					fj4Text.innerHTML="报告照片说明："+Text4;
 				}
-				if(Text5){
-					fj5Text.innerHTML="报告照片说明："+Text5;
-				}
+//				if(Text5){
+//					fj5Text.innerHTML="报告照片说明："+Text5;
+//				}
 				if(Text6){
 					fj6Text.innerHTML="处理照片说明："+Text6;
 				}
@@ -369,13 +370,13 @@
 				}else{
 					createtex('rwfj4');
 				}
-				if(tfpho.length>1){
-					for(var i=1;i<tfpho.length;i++){
-						createimg('rwfj5',tfpho[i]);
-					}
-				}else{
-					createtex('rwfj5');
-				}
+//				if(tfpho.length>1){
+//					for(var i=1;i<tfpho.length;i++){
+//						createimg('rwfj5',tfpho[i]);
+//					}
+//				}else{
+//					createtex('rwfj5');
+//				}
 				if(dwpho.length>1){
 					for(var i=1;i<dwpho.length;i++){
 						createimg('rwfj6',dwpho[i]);

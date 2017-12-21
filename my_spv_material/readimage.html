@@ -236,7 +236,7 @@
 			var sampleText = self.sampleText;
 			var receivedText = self.receivedText;
 			var report = self.report;
-			var disposeText = self.disposeTetx;
+			var disposeText = self.disposeText;
 			var gcdzt = self.gcdzt;
 			var fj1Text = document.getElementById("fj1Text");
 			var fj2Text = document.getElementById("fj2Text");
@@ -280,7 +280,7 @@
 				createtex('rwfj2');
 			}
 			//收样与检测图片
-			if(gcdzt=='result'){
+			if(gcdzt=='收样'||gcdzt=='收样复检'||gcdzt=='合格'){
 				var received_ph = document.getElementById("received_photo");
 				received_ph.classList.remove("my_none");
 				if(receivedText){
@@ -293,7 +293,7 @@
 				}else{
 					createtex('rwfj3');
 				}
-			}else if(gcdzt=='fail'||gcdzt=='qualified'||gcdzt=='fail_first'){
+			}else if(gcdzt=='不合格'||gcdzt=='复检不合格'||gcdzt=='fail_first'){
 				if(receivedText){
 					fj3Text.innerHTML="收样照片说明："+receivedText;
 				}
@@ -318,7 +318,7 @@
 				var detection_photo = document.getElementById("detection_photo");
 				received_photo.classList.remove("my_none");
 				detection_photo.classList.remove("my_none");
-			}else if(gcdzt=='processed'){
+			}else if(gcdzt=='已处理'||gcdzt=='待审批'){
 				if(receivedText){
 					fj3Text.innerHTML="收样照片说明："+receivedText;
 				}

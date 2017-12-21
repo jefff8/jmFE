@@ -262,9 +262,14 @@
 				//获取材料送检信息
 				var scene_photo=[];
 				var sample_photo=[];
+				var received_photo=[];//送样照片
+				var detection_photo=[];//检测报告照片(结论页)
+				var dispose_photo=[];//处理照片
 				var sceneText;
 				var sampleText;
 				var receivedText;
+				var report;
+				var disposeText;
 				mui.ajax(url+'my_plus/my_spv_material_detail.php',{
 					data:{
 						flag:"获取照片",
@@ -274,16 +279,20 @@
 					type:'post',
 					timeout:10000,
 					success:function(data){
-//						alert(data[i].场景照片.split("~*^*~"));
-//						alert(data[i].场景照片.split("~*^*~"));
 						var length=data.length;
 						for (var i=0;i<length-1;i++) {
+//							alert(data[i].处理照片说明);
 							sjc.value=data[i].时间戳;
 							scene_photo=data[i].场景照片.split("~*^*~");
 							sample_photo=data[i].样品照片.split("~*^*~");
+							received_photo=data[i].收样照片.split("~*^*~");
+							detection_photo=data[i].检测照片.split("~*^*~");
+							dispose_photo=data[i].处理照片.split("~*^*~");
 							sceneText=data[i].场景照片说明;
 							sampleText=data[i].样品照片说明;
 							receivedText=data[i].收样照片说明;
+							report=data[i].检测报告照片说明;
+							disposeText=data[i].处理照片说明;
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -302,8 +311,14 @@
 							sjc:sjc.value,
 							scene_photo:scene_photo,
 							sample_photo:sample_photo,
+							received_photo:received_photo,//收样照片
+							detection_photo:detection_photo,//检测照片
+							dispose_photo:dispose_photo,//处理照片
 							sceneText:sceneText,
 							sampleText:sampleText,
+							gcdzt:state,
+							report:report,
+							disposeText:disposeText,
 							receivedText:receivedText
 						},
 						show:{							

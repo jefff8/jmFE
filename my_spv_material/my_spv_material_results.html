@@ -113,6 +113,7 @@
 					sccj_c = encodeURI(encodeURI(sccj));
 					qyr_c = encodeURI(encodeURI(qyr));
 					qyrq_c = encodeURI(encodeURI(qyrq));
+					gcdzt_c = encodeURI(encodeURI(gcdzt));
 					var ul = document.createElement("ul");
 					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 					ul.id = id;
@@ -131,7 +132,7 @@
 					else if(gcdzt=='待审批'){
 						var color = "blue2";
 					}
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="my_spv_material_detail.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="my_spv_material_detail.html?sjc='+sjc+'&gcid='+id+'&gcmc='+gcmc+'&state='+gcdzt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
 					switch(gcdzt){
 						case "合格":
 							qualified.appendChild(ul); 

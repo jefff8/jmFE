@@ -85,10 +85,10 @@
 		        </div>
 		    </form>
 		    <form class="mui-input-group my_none" id="myform4" >
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>不合格报告:</label>
 		            <input id="freport" type="text" class="mui-input-clear" readonly="readonly">
-		        </div>
+		        </div>-->
 		    </form>
 		    <form class="mui-input-group my_none" id="myform5">
 		    	<div class="mui-input-row">
@@ -136,7 +136,7 @@
 				var tbpho = [];//检测前
 				var tipho = [];//检测中
 				var tepho = []//检测设备
-				var rtpho = [];//实测照片
+				var rtpho = [];//检测照片
 				var tfpho = [];//不合格报表
 				var dwpho = [];//处理照片			
 				var dache = doc.getElementById('dache');
@@ -228,9 +228,11 @@
 						if(!data[0].检测报告编号){
 							testNum.classList.add("my_none");
 						}
-						teid.value = data[0].检测报告编号;												
-						rtpho = data[0].实测照片.split("~*^*~");
-						freport.value = data[0].不合格报告;
+						teid.value = data[0].检测报告编号;
+						if(data[0].检测照片){
+							rtpho = data[0].检测照片.split("~*^*~");
+						};
+//						freport.value = data[0].不合格报告;
 						lreport.value = data[0].退场记录;
 						dwpho = data[0].处理照片.split("~*^*~");
 						tfpho = data[0].不合格报表.split("~*^*~");
@@ -238,7 +240,7 @@
 						Text1 = data[0].场景照片说明;
 						Text2 = data[0].检测实施过程照片说明;
 						Text3 = data[0].检测设备照片说明;
-						Text4 = data[0].实测照片说明;
+						Text4 = data[0].报告照片说明;
 						Text5 = data[0].报告照片说明;
 						Text6 = data[0].处理照片说明;
 						process_type.value = data[0].处理类型;
@@ -259,7 +261,7 @@
 							tbpho:tbpho,//检测前
 							tipho:tipho,//检测中
 							tepho:tepho,//检测设备
-							rtpho:rtpho,//实测照片
+							rtpho:rtpho,//检测照片
 							tfpho:tfpho,//不合格报表
 							dwpho:dwpho,//处理照片
 							Text1:Text1,

@@ -26,6 +26,14 @@
 				left:9%;
 			}
 			
+			#consigncode3{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
+			
 			#zuyPopover{
 				min-width: 300px;
 				height:150px;				
@@ -175,6 +183,20 @@
 					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode1(this)">确认</button>
+				</div>
+			</div>
+			<div id="consigncode3" class="mui-popover">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="testNum2"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="code_act2"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="inpcode2(this)">确认</button>
 				</div>
 			</div>
 			<!--------------------------------------结果----------------------------->
@@ -579,10 +601,18 @@
 														var btnArray = ['是', '否'];
 															mui.confirm('确定将该送检鉴定为合格？', '江门建筑管理系统', btnArray, function(e) {
 																if (e.index == 0) {
+																	if(gcdzt_pd=='提交检测'){
+//																		alert(gcdzt_pd);
 																	//输入检测报告编号
 																	mui("#consigncode2").popover("toggle");
-																	var but_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
-																	but_id.id=ulId;
+																	var but1_id=document.getElementById("code_act1").getElementsByTagName('button')[1];
+																	but1_id.id=ulId;
+																	}else if(gcdzt_pd=='扩大抽检检测'){
+//																		alert(gcdzt_pd);
+																		mui("#consigncode3").popover("toggle");
+																		var but_id=document.getElementById("code_act2").getElementsByTagName('button')[1];
+																		but_id.id=ulId;
+																	}
 																}	
 															});
 														break;
@@ -687,8 +717,35 @@
 						ulid:ulId,
 						gcmc:gcmc,
 						timestamp:timestamp,
-						testNum:testNum,
-						gcdzt:gcdzt_pd
+						testNum:testNum
+//						gcdzt:gcdzt_pd
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+//						alert(data.结果);
+						mui.toast('操作成功',{ duration:'long', type:'div' }) 
+						location.reload();
+					},
+					error:function(xhr,type,errorThrown){
+//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});	
+			}
+			
+			function inpcode2(obj){
+				var ulId = obj.id;
+				var testNum = document.getElementById('testNum2').value;
+//				alert(ulId);
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"扩大抽检合格",
+						ulid:ulId,
+						gcmc:gcmc,
+						timestamp:timestamp,
+						testNum:testNum
+//						gcdzt:gcdzt_pd
 					},
 					dataType:'json',
 					type:'POST', 
