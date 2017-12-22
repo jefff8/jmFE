@@ -111,7 +111,26 @@
 		            <label>检测单位:</label>
 		            <input id="jcdw" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
 		        </div>
-		    </form>	
+		    </form>
+		    <form id="firstNum_form" class="mui-input-group my_none">
+		        <div id="firstNum_form" class="mui-input-row">
+		            <label>初检编号:</label>
+		            <input id="first_num" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		    </form>
+		    <form id="testNum_form" class="mui-input-group my_none">
+		        <div class="mui-input-row">
+		            <label>检测报告编号:</label>
+		            <input id="test_num" type="text" class="mui-input-clear" readonly="readonly">
+		        </div>
+		    </form>
+		    <!--退厂记录-->
+		    <form id='recordBack_form' class="mui-input-group my_none">
+		        <div class="mui-input-row">
+		            <label>退厂记录:</label>
+		            <input id="recordBack" type="text" class="mui-input-clear" readonly="readonly" >
+		        </div>
+		    </form>
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
 				&nbsp;&nbsp;
@@ -192,6 +211,12 @@
 				var syr = doc.getElementById("syr");
 				var jzr = doc.getElementById("jzr");
 				var ypbh = doc.getElementById("ypbh");
+				var recordBack = doc.getElementById("recordBack");
+				var recordBack_form = doc.getElementById("recordBack_form");
+				var test_num = doc.getElementById("test_num");
+				var testNum_form = doc.getElementById("testNum_form");
+				var first_num = doc.getElementById("first_num");
+				var firstNum_form = doc.getElementById("firstNum_form");
 				//获取url参数值
 				function geturl(name){
 					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -239,14 +264,29 @@
 						syr.value = data[0].送样人;
 						jzr.value = data[0].见证人;
 						ypbh.value = data[0].样品编号;
+						test_num.value = data[0].检测报告编号;
+						first_num.value = data[0].复检编号;
+						recordBack.value = data[0].退厂记录;
 					},
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});	
 				
-				if(state=='收样'){
+				if(state=='收样'||state=='不合格'){
 					form_songyang.classList.remove("my_none");
+					testNum_form.classList.remove("my_none");
+				}else if(state=='待审批'||state=='已处理'){
+					form_songyang.classList.remove("my_none");
+					testNum_form.classList.remove("my_none");
+					recordBack_form.classList.remove("my_none");
+				}else if(state=='收样复检'){
+					form_songyang.classList.remove("my_none");
+					firstNum_form.classList.remove("my_none");
+				}else if(state=='复检不合格'){
+					form_songyang.classList.remove("my_none");
+					testNum_form.classList.remove("my_none");
+					firstNum_form.classList.remove("my_none");
 				}
 				
 				//日期监听

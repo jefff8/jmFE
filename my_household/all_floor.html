@@ -145,7 +145,7 @@
 					floorTab.appendChild(newButton);
 				}
 				//户号操作
-				mui("#floorTab").on('tap','button',function(){
+				mui("#floorTab").on('longtap','button',function(){
 					var houseId = this.id;
 					var innerText = this.innerText;
 					mui.ajax(url+'check.php',{

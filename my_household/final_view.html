@@ -115,7 +115,7 @@
 					success:function(data){
 						var length = data.length;
 						buildingNum.value = data[0].栋号;
-						floor.value = data[0].楼层
+						floor.value = data[0].楼层;
 						households.value = data[0].户数;
 						beginFloor.value = data[0].起始层;
 						acceptanceTime.value = data[0].验收时间; 
@@ -174,7 +174,7 @@
 					floorTab.appendChild(newButton);
 				}
 				//户号操作
-				mui("#floorTab").on('tap','button',function(){
+				mui("#floorTab").on('longtap','button',function(){
 					var houseId = this.id;
 					mui.ajax(url+'my_household/household_list.php',{
 						data:{

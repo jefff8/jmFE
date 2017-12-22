@@ -1,113 +1,113 @@
 {
-	"index.html": {
-		"resources": [
-			"my.html"
-		],
-		"refer": [
-			"my.html",
-			"team.html"
-		]
-	},
-	"login.html": {
-		"refer": [
-			"index.html"
-		]
-	},
-	"my.html": {
-		"refer": [
-			"my_plus/my_project_list.html"
-		]
-	},
-	"my_plus/my_project.html": {
-		"refer": [
-			"my_plus/my_supervision.html",
-			"my_plus/my_result.html",
-			"my_plus/my_project_list.html"
-		]
-	},
-	"my_plus/my_project_list.html": {
-		"refer": [
-			"my_plus/my_project.html"
-		]
-	},
-	"my_plus/my_supervision.html": {
-		"refer": [
-			"my_spv_material/my_supervision_material.html",
-			"my_spv_entity/my_spv_entity_list.html"
-		]
-	},
-	"my_spv_material/my_spv_material_detail.html": {
-		"refer": [
-			"my_spv_material/my_supervision_material.html",
-			"my_spv_material/readimage.html",
-			"my_spv_material/my_spv_material_results.html"
-		]
-	},
-	"my_spv_material/my_supervision_material.html": {
-		"refer": [
-			"my_spv_material/my_spv_material_detail.html",
-			"my_spv_material/my_spv_material_add.html",
-			"my_spv_material/my_spv_material_deliver.html",
-			"my_spv_material/my_spv_material_fail.html",
-			"my_spv_material/my_spv_material_review_detail.html"
-		]
-	},
-	"my_spv_material/my_spv_material_results.html": {
-		"refer": [
-			"my_spv_material/my_spv_material_detail.html",
-			"my_spv_material/my_spv_material_resDet.html",
-			"my_spv_material/my_spv_material_supvr.html"
-		]
-	},
-	"my_plus/my_result.html": {
-		"refer": [
-			"my_spv_material/my_spv_material_results.html",
-			"my_insp_material/my_inspection_mtResult.html",
-			"my_material/my_material_results.html",
-			"my_spv_entity/my_spv_entity_results.html"
-		]
-	},
-	"my_spv_material/my_spv_material_review_detail.html": {
-		"refer": [
-			"my_spv_material/my_supervision_material.html",
-			"my_spv_material/camera_image.html"
-		]
-	},
-	"my_spv_material/my_spv_material_resDet.html": {
-		"refer": [
-			"my_spv_material/readimage.html",
-			"my_spv_material/my_spv_material_results.html"
-		]
-	},
-	"my_spv_entity/my_spv_entity_list.html": {
-		"refer": [
-			"my_spv_entity/my_spv_entity_readmessage.html",
-			"my_spv_entity/my_spv_entity_add.html",
-			"my_spv_entity/my_spv_entity_fail.html",
-			"my_spv_entity/my_spv_entity_review_readmessage.html"
-		]
-	},
-	"my_spv_entity/my_spv_entity_readmessage.html": {
-		"refer": [
-			"my_spv_entity/my_spv_entity_readimage.html",
-			"my_spv_entity/my_spv_entity_list.html",
-			"my_spv_entity/my_spv_entity_results.html"
-		]
-	},
-	"my_spv_entity/my_spv_entity_add.html": {
-		"refer": [
-			"my_spv_entity/camera_image.html"
-		]
-	},
-	"my_spv_entity/my_spv_entity_results.html": {
-		"refer": [
-			"my_spv_entity/my_spv_entity_readmessage.html",
-			"my_spv_entity/my_spv_entity_supvr.html"
-		]
-	},
-	"my_spv_entity/my_spv_entity_review_readmessage.html": {
-		"refer": [
-			"my_spv_entity/my_spv_entity_list.html"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "my.html"
+    ],
+    "refer": [
+      "my.html",
+      "team.html"
+    ]
+  },
+  "login.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "my.html": {
+    "refer": [
+      "my_plus/my_project_list.html"
+    ]
+  },
+  "my_plus/my_project.html": {
+    "refer": [
+      "my_plus/my_supervision.html",
+      "my_plus/my_result.html",
+      "my_plus/my_project_list.html"
+    ]
+  },
+  "my_plus/my_project_list.html": {
+    "refer": [
+      "my_plus/my_project.html"
+    ]
+  },
+  "my_plus/my_supervision.html": {
+    "refer": [
+      "my_spv_material/my_supervision_material.html",
+      "my_spv_entity/my_spv_entity_list.html"
+    ]
+  },
+  "my_spv_material/my_spv_material_detail.html": {
+    "refer": [
+      "my_spv_material/my_supervision_material.html",
+      "my_spv_material/readimage.html",
+      "my_spv_material/my_spv_material_results.html"
+    ]
+  },
+  "my_spv_material/my_supervision_material.html": {
+    "refer": [
+      "my_spv_material/my_spv_material_detail.html",
+      "my_spv_material/my_spv_material_add.html",
+      "my_spv_material/my_spv_material_deliver.html",
+      "my_spv_material/my_spv_material_fail.html",
+      "my_spv_material/my_spv_material_review_detail.html"
+    ]
+  },
+  "my_spv_material/my_spv_material_results.html": {
+    "refer": [
+      "my_spv_material/my_spv_material_detail.html",
+      "my_spv_material/my_spv_material_resDet.html",
+      "my_spv_material/my_spv_material_supvr.html"
+    ]
+  },
+  "my_plus/my_result.html": {
+    "refer": [
+      "my_spv_material/my_spv_material_results.html",
+      "my_insp_material/my_inspection_mtResult.html",
+      "my_material/my_material_results.html",
+      "my_spv_entity/my_spv_entity_results.html"
+    ]
+  },
+  "my_spv_material/my_spv_material_review_detail.html": {
+    "refer": [
+      "my_spv_material/my_supervision_material.html",
+      "my_spv_material/camera_image.html"
+    ]
+  },
+  "my_spv_material/my_spv_material_resDet.html": {
+    "refer": [
+      "my_spv_material/readimage.html",
+      "my_spv_material/my_spv_material_results.html"
+    ]
+  },
+  "my_spv_entity/my_spv_entity_list.html": {
+    "refer": [
+      "my_spv_entity/my_spv_entity_readmessage.html",
+      "my_spv_entity/my_spv_entity_add.html",
+      "my_spv_entity/my_spv_entity_fail.html",
+      "my_spv_entity/my_spv_entity_review_readmessage.html"
+    ]
+  },
+  "my_spv_entity/my_spv_entity_readmessage.html": {
+    "refer": [
+      "my_spv_entity/my_spv_entity_readimage.html",
+      "my_spv_entity/my_spv_entity_list.html",
+      "my_spv_entity/my_spv_entity_results.html"
+    ]
+  },
+  "my_spv_entity/my_spv_entity_add.html": {
+    "refer": [
+      "my_spv_entity/camera_image.html"
+    ]
+  },
+  "my_spv_entity/my_spv_entity_results.html": {
+    "refer": [
+      "my_spv_entity/my_spv_entity_readmessage.html",
+      "my_spv_entity/my_spv_entity_supvr.html"
+    ]
+  },
+  "my_spv_entity/my_spv_entity_review_readmessage.html": {
+    "refer": [
+      "my_spv_entity/my_spv_entity_list.html"
+    ]
+  }
 }

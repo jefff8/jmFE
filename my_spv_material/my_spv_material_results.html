@@ -252,7 +252,7 @@
 									timeout:10000,
 									success:function(data){
 										var gcdzt_pd = data.工程单状态;
-										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='监督机构')){
 											var btnArray = [
 											{title:"复检"},
 											{title:"监理处理"}

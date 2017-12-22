@@ -204,7 +204,7 @@
 									success:function(data){
 										var gcdzt_pd = data[0].工程单状态;
 										//判断状态并根据状态执行改变状态的任务
-										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员')){
+										if(gcdzt_pd=='不合格'&&((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='监督机构')){
 											var btnArray = [
 											{title:"扩大抽检"},
 											{title:"监理处理"}
@@ -257,9 +257,9 @@
 														break;
 												}	
 											 });
-										}else if(gcdzt_pd=='扩大抽检不合格'&&(units=='监督单位'||units=='管理员')){
+										}else if(gcdzt_pd=='扩大抽检不合格'&&(units=='监理单位'||units=='管理员')){
 											var btnArray = [
-											{title:"监理处理(监督单位)"}
+											{title:"监理处理"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 
@@ -269,30 +269,31 @@
 												var index = e.index;	
 												//var nextpage='';
 												switch (index){
-													case 1://审批通过
-														mui.ajax(url+'my_plus/my_spv_entity_result.php',{
-															data:{
-																flag:"监理处理",
+													case 1://
+														mui.openWindow({
+															url:"my_spv_entity_supvr.html",
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
 																ulId:ulId
 															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-//																alert(data);
-																mui.toast('操作完成！',{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
 															},
-															error:function(xhr,type,errorThrown){
-																alert('aja1x错误'+type+'---'+errorThrown+"失败！");
+															waiting:{
+																autoShow:false,//自动显示等待框
 															}
-														});	
+														})
 														break;
 												}	
 											});
-										}else if(gcdzt_pd=='待审批'&&(units=='监理单位'||units=='管理员')){
+										}else if(gcdzt_pd=='待审批'&&(units=='监督机构'||units=='管理员')){
 											var btnArray = [
-											{title:"确认(监理单位)"}
+											{title:"确认(监督机构)"}
 											]; 
 											plus.nativeUI.actionSheet({
 												title:"操作", 

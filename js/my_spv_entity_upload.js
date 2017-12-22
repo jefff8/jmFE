@@ -434,11 +434,12 @@ function saveInfo(){
 	var my_input = document.getElementById("myform").getElementsByTagName("input");
 	var unit = document.getElementById("operation_unit").value;
 	var test_dpm = document.getElementById("test_dpm").value;
+	var tnum = document.getElementById("tnum");
 	var Str = "";
 	for(var i=0;i<6;i++){
 		Str = Str + my_input[i].value + "|";
 	}
-	Str = Str + test_dpm+"|"+unit;
+	Str = Str + test_dpm+"|"+unit+"|"+tnum.value;
 	return Str;
 }
 ////////////上传文件/////////////////////////////////////////////

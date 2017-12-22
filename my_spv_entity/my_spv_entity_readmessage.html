@@ -54,7 +54,7 @@
 		    <!--<form class="mui-input-group my_none" id="myform2">
 		        
 		    </form>-->
-		    <form class="mui-input-group my_none" id="myform3">
+		    <form class="mui-input-group " id="myform3">
 		        <!--<div class="mui-input-row">
 		            <label>送样日期:</label>
 		            <input id="sedate" type="text" class="mui-input-clear" readonly="readonly" >
@@ -91,12 +91,8 @@
 		        </div>-->
 		    </form>
 		    <form class="mui-input-group my_none" id="myform5">
-		    	<div class="mui-input-row">
-		            <label>处理类型:</label>
-		            <input id="process_type" type="text" class="mui-input-clear" readonly="readonly">
-		        </div>
 		        <div class="mui-input-row">
-		            <label>处理记录:</label>
+		            <label>退厂记录:</label>
 		            <input id="lreport" type="text" class="mui-input-clear" readonly="readonly">
 		        </div>
 		    </form>
@@ -132,7 +128,6 @@
 				var freport = doc.getElementById('freport');
 				var lreport = doc.getElementById('lreport');
 				var testNum = doc.getElementById("testNum");
-				var process_type = doc.getElementById("process_type");
 				var tbpho = [];//检测前
 				var tipho = [];//检测中
 				var tepho = []//检测设备
@@ -191,7 +186,7 @@
 						myform2.classList.remove('my_none');
 //						myform3.classList.remove('my_none');//没有对应输入的信息
 //						myform4.classList.remove('my_none');//没有对应输入的信息
-//						myform5.classList.remove('my_none');//没有对应输入的信息
+						myform5.classList.remove('my_none');//没有对应输入的信息
 					}
 				}
 //				alert(gcid);
@@ -243,7 +238,6 @@
 						Text4 = data[0].报告照片说明;
 						Text5 = data[0].报告照片说明;
 						Text6 = data[0].处理照片说明;
-						process_type.value = data[0].处理类型;
 						datashow(proatt);
 					},
 					error:function(xhr,type,errorThrown){
