@@ -75,7 +75,6 @@
 					</div>
 			    </div>
 			</div>
-			<div id="item3" class="mui-control-content"></div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
@@ -169,135 +168,97 @@
 								var jcrq = data[i].检测日期;
 								var sjc = data[i].时间戳;
 								var operation_supvision = data[i].监理操作单位;
-								mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc,operation_supvision)
+								mymaterial(zjzt,id,jclx,num,jcbw,jcr,jcrq,sjc,operation_supvision);
 							}
 						}
 					},
 					error:function(xhr,type,errorThrown){
-//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});	
 				
 				//长按不合格
 				mui("#witness").on('longtap','ul',function(){
-				var ulid = this.id;
-				mui.ajax(url+'check.php',{
-					data:{
-						ulId:ulid,
-						mobile:mobile,
-						flag:"self_inspection2"
-					},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					success:function(data){
-						var units = data['单位']; //获取单位信息
-						var unitName = data['单位名称'];
-						var operation_supvision = data['监理操作单位'];
-						if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
-							mui.ajax(url+'my_plus/my_inspection_entity.php',{
-								data:{
-									flag:"获取状态",
-									ulid:ulid
-								},
-								dataType:"json",
-								type:"POST",
-								timeout:10000,
-								success:function(data){
-		//							alert(data);
-									var gcdzt = data.工程单状态;
-									var timestamp = data.时间戳;
-									if(gcdzt=='不合格'){
-										var btnArray = [
-										{title:"监理处理"}
-										]; 
-										plus.nativeUI.actionSheet({
-											title:"操作", 
-											cancel:"取消",
-											buttons:btnArray
-										},function(e){
-											var index = e.index;	
-											switch (index){
-												case 1://监理处理
-													mui.openWindow({
-														url:"my_insp_supvr.html",
-														id:"my_inspection_entity_final",
-														extras:{
-															ulid:ulid,
-															timestamp:timestamp
-														},
-														show:{
-															autoShow:true,//页面loaded事件发生后自动显示
-															aniShow:'slide-in-right',//页面显示动画
-															duration:'100'//页面动画持续时间
-														},
-														waiting:{
-															autoShow:false,//自动显示等待框
-														}
-													});
-<<<<<<< HEAD
-													break;
-											}	
-										 });
+					var ulid = this.id;
+					mui.ajax(url+'check.php',{
+						data:{
+							ulId:ulid,
+							mobile:mobile,
+							flag:"self_inspection2"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							var units = data['单位']; //获取单位信息
+							var unitName = data['单位名称'];
+							var operation_supvision = data['监理操作单位'];
+							if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'){
+								mui.ajax(url+'my_plus/my_inspection_entity.php',{
+									data:{
+										flag:"获取状态",
+										ulid:ulid
+									},
+									dataType:"json",
+									type:"POST",
+									timeout:10000,
+									success:function(data){
+			//							alert(data);
+										var gcdzt = data.工程单状态;
+										var timestamp = data.时间戳;
+										if(gcdzt=='不合格'){
+											var btnArray = [
+											{title:"监理处理"}
+											]; 
+											plus.nativeUI.actionSheet({
+												title:"操作", 
+												cancel:"取消",
+												buttons:btnArray
+											},function(e){
+												var index = e.index;	
+												switch (index){
+													case 1://监理处理
+														mui.openWindow({
+															url:"my_insp_supvr.html",
+															id:"my_inspection_entity_final",
+															extras:{
+																ulid:ulid,
+																timestamp:timestamp
+															},
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
+															},
+															waiting:{
+																autoShow:false,//自动显示等待框
+															}
+														});
+														break;
+												}	
+											 });
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										alert("ajax错误");
 									}
-								},
-								error:function(xhr,type,errorThrown){
-=======
-												}else{
-													alert("抱歉，您无权限操作");
-												}
-												break;
-											case 2://拒收
-												if((units=='监理单位'&&unitName==operation_supvision)||units=='管理员'||units=='检测单位'){
-													mui.openWindow({
-														url:"my_rejection.html",
-														styles: {
-															hardwareAccelerated:false
-														},
-														extras:{
-															//传递参数
-															ulId:ulid,
-															urlId:"../my_insp_entity/my_inspection_entity_final.html"
-														},
-														show:{
-															autoShow:true,//页面loaded事件发生后自动显示
-															aniShow:'slide-in-right',//页面显示动画
-															duration:'100'//页面动画持续时间
-														},
-														waiting:{
-															autoShow:false,//自动显示等待框
-														}
-													});
-												}else{
-													alert("抱歉,您无权限操作！");
-												}
-												break;
-										}	
-									 });
-								}
-							},
-							error:function(xhr,type,errorThrown){
->>>>>>> 16115d2dfb4c93938897030c5d43358478400aef
-//									alert("ajax错误:"+type+errorThrown);
-								}
-							});
-						}else{
-							var btnArray = [
-								{title:"抱歉，您没有操作权限"}
-							]; 
-							plus.nativeUI.actionSheet({
-								title:"操作", 
-								cancel:"取消",
-								buttons:btnArray
-							},function(e){
-							});
+								});
+							}else{
+								var btnArray = [
+									{title:"抱歉，您没有操作权限"}
+								]; 
+								plus.nativeUI.actionSheet({
+									title:"操作", 
+									cancel:"取消",
+									buttons:btnArray
+								},function(e){
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+	//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
-					},
-					error:function(xhr,type,errorThrown){
-//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
-					}
-				});	
-					
+					});	
 				});
 			});	
 		</script>

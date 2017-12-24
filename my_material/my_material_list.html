@@ -697,7 +697,7 @@
 										if(gcdzt_pd=='未见证'||gcdzt_pd=='未见证复检'){
 											var btnArray = [
 											{title:"确认见证"},
-											{title:"拒收"}
+											{title:"拒绝见证"}
 											];
 											plus.nativeUI.actionSheet({
 												title:"操作",
@@ -719,7 +719,7 @@
 															but_id.id=ulId;
 														}
 														break;
-													case 2://拒收
+													case 2://拒绝见证
 														mui.openWindow({
 															url:"my_rejection.html",
 															styles: {
@@ -865,7 +865,7 @@
 										var btnArray = [
 											{title:"结果(合格)"},
 											{title:"不合格"},
-											{title:"拒收"}
+											{title:"拒收样品"}
 											];
 											plus.nativeUI.actionSheet({
 												title:"操作",
@@ -984,7 +984,7 @@
 														});
 													}
 													break;
-													case 3:
+													case 3://拒收样品
 														mui.openWindow({
 															url:"my_rejection.html",
 															styles: {
