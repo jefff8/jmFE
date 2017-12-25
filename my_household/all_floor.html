@@ -42,7 +42,11 @@
 				        <input type="number" id="beginFloor" class="mui-input-clear" readonly="readonly" >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>验收时间:</label>
+				        <label>起始时间:</label>
+				        <input type="text" id="startTime" class="mui-input-clear"   readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>完成时间:</label>
 				        <input type="text" id="acceptanceTime" class="mui-input-clear"   readonly="readonly" >
 				    </div>
 				</form> 
@@ -104,6 +108,7 @@
 						households.value = data[0].户数;
 						beginFloor.value = data[0].起始层;
 						acceptanceTime.value = data[0].验收时间; 
+						startTime.value = data[0].起始日期;
 					},
 					error:function(type,xhr,errorThrown){
 //						alert('ajax错误'+type+'---'+errorThrown+"失败！");
@@ -139,7 +144,7 @@
 					if(status=='已上传'){
 						newButton.style.cssText = "margin:2px;width:60px;height:60px;background-color:limegreen;";
 					}else{
-						newButton.style.cssText = "margin:2px;width:60px;height:60px;";
+						newButton.style.cssText = "margin:2px;width:80px;height:80px;";
 					}
 					newButton.appendChild(textNode);
 					floorTab.appendChild(newButton);
@@ -158,91 +163,92 @@
 						dataType:'json',
 						success:function(data){
 							if(data['单位']=='监理单位'||data['单位']=='管理员'){
-								mui.ajax(url+'my_household/household_list.php',{
-									data:{
-										flag:"查看附件",
-										houseId:houseId
-									},
-									type:'post',
-									dataType:'json',
-									timeout:10000,
-									success:function(data){
-										acceptanceForm = data[0].验收记录表.split("~*^*~");
-										acceptancePhoto = data[0].验收照片.split("~*^*~");
-										acceptanceSummary = data[0].验收汇总表.split("~*^*~");
-										var recordText = data[0].验收记录表说明;
-										var acceptText = data[0].验收照片说明;
-										var summaryText = data[0].验收汇总表说明;
-										var btnArray = [
-											{title:"查看附件"},
-											{title:"上传附件"}
-										];
-										plus.nativeUI.actionSheet({
-												title:"操作",
-												cancel:"取消",
-												buttons:btnArray
-											},function(e){
-												var index = e.index;	
-												switch (index){
-													case 1://查看附件
-														mui.openWindow({
-															url:'readimage.html',
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																acceptanceForm:acceptanceForm,
-																acceptancePhoto:acceptancePhoto,
-																acceptanceSummary:acceptanceSummary,
-																recordText:recordText,
-																acceptText:acceptText,
-																summaryText:summaryText
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														});
-														break;
-													case 2://上传附件
-														mui.openWindow({
-															url:'supervision_upload.html',
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																houseId:houseId,
-																innerText:innerText
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														});
-														break;
-												}
-											}
-										);
-									},
-									error:function(xhr,type,errorThrown){
-//										alert('ajax错误'+type+'---'+errorThrown+"失败！");
+								var btnArray = [
+									{title:"上传附件"}
+								];
+								plus.nativeUI.actionSheet({
+										title:"操作",
+										cancel:"取消",
+										buttons:btnArray
+									},function(e){
+										var index = e.index;	
+										switch (index){
+											case 1://上传附件
+												mui.openWindow({
+													url:'supervision_upload.html',
+													styles: {
+														hardwareAccelerated:false
+													},
+													extras:{
+														//传递参数
+														houseId:houseId,
+														innerText:innerText
+													},
+													show:{
+														autoShow:true,//页面loaded事件发生后自动显示
+														aniShow:'slide-in-right',//页面显示动画
+														duration:'100'//页面动画持续时间
+													},
+													waiting:{
+														autoShow:false,//自动显示等待框
+													}
+												});
+												break;
+										}
 									}
-								});
+							 	);
 							}else{
 								alert("抱歉，您无权限操作");
 							}
 						},
 						error:function(type,xhr,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				});
+				
+				mui("#floorTab").on('tap','button',function(){
+					var houseId = this.id;
+					mui.ajax(url+'my_household/household_list.php',{
+						data:{
+							flag:"查看附件",
+							houseId:houseId
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							acceptanceForm = data[0].验收记录表.split("~*^*~");
+							acceptancePhoto = data[0].验收照片.split("~*^*~");
+							acceptanceSummary = data[0].验收汇总表.split("~*^*~");
+							var recordText = data[0].验收记录表说明;
+							var acceptText = data[0].验收照片说明;
+							var summaryText = data[0].验收汇总表说明;
+							mui.openWindow({
+								url:'readimage.html',
+								styles: {
+									hardwareAccelerated:false
+								},
+								extras:{
+									//传递参数
+									acceptanceForm:acceptanceForm,
+									acceptancePhoto:acceptancePhoto,
+									acceptanceSummary:acceptanceSummary,
+									recordText:recordText,
+									acceptText:acceptText,
+									summaryText:summaryText
+								},
+								show:{
+									autoShow:true,//页面loaded事件发生后自动显示
+									aniShow:'slide-in-right',//页面显示动画
+									duration:'100'//页面动画持续时间
+								},
+								waiting:{
+									autoShow:false,//自动显示等待框
+								}
+							});
+						},
+						error:function(xhr,type,errorThrown){
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});

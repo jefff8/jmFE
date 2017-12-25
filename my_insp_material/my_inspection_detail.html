@@ -84,12 +84,6 @@
 					<textarea id="tcjv" rows="5" readonly="readonly"></textarea>
 				</div>
 			</form>
-			<form id="myform6" class="my_none">
-				&nbsp;&nbsp;<label >拒收理由：</label>
-			    <div class="mui-input-row" >
-					<textarea id="reason" rows="5" readonly="readonly"></textarea>
-				</div>
-			</form>
 			<!--监理单位填写-->
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
@@ -134,7 +128,6 @@
 //				var jcbgbh = doc.getElementById("jcbgbh");
 				var clqk = doc.getElementById("clqk");
 				var tcjv = doc.getElementById("tcjv");
-				var reason = doc.getElementById("reason");
 				//日期监听
 				jcrq.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
@@ -220,8 +213,6 @@
 								myform2.classList.remove("my_none");
 								var myform5 = document.getElementById("myform5");
 								myform5.classList.remove("my_none");
-								var myyform6 = document.getElementById("myform6");
-								myform6.classList.remove("my_none");
 							}
 							
 							zjlx.value = data.自检自测类型;
@@ -238,7 +229,6 @@
 							jzr.value = data.见证人;
 							clqk.value = data.处理情况;
 							tcjv.value = data.退场记录;
-							reason.value = data.拒收理由;
 						},	
 						error:function(xhr,type,errorThrown){
 	//						alert('ajax错误'+type+'---'+errorThrown+"失败！");

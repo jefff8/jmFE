@@ -16,6 +16,17 @@
 				/*background-color:transparent;*/
 		        z-index: 998 ;
 		    }
+		    #zuyPopover{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+
+			}
+			.reorganizeBtn{
+				width: 100px;
+			}
 		</style>
 	</head>
 
@@ -73,6 +84,23 @@
 	
 					</div>
 			    </div>
+			</div>
+			<!--重新组织验收弹出框-->
+			<div id="zuyPopover" class="mui-popover">
+        		<h4 id="title" style="text-align: center;margin-top: 15px;">重新组织验收</h4>
+        		<form class="mui-input-group" style="margin-top: 15px;">
+        			<div class="mui-input-row">
+        				<label>理由:</label>
+        				<select id="reason">
+        					<option></option>
+        					<option>人员不符合要求</option>
+        					<option>验收结论不一致</option>
+        				</select>
+        			</div>    			
+        		</form>
+				<div id="comfirm"  class="mui-button-row my_margintop10px">
+					<button  type="button" class="mui-btn mui-btn-primary reorganizeBtn"  onclick="reorganize(this)">确定</button>					
+				</div>
 			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -204,7 +232,7 @@
 					}
 					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+myhref+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ divisionType +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+applicationTime+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+constructionUnits+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">'+supervision+'</p></li>';
 					switch(status){
-						case "施工申请":
+						case "施工申请":case "重新组织验收":
 							apply.appendChild(ul); 
 							break;
 						case "监理确认":case "资料完善":case "重新组织验收":
@@ -444,7 +472,7 @@
 										if(status=='待审批'){
 											var btnArray = [
 												{title:"审批通过"},
-												{title:"资料完善"},
+												{title:"资料待完善"},
 												{title:"重新组织验收"}
 											]; 
 										plus.nativeUI.actionSheet({
@@ -492,22 +520,25 @@
 													});
 													break;
 												case 3://重新组织验收
-													mui.ajax(url+'my_division/division_list.php',{
-														data:{
-															flag:"重新组织验收",
-															ulId:ulId
-														},
-														dataType:'json',
-														type:'POST', 
-														timeout:10000,
-														success:function(data){
-															mui.toast('操作完成！',{ duration:'long', type:'div' })
-															location.reload();//刷新本页面
-														},
-														error:function(xhr,type,errorThrown){
-				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-														}
-													});
+//													mui.ajax(url+'my_division/division_list.php',{
+//														data:{
+//															flag:"重新组织验收",
+//															ulId:ulId
+//														},
+//														dataType:'json',
+//														type:'POST', 
+//														timeout:10000,
+//														success:function(data){
+//															mui.toast('操作完成！',{ duration:'long', type:'div' })
+//															location.reload();//刷新本页面
+//														},
+//														error:function(xhr,type,errorThrown){
+//				//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//														}
+//													});
+													mui("#zuyPopover").popover("toggle");
+													var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+													but_id.id=ulId;
 													break;
 											}	
 										 });
@@ -528,6 +559,26 @@
 					});
 				});
 			});
+			function reorganize(ulId){
+				var reason = document.getElementById("reason");
+				mui.ajax(url+'my_division/division_list.php',{
+					data:{
+						flag:"重新组织验收",
+						ulId:ulId.id,
+						reason:reason.value
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						mui.toast('操作完成！',{ duration:'long', type:'div' })
+						location.reload();//刷新本页面
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
+			}
 		</script>
 	</body>
 
