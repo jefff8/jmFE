@@ -15,7 +15,7 @@
 		    <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
 		    <h1 class="mui-title">附件上传</h1>
 		</header>
-		<div class="mui-content">
+		<div id="content" class="mui-content">
 			<form class="mui-input-group">
 			    <div class="mui-input-row my_none">
 			        <label>id:</label>
@@ -25,18 +25,47 @@
 			        <label>当前户号:</label>
 			        <input id="houseNum" type="text" class="mui-input-clear"  readonly="readonly">
 			    </div>
+			    <form class="mui-input-group">
+			        <div class="mui-input-row">
+			            <label>结果:</label>
+			            <select id="result" style="font-size: 15px;">
+			            	<!--<option>合格</option>
+			            	<option>不合格</option>-->
+			            </select>
+			        </div>
+			    </form>
 			</form>
 		    <!--处理图片-->
 		    <form id="img_content" class="" >
-	        	<!--验收记录表-->
+		        <!--验收观感表-->
 	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">验收记录表</span>
+		        	<span style="padding-bottom: 10px;">验收观感表</span>
+		        	<br/>
+		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>验收观感表说明:</label>
+			            <input id="summaryText" type="text" class="mui-input-clear" placeholder="请输入验收汇总表说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_yshz" class="dlist" style="text-align:left;">
+						<li id="empty_yshz" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	<button id="clean_yshz" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('yshz');">清空记录</button>
+		        </div>
+		        <!--验收实测记录表-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">验收实测记录表</span>
 		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
 		        <div class="mui-input-group" >
 		        	<div  class="mui-input-row">
-			            <label>验收记录表说明:</label>
+			            <label>验收实测记录表说明:</label>
 			            <input id="recordText" type="text" class="mui-input-clear" placeholder="请输入验收记录表说明">
 		        	</div>
 		        </div>
@@ -49,49 +78,32 @@
 		        	<button id="clean_ysjl" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('ysjl');">清空记录</button>
 		        </div>
 		        <!--验收照片-->
-	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">验收照片</span>
-		        	<br/>
-		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        <div id="acceptContent" class="">
+		        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+			        	<span style="padding-bottom: 10px;">验收照片</span>
+			        	<br/>
+			        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+			        </div>
+			        <div class="mui-input-group" >
+			        	<div  class="mui-input-row">
+				            <label>验收照片说明:</label>
+				            <input id="acceptText" type="text" class="mui-input-clear" placeholder="请输入验收照片说明">
+			        	</div>
+			        </div>
+			        <div>
+			        	<ul id="history_yszp" class="dlist" style="text-align:left;">
+							<li id="empty_yszp" class="ditem-empty">无历史记录</li>
+						</ul>
+						
+			        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+			        	<button id="clean_yszp" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('yszp');">清空记录</button>
+			        </div>
 		        </div>
-		        <div class="mui-input-group" >
-		        	<div  class="mui-input-row">
-			            <label>验收照片说明:</label>
-			            <input id="acceptText" type="text" class="mui-input-clear" placeholder="请输入验收照片说明">
-		        	</div>
-		        </div>
-		        <div>
-		        	<ul id="history_yszp" class="dlist" style="text-align:left;">
-						<li id="empty_yszp" class="ditem-empty">无历史记录</li>
-					</ul>
-					
-		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	<button id="clean_yszp" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('yszp');">清空记录</button>
-		        </div>
-		        <!--验收汇总表-->
-	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">验收汇总表</span>
-		        	<br/>
-		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
-		        </div>
-		        <div class="mui-input-group" >
-		        	<div  class="mui-input-row">
-			            <label>验收汇总表说明:</label>
-			            <input id="summaryText" type="text" class="mui-input-clear" placeholder="请输入验收汇总表说明">
-		        	</div>
-		        </div>
-		        <div>
-		        	<ul id="history_yshz" class="dlist" style="text-align:left;">
-						<li id="empty_yshz" class="ditem-empty">无历史记录</li>
-					</ul>
-					
-		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	<button id="clean_yshz" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('yshz');">清空记录</button>
-		        </div>
-		        <button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="upload(this.id,'clean');">保存上传</button>
+		        <button  type="button" class="mui-btn mui-btn-primary mui-btn-block saveBtn" onclick="upload(this.id,'clean');">保存上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
+		    
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
@@ -107,6 +119,50 @@
 				houseNum.value = innerText;
 				var selfId = doc.getElementById("selfId");
 				selfId.value = houseId;
+				var content = doc.getElementById("content").getElementsByTagName("button");
+				var acceptContent = doc.getElementById("acceptContent");
+				
+				if(innerText.indexOf("公共")>0){
+					content[3].id = "save2";
+					acceptContent.classList.add("my_none");
+				}else{
+					content[3].id = "save1";
+				}
+				mui.ajax(url+'my_household/household_list.php',{
+					data:{
+						flag:"查看状态",
+						houseId:houseId
+					},
+					type:'post',
+					dataType:'json',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						for(var i=0;i<length;i++){
+							var status = data[i].状态;
+							if(status=='不合格'||status=='返工合格'){
+								var result = document.getElementById("result");
+								var optionObj1 = document.createElement("option");
+								var optionObj2 = document.createElement("option");
+								optionObj1.innerHTML = "返工合格";
+								optionObj2.innerHTML = "不合格";
+								result.appendChild(optionObj1);
+								result.appendChild(optionObj2);
+							}else{
+								var result = document.getElementById("result");
+								var optionObj1 = document.createElement("option");
+								var optionObj2 = document.createElement("option");
+								optionObj1.innerHTML = "合格";
+								optionObj2.innerHTML = "不合格";
+								result.appendChild(optionObj1);
+								result.appendChild(optionObj2);
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");  
+					}
+				});
 			});
 			//返回父页面(窗口)刷新
 			function back(){

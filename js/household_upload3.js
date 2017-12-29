@@ -2,17 +2,9 @@
 mui.plusReady(function(){
 	//上传图片框
 	var newUpload1=document.getElementById('newUpload1');
-	var newUpload2=document.getElementById('newUpload2');
-	var newUpload3=document.getElementById('newUpload3');
 	//上传图片框监听
 	newUpload1.addEventListener('tap',function () {
-		myactionSheet('ysjl');
-	});	
-	newUpload2.addEventListener('tap',function(){
-		myactionSheet('yszp');
-	});	
-	newUpload3.addEventListener('tap',function(){
-		myactionSheet('yshz');
+		myactionSheet('ysfa');
 	});	
 	//原生操作列表
 	var myactionSheet=function(lx){
@@ -72,14 +64,8 @@ if(window.plus){
 document.addEventListener("DOMContentLoaded",function(){
 	// 获取DOM元素对象
 	//验收记录表
-	history_ysjl=document.getElementById("history_ysjl");
-	empty_ysjl=document.getElementById("empty_ysjl");		
-	//验收照片
-	history_yszp=document.getElementById("history_yszp");
-	empty_yszp=document.getElementById("empty_yszp");	
-	//验收汇总表
-	history_yshz=document.getElementById("history_yshz");
-	empty_yshz=document.getElementById("empty_yshz");
+	history_ysfa=document.getElementById("history_ysfa");
+	empty_ysfa=document.getElementById("empty_ysfa");		
 	
 	de=document.getElementById("display");
 	if(ie=document.getElementById("index")){
@@ -156,11 +142,9 @@ function displayFile( li ) {
 
 // 添加文件
 var f1Base64=[];
-var f2Base64=[];
-var f3Base64=[];
 
 function appendFile(path,entry,lx){
-	if(lx=='ysjl'){
+	if(lx=='ysfa'){
 		var img = new Image();
 		img.src = path; // 传过来的图片路径在这里用。                                              ///////////// 用canvas画布对照片像素进行处理
 		img.onload = function () {
@@ -181,78 +165,22 @@ function appendFile(path,entry,lx){
 			f1Base64.push(base64+"︴");
 			createItem(base64,entry,lx);
 		}
-	}else if(lx=='yszp'){
-		var img = new Image();
-		img.src = path; // 传过来的图片路径在这里用。                                              ///////////// 用canvas画布对照片像素进行处理
-		img.onload = function () {
-			var that = this;
-			//生成比例 
-			var w = that.width,
-				h = that.height,
-				scale = w / h;
-				w = 360 || w; //480  你想压缩到多大，改这里
-				h = w / scale;
-			//生成canvas
-			var canvas = document.createElement('canvas');
-			var ctx = canvas.getContext('2d');
-			canvas.setAttribute("width",w);
-			canvas.setAttribute("height",h);
-			ctx.drawImage(that, 0, 0, w, h);
-			var base64 = canvas.toDataURL('image/jpeg', 1 || 0.8 );
-			f2Base64.push(base64+"︴");
-			createItem(base64,entry,lx);
-		}
-	}else if(lx=='yshz'){
-		var img = new Image();
-		img.src = path; // 传过来的图片路径在这里用。                                              ///////////// 用canvas画布对照片像素进行处理
-		img.onload = function () {
-			var that = this;
-			//生成比例 
-			var w = that.width,
-				h = that.height,
-				scale = w / h;
-				w = 360 || w; //480  你想压缩到多大，改这里
-				h = w / scale;
-			//生成canvas
-			var canvas = document.createElement('canvas');
-			var ctx = canvas.getContext('2d');
-			canvas.setAttribute("width",w);
-			canvas.setAttribute("height",h);
-			ctx.drawImage(that, 0, 0, w, h);
-			var base64 = canvas.toDataURL('image/jpeg', 1 || 0.8 );
-			f3Base64.push(base64+"︴");
-			createItem(base64,entry,lx);
-		}
 	}
 }
 
 // 添加播放项
 var index;
-var index_ysjl=1;
-var index_yszp=1;
-var index_yshz=1;
+var index_ysfa=1;
 function createItem( p,entry,lx ) {
 	var li = document.createElement("li");
 	li.className = "ditem";
 	li.innerHTML = '<span class="iplay"><font class="aname"></font><br/><font class="ainf"></font></span>';
 	li.setAttribute( "onclick", "displayFile(this);" );
-	if (lx=='ysjl') {
-		hs=history_ysjl;
-		ep=empty_ysjl;
-		files_ysjl.push({name:"upfile"+index_ysjl,path:p});
-		index_ysjl++;
-	}
-	if (lx=='yszp') {
-		hs=history_yszp;
-		ep=empty_yszp;
-		files_yszp.push({name:"upfile"+index_yszp,path:p});
-		index_yszp++;
-	}
-	if (lx=='yshz') {
-		hs=history_yshz;
-		ep=empty_yshz;
-		files_yshz.push({name:"upfile"+index_yshz,path:p});
-		index_yshz++;
+	if (lx=='ysfa') {
+		hs=history_ysfa;
+		ep=empty_ysfa;
+		files_ysfa.push({name:"upfile"+index_ysfa,path:p});
+		index_ysfa++;
 	}
 	hs.insertBefore( li, ep.nextSibling );
 	li.querySelector(".aname").innerText = entry.name;
@@ -267,21 +195,11 @@ function cleanHistory(lx) {
 	var btnArray = ['确定', '取消'];
 	mui.confirm('您确定要清空记录吗？', '警告:', btnArray, function(e) {
 		if (e.index == 0) {
-			if (lx=='ysjl') {				
-				history_ysjl.innerHTML = '<li id="empty_ysjl" class="ditem-empty">无历史记录</li>';
-				empty_ysjl=document.getElementById("empty_ysjl");	
-				files_ysjl=[];
-				index_ysjl=1;
-			}else if(lx=='yszp'){
-				history_yszp.innerHTML = '<li id="empty_yszp" class="ditem-empty">无历史记录</li>';
-				empty_yszp=document.getElementById("empty_yszp");	
-				files_yszp=[];
-				index_yszp=1;
-			}else if(lx=='yshz'){
-				history_yshz.innerHTML = '<li id="empty_yshz" class="ditem-empty">无历史记录</li>';
-				empty_yshz=document.getElementById("empty_yshz");	
-				files_yshz=[];
-				index_yshz=1;
+			if (lx=='ysfa') {				
+				history_ysfa.innerHTML = '<li id="empty_ysfa" class="ditem-empty">无历史记录</li>';
+				empty_ysfa=document.getElementById("empty_ysfa");	
+				files_ysfa=[];
+				index_ysfa=1;
 			}
 		} else {
 			return;
@@ -290,42 +208,17 @@ function cleanHistory(lx) {
 }
 
 ////////////上传文件/////////////////////////////////////////////
-var server=url+"my_household/household_upload1.php";
+var server=url+"my_household/household_upload3.php";
 var files1=[];
-var files2=[];
-var files3=[];
-var files_ysjl=[];
-var files_yszp=[];
-var files_yshz=[];
+var files_ysfa=[];
 //上传函数
 function upload(lx,clean){	
-	files1=files_ysjl;
+	files1=files_ysfa;
 	var strs1=","+f1Base64.join();
-	files2=files_yszp;
-	var strs2=","+f2Base64.join();
-	files3=files_yshz;
-	var strs3=","+f3Base64.join();
-	if(lx=='save1'){
-		if(files3.length<=0){
-			plus.nativeUI.alert("没有添加验收观感表！");
-			return;
-		}else if(files1.length<=0){
-			plus.nativeUI.alert("没有添加验收实测记录表！");
-			return;
-		}else if(files2.length<=0){
-			plus.nativeUI.alert("没有添加验收照片！");
-			return;
-		}
-	}else{
-		if(files3.length<=0){
-			plus.nativeUI.alert("没有添加验收观感表！");
-			return;
-		}else if(files1.length<=0){
-			plus.nativeUI.alert("没有添加验收实测记录表！");
-			return;
-		}
+	if(files1.length<=0){
+		plus.nativeUI.alert("没有添加验收通知！");
+		return;
 	}
-	
 //	outSet("开始上传：")
 	var wt=plus.nativeUI.showWaiting();
 	var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
@@ -334,45 +227,24 @@ function upload(lx,clean){
 //			outLine("上传成功："+t.responseText);
 			wt.close();
 			var button_lx=document.getElementById(lx);
-			var button_clean1=document.getElementById("clean_ysjl");
-			var button_clean2=document.getElementById("clean_yszp");
-			var button_clean3=document.getElementById("clean_yshz");
+			var button_clean1=document.getElementById("clean_ysfa");
 			button_lx.disabled=true;
 			button_clean1.disabled=true;
-			button_clean2.disabled=true;
-			button_clean3.disabled=true;
 			button_lx.innerText="上传成功";				
 		}else{
 			outLine("上传失败："+status);
 			wt.close();
 		}
 	});
-	task.addData("recordText",text1());
-	task.addData("acceptText",text2());
-	task.addData("summaryText",text3());
-	task.addData("result",result());
+	task.addData("Text1",Text1());
 	task.addData("files1",strs1);
-	task.addData("files2",strs2);
-	task.addData("files3",strs3);
 	task.addData("selfId",getId());	
 	nub1=files1.length.toString();
-	nub2=files2.length.toString();
-	nub3=files3.length.toString();
 	task.addData("nub1",nub1);
-	task.addData("nub2",nub2);
-	task.addData("nub3",nub3);
 	
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});
-	}
-	for(var i=0;i<files2.length;i++){
-		var f2=files2[i];
-		task.addFile(f2.path,{key:f2.name});
-	}
-	for(var i=0;i<files3.length;i++){
-		var f3=files3[i];
-		task.addFile(f3.path,{key:f3.name});
 	}
 	task.start();
 //	files=[];
@@ -383,28 +255,10 @@ function getId(){
 	var selfId = document.getElementById("selfId").value;
 	return selfId;
 }
-
-//获取结果
-function result(){
-	var result = document.getElementById("result").value;
-	return result
-}
 //验收记录表说明
-function text1(){
-	var recordText = document.getElementById("recordText").value;
-	return recordText;
-}
-
-//验收照片说明
-function text2(){
-	var acceptText = document.getElementById("acceptText").value;
-	return acceptText;
-}
-
-//验收汇总表说明
-function text3(){
-	var summaryText = document.getElementById("summaryText").value;
-	return summaryText;
+function Text1(){
+	var Text1 = document.getElementById("Text1").value;
+	return Text1;
 }
 
 
