@@ -27,7 +27,6 @@
 		        <!--汇总表-->
 	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
 		        	<span style="padding-bottom: 10px;">汇总表</span>
-		        	<br/>
 		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
 		        </div>
 		        <div class="mui-input-group" >
@@ -37,12 +36,12 @@
 		        	</div>
 		        </div>
 		        <div>
-		        	<ul id="history_yshz" class="dlist" style="text-align:left;">
-						<li id="empty_yshz" class="ditem-empty">无历史记录</li>
+		        	<ul id="history_hzb" class="dlist" style="text-align:left;">
+						<li id="empty_hzb" class="ditem-empty">无历史记录</li>
 					</ul>
 					
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	<button id="clean_yshz" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('yshz');">清空记录</button>
+		        	<button id="clean_hzb" type="button" class="mui-btn mui-btn-block" onclick="cleanHistory('hzb');">清空记录</button>
 		        </div>
 		        <button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="upload(this.id,'clean');">保存上传</button>
 		        </div>
@@ -51,6 +50,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
+		<script src="../js/household_upload4.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -61,7 +61,7 @@
 				var selfId = doc.getElementById("selfId");
 				selfId.value = itemId;
 				var save = doc.getElementById("save");
-				var clean_yshz = doc.getElementById("clean_yshz");
+				var clean_hzb = doc.getElementById("clean_hzb");
 				mui.ajax(url+'my_household/household_list.php',{
 					data:{
 						flag:'检查',
@@ -73,7 +73,7 @@
 					success:function(data){
 						if(data[0].不合格>0){
 							alert("含有不合格或未处理的楼层,请先处理后才能提交！");
-							clean_yshz.disabled = true;
+							clean_hzb.disabled = true;
 							save.disabled = true;
 						}
 					},
@@ -84,12 +84,15 @@
 			});
 			//返回父页面(窗口)刷新
 			function back(){
+//				mui.back();
+//				var list = plus.webview.currentWebview().opener();
+//				//触发父页面的自定义事件(refresh),从而进行刷新
+//				mui.fire(list, 'refresh');
+//				//返回true,继续页面关闭逻辑
+//				return true;
+				var target=plus.webview.getWebviewById('../my_household/household_list.html');
+				target.reload(true);
 				mui.back();
-				var list = plus.webview.currentWebview().opener();
-				//触发父页面的自定义事件(refresh),从而进行刷新
-				mui.fire(list, 'refresh');
-				//返回true,继续页面关闭逻辑
-				return true;
 			}	
 		</script>
 	</body>

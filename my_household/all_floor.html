@@ -181,7 +181,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" ></a>
 		    <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
 		    <h1 id="refresh" class="mui-title">户号查看</h1>
 		</header>
@@ -549,22 +549,6 @@
 													autoShow:false,//自动显示等待框
 												}
 											});
-//											mui.ajax(url+'my_household/household_list.php',{
-//												data:{
-//													flag:"监理确认",
-//													ulId:itemId
-//												},
-//												dataType:'json',
-//												type:'POST', 
-//												timeout:10000,
-//												success:function(data){
-//													mui.back();
-//													mui.toast('保存成功！',{ duration:'long', type:'div' });
-//												},
-//												error:function(xhr,type,errorThrown){
-//													alert('ajax错误'+type+'---'+errorThrown+"失败！");
-//												}
-//											});
 											break;
 									}	
 								});
@@ -578,6 +562,12 @@
 					});
 				});
 			});
+			//返回父页面
+//			function back(){
+//				var target=plus.webview.getWebviewById('../my_household/household_list.html');
+//				target.reload(true);
+//				mui.back();
+//			}
 		</script>
 	</body>
 

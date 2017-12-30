@@ -16,8 +16,167 @@
 			#floorTab button:hover{
 				background-color: #efeff4;
 			}
-			#rwfj1_content{
-				margin-top:30px;
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100px;
+				height: 100px;
+			}
+			img{
+				padding: 3px;
+			}
+			.myp{
+				font-size: 1em;
+				color: #000000;			
+			}
+			.myp2{				
+				color:red;	
+				text-indent:2em;	
 			}
 		</style>
 	</head>
@@ -53,23 +212,42 @@
 				    </div>
 				</form> 
 			</form>
-			<p style="text-align: center;">以下为该项目的所有楼层,单击户号进行查看\操作</p>
-			<p style="text-align: center;">注：绿色背景表示该楼层已上传附件</p>
-			<!--楼盘div-->
-		    <div id="tabContent">
-				<div id="floorTab">
-					
+			<br />
+			<!--选项卡-->
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						附件
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						所有分户
+					</a>
 				</div>
-		    </div>
-		    <!--整改通知单-->
-		    <div id="rwfj1_content" class="my_none">
-		    	<p class="myp">整改通知单: </p>
-				<p id="rwfj1">
-				<p id="fj1Text">
-					
-				</p>
-				</p>
-		    </div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content ">
+						<!--处理图片-->
+					    <form id="img_content" class="" >
+				        	<!--验收方案-->
+				        	<p class="myp">验收方案: </p>
+					        <p id="rwfj1"></p>
+					        <p id="fj1Text"></p>
+					        <!--整改通知单-->
+					        <p class="myp" id="rectification_p">整改通知单: </p>
+					        <p id="rwfj2"></p>
+					        <p id="fj2Text"></p>
+					    </form>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+						<!--楼盘div-->
+						<div id="tabContent">
+							<div id="floorTab">
+								
+							</div>
+					    </div>	
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
@@ -97,10 +275,11 @@
 				var acceptancePhoto = [];
 				var acceptanceSummary = [];
 				var rectification = [];
+				var summary = [];
 				var doc = document;
 				var menu = doc.getElementById("menu");
-				var fj1Text = doc.getElementById("fj1Text");
-				var rwfj1_content = doc.getElementById("rwfj1_content");
+				var fj2Text = doc.getElementById("fj2Text");
+				var rectification_p = doc.getElementById("rectification_p");
 				window.addEventListener('refresh', function(e){//执行刷新
 				  	location.reload(); 
 				});
@@ -120,18 +299,30 @@
 						beginFloor.value = data[0].起始层;
 						acceptanceTime.value = data[0].验收时间; 
 						rectification = data[0].整改通知单.split("~*^*~");
-						fj1Text.value = data[0].整改通知单说明; 
-						//整改通知单
-						if (rectification.length>1) {
-							rwfj1_content.classList.remove("my_none");
-							for (var i=1;i<rectification.length;i++){
-								createimg('rwfj1',rectification[i]);
+						fj2Text.value = data[0].整改通知单说明; 
+						summary = data[0].汇总表.split("~*^*~");
+						fj1Text.value = data[0].汇总表说明;
+						//汇总表
+						if (summary.length>1) {
+							for (var i=1;i<summary.length;i++){
+								createimg('rwfj1',summary[i]);
 							}
 						}else{
 							createtex('rwfj1');
 						}	
 						if(fj1Text.value){
-							fj1Text.innerHTML="验收记录表说明："+fj1Text.value;
+							fj1Text.innerHTML="汇总表说明："+fj1Text.value;
+						}
+						//整改通知单
+						if (rectification.length>1) {
+							for (var i=1;i<rectification.length;i++){
+								createimg('rwfj2',rectification[i]);
+							}
+						}else{
+							rectification_p.classList.add("my_none");
+						}	
+						if(fj2Text.value){
+							fj2Text.innerHTML="整改通知单说明："+fj2Text.value;
 						}
 					},
 					error:function(type,xhr,errorThrown){
@@ -151,7 +342,7 @@
 						for(var i=0;i<length;i++){
 							var id = data[i].id ;
 							var houseNum = data[i].户号 ;
-							var status = data[i].上传状态;
+							var status = data[i].状态;
 							ShowTab(id,houseNum,status);
 						}
 					},
@@ -165,16 +356,20 @@
 					var newButton = document.createElement('button');
 					var textNode = document.createTextNode(houseNum);
 					newButton.id = id;
-					if(status=='已上传'){
-						newButton.style.cssText = "margin:2px;width:60px;height:60px;background-color:limegreen;";
+					if(status=='合格'){
+						newButton.style.cssText = "margin:2px;width:80px;height:80px;background-color:limegreen;";
+					}else if(status=='不合格'){
+						newButton.style.cssText = "margin:2px;width:80px;height:80px;background-color:red;";
+					}else if(status=='返工合格'){
+						newButton.style.cssText = "margin:2px;width:80px;height:80px;background-color:orange;"; 
 					}else{
-						newButton.style.cssText = "margin:2px;width:60px;height:60px;";
+						newButton.style.cssText = "margin:2px;width:80px;height:80px;";
 					}
 					newButton.appendChild(textNode);
 					floorTab.appendChild(newButton);
 				}
 				//户号操作
-				mui("#floorTab").on('longtap','button',function(){
+				mui("#floorTab").on('tap','button',function(){
 					var houseId = this.id;
 					mui.ajax(url+'my_household/household_list.php',{
 						data:{
@@ -191,44 +386,29 @@
 							var recordText = data[0].验收记录表说明;
 							var acceptText = data[0].验收照片说明;
 							var summaryText = data[0].验收汇总表说明;
-							var btnArray = [
-								{title:"查看附件"}
-							];
-							plus.nativeUI.actionSheet({
-									title:"操作",
-									cancel:"取消",
-									buttons:btnArray
-								},function(e){
-									var index = e.index;	
-									switch (index){
-										case 1://查看附件
-											mui.openWindow({
-												url:'readimage.html',
-												styles: {
-													hardwareAccelerated:false
-												},
-												extras:{
-													//传递参数
-													acceptanceForm:acceptanceForm,
-													acceptancePhoto:acceptancePhoto,
-													acceptanceSummary:acceptanceSummary,
-													recordText:recordText,
-													acceptText:acceptText,
-													summaryText:summaryText
-												},
-												show:{
-													autoShow:true,//页面loaded事件发生后自动显示
-													aniShow:'slide-in-right',//页面显示动画
-													duration:'100'//页面动画持续时间
-												},
-												waiting:{
-													autoShow:false,//自动显示等待框
-												}
-											});
-											break;
-									}
+							mui.openWindow({
+								url:'readimage.html',
+								styles: {
+									hardwareAccelerated:false
+								},
+								extras:{
+									//传递参数
+									acceptanceForm:acceptanceForm,
+									acceptancePhoto:acceptancePhoto,
+									acceptanceSummary:acceptanceSummary,
+									recordText:recordText,
+									acceptText:acceptText,
+									summaryText:summaryText
+								},
+								show:{
+									autoShow:true,//页面loaded事件发生后自动显示
+									aniShow:'slide-in-right',//页面显示动画
+									duration:'100'//页面动画持续时间
+								},
+								waiting:{
+									autoShow:false,//自动显示等待框
 								}
-							);
+							});
 						},
 						error:function(xhr,type,errorThrown){
 //							alert('ajax错误'+type+'---'+errorThrown+"失败！");
