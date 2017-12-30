@@ -58,76 +58,7 @@
 				<button type="button" class="mui-btn mui-btn-primary mui-action-back" id="data_close">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button type="button" class="mui-btn mui-btn-primary" id="data_save">保存</button>
 			</div>	
-			<!--处理图片-->
-		    <form id="img_content" class="my_none" >
-	        	<!--检测前照片-->
-	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">场景照片</span>
-		        	<br/>
-		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
-		        </div>
-		        <div class="mui-input-group" >
-		        	<div  class="mui-input-row">
-			            <label>场景照片说明:</label>
-			            <input id="Text1" type="text" class="mui-input-clear" placeholder="请输入说明">
-		        	</div>
-		        </div>
-		        <div>
-		        	<ul id="history_cj" class="dlist" style="text-align:left;">
-						<li id="empty_cj" class="ditem-empty">无历史记录</li>
-					</ul>
-		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
-		        </div>
-		        <!--检测实施过程照片-->
-		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">检测实施过程照片</span>
-		        	<br/>
-		        	<div><img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
-		        </div>
-		         <div class="mui-input-group" >
-		        	<div  class="mui-input-row">
-			            <label>检测实施过程照片说明:</label>
-			            <input id="Text2" type="text" class="mui-input-clear" placeholder="请输入说明">
-		        	</div>
-		        </div>
-		        <div>
-		        	<ul id="history_yp" class="dlist" style="text-align:left;">
-						<li id="empty_yp" class="ditem-empty">无历史记录</li>
-					</ul>
-		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<!--<button id="ypzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_yp');">附件上传</button>-->
-		        </div>
-		        <!--检测设备照片-->
-		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">检测设备照片</span>
-		        	<br/>
-		        	<div><img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
-		        </div>
-		        <div class="mui-input-group" >
-		        	<div  class="mui-input-row">
-			            <label>检测设备照片说明:</label>
-			            <input id="Text3" type="text" class="mui-input-clear" placeholder="请输入说明">
-		        	</div>
-		        </div>
-		        <div>
-		        	<ul id="history_teqm" class="dlist" style="text-align:left;">
-						<li id="empty_teqm" class="ditem-empty">无历史记录</li>
-					</ul>
-		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean_teqm" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('teqm');">清空记录</button>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="step1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_teqm');">附件上传</button>
-		        </div>
-		    </form>
-		    <!--处理图片-->
+			
 			<input id="sjc" class="my_none" value="" />
 			<input id="gcmc" class="my_none" value="" />
 		</div>
@@ -136,7 +67,7 @@
 		<script src="../js/mui.poppicker.js"></script>
 		<!--<script src="../js/native.js"></script>-->
 		<script src="../js/service.js"></script>
-		<script src="../js/my_spv_entity_upload.js"></script>
+		<!--<script src="../js/my_spv_entity_upload.js"></script>-->
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -151,7 +82,7 @@
 				var self = plus.webview.currentWebview();
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
-                timestamp = self.timestamp;
+                timestamp = self.timestamp;//工程时间戳
                 detect = self.detect;
                 supvision = self.supvision; 
                 my_name = decodeURI(decodeURI(my_name));
@@ -169,7 +100,7 @@
 				var jcrq = doc.getElementById('jcrq');//检测日期
 				var rmark  = doc.getElementById('rmark');//备注			
 				var tdpm = doc.getElementById('test_dpm');//检测单位
-				var operation_unit = doc.getElementById("operation_unit");
+				var operation_unit = doc.getElementById("operation_unit");//监理操作单位
 				jcr.value = my_name;
 				var myDate=new Date();
 				var mytime=myDate.getTime();
@@ -260,21 +191,50 @@
 
 				//保存按钮
 				data_save.addEventListener('tap',function(){
-					var myform=document.getElementById('myform');
-					var myform2=document.getElementById('myform2');
-					var img_content=document.getElementById('img_content');
-					var formbtn=document.getElementById("formbtn");
-					myform.classList.add('my_none');
-					myform2.classList.add('my_none');
-					formbtn.classList.add('my_none');			
-					img_content.classList.remove('my_none');
-					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
-					setTimeout( function(){
-						plus.nativeUI.closeWaiting();
-					}, 1000 );
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+					var sjc=document.getElementById('sjc').value;
+					myInfo = getInfo();
+//					console.log(myInfo);
+					mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+						data:{
+							flag:"新建",
+							pj_name:gcmc,//工程名称
+							pj_timestamp:timestamp,//工程时间戳
+							sjc:sjc,
+							myInfo:myInfo
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							if(data.result="success"){
+								mui.toast('新建成功',{ duration:'long', type:'div' });
+								back();
+							}else{
+								mui.toast('新建失败',{ duration:'long', type:'div' });
+							}
+							mui.toast('新建成功',{ duration:'long', type:'div' });
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
 				});
 			});
+			
+			function getInfo(){
+				var my_input = document.getElementById("myform").getElementsByTagName("input");
+				var unit = document.getElementById("operation_unit").value;
+				var test_dpm = document.getElementById("test_dpm").value;
+			//	var tnum = document.getElementById("tnum");
+				var Str = "";
+				for(var i=0;i<6;i++){
+					Str = Str + my_input[i].value + "|";
+				}
+			//	Str = Str + test_dpm+"|"+unit+"|"+tnum.value;
+				Str = Str + test_dpm+"|"+unit;
+				return Str;
+			}
 			//返回父页面刷新
 			function back(){
 				var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity_list.html');

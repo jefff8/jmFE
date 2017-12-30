@@ -380,9 +380,7 @@ function upload(lx,clean){
 	task.addData("nub2",nub2);
 	task.addData("nub3",nub3);
 	task.addData("mchen",mchen());
-	task.addData("pj_name",gcmc);
-	task.addData("pj_timestamp",timestamp);
-	task.addData("myInfo",saveInfo());
+	task.addData("ENum",getENum());
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});
@@ -403,10 +401,9 @@ function upload(lx,clean){
 function getUid(){
 	return Math.floor(Math.random()*100000000+10000000).toString();
 }
-// 获取该工程时间戳
+// 获取主键id
 function mchen(){
 	var sjc=document.getElementById('sjc').value;
-//	console.log(sjc);
 	return sjc;
 }
 //获取owntsp
@@ -430,16 +427,8 @@ function text3(){
 	return Text3;
 }
 //信息保存
-function saveInfo(){
-	var my_input = document.getElementById("myform").getElementsByTagName("input");
-	var unit = document.getElementById("operation_unit").value;
-	var test_dpm = document.getElementById("test_dpm").value;
-	var tnum = document.getElementById("tnum");
-	var Str = "";
-	for(var i=0;i<6;i++){
-		Str = Str + my_input[i].value + "|";
-	}
-	Str = Str + test_dpm+"|"+unit+"|"+tnum.value;
-	return Str;
+function getENum(){
+	var ENum = document.getElementById("ENum_input").value;//委托编号:Entrustment number
+	return ENum;
 }
 ////////////上传文件/////////////////////////////////////////////
