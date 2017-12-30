@@ -507,8 +507,7 @@
 			
 										if(zjzt_pd=='未检测'){
 											var btnArray = [
-											{title:"确定见证"},
-											{title:"拒收"}
+											{title:"确定见证"}
 											];
 											plus.nativeUI.actionSheet({
 												title:"操作",
@@ -523,27 +522,6 @@
 														mui("#zuyPopover").popover("toggle");
 														var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
 														but_id.id=ulId;
-														break;
-													case 2://拒收
-														mui.openWindow({
-															url:"my_rejection.html",
-															styles: {
-																hardwareAccelerated:false
-															},
-															extras:{
-																//传递参数
-																ulId:ulId,
-																urlId:"../my_insp_entity/my_inspection_entity.html"
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														});
 														break;
 												}	
 											  }

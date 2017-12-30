@@ -29,11 +29,11 @@
 				        <input type="text" id="buildingNum"  class="mui-input-clear" readonly="readonly"  >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>楼层:</label>
+				        <label>层数:</label>
 				        <input type="number" id="floor" class="mui-input-clear" readonly="readonly"  >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>户数:</label>
+				        <label>层户数:</label>
 				        <input type="number" id="households" class="mui-input-clear" readonly="readonly"  >
 				    </div>
 				    <div class="mui-input-row">
@@ -41,7 +41,11 @@
 				        <input type="number" id="beginFloor" class="mui-input-clear" readonly="readonly" >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>验收时间:</label>
+				        <label>起始日期:</label>
+				        <input type="text" id="startTime" class="mui-input-clear"   readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>完成日期:</label>
 				        <input type="text" id="acceptanceTime" class="mui-input-clear"   readonly="readonly" >
 				    </div>
 				</form> 
@@ -74,6 +78,7 @@
 				var households = doc.getElementById("households");
 				var beginFloor = doc.getElementById("beginFloor");
 				var acceptanceTime = doc.getElementById("acceptanceTime");
+				var startTime = doc.getElementById("startTime");
 				mui.ajax(url+'my_household/household_list.php',{
 					data:{
 						flag:'details',
@@ -88,6 +93,7 @@
 						households.value = data[0].户数;
 						beginFloor.value = data[0].起始层;
 						acceptanceTime.value = data[0].验收时间; 
+						startTime.value = data[0].起始日期;
 					},
 					error:function(type,xhr,errorThrown){
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");

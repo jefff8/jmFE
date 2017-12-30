@@ -32,6 +32,9 @@
 								<a id="" class="mui-control-item"  href="#item3">
 									初检
 								</a>
+								<a id="" class="mui-control-item"  href="#item4">
+									拒收
+								</a>
 		         		   </div>
 		      		  	</div>
 		   			</div>
@@ -69,6 +72,17 @@
 			   </div>
 			</div>
 			<!---------------------------------初检------------------------------------------->
+			
+			<!---------------------------------拒收------------------------------------------->
+			<div id="item4" class="mui-control-content">
+				<div id="scroll" class="mui-scroll-wrapper">
+			    	<div id="rejection" class="mui-scroll rwdiv">
+			    		
+			    		
+					</div>
+			   </div>
+			</div>
+			<!---------------------------------拒收------------------------------------------->
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -161,6 +175,15 @@
 					first.appendChild(ul);
 				}
 				
+				//拒收
+				function show_rejection(id,type,reason,sjc){
+					var rejection = document.getElementById("rejection");
+					var ul = document.createElement("ul");
+					ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
+					ul.id = id;
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_grey"><a class="a_color" href="my_material_resDet.html?sjc='+sjc+'&gcid='+id+'&state='+'processed'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ type +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">拒收理由：'+ reason +'</p></li>';
+					rejection.appendChild(ul);
+				}
 				//异步取值并创建卡项
 				mui.ajax(url+'my_plus/my_material_list.php',{
 					data:{
@@ -226,6 +249,31 @@
 					}
 				});
 				
+				//拒收
+				mui.ajax(url+'my_plus/my_rejection.php',{
+					data:{
+						flag:"material_rejection",
+						timestamp:timestamp
+					},
+					dataType:'json',
+					type:'POST', 
+					timeout:10000,
+					success:function(data){
+						var length=data.length;
+						if (length>=1) {
+							for (var i=0;i<=length-1;i++){
+								var id = data[i].id;
+								var sjc = data[i].时间戳;
+								var type = data[i].取样类型;
+								var reason = data[i].拒收理由;
+								show_rejection(id,type,reason,sjc)
+							}
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
 				
 				//长按合格卡片
 				mui("#qualified").on('longtap','ul',function(){

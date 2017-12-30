@@ -185,19 +185,19 @@
 		<div class="mui-content">
 			<div class="mui-content-padded">
 				<p>正在加载高质量图片，请耐心等待...(^_^)</p>				
-				<p class="myp">验收记录表: </p>
+				<p class="myp">验收观感表: </p>
 				<p id="rwfj1">
 				<p id="fj1Text">
 					
 				</p>
 				</p>	
-				<p class="myp">验收照片: </p>
+				<p class="myp">验收实测照片: </p>
 				<p id="rwfj2">
 				<p id="fj2Text">
 					
 				</p>
 				</p>	
-				<p class="myp">验收汇总表: </p>
+				<p class="myp">验收照片: </p>
 				<p id="rwfj3">
 				<p id="fj3Text">
 					
@@ -246,29 +246,29 @@
 				var fuys=document.getElementById(tplx);
 				fuys.innerHTML='<p class="myp2">该项未上传附件！</p>';			
 			};
-			//验收记录表
+			//验收实测照片
 			if (acceptanceForm.length>1) {
 				for (var i=1;i<acceptanceForm.length;i++){
-					createimg('rwfj1',acceptanceForm[i]);
+					createimg('rwfj2',acceptanceForm[i]);
 				}
 			}else{
-				createtex('rwfj1');
+				createtex('rwfj2');
 			}	
 			//验收照片
 			if(acceptancePhoto.length>1){
 				for(var i=1;i<acceptancePhoto.length;i++){
-					createimg('rwfj2',acceptancePhoto[i]);
-				}
-			}else{
-				createtex('rwfj2');
-			}
-			//验收汇总表
-			if(acceptanceSummary.length>1){
-				for(var i=1;i<acceptanceSummary.length;i++){
-					createimg('rwfj3',acceptanceSummary[i]);
+					createimg('rwfj3',acceptancePhoto[i]);
 				}
 			}else{
 				createtex('rwfj3');
+			}
+			//验收观感表
+			if(acceptanceSummary.length>1){
+				for(var i=1;i<acceptanceSummary.length;i++){
+					createimg('rwfj1',acceptanceSummary[i]);
+				}
+			}else{
+				createtex('rwfj1');
 			}
 		});
 	</script>

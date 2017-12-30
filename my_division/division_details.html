@@ -53,6 +53,10 @@
 		            <label>验收时间:</label>
 		            <input id="acceptanceTime" type="text"  readonly="readonly" disabled="disabled">
 		        </div>
+		        <div id="reasonDiv" class="mui-input-row my_none">
+		            <label>重新组织理由:</label>
+		            <input id="reason" type="text"  readonly="readonly" >
+		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row ">
 				<button id="viewImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看</button>	
@@ -82,6 +86,7 @@
 				var formbtn = doc.getElementById("formbtn");
 				var acceptanceTime = doc.getElementById("acceptanceTime");
 				var acceptanceTimeDiv = doc.getElementById("acceptanceTimeDiv");
+				var reasonDiv = doc.getElementById("reasonDiv");
 				var acceptancePhoto = [];
 				var meettingPhoto = [];
 				var signinPhoto = [];
@@ -117,7 +122,7 @@
 						supervision.value = data[0].监理单位;
 						prospectingUnits.value = data[0].勘察单位;
 						designUnits.value = data[0].设计单位;
-						if(status!='施工申请'&&status!='监理确认'){
+						if(status!='施工申请'&&status!='监理确认'&&status!='重新组织验收'){
 							viewImage.classList.remove("my_none");
 							acceptanceTimeDiv.classList.remove("my_none");
 							acceptanceTime.value = data[0].验收时间;
@@ -129,6 +134,10 @@
 							meettingPhoto = data[0].会议照片.split("~*^*~");
 							signinPhoto = data[0].签到记录表.split("~*^*~");
 							reportPhoto = data[0].验收报告.split("~*^*~");
+						}
+						if(data[0].重新组织理由){
+							reasonDiv.classList.remove("my_none");
+							reason.value = data[0].重新组织理由;
 						}
 					},
 					error:function(xhr,type,errorThrown){

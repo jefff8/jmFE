@@ -53,9 +53,6 @@
 				background:#0000FF;
 				color: white;
 			}
-			#floorTab{
-				text-align: center;
-			}
 		</style>
 	</head>
 
@@ -72,11 +69,11 @@
 				        <input type="text" id="buildingNum"  class="mui-input-clear" placeholder="请输入栋号"  >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>楼层:</label>
+				        <label>层数:</label>
 				        <input type="number" id="floor" class="mui-input-clear" placeholder="请输入楼层"  >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>户数:</label>
+				        <label>层户数:</label>
 				        <input type="number" id="households" class="mui-input-clear" placeholder="请输入户数"  >
 				    </div>
 				    <div class="mui-input-row">
@@ -84,30 +81,16 @@
 				        <input type="number" id="beginFloor" class="mui-input-clear" placeholder="请输入起始层" value="1" >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>验收时间:</label>
-				        <input type="text" id="acceptanceTime" class="mui-input-clear" placeholder="请选择验收时间"  readonly="readonly" >
+				        <label>起始日期:</label>
+				        <input type="text" id="startTime" class="mui-input-clear" placeholder="请选择起始日期"  readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>完成日期:</label>
+				        <input type="text" id="acceptanceTime" class="mui-input-clear" placeholder="请选择完成日期"  readonly="readonly" >
 				    </div>
 				</form>
 				&nbsp;
 				<button id="sure" type="button" class="mui-btn mui-btn-primary mui-btn-block" >确定</button>
-			<div id="tabContent">
-				<div id="floorTab">
-					<!--<button id="houseNum">A101</button>
-					<button id="houseNum">A102</button>
-					<button id="houseNum">A103</button>
-					<button id="houseNum">A104</button>-->
-					<!--<button>A201</button>
-					<button>A202</button>
-					<button>A203</button>
-					<button>A101</button>
-					<button>A102</button>
-					<button>A103</button>
-					<button>A104</button>
-					<button>A201</button>
-					<button>A202</button>
-					<button>A203</button> -->
-				</div>
-		    </div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
@@ -131,9 +114,17 @@
 				var households = doc.getElementById("households");
 				var beginFloor = doc.getElementById("beginFloor");
 				var acceptanceTime = doc.getElementById("acceptanceTime");
+				var startTime = doc.getElementById("startTime");
 				var myDate=new Date();
 				var mytime=myDate.getTime();//当前时间戳 
-				//验收时间日期选择器
+				//起始日期选择器
+				startTime.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+		                startTime.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//完成日期选择器
 				acceptanceTime.addEventListener('tap',function(){
 					plus.nativeUI.pickDate( function(e){
 						d=e.date;
@@ -143,11 +134,15 @@
 				//确定按钮
 				sureButton.addEventListener('tap',function(){
 					var allHouse = '';
+					var beginNum = beginFloor.value;//起始层
+					var floorNum = floor.value;//层数
+					var i = parseInt(beginNum); //循环需要将string转换成int
 					//所有户数添加
-					for(var i=beginFloor.value;i<=floor.value;i++){
+					for(;i<=floorNum;i++){
 						for(var j=1;j<=households.value;j++){
 							allHouse += buildingNum.value + i + '0' + j +'|';
 						}
+						allHouse += buildingNum.value + i + '公共' + '|';
 					}
 					allHouse = allHouse.substring(0,allHouse.length-1);
 					mui.ajax(url+'my_household/household_list.php',{
@@ -161,43 +156,22 @@
 							pj_timestamp:pj_timestamp,
 							acceptanceTime:acceptanceTime.value,
 							mytime:mytime,
-							allHouse:allHouse
+							allHouse:allHouse,
+							startTime:startTime.value
 						},
 						type:'post',
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
-								var target=plus.webview.getWebviewById('../my_household/household_list.html');
-								target.reload(true);
-								mui.toast('保存成功！',{ duration:'long', type:'div' });
+							var target=plus.webview.getWebviewById('../my_household/household_list.html');
+							target.reload(true);
+							mui.back();
+							mui.toast('保存成功！',{ duration:'long', type:'div' });
 						},
 						error:function(xhr,type,errorThrown){
 							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
-//					ShowTab(buildingNum,floor,households,beginFloor);
-				});
-				
-				//显示表格
-				function ShowTab(buildingNum,floor,households,beginFloor){
-					var floorTab = document.getElementById("floorTab");
-					floorTab.innerHTML = "";
-					var btnId = 0;
-					for(var i=beginFloor;i<=floor;i++){
-						for(var j=1;j<=households;j++){
-							var newButton = document.createElement('button');
-							var textNode = document.createTextNode(buildingNum+i+'0'+j);
-							newButton.id = 'button'+btnId;
-							newButton.style.cssText = "margin:2px;width:60px;height:60px;";
-							newButton.appendChild(textNode);
-							floorTab.appendChild(newButton);
-							btnId++;
-						}
-					}
-					
-				}
-				mui("#floorTab").on('longtap','button',function(){
-					alert(this.id);
 				});
 			});
 		</script>

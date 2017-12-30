@@ -45,7 +45,7 @@
 						type:'post',
 						dataType:'json',
 						success:function(data){
-							var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+							var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
 							target.reload(true);
 							mui.toast('提交完成!',{ duration:'long', type:'div' });
 							mui.back();
@@ -58,7 +58,7 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_material/my_material_results.html');
+				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
 				target.reload(true);
 				mui.back();
 			}
