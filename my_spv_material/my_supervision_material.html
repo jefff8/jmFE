@@ -254,7 +254,7 @@
 						timeout:10000,
 						success:function(data){
 //							alert(data['单位']);
-							if(data['单位']=='监督单位'||data['单位']=='管理员'){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_spv_material_add.html",
 									extras:{
@@ -367,7 +367,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位'] == '监督单位'||data['单位']=='管理员'){
+							if(data['单位'] == '监督机构'||data['单位']=='管理员'){
 
 								mui.ajax(url+'my_plus/my_spv_material_list.php',{
 									data:{

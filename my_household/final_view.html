@@ -207,7 +207,11 @@
 				        <input type="number" id="beginFloor" class="mui-input-clear" readonly="readonly" >
 				    </div>
 				    <div class="mui-input-row">
-				        <label>验收时间:</label>
+				        <label>起始时间:</label>
+				        <input type="text" id="startTime" class="mui-input-clear"   readonly="readonly" >
+				    </div>
+				    <div class="mui-input-row">
+				        <label>完成时间:</label>
 				        <input type="text" id="acceptanceTime" class="mui-input-clear"   readonly="readonly" >
 				    </div>
 				</form> 
@@ -297,6 +301,7 @@
 						floor.value = data[0].楼层;
 						households.value = data[0].户数;
 						beginFloor.value = data[0].起始层;
+						startTime.value = data[0].起始日期;
 						acceptanceTime.value = data[0].验收时间; 
 						rectification = data[0].整改通知单.split("~*^*~");
 						fj2Text.value = data[0].整改通知单说明; 

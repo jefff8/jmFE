@@ -322,7 +322,12 @@
 				});
 				//执行刷新
 				window.addEventListener('refresh', function(e){
-				  	location.reload(); 
+					//接收子页面传递的参数
+					var perform = event.detail.perform; 
+					//如果有参数才执行刷新
+					if(perform){
+						location.reload();
+					}
 				});
 				
 				var acceptanceForm = [];
@@ -428,6 +433,7 @@
 											case 1://上传附件
 												mui.openWindow({
 													url:'supervision_upload.html',
+													id:'supervision_upload.html',
 													styles: {
 														hardwareAccelerated:false
 													},

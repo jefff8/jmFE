@@ -135,10 +135,10 @@
 		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
 		        		   	<div class="mui-slider-item">
 		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
-									委托检测(检测单位)
+									监督抽检(监督单位)
 								</a>
 								<a id="a5" class="mui-control-item"  href="#item2">
-									监理见证(监理单位)
+									委托检测(检测单位)
 								</a>
 								<a id="a6" class="mui-control-item"  href="#item3">
 									检测结果(检测单位)
@@ -269,7 +269,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位']=='监督单位'||data['单位']=='管理员'){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
 								mui.openWindow({
 									url:"my_spv_entity_add.html",
 									extras:{
@@ -416,7 +416,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位']=='检测单位'||data['单位']=='管理员'){
+							if(data['单位']=='监督机构'||data['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_spv_entity_list.php',{
 									data:{
 										flag:"获取状态",
@@ -433,7 +433,7 @@
 										//判断状态并根据状态执行改变状态的任务
 										if(gcdzt_pd=='新建'||gcdzt_pd=='扩大抽检'){
 											var btnArray = [
-											{title:"监理见证"},
+											{title:"提交"},
 											{title:"删除"}
 											]; 
 											plus.nativeUI.actionSheet({
@@ -468,25 +468,25 @@
 //															var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
 //															but_id.id=ulId;
 															mui.openWindow({
-															url:'my_spv_entity_Attachments_upload.html',
-															styles: {
-																hardwareAccelerated:false//硬件加速
-															},
-															extras:{
-																//传递参数
-																ulId:ulId,
-																gcdzt:gcdzt_pd,
-																sjc:sjc
-															},
-															show:{
-																autoShow:true,//页面loaded事件发生后自动显示
-																aniShow:'slide-in-right',//页面显示动画
-																duration:'100'//页面动画持续时间
-															},
-															waiting:{
-																autoShow:false,//自动显示等待框
-															}
-														});
+																url:'my_spv_entity_Attachments_upload.html',
+																styles: {
+																	hardwareAccelerated:false//硬件加速
+																},
+																extras:{
+																	//传递参数
+																	ulId:ulId,
+																	gcdzt:gcdzt_pd,
+																	sjc:sjc
+																},
+																show:{
+																	autoShow:true,//页面loaded事件发生后自动显示
+																	aniShow:'slide-in-right',//页面显示动画
+																	duration:'100'//页面动画持续时间
+																},
+																waiting:{
+																	autoShow:false,//自动显示等待框
+																}
+															});
 														}
 														break;
 													case 2://删除
@@ -606,7 +606,7 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+							if(data['单位']=='检测单位'||data['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_spv_entity_list.php',{
 									data:{
 										flag:"获取状态",
