@@ -445,49 +445,68 @@
 												//var nextpage='';
 												switch (index){
 													case 1://准备
-														if(gcdzt_pd=='扩大抽检'){//直接进入"准备"状态，无需输入委托编号
+//														if(gcdzt_pd=='扩大抽检'){//直接进入"准备"状态，无需输入委托编号
+//															mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+//																data:{
+//																	flag:"扩大抽检准备",
+//																	ulid:ulId
+//																},
+//																dataType:'json',
+//																type:'POST', 
+//																timeout:10000,
+//																success:function(data){
+//																	mui.toast(data.结果,{ duration:'long', type:'div' })
+//																	location.reload();//刷新本页面
+//																},
+//																error:function(xhr,type,errorThrown){
+//																	alert('ajax扩大抽检准备错误'+type+'---'+errorThrown+"失败！");
+//																}
+//															});
+//														}else{
+															//输入委托编号
+//															mui("#consigncode").popover("toggle");
+//															var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
+//															but_id.id=ulId;
+															
 															mui.ajax(url+'my_plus/my_spv_entity_list.php',{
 																data:{
-																	flag:"扩大抽检准备",
-																	ulid:ulId
+																	flag:"提交",
+																	gcdzt:gcdzt_pd,
+																	gcdId:ulId
 																},
 																dataType:'json',
 																type:'POST', 
 																timeout:10000,
 																success:function(data){
 																	mui.toast(data.结果,{ duration:'long', type:'div' })
-																	location.reload();//刷新本页面
+																	location.reload();
 																},
 																error:function(xhr,type,errorThrown){
-																	alert('ajax扩大抽检准备错误'+type+'---'+errorThrown+"失败！");
+																	alert('ajax准备错误'+type+'---'+errorThrown);
 																}
 															});
-														}else{
-															//输入委托编号
-//															mui("#consigncode").popover("toggle");
-//															var but_id=document.getElementById("code_act").getElementsByTagName('button')[1];
-//															but_id.id=ulId;
-															mui.openWindow({
-																url:'my_spv_entity_Attachments_upload.html',
-																styles: {
-																	hardwareAccelerated:false//硬件加速
-																},
-																extras:{
-																	//传递参数
-																	ulId:ulId,
-																	gcdzt:gcdzt_pd,
-																	sjc:sjc
-																},
-																show:{
-																	autoShow:true,//页面loaded事件发生后自动显示
-																	aniShow:'slide-in-right',//页面显示动画
-																	duration:'100'//页面动画持续时间
-																},
-																waiting:{
-																	autoShow:false,//自动显示等待框
-																}
-															});
-														}
+															
+//															mui.openWindow({
+//																url:'my_spv_entity_Attachments_upload.html',
+//																styles: {
+//																	hardwareAccelerated:false//硬件加速
+//																},
+//																extras:{
+//																	//传递参数
+//																	ulId:ulId,
+//																	gcdzt:gcdzt_pd,
+//																	sjc:sjc
+//																},
+//																show:{
+//																	autoShow:true,//页面loaded事件发生后自动显示
+//																	aniShow:'slide-in-right',//页面显示动画
+//																	duration:'100'//页面动画持续时间
+//																},
+//																waiting:{
+//																	autoShow:false,//自动显示等待框
+//																}
+//															});
+//														}
 														break;
 													case 2://删除
 														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
@@ -622,7 +641,7 @@
 										var sjc = data.时间戳;
 										if(gcdzt_pd=='准备'||gcdzt_pd=='扩大抽检准备'){
 											var btnArray = [
-											{title:"提交检测"},
+											{title:"提交"},
 											{title:"删除"}
 											];
 											plus.nativeUI.actionSheet({
@@ -634,23 +653,44 @@
 												//var nextpage='';
 												switch (index){
 													case 1://提交检测
-														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
-															data:{
-																flag:"提交检测",
+													
+														mui.openWindow({
+															url:'my_spv_entity_Attachments_upload.html',
+															styles: {
+																hardwareAccelerated:false//硬件加速
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
 																gcdzt:gcdzt_pd,
-																gcdId:ulId
+																sjc:sjc
 															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-																mui.toast(data.结果,{ duration:'long', type:'div' })
-																location.reload();
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
 															},
-															error:function(xhr,type,errorThrown){
-																alert('ajax准备错误'+type+'---'+errorThrown);
+															waiting:{
+																autoShow:false,//自动显示等待框
 															}
 														});
+//														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+//															data:{
+//																flag:"提交检测",
+//																gcdzt:gcdzt_pd,
+//																gcdId:ulId
+//															},
+//															dataType:'json',
+//															type:'POST', 
+//															timeout:10000,
+//															success:function(data){
+//																mui.toast(data.结果,{ duration:'long', type:'div' })
+//																location.reload();
+//															},
+//															error:function(xhr,type,errorThrown){
+//																alert('ajax准备错误'+type+'---'+errorThrown);
+//															}
+//														});
 														break;
 													case 2://删除
 														mui.ajax(url+'my_plus/my_spv_entity_list.php',{

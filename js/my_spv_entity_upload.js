@@ -381,6 +381,7 @@ function upload(lx,clean){
 	task.addData("nub3",nub3);
 	task.addData("mchen",mchen());
 	task.addData("ENum",getENum());
+	task.addData("gcdzt",gcdzt);
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});

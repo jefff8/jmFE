@@ -117,6 +117,7 @@
 				var self = plus.webview.currentWebview();
                 gcmc_c = self.gcmc_c;
                 sjc = self.sjc;
+                gcdzt = self.gcdzt;
                 my_name = self.my_name;
                 detect = self.detect;
                 supvision = self.supvision; 
@@ -146,6 +147,9 @@
 				var protimesp = doc.getElementById('sjc');
 				protimesp.value = sjc;
 				
+				if(gcdzt=='扩大抽检准备'){
+					myform.classList.add("my_none");
+				}				
 				
 				
 			});
