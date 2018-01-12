@@ -19,36 +19,45 @@
 		<div class="mui-content">
 		    <form class="mui-input-group" id="myform">
 		       <div class="mui-input-row">
-		            <label>检测类型:</label>
-		            <input id="test_type"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
+		            <label>委托检测类型:</label>
+		            <!--<input id="test_type"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">-->
+		            	<select id="test_type" style="font-size: 14px;" >
+		            		<option></option>
+		            		<option>市政工程</option>
+		            		<option>房屋建筑结构</option>
+		            	</select>
 		        </div>
-		    	<div class="mui-input-row">
+		    	<!--<div class="mui-input-row">
 		        	<label>检测部位:</label>
 		        	<input type="text" class="mui-input-clear" placeholder="请输入检测部位" id="jcbw">
-		        </div>
-		        <div class="mui-input-row">
+		        </div>-->
+		        <!--<div class="mui-input-row">
 		            <label>检测数量:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入数量" id="num">
-		        </div>
+		        </div>-->
 		        <div class="mui-input-row">
-		            <label>检测人:</label>
+		            <label>监督员:</label>
 		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr" readonly="readonly">
 		        </div>
-		        <div class="mui-input-row">
+		        <!--<div class="mui-input-row">
 		            <label>检测日期:</label>
 		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" >
-		        </div>
+		        </div>-->
 		        <div class="mui-input-row">
+					<label>委托编号:</label>
+					<input id="ENum_input" type="text" class="mui-input-clear" placeholder="输入委托编号">
+				</div> 
+		        <!--<div class="mui-input-row">
 		            <label>备注:</label>
 		            <input type="text" class="mui-input-clear" placeholder="请输入备注" id="rmark">
-		        </div>	       
+		        </div>	       -->
 		    </form>
 		    <br/>
 		    <form class="mui-input-group" id="myform2">
-		    	<div  class="mui-input-row">
+		    	<!--<div  class="mui-input-row">
 		            <label>监理操作单位:</label>
 		            <select id="operation_unit" style="font-size: 14px;" ></select>
-		        </div>
+		        </div>-->
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
 		            <select id="test_dpm" style="font-size: 14px;" ></select>
@@ -57,7 +66,30 @@
 		    <div id="formbtn" class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-primary mui-action-back" id="data_close">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button type="button" class="mui-btn mui-btn-primary" id="data_save">保存</button>
-			</div>	
+			</div>
+			
+			<!--处理图片-->
+		    <form id="img_content" class="my_none" >
+	        	<!--监督抽检委托单-->
+	        	<div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">监督抽检委托单</span>
+		        	<br/>
+		        	<div><img id="newUpload1" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  /></div>
+		        </div>
+		        <div>
+		        	<ul id="history_cj" class="dlist" style="text-align:left;">
+						<li id="empty_cj" class="ditem-empty">无历史记录</li>
+					</ul>
+					
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="add" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
+		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
+		        </div>
+		    </form>
+		    <!--处理图片-->
 			
 			<input id="sjc" class="my_none" value="" />
 			<input id="gcmc" class="my_none" value="" />
@@ -65,9 +97,11 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
-		<!--<script src="../js/native.js"></script>-->
+		<script src="../js/native.js"></script>
 		<script src="../js/service.js"></script>
-		<!--<script src="../js/my_spv_entity_upload.js"></script>-->
+		<script src="../js/my_spv_entity_add.js"></script>
+		<script src="../js/service.js"></script>
+		
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -83,10 +117,10 @@
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
                 timestamp = self.timestamp;//工程时间戳
-                detect = self.detect;
+//              detect = self.detect;
                 supvision = self.supvision; 
                 my_name = decodeURI(decodeURI(my_name));
-                detect = decodeURI(decodeURI(detect));
+//              detect = decodeURI(decodeURI(detect));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 supvision = decodeURI(decodeURI(supvision));
 				
@@ -110,129 +144,97 @@
 				var protimesp = doc.getElementById('sjc');
 				protimesp.value = timesp;
 				
-				//动态添加监理操作单位
-				var opera = supvision.split(",");
-				for(var i=0;i<opera.length;i++){
-					var option = doc.createElement("option");
-					option.innerHTML = opera[i];
-					operation_unit.appendChild(option);
-				}
-				//动态添加检测单位
-				var detection_unit = detect.split(",");
-				for(var i=0;i<detection_unit.length;i++){
-					var option = doc.createElement("option");
-					option.innerHTML = detection_unit[i];
-					tdpm.appendChild(option);
-				}
-				//日期监听
-				jcrq.addEventListener('tap',function(){
-					plus.nativeUI.pickDate( function(e){
-					d=e.date;
-                    jcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-				   });
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"检测单位"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						var detection_unit = new Array();
+							detection_unit[0] = "";
+						for(var i=0;i<=length-1;i++){
+//								alert(data[i].检测单位);
+							detection_unit.push(data[i].检测单位);
+						}
+//						//动态添加检测单位
+						for(var i=0;i<detection_unit.length;i++){
+							var option = doc.createElement("option");
+							option.innerHTML = detection_unit[i];
+							tdpm.appendChild(option);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+errorThrown);
+					}
 				});
-				//检测类型
-				function typeAll(data,data2){
-//					alert(data[0]);
-					//初始化popPicker组件
-					var cityPicker = new mui.PopPicker({
-						layer: 2
-					});
-					var length = data.length;
-					var arr_4 = new Array();
-					arr_4[0] = new Array();
-					arr_4[1] = new Array();
-					arr_4[0]["text"] = "房建工程";
-					arr_4[1]["text"] = "市政工程";
-					arr_4[0]["children"] = new Array();
-					arr_4[1]["children"] = new Array();
-					for(i=0;i<data.length;i++){
-						arr_4[0]["children"][i]=new Array();
-						arr_4[0]["children"][i]["text"] = data[i];
-					}
-					for(i=0;i<data2.length;i++){
-						arr_4[1]["children"][i]=new Array();
-						arr_4[1]["children"][i]["text"] = data2[i];
-					}
-					cityPicker.setData(arr_4);  //给picker对象添加数据
-					cityPicker.show(function(items) {
-						test_type.value =  items[0].text + "—" + items[1].text;
-					});
-				}
 				
-				
-				test_type.addEventListener('tap', function(event) {
-					//异步类型
-					mui.ajax(url+'my_plus/proType.php',{
-						data:{
-							pj_type:"实体检测"
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data){
-//							alert(data);
-							var length = data.length;
-							var typeData = new Array();
-							var typeData2 = new Array();
-							for(var i=0;i<=length-1;i++){
-								typeData.push(data[i].房建工程);
-							}
-							for(var i=0;i<=length-1;i++){
-								typeData2.push(data[i].道路工程);
-							}
-							typeAll(typeData,typeData2);
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+errorThrown);
-						}
-					});
-				}, false);
-
 				//保存按钮
+//				data_save.addEventListener('tap',function(){
+//					var sjc=document.getElementById('sjc').value;
+//					myInfo = getInfo();
+////					console.log(myInfo);
+//					mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+//						data:{
+//							flag:"新建",
+//							pj_name:gcmc,//工程名称
+//							pj_timestamp:timestamp,//工程时间戳
+//							sjc:sjc,
+//							myInfo:myInfo
+//						},
+//						dataType:'json',
+//						type:'POST', 
+//						timeout:10000,
+//						success:function(data){
+////							alert(data);
+//							if(data.result="success"){
+//								mui.toast('新建成功',{ duration:'long', type:'div' });
+//								back();
+//							}else{
+//								mui.toast('新建失败',{ duration:'long', type:'div' });
+//							}
+//							mui.toast('新建成功',{ duration:'long', type:'div' });
+//						},
+//						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//						}
+//					});
+//				});
+				
 				data_save.addEventListener('tap',function(){
-					var sjc=document.getElementById('sjc').value;
-					myInfo = getInfo();
-//					console.log(myInfo);
-					mui.ajax(url+'my_plus/my_spv_entity_list.php',{
-						data:{
-							flag:"新建",
-							pj_name:gcmc,//工程名称
-							pj_timestamp:timestamp,//工程时间戳
-							sjc:sjc,
-							myInfo:myInfo
-						},
-						dataType:'json',
-						type:'POST', 
-						timeout:10000,
-						success:function(data){
-//							alert(data);
-							if(data.result="success"){
-								mui.toast('新建成功',{ duration:'long', type:'div' });
-								back();
-							}else{
-								mui.toast('新建失败',{ duration:'long', type:'div' });
-							}
-							mui.toast('新建成功',{ duration:'long', type:'div' });
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-						}
-					});
+					var myform=document.getElementById('myform');
+					var myform2=document.getElementById('myform2');
+					var img_content=document.getElementById('img_content');
+					var formbtn=document.getElementById("formbtn");
+					myform.classList.add('my_none');
+					myform2.classList.add('my_none');
+					formbtn.classList.add('my_none');			
+					img_content.classList.remove('my_none');
+					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
+					setTimeout( function(){
+						plus.nativeUI.closeWaiting();
+					}, 1000 );
+					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 			});
 			
 			function getInfo(){
 				var my_input = document.getElementById("myform").getElementsByTagName("input");
-				var unit = document.getElementById("operation_unit").value;
+				var my_select = document.getElementById("myform").getElementsByTagName("select");
+//				var unit = document.getElementById("operation_unit").value;
 				var test_dpm = document.getElementById("test_dpm").value;
 			//	var tnum = document.getElementById("tnum");
 				var Str = "";
-				for(var i=0;i<6;i++){
+				for(var i=0;i<2;i++){
 					Str = Str + my_input[i].value + "|";
 				}
+				for(var i=0;i<1;i++){
+					Str = Str + my_select[i].value + "|";
+				}
 			//	Str = Str + test_dpm+"|"+unit+"|"+tnum.value;
-				Str = Str + test_dpm+"|"+unit;
+				Str = Str + test_dpm;
 				return Str;
 			}
 			//返回父页面刷新

@@ -298,7 +298,7 @@
 				});
 				
 				//creat active massagebox				
-				function mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp,operation_supvision,operation_detect){
+				function mymaterial(proatt,id,ttype,num,jcbw,jcr,test_dpm,owtsp,operation_supvision,operation_detect){
 					proatt_c = encodeURI(encodeURI(proatt));
 					ttype_c = encodeURI(encodeURI(ttype));
 					tepe_c = encodeURI(encodeURI(jcr));
@@ -326,7 +326,7 @@
 					}else{
 						var url = "my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
 					}
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">委托编号：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">监督员：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+ test_dpm +'</p></li>';
 					
 					switch(proatt){
 						case "新建":case "扩大抽检":
@@ -363,14 +363,14 @@
 								var proatt = data[i].工程单状态;
 								var ttype = data[i].检测类型;
 								var jcbw = data[i].检测部位;
-								var num=data[i].检测数量;
+								var num=data[i].委托编号;
 								var jcr=data[i].检测人;	
 								var jcrq=data[i].检测日期;
 								var rmark=data[i].备注;
 								var test_dpm=data[i].检测单位;
 								var operation_supvision = data[i].监理操作单位;
 								var operation_detect = data[i].检测操作单位;
-								mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp,operation_supvision,operation_detect);
+								mymaterial(proatt,id,ttype,num,jcbw,jcr,test_dpm,owtsp,operation_supvision,operation_detect);
 							}
 						}
 					},

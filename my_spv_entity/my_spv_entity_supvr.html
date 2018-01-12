@@ -17,15 +17,35 @@
 		</header>
 		<div class="mui-content" style="margin-top:10px;">
 		    <div id="myform">
-				&nbsp;&nbsp;<label >退场记录：</label>
+				&nbsp;&nbsp;<label >监督站整改意见：</label>
 			    <div class="mui-input-row" >
-					<textarea id="tcjv" rows="5" placeholder="请输入退场记录"></textarea>
+					<textarea id="tcjv" rows="5" placeholder="请输入监督站整改意见"></textarea>
 				</div>
 			</div>
 			<div class="mui-input-row  my_none">
 				<label> 时间戳：</label>
 				<input id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
 			</div>
+			<div class="mui-input-row my_none">
+			        <label>企业ID</label>
+			        <input name="CorpID"  type="text" id="CorpID" class="mui-input-clear" value="101781">
+			    </div>
+			    <div class="mui-input-row my_none">
+			        <label>登录名</label>
+			        <input name="LoginName" type="text" id="LoginName" class="mui-input-clear" value="Admin">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>密码</label>
+			        <input name="pwd" type="text" id="pwd" class="mui-input-clear" value="174012" >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>服务器地址</label>
+			        <input name="serverIP" type="text" id="serverIP" class="mui-input-clear"  value="http://sms.mobset.com:8080/Api?wsdl">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>短信内容</label>
+			        <input name="smsContent" type="text" id="smsContent" class="mui-input-clear" value="实体抽检不合格(监理处理),监督站整改意见:">
+			    </div>
 			<div id="formbtn" class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
@@ -67,10 +87,20 @@
 				//获取工程项目id
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
+	      		flag = self.flag;
+//	      		console.log(flag);
+	      		gcmc = self.gcmc; 
+	      		pj_id = self.pj_id; 
+//	      		console.log(ulId);
 				var doc = document;
 				var tcjv = doc.getElementById("tcjv");
 				var save = doc.getElementById("save");
 				var sjc = doc.getElementById("sjc");
+				var CorpID = doc.getElementById("CorpID");
+				var LoginName = doc.getElementById("LoginName");
+				var pwd = doc.getElementById("pwd");
+				var serverIP = doc.getElementById("serverIP");
+				var smsContent = doc.getElementById("smsContent");
 				
 				
 				//异步获取材料送检时间戳
@@ -95,15 +125,48 @@
 					}
 					
 				});	
-				//保存按钮
+				//保存按钮.前
+//				save.addEventListener('tap',function(){
+//					var myform=document.getElementById('myform');
+//					var img_content=document.getElementById('img_content');
+//					var formbtn=document.getElementById("formbtn");
+//					myform.classList.add('my_none');
+//					formbtn.classList.add('my_none');
+//					img_content.classList.remove('my_none');
+//					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+//				});
+				//保存按钮.后
+//				console.log(serverIP.value);
+//				console.log(ulId);
 				save.addEventListener('tap',function(){
-					var myform=document.getElementById('myform');
-					var img_content=document.getElementById('img_content');
-					var formbtn=document.getElementById("formbtn");
-					myform.classList.add('my_none');
-					formbtn.classList.add('my_none');
-					img_content.classList.remove('my_none');
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+					opinion = tcjv.value;//监督站整改意见
+					
+					mui.ajax(url+'send_Sms/batch_SendSms.php',{
+						data:{
+							flag:flag,
+							CorpID:CorpID.value,
+							LoginName:LoginName.value,
+							pwd:pwd.value,
+							serverIP:serverIP.value,
+							smsContent:smsContent.value,
+							pj_id:pj_id,
+							ulId:ulId,
+							gcmc:gcmc,
+							tcjv:tcjv.value
+						},
+//						dataType:'json',
+						type:'POST',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							mui.toast('保存成功',{ duration:'long', type:'div' });
+							back();
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown);
+						}
+					});
+//					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 				
 			});

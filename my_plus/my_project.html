@@ -6,6 +6,7 @@
 		<title>江门建筑管理系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/my_css.css">
 		<link rel="stylesheet" href="../css/iconfont.css">
 	</head>
 
@@ -28,7 +29,7 @@
 	                    <div class="mui-media-body">自检自测</div>
 	            	</a>
 	            </li>
-	            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	            <li id="my_supervision" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 my_none">
 	            	<a href="my_supervision.html">
 	                    <span class="mui-icon iconfont icon-yanshoutongguo "></span>
 	                    <div class="mui-media-body">监督抽检</div>
@@ -67,6 +68,7 @@
 	        </ul> 
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/service.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
@@ -97,6 +99,26 @@
 				detect = decodeURI(detect);
 				var timestamp = geturl("timestamp");
 				document.getElementById('H_name').innerHTML=gcmc;//标题名称
+				
+				mui.ajax(url+'check.php',{
+					data:{
+						ulId:"",
+						mobile:mobile,
+						flag:"commission"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						if(data['单位']=='监督机构'||data['单位']=='检测单位'||data['单位']=='管理员'){
+							var supervision = document.getElementById('my_supervision');//监督抽检
+							supervision.classList.remove('my_none');
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						alert('ajax错误'+type+'---'+errorThrown+"失败！");
+					}
+				});
 				
 				//主列表点击事件 ,把项目id传到所有子页面中
 				mui('#my_list').on('tap', 'a', function() {

@@ -184,23 +184,31 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-content-padded">
-				<p>正在加载高质量图片，请耐心等待...(^_^)</p>				
-				<p class="myp">场景照片: </p>
+				<p>正在加载高质量图片，请耐心等待...(^_^)</p>
+				<div id="jc">
+				<p class="myp my_none">场景照片: </p>
 				<p id="rwfj1">
 				<p id="fj1Text">
 					
 				</p>	
 				</p>
-				<p class="myp">检测实施过程中照片: </p>
-				<!--<p id="tephooto" class="myp my_none">检测实施过程中照片: </p>-->
+				<p class="myp my_none">检测实施过程中照片: </p>
+				<!--<p id="tephooto" class="myp my_none my_none">检测实施过程中照片: </p>-->
 				<p id="rwfj2">
 				<p id="fj2Text">
 					
 				</p>	
 				</p>	
-				<p class="myp">检测设备照片: </p>
+				<p class="myp my_none">检测设备照片: </p>
 				<p id="rwfj3">
 				<p id="fj3Text">
+					
+				</p>	
+				</p>
+				</div>
+				<p class="myp">监督抽检委托单: </p>
+				<p id="jdcjwtd">
+				<p id="jdcjwtdText">
 					
 				</p>	
 				</p>
@@ -244,6 +252,7 @@
 			var tbpho = self.tbpho;
 			var tipho = self.tipho;
 			var tepho = self.tepho;
+			var jdpho = self.jdpho;
 			var rtpho = self.rtpho;
 			var tfpho = self.tfpho;
 			var dwpho = self.dwpho;
@@ -251,7 +260,6 @@
 			var Text2 = self.Text2;
 			var Text3 = self.Text3;
 			var Text4 = self.Text4;
-			console.log(dwpho);
 			var Text5 = self.Text5;
 			var Text6 = self.Text6;
 //			var dispose_photo_01 = document.getElementById("dispose_photo_01");
@@ -292,7 +300,7 @@
 					createimg('rwfj1',tbpho[i]);
 				}
 			}else{
-				createtex('rwfj1');
+//				createtex('rwfj1');
 			}	
 			//检测过程中照片
 			if(tipho.length>1){
@@ -300,7 +308,7 @@
 					createimg('rwfj2',tipho[i]);
 				}
 			}else{
-				createtex('rwfj2');
+//				createtex('rwfj2');
 			}
 			//检测设备照片
 			if(tepho.length>1){
@@ -308,7 +316,20 @@
 					createimg('rwfj3',tepho[i]);
 				}
 			}else{
-				createtex('rwfj3');
+//				createtex('rwfj3');
+			}
+			//监督抽检委托单
+			if(jdpho.length>1){
+				for(var i=1;i<jdpho.length;i++){
+					createimg('jdcjwtd',jdpho[i]);
+				}
+			}else{
+				createtex('jdcjwtd');
+			}
+			
+			if(proatt=='新建'){
+				jc.classList.remove("my_none");
+				
 			}
 			//实测照片
 			if(proatt=='已确认'||proatt=='合格'){
@@ -341,13 +362,6 @@
 				}else{
 					createtex('rwfj4');
 				}
-//				if(tfpho.length>1){
-//					for(var i=1;i<tfpho.length;i++){
-//						createimg('rwfj5',tfpho[i]);
-//					}
-//				}else{
-//					createtex('rwfj5');
-//				}
 			}
 			//处理照片
 			if(proatt=='已处理'||proatt=='待审批'){

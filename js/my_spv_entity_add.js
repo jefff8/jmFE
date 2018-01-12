@@ -15,12 +15,6 @@
 		newUpload1.addEventListener('tap',function () {
 			myactionSheet('cjzp');
 		});	
-		newUpload2.addEventListener('tap',function(){
-			myactionSheet('ypzp');
-		});	
-		newUpload3.addEventListener('tap',function(){
-			myactionSheet('teqm');
-		});	
 		
 		//原生操作列表
 		var myactionSheet=function(lx){
@@ -318,7 +312,7 @@ function cleanHistory(lx) {
 
 ////////////上传文件/////////////////////////////////////////////
 //上传
-var server=url+"my_plus/my_spv_entity_upload.php";
+var server=url+"my_plus/my_spv_entity_upload_add.php";
 //var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
 var files1=[];
 var files2=[];
@@ -329,18 +323,8 @@ var files_teqm=[];
 function upload(lx,clean){	
 	files1=files_cjzp;
 	var strs1=","+f1Base64.join();
-	files2=files_ypzp;
-	var strs2=","+f2Base64.join();
-	files3=files_teqm;
-	var strs3=","+f3Base64.join();
 	if(files1.length<=0){
-		plus.nativeUI.alert("没有添加场景照片！");
-		return;
-	}else if(files2.length<=0){
-		plus.nativeUI.alert("没有添加检测实施过程照片！");
-		return;
-	}else if(files3.length<=0){
-		plus.nativeUI.alert("没有添加检测设备照片！");
+		plus.nativeUI.alert("没有添加监督抽检委托单照片！");
 		return;
 	}
 //	outSet("开始上传：")
@@ -352,12 +336,12 @@ function upload(lx,clean){
 			wt.close();
 			var button_lx=document.getElementById(lx);
 			var button_clean1=document.getElementById("clean_cj");
-			var button_clean2=document.getElementById("clean_yp");
-			var button_clean3=document.getElementById("clean_teqm");
+//			var button_clean2=document.getElementById("clean_yp");
+//			var button_clean3=document.getElementById("clean_teqm");
 			button_lx.disabled=true;
 			button_clean1.disabled=true;
-			button_clean2.disabled=true;
-			button_clean3.disabled=true;
+//			button_clean2.disabled=true;
+//			button_clean3.disabled=true;
 			button_lx.innerText="上传成功";				
 		}else{
 			outLine("上传失败："+status);
@@ -365,34 +349,19 @@ function upload(lx,clean){
 		}
 	});
 	task.addData("gcmc",getName());
-	task.addData("Text1",text1());
-	task.addData("Text2",text2());
-	task.addData("Text3",text3());
 	task.addData("lx",lx);
 	task.addData("files1",strs1);
-	task.addData("files2",strs2);
-	task.addData("files3",strs3);
 	task.addData("uid",getUid());	
 	nub1=files1.length.toString();
-	nub2=files2.length.toString();
-	nub3=files3.length.toString();
 	task.addData("nub1",nub1);
-	task.addData("nub2",nub2);
-	task.addData("nub3",nub3);
+	task.addData("timestamp",timestamp);
+//	console.log(getName())
 	task.addData("mchen",mchen());
-//	task.addData("ENum",getENum());
-	task.addData("gcdzt",gcdzt);
+	task.addData("myInfo",getInfo());
+//	console.log(nub1);
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});
-	}
-	for(var i=0;i<files2.length;i++){
-		var f2=files2[i];
-		task.addFile(f2.path,{key:f2.name});
-	}
-	for(var i=0;i<files3.length;i++){
-		var f3=files3[i];
-		task.addFile(f3.path,{key:f3.name});
 	}
 	task.start();
 //	files=[];
@@ -409,27 +378,12 @@ function mchen(){
 }
 //获取owntsp
 function getName(){
-	var gcmc = document.getElementById("gcmc");
+	var gcmc = document.getElementById("gcmc").value;
 	return gcmc;
 }
-//场景照片说明
-function text1(){
-	var  Text1 = document.getElementById("Text1").value;
-	return Text1;
-}
-//检测实施过程照片说明
-function text2(){
-	var Text2 = document.getElementById("Text2").value;
-	return Text2;
-}
-//检测设备照片说明
-function text3(){
-	var Text3 = document.getElementById("Text3").value;
-	return Text3;
-}
 //信息保存
-//function getENum(){
-//	var ENum = document.getElementById("ENum_input").value;//委托编号:Entrustment number
-//	return ENum;
-//}
+function getENum(){
+	var ENum = document.getElementById("ENum_input").value;//委托编号:Entrustment number
+	return ENum;
+}
 ////////////上传文件/////////////////////////////////////////////

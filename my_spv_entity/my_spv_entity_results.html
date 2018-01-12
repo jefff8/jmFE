@@ -65,7 +65,26 @@
 			<!--------------------------------------prepare part----------------------------->
 			<div id="item3" class="mui-control-content"></div>
 			<!--------------------------------------prepare part----------------------------->
-			
+			<div class="mui-input-row my_none">
+			        <label>企业ID</label>
+			        <input name="CorpID"  type="text" id="CorpID" class="mui-input-clear" value="101781">
+			    </div>
+			    <div class="mui-input-row my_none">
+			        <label>登录名</label>
+			        <input name="LoginName" type="text" id="LoginName" class="mui-input-clear" value="Admin">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>密码</label>
+			        <input name="pwd" type="text" id="pwd" class="mui-input-clear" value="174012" >
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>服务器地址</label>
+			        <input name="serverIP" type="text" id="serverIP" class="mui-input-clear"  value="http://sms.mobset.com:8080/Api?wsdl">
+			    </div>
+			    <div class="mui-input-row  my_none">
+			        <label>短信内容</label>
+			        <input name="smsContent" type="text" id="smsContent" class="mui-input-clear" value="实体抽检不合格(扩大抽检),监督站整改意见:">
+			    </div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -91,6 +110,8 @@
 				mobile = self.mobile;
 				my_name = self.my_name;
 	            gcmc = self.gcmc;
+	            pj_id = self.pj_id;
+//	            console.log(pj_id);
 	            timestamp = self.timestamp;//工程时间戳
 				gcmc_c = encodeURI(encodeURI(gcmc)); //获取工程名称
 				my_name = encodeURI(encodeURI(my_name)); //获取用户名
@@ -128,7 +149,7 @@
 						var color = "blue2";
 					}
 					var url = "my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">数量：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+jcbw+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">操作单位：'+ operation_supvision +'</p></li>';
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">委托编号：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">监督员：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+ jcrq +'</p></li>';
 					switch(proatt){
 						case "合格":case "扩大抽检合格":
 							witness.appendChild(ul); 
@@ -158,10 +179,10 @@
 								var owtsp = data[i].时间戳;
 								var proatt = data[i].工程单状态;
 								var ttype = data[i].检测类型;
-								var num=data[i].数量;
+								var num=data[i].委托编号;
 								var jcbw = data[i].检测部位;
 								var jcr=data[i].检测人;
-								var jcrq=data[i].检测日期;
+								var jcrq=data[i].检测单位;
 								var operation_supvision = data[i].监理操作单位;
 								mymaterial(proatt,id,ttype,num,jcbw,jcr,jcrq,owtsp,operation_supvision);
 							}
@@ -217,23 +238,51 @@
 												var index = e.index;	
 												switch (index){
 													case 1://扩大抽检
-														mui.ajax(url+'my_plus/my_spv_entity_list.php',{
-															data:{
+														mui.openWindow({
+															url:"my_spv_entity_supvr.html",
+															styles: {
+																hardwareAccelerated:false
+															},
+															extras:{
+																//传递参数
+																ulId:ulId,
 																flag:"扩大抽检",
-																ulid:ulId,
+																pj_id:pj_id,
 																gcmc:gcmc
 															},
-															dataType:'json',
-															type:'POST', 
-															timeout:10000,
-															success:function(data){
-																mui.toast('扩大检测成功请回看',{ duration:'long', type:'div' });
-																location.reload();//刷新本页面
+															show:{
+																autoShow:true,//页面loaded事件发生后自动显示
+																aniShow:'slide-in-right',//页面显示动画
+																duration:'100'//页面动画持续时间
 															},
-															error:function(xhr,type,errorThrown){
-//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+															waiting:{
+																autoShow:false,//自动显示等待框
 															}
-														});	
+														})
+//														mui.ajax(url+'send_Sms/batch_SendSms.php',{
+//															data:{
+//																flag:"扩大抽检",
+//																ulId:ulId,
+//																CorpID:CorpID.value,
+//																LoginName:LoginName.value,
+//																pwd:pwd.value,
+//																serverIP:serverIP.value,
+//																smsContent:smsContent.value,
+//																pj_id:pj_id,
+//																tcjv:tcjv.value,
+//																gcmc:gcmc
+//															},
+//															dataType:'json',
+//															type:'POST', 
+//															timeout:10000,
+//															success:function(data){
+//																mui.toast('扩大检测成功请回看',{ duration:'long', type:'div' });
+//																location.reload();//刷新本页面
+//															},
+//															error:function(xhr,type,errorThrown){
+//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//															}
+//														});	
 														break;
 													case 2://监理处理
 														mui.openWindow({
@@ -243,7 +292,10 @@
 															},
 															extras:{
 																//传递参数
-																ulId:ulId
+																ulId:ulId,
+																flag:"监理处理",
+																pj_id:pj_id,
+																gcmc:gcmc
 															},
 															show:{
 																autoShow:true,//页面loaded事件发生后自动显示
