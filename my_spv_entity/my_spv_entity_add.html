@@ -84,7 +84,7 @@
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="add" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
 		        	<!--<button id="cjzp" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_cj');">附件上传</button>-->
 		        </div>
@@ -215,7 +215,7 @@
 					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
 					setTimeout( function(){
 						plus.nativeUI.closeWaiting();
-					}, 1000 );
+					}, 2500 );
 					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
 			});

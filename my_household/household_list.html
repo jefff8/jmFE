@@ -171,9 +171,9 @@
 					var confirm = document.getElementById("confirm");
 					var approval = document.getElementById("approval");
 					var buildingNum = "栋号:"+buildingNum;
-					var floor = "楼层:"+floor;
-					var households = "户数:"+households;
-					var acceptanceTime = "验收时间:"+acceptanceTime;
+					var floor = "层数:"+floor;
+					var households = "层户数:"+households;
+					var acceptanceTime = "完成时间:"+acceptanceTime;
 					if(status=='施工申请'){
 						var color = "blue2";
 						var myhref = 'construction_detail.html?id='+id+'';
@@ -185,7 +185,7 @@
 						var myhref = 'final_view.html?id='+id+'&mobile='+mobile+'';
 					}else if(status=='审批通过'||status=='审批不通过'){
 						if(status=='审批通过'){
-							var color = "green2";
+							var color = "grey";
 						}else{
 							var color = "red";
 						}

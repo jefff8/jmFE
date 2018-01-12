@@ -185,33 +185,33 @@
 		<div class="mui-content">
 			<div class="mui-content-padded">
 				<p>正在加载高质量图片，请耐心等待...(^_^)</p>
-				<div id="jc">
-				<p class="myp my_none">场景照片: </p>
-				<p id="rwfj1">
-				<p id="fj1Text">
-					
-				</p>	
-				</p>
-				<p class="myp my_none">检测实施过程中照片: </p>
-				<!--<p id="tephooto" class="myp my_none my_none">检测实施过程中照片: </p>-->
-				<p id="rwfj2">
-				<p id="fj2Text">
-					
-				</p>	
-				</p>	
-				<p class="myp my_none">检测设备照片: </p>
-				<p id="rwfj3">
-				<p id="fj3Text">
-					
-				</p>	
-				</p>
-				</div>
 				<p class="myp">监督抽检委托单: </p>
 				<p id="jdcjwtd">
 				<p id="jdcjwtdText">
 					
 				</p>	
 				</p>
+				<div id="jc" class="my_none">
+					<p class="myp ">场景照片: </p>
+					<p id="rwfj1">
+					<p id="fj1Text">
+						
+					</p>	
+					</p>
+					<p class="myp ">检测实施过程中照片: </p>
+					<!--<p id="tephooto" class="myp my_none my_none">检测实施过程中照片: </p>-->
+					<p id="rwfj2">
+					<p id="fj2Text">
+						
+					</p>	
+					</p>	
+					<p class="myp ">检测设备照片: </p>
+					<p id="rwfj3">
+					<p id="fj3Text">
+						
+					</p>	
+					</p>
+				</div>
 			</div>
 			<div class="mui-content-padded">
 				<p id="dispose_photo_01"  class="myp my_none">报告照片: </p>
@@ -327,7 +327,7 @@
 				createtex('jdcjwtd');
 			}
 			
-			if(proatt=='新建'){
+			if(proatt!='新建'&&proatt!='准备'){
 				jc.classList.remove("my_none");
 				
 			}
