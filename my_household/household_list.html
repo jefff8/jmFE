@@ -281,76 +281,76 @@
 				});
 				
 				//确认（监理单位）操作
-				mui("#confirm").on('longtap','ul',function(){
-					var ulId = this.id;//当前项目id
-					mui.ajax(url+'check.php',{
-						data:{
-							ulId:"",
-							mobile:mobile,
-							flag:"division"
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data){
-							if(data['单位']=='监理单位'||data['单位']=='管理员'){
-								mui.ajax(url+'my_household/household_list.php',{
-									data:{
-										flag:"details",
-										ulId:ulId
-									},
-									type:'post',
-									dataType:'json',
-									success:function(data){
-										var status = data[0].工程单状态;
-										switch(status){
-											case "监理确认":
-												var btnArray = [
-													{title:"监理确认"}
-												]; 
-												plus.nativeUI.actionSheet({
-													title:"操作", 
-													cancel:"取消",
-													buttons:btnArray
-												},function(e){
-													var index = e.index;	
-													//var nextpage='';
-													switch (index){
-														case 1://监理确认
-															mui.ajax(url+'my_household/household_list.php',{
-																data:{
-																	flag:"监理确认",
-																	ulId:ulId
-																},
-																dataType:'json',
-																type:'POST', 
-																timeout:10000,
-																success:function(data){
-																	mui.toast('操作完成！',{ duration:'long', type:'div' })
-																	location.reload();//刷新本页面
-																},
-																error:function(xhr,type,errorThrown){
-						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
-																}
-															});
-															break;
-													}	
-												});
-										}
-									},
-									error:function(xhr,type,errorThrown){
-										alert("发生错误");
-									}
-								});
-							}else{
-								alert("抱歉，您没有新建卡项的权限");
-							}
-						},
-						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-						}
-					});
-				});
+//				mui("#confirm").on('longtap','ul',function(){
+//					var ulId = this.id;//当前项目id
+//					mui.ajax(url+'check.php',{
+//						data:{
+//							ulId:"",
+//							mobile:mobile,
+//							flag:"division"
+//						},
+//						dataType:'json',
+//						type:'post',
+//						timeout:10000,
+//						success:function(data){
+//							if(data['单位']=='监理单位'||data['单位']=='管理员'){
+//								mui.ajax(url+'my_household/household_list.php',{
+//									data:{
+//										flag:"details",
+//										ulId:ulId
+//									},
+//									type:'post',
+//									dataType:'json',
+//									success:function(data){
+//										var status = data[0].工程单状态;
+//										switch(status){
+//											case "监理确认":
+//												var btnArray = [
+//													{title:"监理确认"}
+//												]; 
+//												plus.nativeUI.actionSheet({
+//													title:"操作", 
+//													cancel:"取消",
+//													buttons:btnArray
+//												},function(e){
+//													var index = e.index;	
+//													//var nextpage='';
+//													switch (index){
+//														case 1://监理确认
+//															mui.ajax(url+'my_household/household_list.php',{
+//																data:{
+//																	flag:"监理确认",
+//																	ulId:ulId
+//																},
+//																dataType:'json',
+//																type:'POST', 
+//																timeout:10000,
+//																success:function(data){
+//																	mui.toast('操作完成！',{ duration:'long', type:'div' })
+//																	location.reload();//刷新本页面
+//																},
+//																error:function(xhr,type,errorThrown){
+//						//											alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//																}
+//															});
+//															break;
+//													}	
+//												});
+//										}
+//									},
+//									error:function(xhr,type,errorThrown){
+//										alert("发生错误");
+//									}
+//								});
+//							}else{
+//								alert("抱歉，您没有新建卡项的权限");
+//							}
+//						},
+//						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+//						}
+//					});
+//				});
 				
 				//审批（监督站）操作
 				mui("#approval").on('longtap','ul',function(){
