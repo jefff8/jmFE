@@ -35,12 +35,10 @@
 	}
 	//动态创建项目
 	function inspection1(sjc,id,pj_name,type,part,quantity,inspector,testDate,state){
-		if(state=='新增'||state=='提交见证'||state=='取样送检'||state=='取样送检提交见证'){
-			color = 'blue2';
-		}else if(state=='不合格'||state=='取样送检不合格'){
+		if(state=='不合格'||state=='取样送检不合格'){
 			color = 'red';
 		}else{
-			color = 'green2';
+			color = 'blue2';
 		}
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
