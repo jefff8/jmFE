@@ -74,8 +74,8 @@
 					constr = encodeURI(encodeURI(construction));
 					supvision = encodeURI(encodeURI(supervision));
 					detect = encodeURI(encodeURI(detection));
-					var zhuyi="本月已完成3项第三方检测";
-					var chakan="本月已完成5项项目自检";
+					var zhuyi="本月已完成项第三方检测";
+					var chakan="本月已完成项项目自检";
 					
 					var diqu="地区："+	dq;
 					var an1='点击查看';
@@ -150,8 +150,11 @@
 						p3.appendChild(txt5);
 						
 						//第三个a标签
+						var li3=document.createElement('li');//创建第二个li
+						li3.className='mui-table-view-cell mui-media';
+						ul.appendChild(li3);
 						var a3=document.createElement('a');//创建第三个a
-						li2.appendChild(a3);
+						li3.appendChild(a3);
 						var div4=document.createElement('div');
 						div4.className='mui-media-body';
 						a3.appendChild(div4);
