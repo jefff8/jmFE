@@ -1,113 +1,218 @@
 {
-  "index.html": {
-    "resources": [
-      "my.html"
-    ],
-    "refer": [
-      "my.html",
-      "team.html"
-    ]
-  },
-  "login.html": {
-    "refer": [
-      "index.html"
-    ]
-  },
-  "my.html": {
-    "refer": [
-      "my_plus/my_project_list.html"
-    ]
-  },
-  "my_plus/my_project.html": {
-    "refer": [
-      "my_plus/my_supervision.html",
-      "my_plus/my_result.html",
-      "my_plus/my_project_list.html"
-    ]
-  },
-  "my_plus/my_project_list.html": {
-    "refer": [
-      "my_plus/my_project.html"
-    ]
-  },
-  "my_plus/my_supervision.html": {
-    "refer": [
-      "my_spv_material/my_supervision_material.html",
-      "my_spv_entity/my_spv_entity_list.html"
-    ]
-  },
-  "my_spv_material/my_spv_material_detail.html": {
-    "refer": [
-      "my_spv_material/my_supervision_material.html",
-      "my_spv_material/readimage.html",
-      "my_spv_material/my_spv_material_results.html"
-    ]
-  },
-  "my_spv_material/my_supervision_material.html": {
-    "refer": [
-      "my_spv_material/my_spv_material_detail.html",
-      "my_spv_material/my_spv_material_add.html",
-      "my_spv_material/my_spv_material_deliver.html",
-      "my_spv_material/my_spv_material_fail.html",
-      "my_spv_material/my_spv_material_review_detail.html"
-    ]
-  },
-  "my_spv_material/my_spv_material_results.html": {
-    "refer": [
-      "my_spv_material/my_spv_material_detail.html",
-      "my_spv_material/my_spv_material_resDet.html",
-      "my_spv_material/my_spv_material_supvr.html"
-    ]
-  },
-  "my_plus/my_result.html": {
-    "refer": [
-      "my_spv_material/my_spv_material_results.html",
-      "my_insp_material/my_inspection_mtResult.html",
-      "my_material/my_material_results.html",
-      "my_spv_entity/my_spv_entity_results.html"
-    ]
-  },
-  "my_spv_material/my_spv_material_review_detail.html": {
-    "refer": [
-      "my_spv_material/my_supervision_material.html",
-      "my_spv_material/camera_image.html"
-    ]
-  },
-  "my_spv_material/my_spv_material_resDet.html": {
-    "refer": [
-      "my_spv_material/readimage.html",
-      "my_spv_material/my_spv_material_results.html"
-    ]
-  },
-  "my_spv_entity/my_spv_entity_list.html": {
-    "refer": [
-      "my_spv_entity/my_spv_entity_readmessage.html",
-      "my_spv_entity/my_spv_entity_add.html",
-      "my_spv_entity/my_spv_entity_fail.html",
-      "my_spv_entity/my_spv_entity_review_readmessage.html"
-    ]
-  },
-  "my_spv_entity/my_spv_entity_readmessage.html": {
-    "refer": [
-      "my_spv_entity/my_spv_entity_readimage.html",
-      "my_spv_entity/my_spv_entity_list.html",
-      "my_spv_entity/my_spv_entity_results.html"
-    ]
-  },
-  "my_spv_entity/my_spv_entity_add.html": {
-    "refer": [
-      "my_spv_entity/camera_image.html"
-    ]
-  },
-  "my_spv_entity/my_spv_entity_results.html": {
-    "refer": [
-      "my_spv_entity/my_spv_entity_readmessage.html",
-      "my_spv_entity/my_spv_entity_supvr.html"
-    ]
-  },
-  "my_spv_entity/my_spv_entity_review_readmessage.html": {
-    "refer": [
-      "my_spv_entity/my_spv_entity_list.html"
-    ]
-  }
+	"index.html": {
+		"resources": [
+			"my.html"
+		],
+		"refer": [
+			"my.html",
+			"team.html",
+			"info.html"
+		]
+	},
+	"login.html": {
+		"refer": [
+			"index.html",
+			"reg.html"
+		]
+	},
+	"my.html": {
+		"refer": [
+			"my_plus/my_project_list.html",
+			"my_plus/my_setting.html",
+			"my_task/task_list.html"
+		]
+	},
+	"my_plus/my_project.html": {
+		"refer": [
+			"my_plus/my_supervision.html",
+			"my_plus/my_result.html",
+			"my_plus/my_project_list.html",
+			"my_material/my_material_list.html",
+			"my_plus/my_query.html",
+			"my_commission/my_commission_list.html",
+			"my_plus/my_inspection.html",
+			"my_division/division_list.html",
+			"my_household/household_list.html"
+		]
+	},
+	"my_plus/my_project_list.html": {
+		"refer": [
+			"my_plus/my_project.html"
+		]
+	},
+	"my_plus/my_supervision.html": {
+		"refer": [
+			"my_spv_material/my_supervision_material.html",
+			"my_spv_entity/my_spv_entity_list.html"
+		]
+	},
+	"my_spv_material/my_spv_material_detail.html": {
+		"refer": [
+			"my_spv_material/my_supervision_material.html",
+			"my_spv_material/readimage.html",
+			"my_spv_material/my_spv_material_results.html"
+		]
+	},
+	"my_spv_material/my_supervision_material.html": {
+		"refer": [
+			"my_spv_material/my_spv_material_detail.html",
+			"my_spv_material/my_spv_material_add.html",
+			"my_spv_material/my_spv_material_deliver.html",
+			"my_spv_material/my_spv_material_fail.html",
+			"my_spv_material/my_spv_material_review_detail.html"
+		]
+	},
+	"my_spv_material/my_spv_material_results.html": {
+		"refer": [
+			"my_spv_material/my_spv_material_detail.html",
+			"my_spv_material/my_spv_material_resDet.html",
+			"my_spv_material/my_spv_material_supvr.html"
+		]
+	},
+	"my_plus/my_result.html": {
+		"refer": [
+			"my_spv_material/my_spv_material_results.html",
+			"my_insp_material/my_inspection_mtResult.html",
+			"my_material/my_material_results.html",
+			"my_spv_entity/my_spv_entity_results.html",
+			"my_insp_entity/my_inspection_entity_final.html",
+			"my_commission/my_entity_results.html"
+		]
+	},
+	"my_spv_material/my_spv_material_review_detail.html": {
+		"refer": [
+			"my_spv_material/my_supervision_material.html",
+			"my_spv_material/camera_image.html"
+		]
+	},
+	"my_spv_material/my_spv_material_resDet.html": {
+		"refer": [
+			"my_spv_material/readimage.html",
+			"my_spv_material/my_spv_material_results.html"
+		]
+	},
+	"my_spv_entity/my_spv_entity_list.html": {
+		"refer": [
+			"my_spv_entity/my_spv_entity_readmessage.html",
+			"my_spv_entity/my_spv_entity_add.html",
+			"my_spv_entity/my_spv_entity_fail.html",
+			"my_spv_entity/my_spv_entity_review_readmessage.html",
+			"my_spv_entity/my_spv_entity_Attachments_upload.html"
+		]
+	},
+	"my_spv_entity/my_spv_entity_readmessage.html": {
+		"refer": [
+			"my_spv_entity/my_spv_entity_readimage.html",
+			"my_spv_entity/my_spv_entity_list.html",
+			"my_spv_entity/my_spv_entity_results.html"
+		]
+	},
+	"my_spv_entity/my_spv_entity_add.html": {
+		"refer": [
+			"my_spv_entity/camera_image.html"
+		]
+	},
+	"my_spv_entity/my_spv_entity_results.html": {
+		"refer": [
+			"my_spv_entity/my_spv_entity_readmessage.html",
+			"my_spv_entity/my_spv_entity_supvr.html"
+		]
+	},
+	"my_spv_entity/my_spv_entity_review_readmessage.html": {
+		"refer": [
+			"my_spv_entity/my_spv_entity_list.html"
+		]
+	},
+	"my_material/my_material_list.html": {
+		"refer": [
+			"my_material/my_material_add.html",
+			"my_material/my_rejection.html",
+			"my_material/my_material_samDet.html"
+		]
+	},
+	"my_material/my_material_results.html": {
+		"refer": [
+			"my_material/my_material_resDet.html"
+		]
+	},
+	"my_commission/my_commission_list.html": {
+		"refer": [
+			"my_commission/my_commission_add.html"
+		]
+	},
+	"my_commission/my_entity_results.html": {
+		"refer": [
+			"my_commission/my_entity_readmessage.html"
+		]
+	},
+	"my_plus/my_inspection.html": {
+		"refer": [
+			"my_insp_entity/my_inspection_entity.html"
+		]
+	},
+	"my_insp_entity/my_inspection_entity.html": {
+		"refer": [
+			"my_insp_entity/my_inspection_new.html"
+		]
+	},
+	"my_division/division_list.html": {
+		"refer": [
+			"my_division/division_details.html",
+			"my_division/division_add.html",
+			"my_division/supervision.html",
+			"my_division/perfect_info.html"
+		]
+	},
+	"my_division/supervision.html": {
+		"refer": [
+			"my_division/camera_image.html"
+		]
+	},
+	"my_division/division_details.html": {
+		"refer": [
+			"my_division/readimage.html"
+		]
+	},
+	"my_household/household_list.html": {
+		"refer": [
+			"my_household/household_add.html",
+			"my_household/construction_detail.html",
+			"my_household/all_floor.html",
+			"my_household/final_view.html"
+		]
+	},
+	"my_household/all_floor.html": {
+		"refer": [
+			"my_household/readimage.html",
+			"my_household/supervision_upload.html",
+			"my_household/summaryTab_upload.html"
+		]
+	},
+	"my_household/supervision_upload.html": {
+		"refer": [
+			"my_household/camera_image.html"
+		]
+	},
+	"my_household/final_view.html": {
+		"refer": [
+			"my_household/readimage.html"
+		]
+	},
+	"my_plus/my_setting.html": {
+		"refer": [
+			"my_setting/my_setting_wdzh.html"
+		]
+	},
+	"my_task/task_list.html": {
+		"refer": [
+			"my_material/my_material_samDet.html",
+			"my_commission/my_entity_readmessage.html",
+			"my_insp_material/my_inspection_detail.html"
+		]
+	},
+	"my_material/my_material_samDet.html": {
+		"refer": [
+			"my_material/readimage.html"
+		]
+	}
 }

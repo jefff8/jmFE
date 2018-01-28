@@ -7,7 +7,7 @@
 	"id": "H5986FCE1",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "江门市建设工程施工质量管理系统",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.4",/*应用版本名称*/
+		"name": "2018.02.0126",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -407,7 +407,8 @@
 					"my_commission/my_commisson_list.html",
 					"my_commission/my_commission_list.html",
 					"my_division/division_list.html",
-					"my_household/my_checkB.html"
+					"my_household/my_checkB.html",
+					"my_household/household_list.html"
 				],
 				"priority": 0
 			},
@@ -1544,7 +1545,8 @@
 					"my_material/my_material_add.html",
 					"my_material/my_material_fail.html",
 					"my_material/my_material_deliver.html",
-					"my_material/my_material_recheckDeliver.html"
+					"my_material/my_material_recheckDeliver.html",
+					"my_material/my_rejection.html"
 				],
 				"priority": 0
 			},
@@ -2359,7 +2361,9 @@
 					"my_division/division_add.html",
 					"my_division/division_details.html",
 					"my_division/supervision1.html",
-					"my_division/supervision3.html"
+					"my_division/supervision3.html",
+					"my_division/supervision.html",
+					"my_division/perfect_info.html"
 				],
 				"priority": 0
 			},
@@ -2451,7 +2455,8 @@
 					"my_spv_entity/my_spv_entity_readmessage.html",
 					"my_spv_entity/my_spv_entity_supvr.html",
 					"my_spv_entity/my_spv_entity_fail.html",
-					"my_spv_entity/my_spv_entity_review_readmessage.html"
+					"my_spv_entity/my_spv_entity_review_readmessage.html",
+					"my_spv_entity/my_spv_entity_Attachments_upload.html"
 				],
 				"priority": 0
 			},
@@ -2499,6 +2504,53 @@
 				"resources": [],
 				"refer": [
 					"my_spv_entity/my_spv_entity_list.html"
+				],
+				"priority": 0
+			},
+			"my_division/supervision.html": {
+				"resources": [],
+				"refer": [
+					"my_division/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_division/division_details.html": {
+				"resources": [],
+				"refer": [
+					"my_division/readimage.html"
+				],
+				"priority": 0
+			},
+			"my_household/household_list.html": {
+				"resources": [],
+				"refer": [
+					"my_household/household_add.html",
+					"my_household/construction_detail.html",
+					"my_household/all_floor.html",
+					"my_household/final_view.html"
+				],
+				"priority": 0
+			},
+			"my_household/all_floor.html": {
+				"resources": [],
+				"refer": [
+					"my_household/readimage.html",
+					"my_household/supervision_upload.html",
+					"my_household/summaryTab_upload.html"
+				],
+				"priority": 0
+			},
+			"my_household/supervision_upload.html": {
+				"resources": [],
+				"refer": [
+					"my_household/camera_image.html"
+				],
+				"priority": 0
+			},
+			"my_household/final_view.html": {
+				"resources": [],
+				"refer": [
+					"my_household/readimage.html"
 				],
 				"priority": 0
 			}
