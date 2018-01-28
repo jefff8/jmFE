@@ -278,7 +278,7 @@ function upload(lx){
 			wt.close();
 		}
 	});
-	task.addData("gcmc",getName());
+//	task.addData("gcmc",getName());
 	task.addData("sceneText",getScene());
 	task.addData("sampleText",getSample());
 	task.addData("lx",lx);
@@ -290,9 +290,9 @@ function upload(lx){
 	task.addData("nub1",nub1);
 	task.addData("nub2",nub2);
 	task.addData("mchen",mchen());
-	task.addData("pj_name",gcmc);
-	task.addData("pj_timestamp",timestamp);
-	task.addData("myInfo",myInfo());
+//	task.addData("pj_name",gcmc);
+//	task.addData("pj_timestamp",timestamp);
+//	task.addData("myInfo",myInfo());
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});
@@ -333,15 +333,6 @@ function getSample(){
 	return sampleText;
 }
 //信息保存
-function myInfo(){
-	var F_input = document.getElementById('myform').getElementsByTagName('input');
-	var F_qcdw = document.getElementById('qcdy').value;
-	var unit = document.getElementById("operation_unit").value;
-	var Str="";
-	for(i=0;i<11;i++){
-		var Str = Str + F_input[i].value+"|";
-	}
-	Str= Str+F_qcdw+"|"+unit;
-	return Str
-}
+
+
 ////////////上传文件/////////////////////////////////////////////

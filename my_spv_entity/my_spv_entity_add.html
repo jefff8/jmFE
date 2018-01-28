@@ -99,28 +99,21 @@
 		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/native.js"></script>
 		<script src="../js/service.js"></script>
+		<script src="../js/public.js"></script>
 		<script src="../js/my_spv_entity_add.js"></script>
 		<script src="../js/service.js"></script>
 		
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
-				//获取url参数值
-				function geturl(name){
-					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-					var r = window.location.search.substr(1).match(reg);
-					if(r!=null)return  unescape(r[2]);
-					return null;
-				}
+				
 				//获取工程名称
 				var self = plus.webview.currentWebview();
                 gcmc_c = self.gcmc_c;
                 my_name = self.my_name;
                 timestamp = self.timestamp;//工程时间戳
-//              detect = self.detect;
                 supvision = self.supvision; 
                 my_name = decodeURI(decodeURI(my_name));
-//              detect = decodeURI(decodeURI(detect));
                 gcmc = decodeURI(decodeURI(gcmc_c));
                 supvision = decodeURI(decodeURI(supvision));
 				
@@ -136,13 +129,9 @@
 				var tdpm = doc.getElementById('test_dpm');//检测单位
 				var operation_unit = doc.getElementById("operation_unit");//监理操作单位
 				jcr.value = my_name;
-				var myDate=new Date();
-				var mytime=myDate.getTime();
-				var timesp = mytime;
+				
 				var progcmc = doc.getElementById('gcmc');
 				progcmc.value = gcmc;
-				var protimesp = doc.getElementById('sjc');
-				protimesp.value = timesp;
 				
 				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
 					data:{
@@ -171,39 +160,69 @@
 					}
 				});
 				
-				//保存按钮
-//				data_save.addEventListener('tap',function(){
-//					var sjc=document.getElementById('sjc').value;
-//					myInfo = getInfo();
-////					console.log(myInfo);
-//					mui.ajax(url+'my_plus/my_spv_entity_list.php',{
-//						data:{
-//							flag:"新建",
-//							pj_name:gcmc,//工程名称
-//							pj_timestamp:timestamp,//工程时间戳
-//							sjc:sjc,
-//							myInfo:myInfo
-//						},
-//						dataType:'json',
-//						type:'POST', 
-//						timeout:10000,
-//						success:function(data){
-////							alert(data);
-//							if(data.result="success"){
-//								mui.toast('新建成功',{ duration:'long', type:'div' });
-//								back();
-//							}else{
-//								mui.toast('新建失败',{ duration:'long', type:'div' });
-//							}
-//							mui.toast('新建成功',{ duration:'long', type:'div' });
-//						},
-//						error:function(xhr,type,errorThrown){
-//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
-//						}
-//					});
-//				});
-				
+				/**
+				 * 保存按钮监听
+				 */
 				data_save.addEventListener('tap',function(){
+					myInfo = getInfo();
+					sjc = getsjc();
+					var protimesp = doc.getElementById('sjc');
+					protimesp.value = sjc;
+					saveInfo(sjc);
+					//显示上传页面
+					Uploadingpage();
+				});
+				
+				function getInfo(){
+					var my_input = document.getElementById("myform").getElementsByTagName("input");
+					var my_select = document.getElementById("myform").getElementsByTagName("select");
+					var test_dpm = document.getElementById("test_dpm").value;
+					var Str = "";
+					for(var i=0;i<2;i++){
+						Str = Str + my_input[i].value + "|";
+					}
+					for(var i=0;i<1;i++){
+						Str = Str + my_select[i].value + "|";
+					}
+					Str = Str + test_dpm;
+					return Str;
+				}
+				
+				/**
+				 * 保存信息
+				 * @param string sjc 时间戳
+				 */
+				function saveInfo(sjc){
+					mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+						data:{
+							flag:"新建",
+							pj_name:gcmc,//工程名称
+							pj_timestamp:timestamp,//工程时间戳
+							sjc:sjc,
+							myInfo:myInfo
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							if(data.result="success"){
+//								mui.toast('新建成功',{ duration:'long', type:'div' });
+							}else{
+								mui.toast('新建失败',{ duration:'long', type:'div' });
+							}
+						},
+						error:function(xhr,type,errorThrown){
+//							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+				
+				
+				/**
+				 * 显示上传附件页面
+				 */
+				function Uploadingpage(){
+					waitload('保存中');
 					var myform=document.getElementById('myform');
 					var myform2=document.getElementById('myform2');
 					var img_content=document.getElementById('img_content');
@@ -212,37 +231,31 @@
 					myform2.classList.add('my_none');
 					formbtn.classList.add('my_none');			
 					img_content.classList.remove('my_none');
-					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
-					setTimeout( function(){
-						plus.nativeUI.closeWaiting();
-					}, 2500 );
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
-				});
+					
+					mui.toast('请上传完整照片',{ duration:'long', type:'div' });
+					
+				}
+				
+				
+				
+				
+				
+				
+				
 			});
 			
-			function getInfo(){
-				var my_input = document.getElementById("myform").getElementsByTagName("input");
-				var my_select = document.getElementById("myform").getElementsByTagName("select");
-//				var unit = document.getElementById("operation_unit").value;
-				var test_dpm = document.getElementById("test_dpm").value;
-			//	var tnum = document.getElementById("tnum");
-				var Str = "";
-				for(var i=0;i<2;i++){
-					Str = Str + my_input[i].value + "|";
-				}
-				for(var i=0;i<1;i++){
-					Str = Str + my_select[i].value + "|";
-				}
-			//	Str = Str + test_dpm+"|"+unit+"|"+tnum.value;
-				Str = Str + test_dpm;
-				return Str;
-			}
 			//返回父页面刷新
 			function back(){
 				var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity_list.html');
 				target.reload(true);
 				mui.back();
 			}
+			
+			
+
+			
+			
+			
 		</script>
 	</body> 
 

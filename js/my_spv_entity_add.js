@@ -313,7 +313,6 @@ function cleanHistory(lx) {
 ////////////上传文件/////////////////////////////////////////////
 //上传
 var server=url+"my_plus/my_spv_entity_upload_add.php";
-//var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
 var files1=[];
 var files2=[];
 var files3=[];
@@ -348,7 +347,7 @@ function upload(lx,clean){
 			wt.close();
 		}
 	});
-	task.addData("gcmc",getName());
+//	task.addData("gcmc",getName());
 	task.addData("lx",lx);
 	task.addData("files1",strs1);
 	task.addData("uid",getUid());	
@@ -357,8 +356,6 @@ function upload(lx,clean){
 	task.addData("timestamp",timestamp);
 //	console.log(getName())
 	task.addData("mchen",mchen());
-	task.addData("myInfo",getInfo());
-//	console.log(nub1);
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});

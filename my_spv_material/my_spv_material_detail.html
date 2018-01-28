@@ -8,6 +8,8 @@
 		<link rel="stylesheet" href="../css/mui.min.css">	
 		<link rel="stylesheet" href="../css/my_css.css">	
 		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -19,7 +21,7 @@
 		    <form id="myform" class="mui-input-group ">
 		        <div class="mui-input-row">
 		            <label>抽检类型:</label>
-		            <input id="qylx" type="text" class="mui-input-clear" readonly="readonly">
+		            <input id="qylx" type="text" class="mui-input-clear" readonly="readonly" disabled="disabled">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>规格:</label>
@@ -39,11 +41,11 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>进场日期:</label>
-		            <input id="interDate" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input id="interDate" name="Selection-date" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>取样日期:</label>
-		            <input id="qyrq" id="qyrq" type="text" class="mui-input-clear" readonly="readonly" disabled="disabled" >
+		            <input id="qyrq" id="qyrq" name="Selection-date" type="text" class="mui-input-clear" readonly="readonly" disabled="disabled" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>合格证编号:</label>
@@ -60,16 +62,16 @@
 		        <div class="mui-input-row">
 		            <label>备注:</label>
 		            <input id="remark" type="text" class="mui-input-clear"  readonly="readonly" >
-		        </div>
-		        <div class="mui-input-row my_none">
-					<label> 时间戳：</label>
-					<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
-				</div>	
-				<div class="mui-input-row my_none">
-					<label> 工程名称：</label>
-					<input  id='gcmc' type="text" placeholder="时间戳" readonly="readonly">						
-				</div>	
+		        </div>	
 		    </form>
+		    <div class="mui-input-row my_none">
+				<label> 时间戳：</label>
+				<input  id='sjc' type="text" placeholder="时间戳" readonly="readonly">						
+			</div>	
+			<div class="mui-input-row my_none">
+				<label> 工程名称：</label>
+				<input  id='gcmc' type="text" placeholder="时间戳" readonly="readonly">						
+			</div>
 		    <!--//送样基本信息-->
 		    <form id="form_songyang" class="mui-input-group my_none">
 		        <div class="mui-input-row">
@@ -109,7 +111,8 @@
 		    <form id="myform2" class="mui-input-group">
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
-		            <input id="jcdw" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <!--<input id="jcdw" type="text" class="mui-input-clear"  >-->
+		            <select id="jcdw" style="font-size: 14px;" readonly="readonly" disabled="disabled"></select>
 		        </div>
 		    </form>
 		    <form id="firstNum_form" class="mui-input-group my_none">
@@ -132,7 +135,9 @@
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
-				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
+				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>
+				<button type="button" class="mui-btn mui-btn-primary my_none" id="modify">修改</button>
+				<button type="button" class="mui-btn mui-btn-primary my_none" id="save">保存</button>
 				&nbsp;&nbsp;
 				<!--<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>-->		
 			</div>
@@ -179,11 +184,14 @@
 		<script src="../js/common.js"></script>
 		<script src="../js/immersed.js" ></script>	
 		<script src="../js/service.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/public.js"></script>
 		<script src="../js/upload_qy.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
-				
+				var self = plus.webview.currentWebview();
 				var doc = document;
 				var my_popover = doc.getElementById("my_popover");
 				
@@ -229,8 +237,9 @@
 				var gcid = geturl("gcid");
 				var gcmc_in = geturl("gcmc");
 				var state = decodeURI(decodeURI(geturl("state")));
+				var detect = decodeURI(decodeURI(geturl("detect")));
+//				console.log(detect);
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
-//				alert(gcmc.value);
 				sjc_in.value = sjc_send;
 //				alert(sjc_send);
 				//异步取值填写
@@ -243,7 +252,6 @@
 					type:'POST', 
 					timeout:10000,
 					success:function(data){
-//						alert(data);
 						qylx.value = data[0].取样类型;
 						gg.value = data[0].规格;
 						sl.value = data[0].数量;
@@ -271,7 +279,35 @@
 					error:function(xhr,type,errorThrown){
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
-				});	
+				});
+				
+				qylx.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"材料送检"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data.length);
+							var length = data.length;
+							var typeData = new Array();
+							var typeData2 = new Array();
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].房建工程);
+							}
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
 				
 				if(state=='收样'||state=='不合格'){
 					form_songyang.classList.remove("my_none");
@@ -287,15 +323,45 @@
 					form_songyang.classList.remove("my_none");
 					testNum_form.classList.remove("my_none");
 					firstNum_form.classList.remove("my_none");
+				}else if(state=='新增'){
+					modify.classList.remove('my_none');
 				}
 				
-				//日期监听
-				qyrq.addEventListener('tap',function(){
-					plus.nativeUI.pickDate( function(e){
-					d=e.date;
-                    qyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-				   });
-				});
+				function typeAll(data,data2){
+//					alert(data[0]);
+					//初始化popPicker组件
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
+					var length = data.length;
+					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
+					}
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						qylx.value =  items[0].text + "—" + items[1].text;
+					});
+				}
+	
+				//动态添加检测单位
+				var detection_unit = detect.split(",");
+				for(var i=0;i<detection_unit.length;i++){
+					var option = doc.createElement("option");
+					option.innerHTML = detection_unit[i];
+					jcdw.appendChild(option);
+				}
 		
 				
 				
@@ -340,7 +406,69 @@
 						alert('ajax1错误'+type);
 //						return callback('ajax错误'+type+errorThrown);
 					}
-				});	
+				});
+				
+				modify.addEventListener('tap',function(){
+					modify.classList.add('my_none');
+					save.classList.remove('my_none');
+					//检测单位
+					jcdw.removeAttribute("readonly");
+					jcdw.removeAttribute("disabled");
+					myforminput = document.getElementById("myform").getElementsByTagName("input");
+//					console.log(myforminput.length);
+					for(i=1;i<myforminput.length;i++){
+  						myforminput[i].removeAttribute("readonly");
+//						console.log(myforminput[i].value)
+  					}
+					for(i=0;i<myforminput.length;i++){
+  						myforminput[i].removeAttribute("disabled");
+//						console.log(myforminput[i].value)
+  					}
+				});
+				
+				/**
+				 * 保存按钮
+				 */
+				save.addEventListener('tap',function(){
+					myInfo = getInfo();
+					saveInfo();
+				});
+				
+				function getInfo(){
+					var F_input = document.getElementById('myform').getElementsByTagName('input');
+					//委托检测类型的值
+					jcdw = document.getElementById("jcdw").value;
+					var Str = "";
+					for(var i=0;i<myforminput.length;i++){
+						Str = Str + myforminput[i].value + "|";
+					}
+					return Str + jcdw;
+				}
+				
+				function saveInfo(){
+					mui.ajax(url+'my_plus/my_spv_material_detail.php',{
+						data:{
+							flag:"新建状态修改信息",
+							sjc:sjc_send,
+							myInfo:myInfo
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							if(data.result="success"){
+								mui.toast('修改成功',{ duration:'long', type:'div' });
+								self.reload(true);
+							}else{
+								mui.toast('修改失败',{ duration:'long', type:'div' });
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
 				
 				//附件查看
 				fjck.addEventListener('tap',function(){

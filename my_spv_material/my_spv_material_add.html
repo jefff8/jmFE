@@ -150,6 +150,7 @@
 					if(r!=null)return  unescape(r[2]);
 					return null;
 				}
+				
 				//获取工程名称
 				var self = plus.webview.currentWebview();
                 gcmc_c = self.gcmc_c;
@@ -159,6 +160,7 @@
                 supvision = self.supvision; 
                 my_name = decodeURI(decodeURI(my_name));
                 gcmc = decodeURI(decodeURI(gcmc_c));
+
 //              alert(timestamp);
 				detect = decodeURI(decodeURI(detect));
 				supvision = decodeURI(decodeURI(supvision));
@@ -271,6 +273,9 @@
 				}, false);
 							
 				save.addEventListener('tap',function(){
+					sjc = mchen();
+					myInfo = myInfo();
+//					console.log(myInfo);
 					var myform=document.getElementById('myform');
 					var myform2=document.getElementById('myform2');
 					var img_content=document.getElementById('img_content');
@@ -285,6 +290,47 @@
 					}, 1000 );
 					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
 				});
+				
+				function myInfo(){
+					var F_input = document.getElementById('myform').getElementsByTagName('input');
+					var F_qcdw = document.getElementById('qcdy').value;
+					var unit = document.getElementById("operation_unit").value;
+					var Str="";
+					for(i=0;i<11;i++){
+						var Str = Str + F_input[i].value+"|";
+					}
+					Str= Str+F_qcdw+"|"+unit;
+					return Str
+				}
+				
+				/**
+				 * 保存信息
+				 * @param string sjc 时间戳
+				 */
+				function saveInfo(sjc){
+					mui.ajax(url+'my_plus/my_spv_material_list.php',{
+						data:{
+							flag:"新建",
+							gcmc:gcmc,//工程名称
+							pj_timestamp:timestamp,//工程时间戳
+							sjc:sjc,
+							myInfo:myInfo
+						},
+						dataType:'json',
+						type:'POST', 
+						timeout:10000,
+						success:function(data){
+							mui.toast('新建成功',{ duration:'long', type:'div' });
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+						}
+					});
+				}
+				
+				
+				
+				
 			});
 			//返回父页面刷新
 			function back(){
