@@ -484,7 +484,7 @@
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
-							if((data['单位']=='检测单位'&&data['单位名称']==data['检测操作单位'])||data['单位']=='管理员'){
+							if(data['单位']=='检测单位'||data['单位']=='管理员'){
 								mui.ajax(url+'my_plus/my_spv_material_list.php',{
 									data:{
 										flag:"获取状态",

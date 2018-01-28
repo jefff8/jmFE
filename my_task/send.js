@@ -38,12 +38,10 @@
 	function send(sjc,id,pj_name,type,scale,quantity,getGuy,getDate,state){
 		var state_c = encodeURI(encodeURI(state));
 		var pj_name_c = encodeURI(encodeURI(pj_name));
-		if(state=='新增'||state=='新增复检'||state=='未见证'||state=='待审批'){
-			color = 'blue2';
-		}else if(state=='不合格'){
+		if(state=='不合格'){
 			color = 'red';
 		}else{
-			color = 'green2';
+			color = 'blue2';
 		}
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";

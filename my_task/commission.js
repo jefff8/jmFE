@@ -35,12 +35,10 @@
 	}
 	//动态创建项目
 	function commission(sjc,id,pj_name,type,part,quantity,inspector,testDate,state){
-		if(state=='新建'||state=='待确认'||state=='待审批'){
-			color = 'blue2';
-		}else if(state=='不合格'){
+		if(state=='不合格'){
 			color = 'red';
 		}else{
-			color = 'green2';
+			color = 'blue2';
 		}
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";

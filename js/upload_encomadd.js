@@ -191,7 +191,7 @@ function appendFile(path,entry,lx){
 			var w = that.width,
 				h = that.height,
 				scale = w / h;
-				w = 360 || w; //480  你想压缩到多大，改这里
+				w = 700 || w; //480  你想压缩到多大，改这里
 				h = w / scale;
 			//生成canvas
 			var canvas = document.createElement('canvas');
@@ -212,7 +212,7 @@ function appendFile(path,entry,lx){
 			var w = that.width,
 				h = that.height,
 				scale = w / h;
-				w = 360 || w; //480  你想压缩到多大，改这里
+				w = 700 || w; //480  你想压缩到多大，改这里
 				h = w / scale;
 			//生成canvas
 			var canvas = document.createElement('canvas');
@@ -233,7 +233,7 @@ function appendFile(path,entry,lx){
 			var w = that.width,
 				h = that.height,
 				scale = w / h;
-				w = 360 || w; //480  你想压缩到多大，改这里
+				w = 700 || w; //480  你想压缩到多大，改这里
 				h = w / scale;
 			//生成canvas
 			var canvas = document.createElement('canvas');

@@ -35,12 +35,10 @@
 	}
 	//动态创建项目
 	function inspection2(sjc,id,pj_name,type,part,quantity,inspector,testDate,state){
-		if(state=='新增'||state=='未检测'){
-			color = 'blue2';
-		}else if(state=='不合格'){
+		if(state=='不合格'){
 			color = 'red';
 		}else{
-			color = 'green2';
+			color = 'blue2';
 		}
 		if(state=='新增'||state=='准备材料'){
 			var my_href = "../my_insp_entity/my_inspection_entitydetail.html?sjc="+sjc+"&gcid="+id+"";

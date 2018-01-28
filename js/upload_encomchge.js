@@ -11,8 +11,38 @@
 		//监听upload_camera,打开原生操作列表
 		var newUpload1=document.getElementById('newUpload1');
 		newUpload1.addEventListener('tap',function () {
-			getImage('syzp');
+			myactionSheet('syzp');
 		});	
+		
+		//原生操作列表
+		var myactionSheet=function(lx){
+			var btnArray = [
+			{title:"拍照"},
+			//{title:"录像"},录像函数getVideo()
+			{title:"相册"}
+			];
+			plus.nativeUI.actionSheet( {
+				title:"操作",
+				cancel:"取消",
+				buttons:btnArray
+			}, function(e){
+				var index = e.index;
+				var text = "你刚点击了\"";
+				switch (index){
+					case 0:
+						text += "取消";
+						break;
+					case 1:
+						getImage(lx);
+						text += "拍照";
+						break;
+					case 2:
+						galleryImgs(lx);
+						text += "相册";
+						break;
+				}				
+			} );
+		};
 	});
 
 //定义变量
@@ -82,6 +112,26 @@ function getImage(lx) {
 	}, {filename:"_doc/camera/rwxj/",index:1} );
 }
 
+//相册多选照片
+function galleryImgs(lx){
+	// 从相册中选择图片
+//	outSet("从相册中选择多张图片:");
+    plus.gallery.pick( function(path){
+		for(var i=0 in path.files){
+			paths = path.files[i];
+			plus.io.resolveLocalFileSystemURL( paths, function ( entry ) {
+				appendFile(entry.toLocalURL(),entry,lx);
+				
+			}, function ( e ) {
+				alert("读取拍照文件错误："+e.message);
+	//			outLine( "读取拍照文件错误："+e.message );
+			} );
+		}
+   }, function ( e ) {
+//  	outSet( "取消选择图片" );
+    },{filter:"image",multiple:true,system:false});
+}
+
 // 显示文件
 function displayFile( li ) {
 	if ( w ) {
@@ -123,7 +173,7 @@ function appendFile(path,entry,lx){
 		var w = that.width,
 			h = that.height,
 			scale = w / h;
-			w = 360 || w; //480  你想压缩到多大，改这里
+			w = 700 || w; //480  你想压缩到多大，改这里
 			h = w / scale;
 		//生成canvas
 		var canvas = document.createElement('canvas');

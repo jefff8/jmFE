@@ -121,11 +121,21 @@
 							unitName:unitName.value,
 							cid:cid
 						};
+						//账号名不能为中文
+						var str = accountBox.value.trim();    
+				        if(str.length!=0){    
+					        reg=/^[\u0391-\uFFE5]+$/;    
+					        if(reg.test(str)){    
+					            alert("对不起，您输入的字符串类型格式不正确(不可中文)!");//请将“字符串类型”要换成你要验证的那个属性名称！    
+					        }    
+				        }    
+				        
 						var passwordConfirm = passwordConfirmBox.value;
 						if (passwordConfirm != regInfo.password) {
 							plus.nativeUI.toast('密码两次输入不一致');
 							return;
 						}
+   
 						app.reg(regInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);

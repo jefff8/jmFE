@@ -69,108 +69,108 @@ mui.plusReady(function() {
 
 	//二期开发，去掉注释就是二期开发
 //	//检测服务器是否有新版本
-//	var thisversion=plus.runtime.version;
-//	keyUpdate="updateCheck",//取消升级键名
-//	keyAbort="updateAbort",//忽略版本键名
-//	cvz="";	//用于存放compareVersion函数的判断结果
-//	//比较版本大小，如果新版本nv大于旧版本ov则cvz=true，否则cvz=false
-//	function compareVersion( ov, nv ){		
-//		if ( !ov || !nv || ov=="" || nv=="" ){
-//			cvz="false";
-//			return false;			
-//		}
-//		var b=false,
-//		ova = ov.split(".",4);
-//		nva = nv.split(".",4);
-//		for ( var i=0; i<ova.length&&i<nva.length; i++ ) {
-//			var so=ova[i],no=parseInt(so),sn=nva[i],nn=parseInt(sn);
-//			if ( nn>no || sn.length>so.length  ) {
-//				cvz="true";
-//				return true;
-//			} else if ( nn<no ) {
-//				cvz="false";
-//				return false;
-//			}
-//		}
-//		if ( nva.length>ova.length && 0==nv.indexOf(ov) ) {
-//			cvz="true";
-//			return true;
-//		}
-//	}
-//	
-//	//改函数用于下载安装
-//	var createDownload=function(DownUrl){		
-//		plus.nativeUI.showWaiting("下载中，请稍等...");
-//		var dtask = plus.downloader.createDownload( DownUrl, {
-//			timeout:180
-//		}, function ( d, status ) {
-//			plus.nativeUI.closeWaiting();
-//			if ( status == 200 ) {
-//				// 下载成功
-//				var path = d.filename;
-//				//console.log(d.filename);
-//				//alert( "下载成功: " + path);
-//				var btnArray = ['是', '否'];
-//				mui.confirm('下载成功：'+path+'是否安装？', '华西安检', btnArray, function(e) {
-//					if (e.index == 0) {
-//						plus.runtime.install(path);  // 安装下载的apk文件
-//					} else {
-//						
-//					}
-//				});
-//			} else {
-//				//下载失败
-//				alert( "下载失败: " + status );
-//			}
-//		});
-//		
-//		dtask.start();		
-//	};
-//	
-//	mui.ajax(url+'update.php',{
-//		data:{
-//			
-//		},
-//		dataType:'json',
-//		type:'post',
-//		timeout:10000,
-//		success:function(data){	
-//			//alert(data);
-//			var version=data.version;
-//			var appurl=data.appurl;
-//			
-//			// 判断是否存在忽略版本号,是否设置自动升级
-//			var vabort = plus.storage.getItem( keyAbort );			
-//			var zdzcsjState = plus.storage.getItem("zdzcsjState");			
-//			if ( vabort && version==vabort ) {				
-//				// 忽略此版本
-//				return;
-//			}else{	
-//				compareVersion(thisversion,version);
-//				if (cvz=="true" && zdzcsjState=="true") {
-//					// 提示用户是否升级
-//					plus.nativeUI.confirm( "有新版本，是否更新？", function(i){
-//						if ( 0==i.index ) {		
-//							//alert(appurl);
-//							createDownload(appurl);
-//							//plus.runtime.openURL(appurl);
-//						} else if ( 1==i.index ) {
-//							plus.storage.setItem( keyAbort, version );
-//							plus.storage.setItem( keyUpdate, (new Date()).getTime().toString() );
-//						} else {
-//							plus.storage.setItem( keyUpdate, (new Date()).getTime().toString() );
-//						}
-//					}, "华西安检", ["下载新版","跳过该版","取消"] );
-//				}
-//				
-//			}
-//			
-//		},
-//		error:function(xhr,type,errorThrown){
-//			//异常处理；
-//			alert('ajax错误'+type);
-//		}
-//	});
+	var thisversion=plus.runtime.version;
+	keyUpdate="updateCheck",//取消升级键名
+	keyAbort="updateAbort",//忽略版本键名
+	cvz="";	//用于存放compareVersion函数的判断结果
+	//比较版本大小，如果新版本nv大于旧版本ov则cvz=true，否则cvz=false
+	function compareVersion( ov, nv ){		
+		if ( !ov || !nv || ov=="" || nv=="" ){
+			cvz="false";
+			return false;			
+		}
+		var b=false,
+		ova = ov.split(".",4);
+		nva = nv.split(".",4);
+		for ( var i=0; i<ova.length&&i<nva.length; i++ ) {
+			var so=ova[i],no=parseInt(so),sn=nva[i],nn=parseInt(sn);
+			if ( nn>no || sn.length>so.length  ) {
+				cvz="true";
+				return true;
+			} else if ( nn<no ) {
+				cvz="false";
+				return false;
+			}
+		}
+		if ( nva.length>ova.length && 0==nv.indexOf(ov) ) {
+			cvz="true";
+			return true;
+		}
+	}
+	
+	//改函数用于下载安装
+	var createDownload=function(DownUrl){		
+		plus.nativeUI.showWaiting("下载中，请稍等...");
+		var dtask = plus.downloader.createDownload( DownUrl, {
+			timeout:180
+		}, function ( d, status ) {
+			plus.nativeUI.closeWaiting();
+			if ( status == 200 ) {
+				// 下载成功
+				var path = d.filename;
+				//console.log(d.filename);
+				//alert( "下载成功: " + path);
+				var btnArray = ['是', '否'];
+				mui.confirm('下载成功：'+path+'是否安装？', '江门市建设工程施工质量管理系统', btnArray, function(e) {
+					if (e.index == 0) {
+						plus.runtime.install(path);  // 安装下载的apk文件
+					} else {
+						
+					}
+				});
+			} else {
+				//下载失败
+				alert( "下载失败: " + status );
+			}
+		});
+		
+		dtask.start();		
+	};
+	
+	mui.ajax(url+'update.php',{
+		data:{
+			
+		},
+		dataType:'json',
+		type:'post',
+		timeout:10000,
+		success:function(data){	
+			//alert(data);
+			var version=data.version;
+			var appurl=data.appurl;
+			
+			// 判断是否存在忽略版本号,是否设置自动升级
+			var vabort = plus.storage.getItem( keyAbort );			
+			var zdzcsjState = plus.storage.getItem("zdzcsjState");			
+			if ( vabort && version==vabort ) {				
+				// 忽略此版本
+				return;
+			}else{	
+				compareVersion(thisversion,version);
+				if (cvz=="true" && zdzcsjState=="true") {
+					// 提示用户是否升级
+					plus.nativeUI.confirm( "有新版本，是否更新？", function(i){
+						if ( 0==i.index ) {		
+							//alert(appurl);
+							createDownload(appurl);
+							//plus.runtime.openURL(appurl);
+						} else if ( 1==i.index ) {
+							plus.storage.setItem( keyAbort, version );
+							plus.storage.setItem( keyUpdate, (new Date()).getTime().toString() );
+						} else {
+							plus.storage.setItem( keyUpdate, (new Date()).getTime().toString() );
+						}
+					}, "江门市建设工程施工质量管理系统", ["下载新版","跳过该版","取消"] );
+				}
+				
+			}
+			
+		},
+		error:function(xhr,type,errorThrown){
+			//异常处理；
+			alert('ajax错误'+type);
+		}
+	});
 
 });
 
