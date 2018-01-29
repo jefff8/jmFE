@@ -205,13 +205,13 @@
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 		        	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean1" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
+		        	<button id="clean_cj" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('cjzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="update1" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
 		        </div>
-		        <!--样品照片-->
+		        <!--检测实施过程中照片-->
 		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
-		        	<span style="padding-bottom: 10px;">样品照片</span>
+		        	<span style="padding-bottom: 10px;">检测实施过程中照片</span>
 		        	<br/>
 		        	<div>
 		        		<img id="newUpload2" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  />
@@ -220,8 +220,8 @@
 		        <p id="rwfj2"><span id="posted2" class="my_none" >已上传：</span></p>
 		        <div class="mui-input-group" >
 		        	<div  class="mui-input-row">
-			            <label>样品图片说明:</label>
-			            <input id="sampleText" type="text" class="mui-input-clear" placeholder="请输入样品说明">
+			            <label>检测实施过程中照片说明:</label>
+			            <input id="sampleText" type="text" class="mui-input-clear" placeholder="请输入检测实施过程中照片说明">
 		        	</div>
 		        </div>
 		        <div>
@@ -230,9 +230,34 @@
 					</ul>
 		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        	<button id="clean2" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
+		        	<button id="clean_yp" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('ypzp');">清空记录</button>
 		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        	<button id="update2" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean');">附件上传</button>
+		        </div>
+		        <!--检测设备照片-->
+		        <div style="width:100%;height:80px;margin:5px;padding: 7px 10px;">
+		        	<span style="padding-bottom: 10px;">检测设备照片</span>
+		        	<br/>
+		        	<div>
+		        		<img id="newUpload3" src="../images/iconfont-tianjia.png"  style="width:50px;height:50px;"  />
+		        	</div>
+		        </div>
+		        <p id="rwfj3"><span id="posted3" class="my_none" >已上传：</span></p>
+		        <div class="mui-input-group" >
+		        	<div  class="mui-input-row">
+			            <label>检测设备照片说明:</label>
+			            <input id="testEquipment" type="text" class="mui-input-clear" placeholder="请输入说明">
+		        	</div>
+		        </div>
+		        <div>
+		        	<ul id="history_teqm" class="dlist" style="text-align:left;">
+						<li id="empty_teqm" class="ditem-empty">无历史记录</li>
+					</ul>
+		        	<img  id="my_img_id" class="my_none"  style="width:100%;height:auto;"/>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="clean_teqm" type="button" class="mui-btn mui-btn-primary" onclick="cleanHistory('teqm');">清空记录</button>
+		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<button id="update3" type="button" class="mui-btn mui-btn-primary" onclick="upload(this.id,'clean_teqm');">附件上传</button>
 		        </div>
 		    </form>
 		    <!--处理图片-->
@@ -241,7 +266,7 @@
 		<script src="../js/service.js"></script>
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
-		<script src="../js/send_EditImage.js"></script>
+		<script src="../js/commission_EditImage.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig:{					
@@ -254,19 +279,20 @@
 				var self = plus.webview.currentWebview();
 				var doc = document;
 				sjc = self.sjc;
-				var scene_photo = self.scene_photo;
-				var sample_photo = self.sample_photo;
-				var sceneText = self.sceneText;
-				var sampleText = self.sampleText;
+				var tbpho = self.tbpho;
+				var tipho = self.tipho;
+				var tepho = self.tepho;
+				var Text1 = self.Text1;
+				var Text2 = self.Text2;
+				var Text3 = self.Text3;
 				var posted1 = doc.getElementById("posted1");
 				var posted2 = doc.getElementById("posted2");
-				var sceneText1 = doc.getElementById("sceneText");
 				var rwfj1 = doc.getElementById("rwfj1");
 				var rwfj2 = doc.getElementById("rwfj2");
-				sceneText1.value = sceneText;
-				var sampleText1 = doc.getElementById("sampleText");
-				sampleText1.value = sampleText;
-				
+				var rwfj3 = doc.getElementById("rwfj3");
+				sceneText.value = Text1;
+				sampleText.value = Text2;
+				testEquipment.value = Text3;
 				//动态创建图片
 				var createimg=function(tplx,tpmc) {	
 					var mysrc=url+"upload/"+tpmc;
@@ -282,6 +308,8 @@
 						posted1.classList.remove("my_none");
 					}else if(tplx=='rwfj2'){
 						posted2.classList.remove("my_none");
+					}else if(tplx=='rwfj3'){
+						posted3.classList.remove("my_none");
 					}
 				};
 				var createtex=function(tplx) {				
@@ -290,20 +318,28 @@
 				};
 				
 				//场景照片
-				if (scene_photo.length>1) {
-					for (var i=1;i<scene_photo.length;i++){
-						createimg('rwfj1',scene_photo[i]);
+				if (tbpho.length>1) {
+					for (var i=1;i<tbpho.length;i++){
+						createimg('rwfj1',tbpho[i]);
 					}
 				}else{
 					createtex('rwfj1');
 				}
-				//样品照片
-				if(sample_photo.length>1){
-					for(var i=1;i<sample_photo.length;i++){
-						createimg('rwfj2',sample_photo[i]);
+				//检测实施过程中照片
+				if(tipho.length>1){
+					for(var i=1;i<tipho.length;i++){
+						createimg('rwfj2',tipho[i]);
 					}
 				}else{
 					createtex('rwfj2');
+				}
+				//检测设备照片
+				if(tepho.length>1){
+					for(var i=1;i<tepho.length;i++){
+						createimg('rwfj3',tepho[i]);
+					}
+				}else{
+					createtex('rwfj3');
 				}
 				
 				//场景照片删除
@@ -318,7 +354,7 @@
 						if(e.index==1){
 							mui.ajax(url+'my_plus/imgDelete.php',{
 								data:{
-									module:'材料送检',
+									module:'实体检测',
 									type:'场景照片',
 									imgID:imgID,
 									imgsrc:imgsrc,
@@ -343,7 +379,7 @@
 					
 				});
 				
-				//样品照片删除
+				//检测实施过程中照片删除
 				mui("#rwfj2").on('longtap','img',function(){
 					var imgID = this.id;
 					var imgClassName = this.className;
@@ -354,8 +390,8 @@
 						if(e.index==1){
 							mui.ajax(url+'my_plus/imgDelete.php',{
 								data:{
-									module:'材料送检',
-									type:'样品照片',
+									module:'实体检测',
+									type:'检测实施过程中照片',
 									imgID:imgID,
 									imgsrc:imgsrc,
 									sjc:sjc
@@ -376,10 +412,44 @@
 						}
 					});
 				});
+				
+				//检测设备照片删除
+				mui("#rwfj3").on('longtap','img',function(){
+					var imgID = this.id;
+					var imgClassName = this.className;
+					var imgsrc = '../upload/'+imgClassName;
+					var imgtag = this;
+					var btnArray = ['否','是'];
+					mui.confirm('是否删除该图片?','江门建筑管理系统',btnArray,function(e){
+						if(e.index==1){
+							mui.ajax(url+'my_plus/imgDelete.php',{
+								data:{
+									module:'实体检测',
+									type:'检测设备照片',
+									imgID:imgID,
+									imgsrc:imgsrc,
+									sjc:sjc
+								},
+								type:'post',
+								dataType:'json',
+								timeout:10000,
+								success:function(data){
+									alert('删除成功！');
+									rwfj3.removeChild(imgtag);
+								},
+								error:function(xhr,type,errorThrown){
+									
+								}
+							});
+						}else{
+							
+						}
+					});
+				});
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_material/my_material_list.html');
+				var target=plus.webview.getWebviewById('../my_commission/my_commission_list.html');
 				target.reload(true);
 				mui.back();
 			}

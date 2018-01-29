@@ -335,91 +335,126 @@ function upload(lx,clean){
 	var strs2=","+f2Base64.join();
 	files3=files_teqm;
 	var strs3=","+f3Base64.join();
-	if(files1.length<=0){
-		plus.nativeUI.alert("没有添加场景照片！");
-		return;
-	}else if(files2.length<=0){
-		plus.nativeUI.alert("没有添加检测实施过程照片！");
-		return;
-	}else if(files3.length<=0){
-		plus.nativeUI.alert("没有添加检测设备照片！");
-		return;
+	switch(lx){
+		case "update1":
+			if(files1.length<=0){
+				plus.nativeUI.alert("没有添加场景照片！");
+				return;
+			}
+			var wt=plus.nativeUI.showWaiting();
+			var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+				//上传完成
+				if(status==200){
+					wt.close();
+					var button_lx=document.getElementById(lx);
+					var button_clean1=document.getElementById("clean_cj");
+					button_lx.disabled=true;
+					button_clean1.disabled=true;
+					button_lx.innerText="上传成功";				
+				}else{
+					outLine("上传失败："+status);
+					wt.close();
+				}
+			});
+			task.addData("Text1",text1());
+			task.addData("lx",lx);
+			task.addData("files1",strs1);
+			task.addData("uid",getUid());
+			nub1=files1.length.toString();
+			task.addData("nub1",nub1);
+			task.addData("mchen",sjc);
+			for(var i=0;i<files1.length;i++){
+				var f1=files1[i];
+				task.addFile(f1.path,{key:f1.name});
+			}
+			task.start();
+			break;
+		case "update2":
+			if(files2.length<=0){
+				plus.nativeUI.alert("没有添加检测实施过程照片！");
+				return;
+			}
+			var wt=plus.nativeUI.showWaiting();
+			var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+				//上传完成
+				if(status==200){
+					wt.close();
+					var button_lx=document.getElementById(lx);
+					var button_clean2=document.getElementById("clean_yp");
+					button_lx.disabled=true;
+					button_clean2.disabled=true;
+					button_lx.innerText="上传成功";				
+				}else{
+					outLine("上传失败："+status);
+					wt.close();
+				}
+			});
+			task.addData("Text2",text2());
+			task.addData("lx",lx);
+			task.addData("files2",strs2);
+			task.addData("uid",getUid());
+			nub2=files2.length.toString();
+			task.addData("nub2",nub2);
+			task.addData("mchen",sjc);
+			for(var i=0;i<files2.length;i++){
+				var f2=files2[i];
+				task.addFile(f2.path,{key:f2.name});
+			}
+			task.start();
+			break;
+		case "update3":
+			if(files3.length<=0){
+				plus.nativeUI.alert("没有添加检测设备照片！");
+				return;
+			}
+			var wt=plus.nativeUI.showWaiting();
+			var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+				//上传完成
+				if(status==200){
+					wt.close();
+					var button_lx=document.getElementById(lx);
+					var button_clean3=document.getElementById("clean_teqm");
+					button_lx.disabled=true;
+					button_clean3.disabled=true;
+					button_lx.innerText="上传成功";				
+				}else{
+					outLine("上传失败："+status);
+					wt.close();
+				}
+			});
+			task.addData("Text3",text3());
+			task.addData("lx",lx);
+			task.addData("files3",strs3);
+			task.addData("uid",getUid());
+			nub3=files3.length.toString();
+			task.addData("nub3",nub3);
+			task.addData("mchen",sjc);
+			for(var i=0;i<files3.length;i++){
+				var f3=files3[i];
+				task.addFile(f3.path,{key:f3.name});
+			}
+			task.start();
+			break;
 	}
-//	outSet("开始上传：")
-	var wt=plus.nativeUI.showWaiting();
-	var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-		//上传完成
-		if(status==200){
-//			outLine("上传成功："+t.responseText);
-			wt.close();
-			var button_lx=document.getElementById(lx);
-			var button_clean1=document.getElementById("clean_cj");
-			var button_clean2=document.getElementById("clean_yp");
-			var button_clean3=document.getElementById("clean_teqm");
-			button_lx.disabled=true;
-			button_clean1.disabled=true;
-			button_clean2.disabled=true;
-			button_clean3.disabled=true;
-			button_lx.innerText="上传成功";				
-		}else{
-			outLine("上传失败："+status);
-			wt.close();
-		}
-	});
-	task.addData("Text1",text1());
-	task.addData("Text2",text2());
-	task.addData("Text3",text3());
-	task.addData("lx",lx);
-	task.addData("files1",strs1);
-	task.addData("files2",strs2);
-	task.addData("files3",strs3);
-	task.addData("uid",getUid());	
-	nub1=files1.length.toString();
-	nub2=files2.length.toString();
-	nub3=files3.length.toString();
-	task.addData("nub1",nub1);
-	task.addData("nub2",nub2);
-	task.addData("nub3",nub3);
-	task.addData("mchen",mchen());
-	for(var i=0;i<files1.length;i++){
-		var f1=files1[i];
-		task.addFile(f1.path,{key:f1.name});
-	}
-	for(var i=0;i<files2.length;i++){
-		var f2=files2[i];
-		task.addFile(f2.path,{key:f2.name});
-	}
-	for(var i=0;i<files3.length;i++){
-		var f3=files3[i];
-		task.addFile(f3.path,{key:f3.name});
-	}
-	task.start();
-//	files=[];
 }
 
 // 产生一个随机数
 function getUid(){
 	return Math.floor(Math.random()*100000000+10000000).toString();
 }
-// 获取该工程时间戳
-function mchen(){
-	var sjc=document.getElementById('sjc').value;
-//	alert(sjc);
-	return sjc;
-}
 //场景照片说明
 function text1(){
-	var  Text1 = document.getElementById("Text1").value;
+	var  Text1 = document.getElementById("sceneText").value;
 	return Text1;
 }
 //检测实施过程照片说明
 function text2(){
-	var Text2 = document.getElementById("Text2").value;
+	var Text2 = document.getElementById("sampleText").value;
 	return Text2;
 }
 //检测设备照片说明
 function text3(){
-	var Text3 = document.getElementById("Text3").value;
+	var Text3 = document.getElementById("testEquipment").value;
 	return Text3;
 }
 ////////////上传文件/////////////////////////////////////////////

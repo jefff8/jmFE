@@ -260,6 +260,33 @@
 
 				//保存按钮
 				data_save.addEventListener('tap',function(){
+					//信息保存
+					var my_input = document.getElementById("myform").getElementsByTagName("input");
+					var unit = document.getElementById("operation_unit").value;
+					var test_dpm = document.getElementById("test_dpm").value;
+					var Str = "";
+					for(var i=0;i<6;i++){
+						Str = Str + my_input[i].value + "|";
+					}
+					Str = Str + test_dpm+"|"+unit;
+					mui.ajax(url+'my_plus/entity_upload.php',{
+						data:{
+							lx:'insert',
+							myInfo:Str,
+							pj_name:gcmc,
+							pj_timestamp:timestamp,
+							mchen:protimesp.value
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							
+						},
+						error:function(xhr,type,errorThrown){
+							
+						}
+					});
 					var myform=document.getElementById('myform');
 					var myform2=document.getElementById('myform2');
 					var img_content=document.getElementById('img_content');
