@@ -243,60 +243,80 @@ var files1=[];
 var files2=[];
 var files_cjzp=[];
 var files_ypzp=[];
-function upload(lx){	
+function upload(lx){
+	
 	files1=files_cjzp;	
 	var strs1=","+f1Base64.join(); //场景照片
 	files2=files_ypzp;
 	var strs2=","+f2Base64.join(); //样品照片
-	if(files1.length<=0){
-		plus.nativeUI.alert("场景照片没有上传的文件！");
-		return;
-	}
-	if(files2.length<=0){
-		plus.nativeUI.alert("样品照片没有上传的文件！");
-		return;
-	}
-//	outSet("开始上传：")
-	var wt=plus.nativeUI.showWaiting();
-	var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-		//上传完成
-		if(status==200){
-//			outLine("上传成功："+t.responseText);
-			wt.close();
-			var button_lx=document.getElementById(lx);
-			var button_clean1=document.getElementById('clean1');
-			var button_clean2=document.getElementById('clean2');
-			button_lx.disabled=true;
-			button_clean1.disabled=true;
-			button_clean2.disabled=true;
-			button_lx.innerText="上传成功";				
-		}else{
-			outLine("上传失败："+status);
-			wt.close();
+	
+	if(lx=='update1'){
+		if(files1.length<=0){
+			plus.nativeUI.alert("场景照片没有上传的文件！");
+			return;
 		}
-	});
-	task.addData("sceneText",getScene());
-	task.addData("sampleText",getSample());
-	task.addData("lx",lx);
-	task.addData("files1",strs1);
-	task.addData("files2",strs2);
-	task.addData("uid",getUid());	
-	nub1=files1.length.toString();
-	nub2=files2.length.toString();
-	task.addData("nub1",nub1);
-	task.addData("nub2",nub2);
-	task.addData("mchen",mchen());
-	for(var i=0;i<files1.length;i++){
-		var f1=files1[i];
-		task.addFile(f1.path,{key:f1.name});
+		var wt=plus.nativeUI.showWaiting();
+		var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+			//上传完成
+			if(status==200){
+	//			outLine("上传成功："+t.responseText);
+				wt.close();
+				var button_lx=document.getElementById(lx);
+				var button_clean1=document.getElementById('clean1');
+				button_lx.disabled=true;
+				button_clean1.disabled=true;
+				button_lx.innerText="上传成功";				
+			}else{
+				outLine("上传失败："+status);
+				wt.close();
+			}
+		});
+		task.addData("lx",lx);
+		task.addData("sceneText",getScene());
+		task.addData("files1",strs1);
+		task.addData("uid",getUid());
+		nub1=files1.length.toString();
+		task.addData("nub1",nub1);
+		task.addData("mchen",sjc);
+		for(var i=0;i<files1.length;i++){
+			var f1=files1[i];
+			task.addFile(f1.path,{key:f1.name});
+		}
+		task.start();
+	}else{
+		if(files2.length<=0){
+			plus.nativeUI.alert("样品照片没有上传的文件！");
+			return;
+		}
+		var wt=plus.nativeUI.showWaiting();
+		var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
+			//上传完成
+			if(status==200){
+	//			outLine("上传成功："+t.responseText);
+				wt.close();
+				var button_lx=document.getElementById(lx);
+				var button_clean2=document.getElementById('clean2');
+				button_lx.disabled=true;
+				button_clean2.disabled=true;
+				button_lx.innerText="上传成功";				
+			}else{
+				outLine("上传失败："+status);
+				wt.close();
+			}
+		});
+		task.addData("lx",lx);
+		task.addData("sampleText",getSample());
+		task.addData("files2",strs2);
+		task.addData("uid",getUid());
+		nub2=files2.length.toString();
+		task.addData("nub2",nub2);
+		task.addData("mchen",sjc); 
+		for(var i=0;i<files2.length;i++){
+			var f2=files2[i];
+			task.addFile(f2.path,{key:f2.name});
+		}
+		task.start();
 	}
-	for(var i=0;i<files2.length;i++){
-		var f2=files2[i];
-		task.addFile(f2.path,{key:f2.name});
-	}
-	task.start();
-//	files1=[];
-//	files2=[];
 }
 
 
@@ -304,11 +324,6 @@ function upload(lx){
 // 产生一个随机数
 function getUid(){
 	return Math.floor(Math.random()*100000000+10000000).toString();
-}
-// 获取时间戳
-function mchen(){	
-	var sjc=document.getElementById('sjc').value;
-	return sjc;
 }
 //场景照片说明
 function getScene(){

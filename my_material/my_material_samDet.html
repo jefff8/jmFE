@@ -23,19 +23,19 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>规格:</label>
-		            <input id="gg" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input id="gg" type="text" class="mui-input-clear"  readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>数量:</label>
-		            <input id="sl" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input id="sl" type="text" class="mui-input-clear"  readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>生产厂家:</label>
-		            <input id="sccj" type="text" class="mui-input-clear"   readonly="readonly" disabled="disabled">
+		            <input id="sccj" type="text" class="mui-input-clear"   readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>取样人:</label>
-		            <input id="qyr" type="text" class="mui-input-clear"   readonly="readonly" disabled="disabled">
+		            <input id="qyr" type="text" class="mui-input-clear"   readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>进场日期:</label>
@@ -79,6 +79,8 @@
 		        </div>
 		    </form>	
 		    <div id="formbtn" class="mui-button-row">
+		    	<button id="saveInfo" type="button" class="mui-btn mui-btn-primary my_none">保存信息修改</button>
+		    	<button id="EditImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看/修改</button>	
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
 				&nbsp;&nbsp;
 				<!--<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>-->		
@@ -123,8 +125,8 @@
 		    
 		</div>
 		<script src="../js/mui.min.js"></script>
-		<script src="../js/common.js"></script>
-		<script src="../js/immersed.js" ></script>	
+		<!--<script src="../js/common.js"></script>
+		<script src="../js/immersed.js" ></script>	-->
 		<script src="../js/service.js"></script>
 		<script src="../js/upload_qy.js"></script>
 		<script type="text/javascript">
@@ -144,12 +146,15 @@
 				var rwfj = doc.getElementById("rwfj");
 				var fjck = doc.getElementById("fjck");
 				var fjgx = doc.getElementById("fjgx");
+				var saveInfo = doc.getElementById("saveInfo");
+				var EditImage = doc.getElementById("EditImage");
 				var qualifiedNum = doc.getElementById("qualifiedNum");
 				var usedPart = doc.getElementById("usedPart");
 				var interDate = doc.getElementById("interDate");
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
 				var sjc_in = doc.getElementById("sjc");
+				var myform = doc.getElementById("myform").getElementsByTagName("input");
 				//获取url参数值
 				function geturl(name){
 					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -161,10 +166,24 @@
 				var sjc_send = geturl("sjc");
 				var gcid = geturl("gcid");
 				var gcmc_in = geturl("gcmc");
+				var type = geturl("type");
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
-//				alert(gcmc.value);
 				sjc_in.value = sjc_send;
-//				alert(sjc_send);
+				
+				//项目新建状态
+				if(type){
+					saveInfo.classList.remove("my_none");
+					EditImage.classList.remove("my_none");
+					fjck.classList.add("my_none");
+					for(var i=0;i<13;i++){
+						myform[i].removeAttribute("readonly");
+					}
+					myform[5].removeAttribute("disabled");
+					myform[6].removeAttribute("disabled");
+				}
+				
+				
+				
 				//异步取值填写
 				mui.ajax(url+'my_plus/my_material_detail.php',{
 					data:{
@@ -200,8 +219,37 @@
                     qyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
+				interDate.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    interDate.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
 		
-				
+				//保存信息修改
+				saveInfo.addEventListener('tap',function(){
+					var formStr="";
+					for(i=0;i<11;i++){
+						var formStr = formStr + myform[i].value+"|";
+					}
+					formStr = formStr + jcdw.value;
+					mui.ajax(url+'my_plus/my_material_upload.php',{
+						data:{
+							lx:'updateForm',
+							formStr:formStr,
+							mchen:sjc_send
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+						},
+						error:function(xhr,type,errorThrown){
+							mui.toast('保存成功！',{ duration:'long', type:'div' });
+//							alert("ajax错误");
+						}
+					});
+				});
 				
 				//获取材料送检信息
 				var scene_photo=[];
@@ -233,6 +281,21 @@
 //						return callback('ajax错误'+type+errorThrown);
 					}
 				});	
+				
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							sjc:sjc.value,
+							scene_photo:scene_photo,
+							sample_photo:sample_photo,
+							sceneText:sceneText,
+							sampleText:sampleText,
+							receivedText:receivedText
+						}
+					});
+				});
 				
 				//附件查看
 				fjck.addEventListener('tap',function(){

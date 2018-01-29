@@ -270,6 +270,33 @@
 				}, false);
 							
 				save.addEventListener('tap',function(){
+					//信息保存
+					var F_input = document.getElementById('myform').getElementsByTagName('input');
+					var F_qcdw = document.getElementById('qcdy').value;
+					var unit = document.getElementById("operation_unit").value;
+					var Str="";
+					for(i=0;i<11;i++){
+						var Str = Str + F_input[i].value+"|";
+					}
+					Str= Str+F_qcdw+"|"+unit;
+					mui.ajax(url+'my_plus/my_material_upload.php',{
+						data:{
+							lx:'insert',
+							mchen:sjc.value,
+							myInfo:Str,
+							pj_timestamp:timestamp,
+							pj_name:gcmc
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+							
+						},
+						error:function(xhr,type,errThrown){
+//							alert('ajax错误 ');
+						}
+					});
 					var myform=document.getElementById('myform');
 					var myform2=document.getElementById('myform2');
 					var img_content=document.getElementById('img_content');
