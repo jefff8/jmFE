@@ -318,7 +318,6 @@ function upload(lx,clean){
 			wt.close();
 		}
 	});
-	task.addData("gcmc",getName());
 	task.addData("Text1",text1());
 	task.addData("Text2",text2());
 	task.addData("Text3",text3());
@@ -334,7 +333,6 @@ function upload(lx,clean){
 	task.addData("nub2",nub2);
 	task.addData("nub3",nub3);
 	task.addData("mchen",mchen());
-	task.addData("myInfo",saveInfo());
 	task.addData("pj_name",project_name);
 	task.addData("pj_timestamp",timestamp);
 	for(var i=0;i<files1.length;i++){
@@ -362,11 +360,6 @@ function mchen(){
 	var sjc=document.getElementById('sjc').value;
 	return sjc;
 }
-//获取工程名称
-function getName(){
-	var gcmc = document.getElementById("gcmc");
-	return gcmc;
-}
 //场景照片说明
 function text1(){
 	var  Text1 = document.getElementById("Text1").value;
@@ -381,17 +374,5 @@ function text2(){
 function text3(){
 	var Text3 = document.getElementById("Text3").value;
 	return Text3;
-}
-//信息保存
-function saveInfo(){
-	var myform=document.getElementById('myform');
-	var F_input = myform.getElementsByTagName("input");
-	var Str = "";
-	var unit = document.getElementById("operation_unit").value;
-	for(i=0;i<7;i++){
-		Str = Str + F_input[i].value + "|";
-	}
-	Str= Str+unit;
-	return Str;
 }
 ////////////上传文件/////////////////////////////////////////////
