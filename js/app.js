@@ -114,21 +114,21 @@
 		//owner.setSettings(settings);
 	};
 
-	var checkEmail = function(email) {
-		email = email || '';
-		return (email.length > 3 && email.indexOf('@') > -1);
-	};
+//	var checkEmail = function(email) {
+//		email = email || '';
+//		return (email.length > 3 && email.indexOf('@') > -1);
+//	};
 
 	/**
 	 * 找回密码
 	 **/
-	owner.forgetPassword = function(email, callback) {
-		callback = callback || $.noop;
-		if (!checkEmail(email)) {
-			return callback('邮箱地址不合法');
-		}
-		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
-	};
+//	owner.forgetPassword = function(email, callback) {
+//		callback = callback || $.noop;
+//		if (!checkEmail(email)) {
+//			return callback('邮箱地址不合法');
+//		}
+//		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
+//	};
 
 	/**
 	 * 获取应用本地配置
