@@ -19,7 +19,9 @@
 		"refer": [
 			"my_plus/my_project_list.html",
 			"my_plus/my_setting.html",
-			"my_task/task_list.html"
+			"my_task/task_list.html",
+			"my_statistics/my_time_select.html",
+			"my_commission/my_time_select.html"
 		]
 	},
 	"my_plus/my_project.html": {
@@ -50,7 +52,8 @@
 		"refer": [
 			"my_spv_material/my_supervision_material.html",
 			"my_spv_material/readimage.html",
-			"my_spv_material/my_spv_material_results.html"
+			"my_spv_material/my_spv_material_results.html",
+			"my_task/task_list.html"
 		]
 	},
 	"my_spv_material/my_supervision_material.html": {
@@ -82,7 +85,8 @@
 	"my_spv_material/my_spv_material_review_detail.html": {
 		"refer": [
 			"my_spv_material/my_supervision_material.html",
-			"my_spv_material/camera_image.html"
+			"my_spv_material/camera_image.html",
+			"my_task/task_list.html"
 		]
 	},
 	"my_spv_material/my_spv_material_resDet.html": {
@@ -104,7 +108,8 @@
 		"refer": [
 			"my_spv_entity/my_spv_entity_readimage.html",
 			"my_spv_entity/my_spv_entity_list.html",
-			"my_spv_entity/my_spv_entity_results.html"
+			"my_spv_entity/my_spv_entity_results.html",
+			"my_task/task_list.html"
 		]
 	},
 	"my_spv_entity/my_spv_entity_add.html": {
@@ -127,7 +132,8 @@
 		"refer": [
 			"my_material/my_material_add.html",
 			"my_material/my_rejection.html",
-			"my_material/my_material_samDet.html"
+			"my_material/my_material_samDet.html",
+			"my_material/my_material_samDetEdit.html"
 		]
 	},
 	"my_material/my_material_results.html": {
@@ -147,7 +153,8 @@
 	},
 	"my_plus/my_inspection.html": {
 		"refer": [
-			"my_insp_entity/my_inspection_entity.html"
+			"my_insp_entity/my_inspection_entity.html",
+			"my_insp_material/my_inspection_material.html"
 		]
 	},
 	"my_insp_entity/my_inspection_entity.html": {
@@ -170,7 +177,8 @@
 	},
 	"my_division/division_details.html": {
 		"refer": [
-			"my_division/readimage.html"
+			"my_division/readimage.html",
+			"my_division/division_list.html"
 		]
 	},
 	"my_household/household_list.html": {
@@ -207,12 +215,53 @@
 		"refer": [
 			"my_material/my_material_samDet.html",
 			"my_commission/my_entity_readmessage.html",
-			"my_insp_material/my_inspection_detail.html"
+			"my_insp_material/my_inspection_detail.html",
+			"my_task/spv_material/spv_material_deliver.html",
+			"my_task/spv_material/spv_material_detail.html",
+			"my_spv_material/my_spv_material_fail.html",
+			"my_spv_material/my_spv_material_review_detail.html",
+			"my_task/spv_material/spv_material_review_detail.html",
+			"my_task/spv_material/spv_material_fail.html",
+			"my_spv_material/my_spv_material_supvr.html",
+			"my_spv_entity/my_spv_entity_fail.html",
+			"my_spv_entity/my_spv_entity_supvr.html",
+			"my_spv_entity/my_spv_entity_readmessage.html",
+			"my_spv_material/my_spv_material_detail.html",
+			"my_spv_material/my_spv_material_deliver.html"
+		],
+		"resources": [
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
 		]
 	},
 	"my_material/my_material_samDet.html": {
 		"refer": [
-			"my_material/readimage.html"
+			"my_material/readimage.html",
+			"my_task/task_list.html"
+		]
+	},
+	"my_material/my_material_samDetEdit.html": {
+		"refer": [
+			"my_material/my_material_list.html"
+		]
+	},
+	"my_task/spv_material/spv_material_deliver.html": {
+		"resources": [
+			"css/mui.min.css",
+			"images/iconfont-tianjia.png"
+		]
+	},
+	"my_task/spv_material/spv_material_review_detail.html": {
+		"resources": [
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
+		]
+	},
+	"my_task/spv_material/spv_material_detail.html": {
+		"refer": [
+			"my_spv_material/readimage.html"
 		]
 	}
 }

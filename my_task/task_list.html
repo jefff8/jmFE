@@ -11,6 +11,13 @@
 		<link rel="stylesheet" href="../css/mui.picker.min.css"/>
 		<link rel="stylesheet" href="../css/mui.poppicker.css"/>
 		<style>
+			.consigncode{
+				min-width: 300px;
+				height:150px;				
+				top:35%;
+				/*position:relative;*/
+				left:9%;
+			}
 			#reinspection{
 				min-width: 300px;
 				height:150px;				
@@ -327,31 +334,80 @@
 			<!----------------------实体检测 ------------------------->
 			
 			<!----------------------材料抽检 ------------------------->
-			<div id="item5" class="mui-control-content  ">
+			<div id="item5" class="mui-control-content">
 			    <div id="scroll" class="mui-scroll-wrapper">
-			    	<div id="self_inspection1" class="mui-scroll rwdiv">
+			    	<div id="supervision_material" class="mui-scroll rwdiv">
 
 					</div>
 			    </div>
 			</div>
+			<!--↓检测报告编号↓-->
+			<div id="spvmaterialconsigncode" class="mui-popover consigncode">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="spv_material_testNum"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="spv_material_code_act"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="spv_material_inpcode(this)">确认</button>
+				</div>
+			</div>
+			<!--↑检测报告编号↑-->
+			<!--↓复检报告编号↓-->
+			<div id="spvmaterialreinspection" class="mui-popover consigncode" >
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="spv_material_recheckNum"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="spv_material_code_act1"  class="mui-button-row my_margintop10px">
+					<button id=""  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="" type="button" class="mui-btn mui-btn-primary" onclick="spv_material_recheckNum(this)">确认</button>
+				</div>
+			</div>
+			<!--↑复检报告编号↑-->
 			<!----------------------材料抽检 ------------------------->
 			
 			<!----------------------实体抽检 ------------------------->
-			<div id="item6" class="mui-control-content  ">
+			<div id="item6" class="mui-control-content">
 			    <div id="scroll" class="mui-scroll-wrapper">
-			    	<div id="self_inspection1" class="mui-scroll rwdiv">
+			    	<div id="supervision_entity" class="mui-scroll rwdiv">
 
 					</div>
 			    </div>
+			</div>
+			<div id="spventityconsigncode" class="mui-popover consigncode">
+	    		<h4 id="title" style="text-align: center;margin-top: 15px;">合格</h4>
+	    		<form class="mui-input-group" style="margin-top: 15px;" id="concode1">
+	    			<div class="mui-input-row">
+	    				<label>检测报告编号:</label>
+	    				<input id="spv_entity_testNum"  class="mui-input-clear" placeholder="输入检测报告编号">
+	    			</div>    			
+	    		</form>
+				<div id="spv_entity_code_act1"  class="mui-button-row my_margintop10px">
+					<button id="code_close"  type="button" class="mui-btn mui-btn-primary mui-action-back" >取消</button>					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="code_sure" type="button" class="mui-btn mui-btn-primary" onclick="spv_entity_inpcode1(this)">确认</button>
+				</div>
 			</div>
 			<!----------------------实体抽检 ------------------------->
 	    </div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
+		<script src="../js/public.js"></script><!--公共方法-->
 		<script src="send.js"></script><!--材料送检-->
+		<script src="commission.js"></script><!--实体检测-->
 		<script src="self_inspection1.js"></script><!--材料自检-->
 		<script src="self_inspection2.js"></script><!--实体自检-->
-		<script src="commission.js"></script><!--实体检测-->
+		<script src="spv_material/spv_material.js"></script><!--材料抽检-->
+		<script src="spv_entity/my_spv_entity.js"></script><!--实体抽检-->
 		<script type="text/javascript">
 			mui.init({
 				gestureConfig:{					
@@ -388,10 +444,13 @@
 				unit = self.unit;//单位
 				unitName = self.unitName; //单位名称
 				my_name = decodeURI(decodeURI(my_name));
+				setlocalStorage('username',my_name);
+				setlocalStorage('mobile',mobile);
+//				console.log(getsessionStorage('username'));
 				unit = decodeURI(decodeURI(unit));
 				var myDate = new Date();//获取系统当前时间
 				mytime=myDate.toLocaleString();//获取日期与时间
-				
+//				taskList6(1506414368014);
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',
@@ -404,10 +463,13 @@
 						var length = data.length;
 						for(var i=0;i<length;i++){
 							var pj_timestamp = data[i].时间戳;
+//							console.log(pj_timestamp);
 							taskList1(pj_timestamp);//材料送检
 							taskList2(pj_timestamp);//材料自检
 							taskList3(pj_timestamp);//实体自检
 							taskList4(pj_timestamp);//实体检测
+							taskList5(pj_timestamp);//材料抽检
+							taskList6(pj_timestamp);//实体抽检
 						}
 					},
 					error:function(xhr,type,errorThrown){

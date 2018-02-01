@@ -1600,7 +1600,8 @@
 					"js/mui.min.js"
 				],
 				"refer": [
-					"my_material/readimage.html"
+					"my_material/readimage.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2162,7 +2163,19 @@
 					"my_task/insp1_deliver.html",
 					"my_task/insp1_supvr.html",
 					"my_task/insp2_deliver.html",
-					"my_task/insp2_supvr.html"
+					"my_task/insp2_supvr.html",
+					"my_task/spv_material/spv_material_deliver.html",
+					"my_task/spv_material/spv_material_detail.html",
+					"my_spv_material/my_spv_material_fail.html",
+					"my_spv_material/my_spv_material_review_detail.html",
+					"my_task/spv_material/spv_material_review_detail.html",
+					"my_task/spv_material/spv_material_fail.html",
+					"my_spv_material/my_spv_material_supvr.html",
+					"my_spv_entity/my_spv_entity_fail.html",
+					"my_spv_entity/my_spv_entity_supvr.html",
+					"my_spv_entity/my_spv_entity_readmessage.html",
+					"my_spv_material/my_spv_material_detail.html",
+					"my_spv_material/my_spv_material_deliver.html"
 				],
 				"priority": 0
 			},
@@ -2413,7 +2426,8 @@
 				"refer": [
 					"my_spv_material/my_supervision_material.html",
 					"my_spv_material/readimage.html",
-					"my_spv_material/my_spv_material_results.html"
+					"my_spv_material/my_spv_material_results.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2421,7 +2435,8 @@
 				"resources": [],
 				"refer": [
 					"my_spv_material/my_supervision_material.html",
-					"my_spv_material/camera_image.html"
+					"my_spv_material/camera_image.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2465,7 +2480,8 @@
 				"refer": [
 					"my_spv_entity/my_spv_entity_list.html",
 					"my_spv_entity/my_spv_entity_readimage.html",
-					"my_spv_entity/my_spv_entity_results.html"
+					"my_spv_entity/my_spv_entity_results.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2517,7 +2533,8 @@
 			"my_division/division_details.html": {
 				"resources": [],
 				"refer": [
-					"my_division/readimage.html"
+					"my_division/readimage.html",
+					"my_division/division_list.html"
 				],
 				"priority": 0
 			},
@@ -2551,6 +2568,29 @@
 				"resources": [],
 				"refer": [
 					"my_household/readimage.html"
+				],
+				"priority": 0
+			},
+			"my_task/spv_material/spv_material_deliver.html": {
+				"resources": [
+					"css/mui.min.css",
+					"images/iconfont-tianjia.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/spv_material/spv_material_review_detail.html": {
+				"resources": [
+					"css/mui.poppicker.css",
+					"css/mui.picker.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_task/spv_material/spv_material_detail.html": {
+				"resources": [],
+				"refer": [
+					"my_spv_material/readimage.html"
 				],
 				"priority": 0
 			}

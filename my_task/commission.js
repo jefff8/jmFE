@@ -5,7 +5,8 @@
 			data:{
 				flag:"实体检测",
 				pj_timestamp:pj_timestamp,
-				unit:unit
+				unit:unit,
+				unitName:unitName
 			},
 			type:'post',
 			dataType:'json',

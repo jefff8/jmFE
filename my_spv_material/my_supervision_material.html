@@ -73,7 +73,7 @@
 		       			<div id="xuanxiangka" class="mui-slider-group mui-slider-loop ">
 		        		   	<div class="mui-slider-item">
 		         		       <a id="a4" class="mui-control-item  mui-active"  href="#item1">
-									监督取样(监督单位)
+									监督取样(监督机构)
 								</a>
 								<a id="a5" class="mui-control-item"  href="#item2">
 									委托检测(检测单位)
@@ -220,14 +220,14 @@
 				var self = plus.webview.currentWebview();
 				pj_id = self.pj_id;//工程id
 				gcmc = self.gcmc; //工程名称
-				timestamp = self.timestamp;
+				timestamp = self.timestamp;//工程时间戳
 				//全局变量mobile
 				mobile = self.mobile;
 				my_name = self.my_name;
 				constr = self.constr; //施工单位
-				supvision = self.supvision;
-				detect = self.detect;
-//				console.log(supvision);
+				supvision = self.supvision;//监理单位
+				detect = self.detect;//检测单位
+//				console.log(detect);
 				gcmc_c = encodeURI(encodeURI(gcmc));
 				my_name = decodeURI(decodeURI(my_name)); //获取用户名
 				var doc = document;
@@ -340,7 +340,7 @@
 					}else{
 						var url = "my_spv_material_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc+"&state="+gcdzt_c+"&detect="+detect_c;
 					}
-					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
+					ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格,数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
 						
 					switch(gcdzt){
 						case "新增":case "新增复检":
@@ -354,7 +354,7 @@
 							break;
 					}
 				}
-				////////////////////////////监督取样（监督单位）//////////////////////////////
+				////////////////////////////监督取样（监督机构）//////////////////////////////
 				mui('#draft').on('longtap','ul',function(){
 					var ulId = this.id;//获取当前的卡项的id
 					mui.ajax(url+'check.php',{
@@ -521,6 +521,7 @@
 																extras:{
 																	//传递参数
 																	ulId:ulId,
+																	flag:'my_spv_material',
 																	my_name:my_name,
 																	timestamp:timestamp,
 																	constr:constr,
@@ -786,7 +787,7 @@
 																		ulId:ulId,
 																		timestamp:timestamp,
 																		state:'recheck',
-																		flag:''
+																		flag:'my_spv_material'
 																	},
 																	show:{
 																		autoShow:true,//页面loaded事件发生后自动显示

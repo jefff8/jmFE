@@ -238,7 +238,6 @@
 				var gcmc_in = geturl("gcmc");
 				var state = decodeURI(decodeURI(geturl("state")));
 				var detect = decodeURI(decodeURI(geturl("detect")));
-//				console.log(detect);
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
 				sjc_in.value = sjc_send;
 //				alert(sjc_send);
@@ -281,6 +280,15 @@
 					}
 				});
 				
+				//使用时，需要增加'name="Selection-date"'以供.on方法批量绑定
+				mui(".mui-content").on('tap','input[name="Selection-date"]',function(){
+					o = this;
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+						o.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+					});
+				})
+				
 				qylx.addEventListener('tap', function(event) {
 					//异步类型
 					mui.ajax(url+'my_plus/proType.php',{
@@ -309,22 +317,27 @@
 					});
 				}, false);
 				
-				if(state=='收样'||state=='不合格'){
+				if(state=='收样'){
 					form_songyang.classList.remove("my_none");
-					testNum_form.classList.remove("my_none");
 				}else if(state=='待审批'||state=='已处理'){
 					form_songyang.classList.remove("my_none");
 					testNum_form.classList.remove("my_none");
 					recordBack_form.classList.remove("my_none");
 				}else if(state=='收样复检'){
 					form_songyang.classList.remove("my_none");
-					firstNum_form.classList.remove("my_none");
+//					firstNum_form.classList.remove("my_none");
 				}else if(state=='复检不合格'){
 					form_songyang.classList.remove("my_none");
 					testNum_form.classList.remove("my_none");
 					firstNum_form.classList.remove("my_none");
 				}else if(state=='新增'){
 					modify.classList.remove('my_none');
+				}else if(state=='不合格'){
+					form_songyang.classList.remove("my_none");
+					testNum_form.classList.remove("my_none");
+				}else if(state=='已取样复检'){
+					form_songyang.classList.remove("my_none");
+//					ffirstNum_form.classList.remove("my_none");
 				}
 				
 				function typeAll(data,data2){

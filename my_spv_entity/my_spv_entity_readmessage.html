@@ -217,7 +217,6 @@
 					modify.classList.add('my_none');
 					save.classList.remove('my_none');
 					myforminput = document.getElementById("myform").getElementsByTagName("input");
-					console.log(myforminput.length);
 					for(i=0;i<myforminput.length;i++){
   						myforminput[i].removeAttribute("readonly");
 //						console.log(myforminput[i].value)
@@ -249,7 +248,7 @@
 				}
 				
 				function saveInfo(){
-					console.log(myInfo);
+//					console.log(myInfo);
 					mui.ajax(url+'my_plus/my_spv_entity_detail.php',{
 						data:{
 							flag:"修改信息",

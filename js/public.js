@@ -13,6 +13,24 @@
 	};
 	
 	/**
+	 * 设置session缓存
+	 * @param {Object} Key   键
+	 * @param {Object} Value 值
+	 */
+	setlocalStorage  = function(Key,Value) {
+		Value = Value || {};
+		localStorage.setItem(Key, JSON.stringify(Value));
+	};
+	
+	/**
+	 * 获取session缓存
+	 * @param {Object} Key 键
+	 */
+	getlocalStorage  = function(Key) {
+		return JSON.parse(localStorage.getItem(Key))
+	};
+	
+	/**
 	 * 获取当前时间戳
 	 */
 	getsjc = function (){
@@ -31,17 +49,8 @@
 		if(r!=null)return  unescape(r[2]);
 		return null;
 	}
-	/*
-	 * 日期选择器
-	 * 使用时，需要增加'name="Selection-date"'以供.on方法批量绑定事件
-	 */
-	mui(".mui-content").on('tap','input[name="Selection-date"]',function(){
-		o = this;
-		plus.nativeUI.pickDate( function(e){
-			d=e.date;
-			o.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-		});
-	})
+
+	
 
 
 

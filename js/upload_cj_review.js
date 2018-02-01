@@ -292,7 +292,7 @@ function upload(lx){
 	task.addData("mchen",mchen());
 //	task.addData("pj_name",gcmc);
 //	task.addData("pj_timestamp",timestamp);
-//	task.addData("myInfo",myInfo());
+	task.addData("myInfo",myInfo());
 	for(var i=0;i<files1.length;i++){
 		var f1=files1[i];
 		task.addFile(f1.path,{key:f1.name});
