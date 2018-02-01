@@ -75,7 +75,7 @@
 		            <select id="operation_unit" style="font-size: 14px;" ></select>
 		        </div>
 		        <div  class="mui-input-row">
-		            <label>检测单位:</label>
+		            <label>检测操作单位:</label>
 		            <select id="qcdy" style="font-size: 14px;" ></select>
 		        </div>
 		    </form>
@@ -276,6 +276,7 @@
 					sjc = mchen();
 					myInfo = myInfo();
 //					console.log(myInfo);
+					saveInfo(sjc);
 					var myform=document.getElementById('myform');
 					var myform2=document.getElementById('myform2');
 					var img_content=document.getElementById('img_content');
@@ -320,10 +321,11 @@
 						type:'POST', 
 						timeout:10000,
 						success:function(data){
+//							alert(data);
 							mui.toast('新建成功',{ duration:'long', type:'div' });
 						},
 						error:function(xhr,type,errorThrown){
-							alert('ajax错误'+type+'---'+errorThrown+"失败！");
+							alert('ajax123错误'+type+'---'+errorThrown+"失败！");
 						}
 					});
 				}

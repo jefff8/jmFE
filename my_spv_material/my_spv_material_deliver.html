@@ -101,6 +101,7 @@
 	      		var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
 	      		my_name = self.my_name;
+	      		flag = self.flag; 
 	      		constr = self.constr;
 	      		supvision = self.supvision;
 	      		detect = self.detect;
@@ -144,6 +145,7 @@
 					type:'post',
 					timeout:10000,
 					success:function(data){
+//						alert(data)
 						var length=data.length;
 						for (var i=0;i<length-1;i++) {
 							sjc.value=data[i].时间戳;
@@ -171,8 +173,13 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_spv_material/my_supervision_material.html');
-				target.reload(true);
+				if(flag=='task'){
+					target=plus.webview.getWebviewById('my_task/task_list.html');
+					target.reload(true);
+				}else{
+					target=plus.webview.getWebviewById('../my_spv_material/my_supervision_material.html');
+					target.reload(true);
+				}
 				mui.back();
 			}	
 			

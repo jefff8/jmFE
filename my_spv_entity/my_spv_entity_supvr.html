@@ -88,7 +88,7 @@
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
 	      		flag = self.flag;
-//	      		console.log(flag);
+	      		flag2 = self.flag2;
 	      		gcmc = self.gcmc; 
 	      		pj_id = self.pj_id; 
 //	      		console.log(ulId);
@@ -172,9 +172,15 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity_results.html');
-				target.reload(true);
-				mui.back();
+				if(flag2=='task'){
+					var target=plus.webview.getWebviewById('my_task/task_list.html');
+					target.reload(true);
+					mui.back();
+				}else{
+					var target=plus.webview.getWebviewById('../my_spv_entity/my_spv_entity_results.html');
+					target.reload(true);
+					mui.back();
+				}
 			}
 		</script>
 	</body>

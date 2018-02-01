@@ -67,6 +67,7 @@
 				//获取工程项目id
 				var self = plus.webview.currentWebview();
 	      		ulId = self.ulId; 
+	      		flag = self.flag; 
 				var doc = document;
 				var tcjv = doc.getElementById("tcjv");
 				var save = doc.getElementById("save");
@@ -108,9 +109,16 @@
 			});
 			//返回父页面刷新
 			function back(){
-				var target=plus.webview.getWebviewById('../my_spv_material/my_spv_material_results.html');
-				target.reload(true);
-				mui.back();
+				if(flag=='task'){
+					var target=plus.webview.getWebviewById('my_task/task_list.html');
+					target.reload(true);
+					mui.back();
+				}else{
+					var target=plus.webview.getWebviewById('../my_spv_material/my_spv_material_results.html');
+					target.reload(true);
+					mui.back();
+				}
+				
 			}
 		</script>
 	</body>
