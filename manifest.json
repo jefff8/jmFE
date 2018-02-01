@@ -408,7 +408,8 @@
 					"my_commission/my_commission_list.html",
 					"my_division/division_list.html",
 					"my_household/my_checkB.html",
-					"my_household/household_list.html"
+					"my_household/household_list.html",
+					"my_plus/my_project.html"
 				],
 				"priority": 0
 			},
@@ -1600,7 +1601,9 @@
 					"js/mui.min.js"
 				],
 				"refer": [
-					"my_material/readimage.html"
+					"my_material/readimage.html",
+					"my_material/editImage.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -1635,7 +1638,8 @@
 					"my_insp_material/my_inspection_mtResult.html"
 				],
 				"refer": [
-					"my_insp_material/readimage_inspection.html"
+					"my_insp_material/readimage_inspection.html",
+					"my_insp_material/editImage.html"
 				],
 				"priority": 0
 			},
@@ -1965,7 +1969,9 @@
 					"css/mui.poppicker.css",
 					"css/mui.picker.css"
 				],
-				"refer": [],
+				"refer": [
+					"my_insp_entity/camera_image.html"
+				],
 				"priority": 0
 			},
 			"my_insp_entity/my_inspection_entitydetail.html": {
@@ -1980,7 +1986,8 @@
 					"my_insp_entity/my_inspection_entity.html"
 				],
 				"refer": [
-					"my_insp_entity/readimage_inspection_entity.html"
+					"my_insp_entity/readimage_inspection_entity.html",
+					"my_insp_entity/editImage.html"
 				],
 				"priority": 0
 			},
@@ -2060,7 +2067,8 @@
 					"js/mui.min.js"
 				],
 				"refer": [
-					"my_insp_entity/readimage_inspection_entity.html"
+					"my_insp_entity/readimage_inspection_entity.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2221,7 +2229,10 @@
 					"css/my_project_fhys_xz.css"
 				],
 				"refer": [
-					"my_commission/my_entity_readimage.html"
+					"my_commission/my_entity_readimage.html",
+					"my_commission/editImage.html",
+					"my_commission/my_commission_list.html",
+					"my_task/task_list.html"
 				],
 				"priority": 0
 			},
@@ -2551,6 +2562,13 @@
 				"resources": [],
 				"refer": [
 					"my_household/readimage.html"
+				],
+				"priority": 0
+			},
+			"my_material/editImage.html": {
+				"resources": [],
+				"refer": [
+					"my_material/camera_image.html"
 				],
 				"priority": 0
 			}

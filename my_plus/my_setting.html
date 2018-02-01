@@ -123,13 +123,16 @@
 					</li>
 					<li class="mui-table-view-divider">升级设置</li>
 					<li class="mui-table-view-cell ">
+						当前版本：<span id="version"></span>
+					</li>
+					<li class="mui-table-view-cell ">
 						自动侦测升级
 						<div id="zdzcsj" class="mui-switch">
 							<div class="mui-switch-handle"></div>
 						</div>
 					</li>
 					<li id="jcxbb" class="mui-table-view-cell">
-						检查新版本						
+						检查新版本(下载)						
 					</li>
 					<li class="mui-table-view-divider">&nbsp;</li>
 					<li class="mui-table-view-cell" style="text-align: center;">
@@ -157,6 +160,7 @@
 				var jcxbb = document.getElementById("jcxbb");
 				var autoLogin = document.getElementById("autoLogin"); 
 				var qr = document.getElementById("qr"); //扫一扫
+				var version = document.getElementById("version");
 				
 				//自动登录
 				var foo = plus.storage.getItem("autoLoginState");
@@ -195,6 +199,8 @@
 //				//检查新版本
 //				//检测服务器是否有新版本
 				var thisversion=plus.runtime.version;
+				//当前版本
+				version.innerHTML = thisversion;
 				cvz="";	//用于存放compareVersion函数的判断结果
 //				//比较版本大小，如果新版本nv大于旧版本ov则cvz=true，否则cvz=false
 				function compareVersion( ov, nv ){
