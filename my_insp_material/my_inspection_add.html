@@ -236,12 +236,39 @@
 				
 				//信息保存
 				save.addEventListener('tap',function(){
+					var myform=document.getElementById('myform');
+					var F_input = myform.getElementsByTagName("input");
+					var Str = "";
+					var unit = document.getElementById("operation_unit").value;
+					for(i=0;i<7;i++){
+						Str = Str + F_input[i].value + "|";
+					}
+					Str= Str+unit;
+					mui.ajax(url+'my_plus/my_inspection_PicUpload.php',{
+						data:{
+							lx:'insert',
+							mchen:sjc.value,
+							pj_name:project_name,
+							pj_timestamp:timestamp,
+							myInfo:Str
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							
+						},
+						error:function(xhr,type,errorThrown){
+						}
+					});
 					var img_content=document.getElementById('img_content');
 					var formbtn=document.getElementById("formbtn");
 					myform.classList.add('my_none');
 					formbtn.classList.add('my_none');			
 					img_content.classList.remove('my_none');
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
+					setTimeout( function(){
+						plus.nativeUI.closeWaiting();
+					}, 500 );
 				});
 				
 			});

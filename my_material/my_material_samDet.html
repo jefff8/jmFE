@@ -5,9 +5,11 @@
 		<meta charset="UTF-8">
 		<title>江门建筑管理系统</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link rel="stylesheet" href="../css/mui.min.css">	
-		<link rel="stylesheet" href="../css/my_css.css">	
-		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link rel="stylesheet" href="../css/my_css.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link href="../css/my_project_fhys_xz.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -23,19 +25,19 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>规格:</label>
-		            <input id="gg" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input id="gg" type="text" class="mui-input-clear"  readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>数量:</label>
-		            <input id="sl" type="text" class="mui-input-clear"  readonly="readonly" disabled="disabled">
+		            <input id="sl" type="text" class="mui-input-clear"  readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>生产厂家:</label>
-		            <input id="sccj" type="text" class="mui-input-clear"   readonly="readonly" disabled="disabled">
+		            <input id="sccj" type="text" class="mui-input-clear"   readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>取样人:</label>
-		            <input id="qyr" type="text" class="mui-input-clear"   readonly="readonly" disabled="disabled">
+		            <input id="qyr" type="text" class="mui-input-clear"   readonly="readonly" >
 		        </div>
 		        <div class="mui-input-row">
 		            <label>进场日期:</label>
@@ -79,6 +81,8 @@
 		        </div>
 		    </form>	
 		    <div id="formbtn" class="mui-button-row">
+		    	<button id="saveInfo" type="button" class="mui-btn mui-btn-primary my_none">保存信息修改</button>
+		    	<button id="EditImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看/修改</button>	
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>	
 				&nbsp;&nbsp;
 				<!--<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>-->		
@@ -123,8 +127,8 @@
 		    
 		</div>
 		<script src="../js/mui.min.js"></script>
-		<script src="../js/common.js"></script>
-		<script src="../js/immersed.js" ></script>	
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/service.js"></script>
 		<script src="../js/upload_qy.js"></script>
 		<script type="text/javascript">
@@ -144,12 +148,15 @@
 				var rwfj = doc.getElementById("rwfj");
 				var fjck = doc.getElementById("fjck");
 				var fjgx = doc.getElementById("fjgx");
+				var saveInfo = doc.getElementById("saveInfo");
+				var EditImage = doc.getElementById("EditImage");
 				var qualifiedNum = doc.getElementById("qualifiedNum");
 				var usedPart = doc.getElementById("usedPart");
 				var interDate = doc.getElementById("interDate");
 				var dealer_units = doc.getElementById("dealer_units");
 				var remark = doc.getElementById("remark");
 				var sjc_in = doc.getElementById("sjc");
+				var myform = doc.getElementById("myform").getElementsByTagName("input");
 				//获取url参数值
 				function geturl(name){
 					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -161,10 +168,80 @@
 				var sjc_send = geturl("sjc");
 				var gcid = geturl("gcid");
 				var gcmc_in = geturl("gcmc");
+				var type = geturl("type");
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
-//				alert(gcmc.value);
 				sjc_in.value = sjc_send;
-//				alert(sjc_send);
+				
+				function typeAll(data,data2){
+//					alert(data[0]);
+					//初始化popPicker组件
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
+					var length = data.length;
+					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
+					}
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						qylx.value =  items[0].text + "—" + items[1].text;
+					});
+				}
+				
+				qylx.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"材料送检"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data.length);
+							var length = data.length;
+							var typeData = new Array();
+							var typeData2 = new Array();
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].房建工程);
+							}
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+				
+				//项目新建状态
+				if(type){
+					saveInfo.classList.remove("my_none");
+					EditImage.classList.remove("my_none");
+					fjck.classList.add("my_none");
+					for(var i=1;i<13;i++){
+						myform[i].removeAttribute("readonly");
+					}
+					myform[5].removeAttribute("disabled");
+					myform[6].removeAttribute("disabled");
+				}
+				
+				
+				
 				//异步取值填写
 				mui.ajax(url+'my_plus/my_material_detail.php',{
 					data:{
@@ -200,8 +277,37 @@
                     qyrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 				   });
 				});
+				interDate.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    interDate.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
 		
-				
+				//保存信息修改
+				saveInfo.addEventListener('tap',function(){
+					var formStr="";
+					for(i=0;i<11;i++){
+						var formStr = formStr + myform[i].value+"|";
+					}
+					formStr = formStr + jcdw.value;
+					mui.ajax(url+'my_plus/my_material_upload.php',{
+						data:{
+							lx:'updateForm',
+							formStr:formStr,
+							mchen:sjc_send
+						},
+						type:'post',
+						dataType:'json',
+						timeout:10000,
+						success:function(data){
+						},
+						error:function(xhr,type,errorThrown){
+							mui.toast('保存成功！',{ duration:'long', type:'div' });
+//							alert("ajax错误");
+						}
+					});
+				});
 				
 				//获取材料送检信息
 				var scene_photo=[];
@@ -234,6 +340,21 @@
 					}
 				});	
 				
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							sjc:sjc.value,
+							scene_photo:scene_photo,
+							sample_photo:sample_photo,
+							sceneText:sceneText,
+							sampleText:sampleText,
+							receivedText:receivedText
+						}
+					});
+				});
+				
 				//附件查看
 				fjck.addEventListener('tap',function(){
 					mui.openWindow({
@@ -257,25 +378,6 @@
 					})
 				});
 				
-				//附件更新
-//				fjgx.addEventListener('tap',function(){
-//					var btnArray = ['是', '否'];
-//					mui.confirm('更新后会覆盖原有附件，确定更新吗？', '江门建筑管理系统', btnArray, function(e) {
-//						if (e.index == 0) {
-//							var myform=document.getElementById('myform');
-//							var myform2=document.getElementById('myform2');
-//							var img_content=document.getElementById('img_content');
-//							var formbtn=document.getElementById("formbtn");
-//							myform.classList.add('my_none');
-//							myform2.classList.add('my_none');
-//							formbtn.classList.add('my_none');			
-//							img_content.classList.remove('my_none');
-//						} else {
-//							
-//						}
-//					});
-//				});
-	
 			});
 		</script>
 	</body>

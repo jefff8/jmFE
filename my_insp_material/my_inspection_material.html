@@ -208,7 +208,7 @@
 					
 					if(zt=="新增"){
 						var choujian = document.getElementById("draft");
-						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c'+zt_c+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
+						ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_blue2"><a class="a_color" href="my_inspection_detail.html?sjc='+sjc+'&gcid='+id+'&zt_c='+zt_c+'&type='+'NewAdd'+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ jclx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测数量：'+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位：'+ Position +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+ jcrq +'</p></li>';
 						choujian.appendChild(ul);
 					}else if(zt=="取样送检" ){
 						var quyang = document.getElementById("draft");

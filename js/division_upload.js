@@ -342,31 +342,6 @@ var files_qdjl=[];
 var files_ysbg=[];
 //上传函数
 function upload(lx,clean){
-	
-//	files1=files_ystz;
-//	var strs1=","+f1Base64.join();
-//	files2=files_hyzp;
-//	var strs2=","+f2Base64.join();
-//	files3=files_qdjl;
-//	var strs3=","+f3Base64.join();
-//	files4=files_ysbg;
-//	var strs4=","+f4Base64.join();
-//	if(files1.length<=0){
-//		plus.nativeUI.alert("没有添加验收通知！");
-//		return;
-//	}else if(files2.length<=0){
-//		plus.nativeUI.alert("没有添加会议照片！");
-//		return;
-//	}else if(files3.length<=0){
-//		plus.nativeUI.alert("没有添加签到记录表！");
-//		return;
-//	}else if(files4.length<=0){
-//		plus.nativeUI.alert("没有添加验收报告！");
-//		return;
-//	}
-	
-	
-	
 	switch(lx){
 		case "save1"://验收通知
 			files1=files_ystz;
@@ -506,62 +481,6 @@ function upload(lx,clean){
 			task.start();
 			break;
 	}
-//	var wt=plus.nativeUI.showWaiting();
-//	var task=plus.uploader.createUpload(server,{method:"POST"},	function(t,status){ 
-//		if(status==200){
-//			wt.close();
-//			var button_lx=document.getElementById(lx);
-//			var button_clean1=document.getElementById("clean_ystz");
-//			var button_clean2=document.getElementById("clean_hyzp");
-//			var button_clean3=document.getElementById("clean_qdjl");
-//			var button_clean4=document.getElementById("clean_ysbg");
-//			button_lx.disabled=true;
-//			button_clean1.disabled=true;
-//			button_clean2.disabled=true;
-//			button_clean3.disabled=true;
-//			button_clean4.disabled=true;
-//			button_lx.innerText="上传成功";				
-//		}else{
-//			outLine("上传失败："+status);
-//			wt.close();
-//		}
-//	});
-//	task.addData("acceptText",text1());
-//	task.addData("meetingText",text2());
-//	task.addData("signinText",text3());
-//	task.addData("reportText",text4());
-//	task.addData("files1",strs1);
-//	task.addData("files2",strs2);
-//	task.addData("files3",strs3);
-//	task.addData("files4",strs4);
-//	task.addData("selfId",getId());	
-//	task.addData("acceptanceTime",get_AcceptanceTime());	
-//	nub1=files1.length.toString();
-//	nub2=files2.length.toString();
-//	nub3=files3.length.toString();
-//	nub4=files4.length.toString();
-//	task.addData("nub1",nub1);
-//	task.addData("nub2",nub2);
-//	task.addData("nub3",nub3);
-//	task.addData("nub4",nub4);
-////	
-//	for(var i=0;i<files1.length;i++){
-//		var f1=files1[i];
-//		task.addFile(f1.path,{key:f1.name});
-//	}
-//	for(var i=0;i<files2.length;i++){
-//		var f2=files2[i];
-//		task.addFile(f2.path,{key:f2.name});
-//	}
-//	for(var i=0;i<files3.length;i++){
-//		var f3=files3[i];
-//		task.addFile(f3.path,{key:f3.name});
-//	}
-//	for(var i=0;i<files4.length;i++){
-//		var f4=files4[i];
-//		task.addFile(f4.path,{key:f4.name});
-//	}
-//	task.start();
 }
 
 //获取项目id

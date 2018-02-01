@@ -7,6 +7,8 @@
 		<link rel="stylesheet" href="../css/mui.min.css">	
 		<link rel="stylesheet" href="../css/my_css.css">	
 		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -24,7 +26,7 @@
 		        </div>		        
 		        <div class="mui-input-row">
 		        	<label>检测部位:</label>
-		        	<input type="text" class="mui-input-clear"  id="jcbw">
+		        	<input type="text" class="mui-input-clear"  id="jcbw" readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测数量:</label>
@@ -32,7 +34,7 @@
 		        </div>
 		    	<div class="mui-input-row">
 		            <label>检测人:</label>
-		           <input type="text" class="mui-input-clear" id="jcr">
+		           <input type="text" class="mui-input-clear" id="jcr"  readonly="readonly">
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测日期:</label>
@@ -103,13 +105,15 @@
 		        </div>
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
+		    	<button type="button" class="mui-btn mui-btn-primary my_none" id="saveInfo">保存信息修改</button>
+		    	<button type="button" class="mui-btn mui-btn-primary my_none" id="EditImage">附件查看/修改</button>
 				<button type="button" class="mui-btn mui-btn-primary" id="dache">附件查看</button>
 			</div>	
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
-		<script src="../js/native.js"></script>
+		<!--<script src="../js/native.js"></script>-->
 		<script src="../js/service.js"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -126,6 +130,8 @@
 				var lreport = doc.getElementById('lreport');
 				var testNum = doc.getElementById("testNum");
 				var process_type = doc.getElementById("process_type");
+				var saveInfo = doc.getElementById("saveInfo");
+				var myform = doc.getElementById("myform").getElementsByTagName("input");
 				var tbpho = [];//检测前
 				var tipho = [];//检测中
 				var tepho = []//检测设备
@@ -148,11 +154,82 @@
 				}
 				var owtsp = geturl("owtsp");
 				gcid = geturl("gcid");
+				var type = geturl("type");
+				//项目新建状态
+				if(type){
+					saveInfo.classList.remove("my_none");
+					EditImage.classList.remove("my_none");
+					dache.classList.add("my_none");
+					for(var i=1;i<7;i++){
+						myform[i].removeAttribute("readonly");
+					}
+				}
+				
+				//检测类型
+				function typeAll(data,data2){
+//					alert(data[0]);
+					//初始化popPicker组件
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
+					var length = data.length;
+					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
+					}
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						ttype.value =  items[0].text + "—" + items[1].text;
+					});
+				}
+				
+				
+				ttype.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"实体检测"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							var length = data.length;
+							var typeData = new Array();
+							var typeData2 = new Array();
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].房建工程);
+							}
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+
+				
 				//获取工程名称
 				var self = plus.webview.currentWebview();
                 my_name = self.my_name;
                 timestamp = self.timestamp;
                 my_name = decodeURI(decodeURI(my_name));
+                
 				var proatt='';
 				var owntsp;
 				var myform2=document.getElementById('myform2');
@@ -190,7 +267,6 @@
 						myform5.classList.remove('my_none');
 					}
 				}
-//				alert(gcid);
 				//异步数据传输
 				mui.ajax(url+'my_plus/my_entity_detail.php',{
 					data:{
@@ -243,6 +319,53 @@
 					error:function(xhr,type,errorThrown){
 //						alert('ajax错误:'+type+'+'+errorThrown);
 					}
+				});
+				
+				//日期监听
+				jcrq.addEventListener('tap',function(){
+					plus.nativeUI.pickDate( function(e){
+					d=e.date;
+                    jcrq.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+				   });
+				});
+				//保存信息修改
+				saveInfo.addEventListener('tap',function(){
+					//信息保存
+					var formInfo = ""
+					for(var i=0;i<7;i++){
+						formInfo = formInfo + myform[i].value + "|";
+					}
+					mui.ajax(url+'my_plus/entity_upload.php',{
+						data:{
+							lx:'updateForm',
+							formInfo:formInfo,
+							mchen:owtsp
+						},
+						type:'post',
+						dataType:'json',
+						success:function(data){
+							
+						},
+						error:function(xhr,type,errorThrown){
+							mui.toast('保存成功！',{ duration:'long', type:'div' });
+						}
+					});
+				});
+				
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							tbpho:tbpho,//检测前
+							tipho:tipho,//检测中
+							tepho:tepho,//检测设备
+							Text1:Text1,
+							Text2:Text2,
+							Text3:Text3,
+							sjc:owtsp
+						}
+					});
 				});
 				
 				dache.addEventListener('tap',function(){
