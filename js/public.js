@@ -13,7 +13,7 @@
 	};
 	
 	/**
-	 * 设置session缓存
+	 * 设置localStorage缓存
 	 * @param {Object} Key   键
 	 * @param {Object} Value 值
 	 */
@@ -23,7 +23,7 @@
 	};
 	
 	/**
-	 * 获取session缓存
+	 * 获取localStorage缓存
 	 * @param {Object} Key 键
 	 */
 	getlocalStorage  = function(Key) {

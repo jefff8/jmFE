@@ -7,6 +7,8 @@
 		<link rel="stylesheet" href="../css/mui.min.css">	
 		<link rel="stylesheet" href="../css/my_css.css">	
 		<link rel="stylesheet" href="../css/my_project_fhys_xz.css" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -18,17 +20,9 @@
 			<input id="url" class="my_none"/>
 			<input id="state" class="my_none"/>			
 		    <form class="mui-input-group" id="myform">
-		        <!--<div class="mui-input-row">
-		            <label>检测类型:</label>
-		            <input id="ttype"  type="text" class="mui-input-clear" readonly="readonly" >
-		        </div>-->
 		        <div class="mui-input-row">
-		            <label>委托检测类型:</label>
-		            	<select id="ttype" style="font-size: 14px;" readonly="readonly">
-		            		<option></option>
-		            		<option>市政工程</option>
-		            		<option>房屋建筑结构</option>
-		            	</select>
+		        	<label>委托检测类型:</label>
+		            <input id="ttype"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
 		        </div>
 		    	<div class="mui-input-row">
 		            <label>监督员:</label>
@@ -36,7 +30,7 @@
 		        </div>
 		        <div class="mui-input-row">
 		            <label>检测单位:</label>
-		            <input id="tdpm" type="text" class="mui-input-clear"  readonly="readonly">
+		            <select id="tdpm" style="font-size: 14px;" readonly="readonly" disabled="disabled"></select>
 		        </div>
 		        <div  class="mui-input-row ">
 		            <label>委托编号:</label>
@@ -116,7 +110,7 @@
 				var owtsp = geturl("owtsp");
 				gcid = geturl("gcid");//主键id
 				flag = geturl("flag");
-//				console.log(flag);
+//				console.log(gcid);
 				//获取工程名称
 				var self = plus.webview.currentWebview();
                 my_name = self.my_name;
@@ -129,6 +123,7 @@
 				var myform3=document.getElementById('myform3');
 				var myform5=document.getElementById('myform5');
 				var myforminput = document.getElementById("myform").getElementsByTagName("input");
+				var myformselect = document.getElementById("myform").getElementsByTagName("select");
 //				var modify=document.getElementById('modify');//修改按钮
 				var save=document.getElementById('save');//修改按钮
 				
@@ -136,6 +131,8 @@
 				var urlo = doc.getElementById('url');
 				urlo.value = timestamp +'/'+ my_name +'/'+ owtsp;
 				var stateo = doc.getElementById('state');
+				
+				
 				
 				//设定哪些信息可见
 				function datashow(proatt){
@@ -157,11 +154,17 @@
 						save.classList.remove("my_none");
 						EditImage.classList.remove("my_none");
 						dache.classList.add("my_none");
-						for(i=0,len=myforminput.length;i<len;i++){
+//						tdpm.removeAttribute("disabled");
+//						tdpm.removeAttribute("readonly");
+						for(i=1,len=myforminput.length;i<len;i++){
 							myforminput[i].removeAttribute("readonly");
 						}
 						for(i=0,len=myforminput.length;i<len;i++){
 							myforminput[i].removeAttribute("disabled");
+						}
+						for(i=0,len=myformselect.length;i<len;i++){
+							myformselect[i].removeAttribute("readonly");
+							myformselect[i].removeAttribute("disabled");
 						}
 					}
 				}
@@ -191,6 +194,8 @@
 						}
 					});
 				});
+				
+				
 				
 				//异步数据传输
 				mui.ajax(url+'my_plus/my_spv_entity_detail.php',{
@@ -248,6 +253,38 @@
 					}
 				});
 				
+				
+				//动态添加检测单位
+				mui.ajax(url+'my_plus/my_spv_entity_list.php',{
+					data:{
+						flag:"检测单位"
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){
+						var length = data.length;
+						var detection_unit = new Array();
+//							detection_unit[0] = "";
+						for(var i=0;i<=length-1;i++){
+							detection_unit.push(data[i].检测单位);
+						}
+//						//动态添加检测单位
+//						console.log(detection_unit.length)
+						for(var i=0;i<detection_unit.length;i++){
+							var option = doc.createElement("option");
+							option.innerHTML = detection_unit[i];
+							tdpm.appendChild(option);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+//						alert('ajax错误'+type+errorThrown);
+					}
+				});
+				
+				
+				
+				
 				/**
 				 * 保存按钮
 				 */
@@ -262,12 +299,16 @@
 				function getInfo(){
 //					console.log(myforminput.length);
 					//委托检测类型的值
-					ttype = document.getElementById("ttype").value;
+//					ttype = document.getElementById("ttype").value;
 					var Str = "";
 					for(var i=0;i<myforminput.length;i++){
 						Str = Str + myforminput[i].value + "|";
 					}
-					return Str + ttype;
+					for(var i=0;i<myformselect.length;i++){
+						Str = Str + myformselect[i].value ;
+					}
+					return Str;
+
 				}
 				
 				function saveInfo(){
@@ -293,6 +334,64 @@
 						error:function(xhr,type,errorThrown){
 							alert('ajax错误'+type+'---'+errorThrown+"失败！");
 						}
+					});
+				}
+				
+				ttype.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"实体检测"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							var length = data.length;
+							var typeData = new Array();
+							var typeData2 = new Array();
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].房建工程);
+							}
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+				
+				
+				//检测类型
+				function typeAll(data,data2){
+//					alert(data[0]);
+					//初始化popPicker组件
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
+					var length = data.length;
+					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
+					}
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						ttype.value =  items[0].text + "—" + items[1].text;
 					});
 				}
 				

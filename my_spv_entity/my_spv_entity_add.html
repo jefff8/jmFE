@@ -18,39 +18,18 @@
 		</header>
 		<div class="mui-content">
 		    <form class="mui-input-group" id="myform">
-		       <div class="mui-input-row">
-		            <label>委托检测类型:</label>
-		            <!--<input id="test_type"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">-->
-		            	<select id="test_type" style="font-size: 14px;" >
-		            		<option></option>
-		            		<option>市政工程</option>
-		            		<option>房屋建筑结构</option>
-		            	</select>
+		    	<div class="mui-input-row">
+		        	<label>委托检测类型:</label>
+		            <input id="test_type"  type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择类型">
 		        </div>
-		    	<!--<div class="mui-input-row">
-		        	<label>检测部位:</label>
-		        	<input type="text" class="mui-input-clear" placeholder="请输入检测部位" id="jcbw">
-		        </div>-->
-		        <!--<div class="mui-input-row">
-		            <label>检测数量:</label>
-		            <input type="text" class="mui-input-clear" placeholder="请输入数量" id="num">
-		        </div>-->
 		        <div class="mui-input-row">
 		            <label>监督员:</label>
 		           <input type="text" class="mui-input-clear" placeholder="请输入检测人" id="jcr" readonly="readonly">
 		        </div>
-		        <!--<div class="mui-input-row">
-		            <label>检测日期:</label>
-		            <input id="jcrq" type="text" class="mui-input-clear" placeholder="请选择日期" readonly="readonly" >
-		        </div>-->
 		        <div class="mui-input-row">
 					<label>委托编号:</label>
 					<input id="ENum_input" type="text" class="mui-input-clear" placeholder="输入委托编号">
 				</div> 
-		        <!--<div class="mui-input-row">
-		            <label>备注:</label>
-		            <input type="text" class="mui-input-clear" placeholder="请输入备注" id="rmark">
-		        </div>	       -->
 		    </form>
 		    <br/>
 		    <form class="mui-input-group" id="myform2">
@@ -173,18 +152,19 @@
 					Uploadingpage();
 				});
 				
+				/**
+				 * 获取信息
+				 */
 				function getInfo(){
 					var my_input = document.getElementById("myform").getElementsByTagName("input");
-					var my_select = document.getElementById("myform").getElementsByTagName("select");
-					var test_dpm = document.getElementById("test_dpm").value;
+//					var my_select = document.getElementById("myform").getElementsByTagName("select");
+					var test_dpm = document.getElementById("test_dpm").value;//检测单位
 					var Str = "";
-					for(var i=0;i<2;i++){
+					for(i=0,len=my_input.length;i<len;i++){
 						Str = Str + my_input[i].value + "|";
 					}
-					for(var i=0;i<1;i++){
-						Str = Str + my_select[i].value + "|";
-					}
 					Str = Str + test_dpm;
+//					console.log(Str)
 					return Str;
 				}
 				
@@ -234,6 +214,63 @@
 					
 					mui.toast('请上传完整照片',{ duration:'long', type:'div' });
 					
+				}
+				
+				test_type.addEventListener('tap', function(event) {
+					//异步类型
+					mui.ajax(url+'my_plus/proType.php',{
+						data:{
+							pj_type:"实体检测"
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+//							alert(data);
+							var length = data.length;
+							var typeData = new Array();
+							var typeData2 = new Array();
+							for(var i=0;i<=length-1;i++){
+								typeData.push(data[i].房建工程);
+							}
+							for(var i=0;i<=length-1;i++){
+								typeData2.push(data[i].道路工程);
+							}
+							typeAll(typeData,typeData2);
+						},
+						error:function(xhr,type,errorThrown){
+							alert('ajax错误'+type+errorThrown);
+						}
+					});
+				}, false);
+				
+				//检测类型
+				function typeAll(data,data2){
+//					alert(data[0]);
+					//初始化popPicker组件
+					var cityPicker = new mui.PopPicker({
+						layer: 2
+					});
+					var length = data.length;
+					var arr_4 = new Array();
+					arr_4[0] = new Array();
+					arr_4[1] = new Array();
+					arr_4[0]["text"] = "房建工程";
+					arr_4[1]["text"] = "市政工程";
+					arr_4[0]["children"] = new Array();
+					arr_4[1]["children"] = new Array();
+					for(i=0;i<data.length;i++){
+						arr_4[0]["children"][i]=new Array();
+						arr_4[0]["children"][i]["text"] = data[i];
+					}
+					for(i=0;i<data2.length;i++){
+						arr_4[1]["children"][i]=new Array();
+						arr_4[1]["children"][i]["text"] = data2[i];
+					}
+					cityPicker.setData(arr_4);  //给picker对象添加数据
+					cityPicker.show(function(items) {
+						test_type.value =  items[0].text + "—" + items[1].text;
+					});
 				}
 				
 				
