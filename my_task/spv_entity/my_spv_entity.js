@@ -81,7 +81,7 @@
 		if(proatt=='扩大抽检'){
 			var url = "../my_spv_entity/my_spv_entity_review_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c+"&mobile="+mobile+"&detect="+detect_c+"&supvision="+supvision_c;
 		}else{
-			var url = "../my_spv_entity/my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c;
+			var url = "../my_spv_entity/my_spv_entity_readmessage.html?owtsp="+owtsp+"&gcid="+id+"&gcmc="+gcmc_c+"&flag="+"task";
 		}
 		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ ttype +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">委托编号：'+num+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">监督员：'+ jcr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测单位：'+ test_dpm +'</p></li>';
 		supervision_entity.appendChild(ul);

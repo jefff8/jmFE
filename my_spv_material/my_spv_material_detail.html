@@ -136,8 +136,8 @@
 		    </form>
 		    <div id="formbtn" class="mui-button-row">
 				<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>
-				<button type="button" class="mui-btn mui-btn-primary my_none" id="modify">修改</button>
-				<button type="button" class="mui-btn mui-btn-primary my_none" id="save">保存</button>
+				<button type="button" class="mui-btn mui-btn-primary my_none" id="save">保存信息修改</button>
+				<button id="EditImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看/修改</button>	
 				&nbsp;&nbsp;
 				<!--<button id="fjgx" type="button" class="mui-btn mui-btn-primary">附件更新</button>-->		
 			</div>
@@ -219,24 +219,21 @@
 				var syr = doc.getElementById("syr");
 				var jzr = doc.getElementById("jzr");
 				var ypbh = doc.getElementById("ypbh");
+				var EditImage = doc.getElementById("EditImage");
 				var recordBack = doc.getElementById("recordBack");
 				var recordBack_form = doc.getElementById("recordBack_form");
 				var test_num = doc.getElementById("test_num");
 				var testNum_form = doc.getElementById("testNum_form");
 				var first_num = doc.getElementById("first_num");
 				var firstNum_form = doc.getElementById("firstNum_form");
-				//获取url参数值
-				function geturl(name){
-					var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-					var r = window.location.search.substr(1).match(reg);
-					if(r!=null)return  unescape(r[2]);
-					return null;
-				}
+				var myforminput = document.getElementById("myform").getElementsByTagName("input");
 				//获取URL上的时间戳
 				var sjc_send = geturl("sjc");
 				var gcid = geturl("gcid");
+				var flag = geturl("flag");
+//				console.log(flag)
 				var gcmc_in = geturl("gcmc");
-				var state = decodeURI(decodeURI(geturl("state")));
+				var state = decodeURI(decodeURI(geturl("state")));//工程单状态
 				var detect = decodeURI(decodeURI(geturl("detect")));
 				gcmc.value = decodeURI(decodeURI(gcmc_in));
 				sjc_in.value = sjc_send;
@@ -279,15 +276,22 @@
 						alert('ajax错误'+type+'---'+errorThrown+"失败！");
 					}
 				});
-				
-				//使用时，需要增加'name="Selection-date"'以供.on方法批量绑定
-				mui(".mui-content").on('tap','input[name="Selection-date"]',function(){
-					o = this;
-					plus.nativeUI.pickDate( function(e){
-						d=e.date;
-						o.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							flag:flag,
+							sjc:sjc.value,
+							scene_photo:scene_photo,
+							sample_photo:sample_photo,
+							sceneText:sceneText,
+							sampleText:sampleText,
+							receivedText:receivedText
+						}
 					});
-				})
+				});
 				
 				qylx.addEventListener('tap', function(event) {
 					//异步类型
@@ -317,7 +321,20 @@
 					});
 				}, false);
 				
-				if(state=='收样'){
+				if(state==='新增'){
+					save.classList.remove("my_none");
+					EditImage.classList.remove("my_none");
+					fjck.classList.add("my_none");
+//					console.log(myforminput.length);
+					jcdw.removeAttribute("readonly");
+					jcdw.removeAttribute("disabled");
+					for(i=1,len=myforminput.length;i<len;i++){
+						myform[i].removeAttribute("readonly");
+					}
+					for(i=0,len=myforminput.length;i<len;i++){
+						myform[i].removeAttribute("disabled");
+					}
+				}else if(state=='收样'){
 					form_songyang.classList.remove("my_none");
 				}else if(state=='待审批'||state=='已处理'){
 					form_songyang.classList.remove("my_none");
@@ -325,23 +342,20 @@
 					recordBack_form.classList.remove("my_none");
 				}else if(state=='收样复检'){
 					form_songyang.classList.remove("my_none");
-//					firstNum_form.classList.remove("my_none");
 				}else if(state=='复检不合格'){
 					form_songyang.classList.remove("my_none");
 					testNum_form.classList.remove("my_none");
 					firstNum_form.classList.remove("my_none");
-				}else if(state=='新增'){
-					modify.classList.remove('my_none');
 				}else if(state=='不合格'){
 					form_songyang.classList.remove("my_none");
 					testNum_form.classList.remove("my_none");
 				}else if(state=='已取样复检'){
 					form_songyang.classList.remove("my_none");
-//					ffirstNum_form.classList.remove("my_none");
 				}
 				
+				
+				
 				function typeAll(data,data2){
-//					alert(data[0]);
 					//初始化popPicker组件
 					var cityPicker = new mui.PopPicker({
 						layer: 2
@@ -421,23 +435,7 @@
 					}
 				});
 				
-				modify.addEventListener('tap',function(){
-					modify.classList.add('my_none');
-					save.classList.remove('my_none');
-					//检测单位
-					jcdw.removeAttribute("readonly");
-					jcdw.removeAttribute("disabled");
-					myforminput = document.getElementById("myform").getElementsByTagName("input");
-//					console.log(myforminput.length);
-					for(i=1;i<myforminput.length;i++){
-  						myforminput[i].removeAttribute("readonly");
-//						console.log(myforminput[i].value)
-  					}
-					for(i=0;i<myforminput.length;i++){
-  						myforminput[i].removeAttribute("disabled");
-//						console.log(myforminput[i].value)
-  					}
-				});
+				
 				
 				/**
 				 * 保存按钮
@@ -483,6 +481,15 @@
 					});
 				}
 				
+				//使用时，需要增加'name="Selection-date"'以供.on方法批量绑定
+				mui(".mui-content").on('tap','input[name="Selection-date"]',function(){
+					o = this;
+					plus.nativeUI.pickDate( function(e){
+						d=e.date;
+						o.value = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+					});
+				})
+				
 				//附件查看
 				fjck.addEventListener('tap',function(){
 					mui.openWindow({
@@ -511,26 +518,7 @@
 						}
 					})
 				});
-				
-				//附件更新
-//				fjgx.addEventListener('tap',function(){
-//					var btnArray = ['是', '否'];
-//					mui.confirm('更新后会覆盖原有附件，确定更新吗？', '江门建筑管理系统', btnArray, function(e) {
-//						if (e.index == 0) {
-//							var myform=document.getElementById('myform');
-//							var myform2=document.getElementById('myform2');
-//							var img_content=document.getElementById('img_content');
-//							var formbtn=document.getElementById("formbtn");
-//							myform.classList.add('my_none');
-//							myform2.classList.add('my_none');
-//							formbtn.classList.add('my_none');			
-//							img_content.classList.remove('my_none');
-//						} else {
-//							
-//						}
-//					});
-//				});
-	
+
 			});
 		</script>
 	</body>

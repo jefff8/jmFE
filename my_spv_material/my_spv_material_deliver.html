@@ -175,11 +175,10 @@
 			function back(){
 				if(flag=='task'){
 					target=plus.webview.getWebviewById('my_task/task_list.html');
-					target.reload(true);
 				}else{
 					target=plus.webview.getWebviewById('../my_spv_material/my_supervision_material.html');
-					target.reload(true);
 				}
+				target.reload(true);
 				mui.back();
 			}	
 			

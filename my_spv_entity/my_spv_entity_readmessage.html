@@ -38,7 +38,7 @@
 		            <label>检测单位:</label>
 		            <input id="tdpm" type="text" class="mui-input-clear"  readonly="readonly">
 		        </div>
-		        <div id="myform2" class="mui-input-row ">
+		        <div  class="mui-input-row ">
 		            <label>委托编号:</label>
 		            <input id="tnum" type="text" class="mui-input-clear" readonly="readonly">
 		        </div>
@@ -63,8 +63,8 @@
 				<!--<button type="button" class="mui-btn mui-btn-primary mui-action-back">关闭</button>-->
 				<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				<button type="button" class="mui-btn mui-btn-primary" id="dache">附件查看</button>
-				<button type="button" class="mui-btn mui-btn-primary my_none" id="modify">修改</button>
-				<button type="button" class="mui-btn mui-btn-primary my_none" id="save">保存</button>
+				<button type="button" class="mui-btn mui-btn-primary my_none" id="save">保存信息修改</button>
+				<button id="EditImage" type="button" class="mui-btn mui-btn-primary my_none">附件查看/修改</button>	
 			</div>	
 			<!--<input id="tbpho"/>
 			<input id="tipho"/>
@@ -92,6 +92,7 @@
 				var freport = doc.getElementById('freport');
 				var lreport = doc.getElementById('lreport');
 				var testNum = doc.getElementById("testNum");
+				var EditImage = doc.getElementById("EditImage");
 				var tbpho = [];//检测前
 				var tipho = [];//检测中
 				var tepho = []//检测设备
@@ -114,7 +115,8 @@
 				}
 				var owtsp = geturl("owtsp");
 				gcid = geturl("gcid");//主键id
-//				console.log(gcid);
+				flag = geturl("flag");
+//				console.log(flag);
 				//获取工程名称
 				var self = plus.webview.currentWebview();
                 my_name = self.my_name;
@@ -126,7 +128,8 @@
 				var myform=document.getElementById('myform');
 				var myform3=document.getElementById('myform3');
 				var myform5=document.getElementById('myform5');
-				var modify=document.getElementById('modify');//修改按钮
+				var myforminput = document.getElementById("myform").getElementsByTagName("input");
+//				var modify=document.getElementById('modify');//修改按钮
 				var save=document.getElementById('save');//修改按钮
 				
 				//test
@@ -150,9 +153,44 @@
 						myform3.classList.remove('my_none');//没有对应输入的信息
 						myform5.classList.remove('my_none');//没有对应输入的信息
 					}else if(proatt == '新建'){
-						modify.classList.remove('my_none');
+						//显隐
+						save.classList.remove("my_none");
+						EditImage.classList.remove("my_none");
+						dache.classList.add("my_none");
+						for(i=0,len=myforminput.length;i<len;i++){
+							myforminput[i].removeAttribute("readonly");
+						}
+						for(i=0,len=myforminput.length;i<len;i++){
+							myforminput[i].removeAttribute("disabled");
+						}
 					}
 				}
+				
+				//附件查看/修改
+				EditImage.addEventListener('tap',function(){
+//					console.log(owntsp)
+					mui.openWindow({
+						url:'editImage.html',
+						extras:{
+							sjc:owntsp,
+							flag:flag,
+							proatt:proatt,
+							tbpho:tbpho,//检测前
+							tipho:tipho,//检测中
+							tepho:tepho,//检测设备
+							jdpho:jdpho,//监督抽检委托单
+							rtpho:rtpho,//检测照片
+							tfpho:tfpho,//不合格报表
+							dwpho:dwpho,//处理照片
+							Text1:Text1,
+							Text2:Text2,
+							Text3:Text3,
+							Text4:Text4,
+							Text5:Text5,
+							Text6:Text6
+						}
+					});
+				});
 				
 				//异步数据传输
 				mui.ajax(url+'my_plus/my_spv_entity_detail.php',{
@@ -206,24 +244,8 @@
 						datashow(proatt);
 					},
 					error:function(xhr,type,errorThrown){
-//						alert('ajax错误:'+type+'+'+errorThrown);
+						alert('ajax错误:'+type+'+'+errorThrown);
 					}
-				});
-				
-				/**
-				 * 修改按钮
-				 */
-				modify.addEventListener('tap',function(){
-					modify.classList.add('my_none');
-					save.classList.remove('my_none');
-					myforminput = document.getElementById("myform").getElementsByTagName("input");
-					for(i=0;i<myforminput.length;i++){
-  						myforminput[i].removeAttribute("readonly");
-//						console.log(myforminput[i].value)
-  					}
-					for(i=0;i<myforminput.length;i++){
-  						myform[i].removeAttribute("disabled");
-  					}
 				});
 				
 				/**
@@ -233,6 +255,7 @@
 					myInfo = getInfo();
 					saveInfo();
 				});
+				
 				/**
 				 * 获取myform表单的数据并拼接在一起
 				 */

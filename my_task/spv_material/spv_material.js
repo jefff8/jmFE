@@ -76,7 +76,7 @@
 		if(gcdzt=='新增复检'){
 			var url = "../my_spv_material/my_spv_material_review_detail.html?sjc="+sjc+"&gcid="+id+"&state="+gcdzt_c+"&gcmc="+gcmc_c+"&supvision="+supvision_c+"&mobile="+mobile+"&detect="+detect_c;
 		}else{
-			var url = "../my_spv_material/my_spv_material_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc_c+"&state="+gcdzt_c+"&detect="+detect_c;
+			var url = "../my_spv_material/my_spv_material_detail.html?sjc="+sjc+"&gcid="+id+"&gcmc="+gcmc_c+"&state="+gcdzt_c+"&detect="+detect_c+"&flag="+"task";
 		}
 		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="'+url+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">'+ qylx +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">规格,数量：'+gg+','+sl+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">生产厂家：'+sccj+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样人：'+ qyr +'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">取样日期：'+ qyrq +'</p></li>';
 		supervision_material.appendChild(ul);
