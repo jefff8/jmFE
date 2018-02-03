@@ -288,8 +288,7 @@
 					plus.nativeUI.showWaiting( "保存中..." );//调用雪花框
 					setTimeout( function(){
 						plus.nativeUI.closeWaiting();
-					}, 1000 );
-					mui.toast('请完整上传相应图片',{ duration:'long', type:'div' });
+					}, 500 );
 				});
 				
 				function myInfo(){
@@ -322,7 +321,6 @@
 						timeout:10000,
 						success:function(data){
 //							alert(data);
-							mui.toast('新建成功',{ duration:'long', type:'div' });
 						},
 						error:function(xhr,type,errorThrown){
 							alert('ajax123错误'+type+'---'+errorThrown+"失败！");
