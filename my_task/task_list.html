@@ -446,11 +446,9 @@
 				my_name = decodeURI(decodeURI(my_name));
 				setlocalStorage('username',my_name);
 				setlocalStorage('mobile',mobile);
-//				console.log(getsessionStorage('username'));
 				unit = decodeURI(decodeURI(unit));
 				var myDate = new Date();//获取系统当前时间
 				mytime=myDate.toLocaleString();//获取日期与时间
-//				taskList6(1506414368014);
 				mui.ajax(url+'my_task/task_list.php',{
 					data:{
 						flag:'获取工程时间戳',

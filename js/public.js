@@ -5,12 +5,12 @@
 	 * @param {Object} message 		雪花框文本
 	 * @param {Object} Millisecond  维持时间(毫秒)
 	 */
-	waitload = function(message,Millisecond=2500) {
-		plus.nativeUI.showWaiting(message);//调用雪花框
-		setTimeout( function(){
-			plus.nativeUI.closeWaiting();
-		}, Millisecond );
-	};
+//	waitload = function(message,Millisecond=2500) {
+//		plus.nativeUI.showWaiting(message);//调用雪花框
+//		setTimeout( function(){
+//			plus.nativeUI.closeWaiting();
+//		}, Millisecond );
+//	};
 	
 	/**
 	 * 设置localStorage缓存

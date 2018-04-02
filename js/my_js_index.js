@@ -80,8 +80,8 @@ mui.plusReady(function() {
 			return false;			
 		}
 		var b=false,
-		ova = ov.split(".",4);
-		nva = nv.split(".",4);
+		ova = ov.split(".");
+		nva = nv.split(".");
 		for ( var i=0; i<ova.length&&i<nva.length; i++ ) {
 			var so=ova[i],no=parseInt(so),sn=nva[i],nn=parseInt(sn);
 			if ( nn>no || sn.length>so.length  ) {
@@ -92,7 +92,7 @@ mui.plusReady(function() {
 				return false;
 			}
 		}
-		if ( nva.length>ova.length && 0==nv.indexOf(ov) ) {
+		if ( nva[1]>ova[1] && nva[2]>ova[2] ) {
 			cvz="true";
 			return true;
 		}

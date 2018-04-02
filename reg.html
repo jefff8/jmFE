@@ -92,12 +92,12 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/service.js"></script>
-		<script src="js/app.js"></script>
+		<!--<script src="js/app.js"></script>-->
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var settings = app.getSettings();
+//					var settings = app.getSettings();
 					var regButton = doc.getElementById('reg');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
@@ -109,7 +109,6 @@
 					var unitName = doc.getElementById("unitName");
 					//获取cid(每台设备指定一个)
 					var cid = plus.push.getClientInfo().clientid;
-//					var vInfoData = JSON.stringify(vInfo);
 					regButton.addEventListener('tap', function(event) {
 						var regInfo = {
 							account: accountBox.value,
@@ -121,53 +120,67 @@
 							unitName:unitName.value,
 							cid:cid
 						};
-						//账号名不能为中文
-						var str = accountBox.value.trim();    
-				        if(str.length!=0){    
-					        reg=/^[\u0391-\uFFE5]+$/;    
-					        if(reg.test(str)){    
-					            alert("对不起，您输入的字符串类型格式不正确(不可中文)!");//请将“字符串类型”要换成你要验证的那个属性名称！    
-					        }    
-				        }    
-				        
+						var str = accountBox.value.trim();
 						var passwordConfirm = passwordConfirmBox.value;
-						if (passwordConfirm != regInfo.password) {
-							plus.nativeUI.toast('密码两次输入不一致');
+						//账号名为中文或为空
+						if(!str.length){
+							alert("账号为空");
+				        	return;
+				        //判断账号是否包含中文
+						}else if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){
+				            alert("对不起，您输入的字符串类型格式不正确(不可中文)!");//请将“字符串类型”要换成你要验证的那个属性名称！    
+				            return;
+					    //密码为空或密码输入不一致
+						}else if(!regInfo.password.length||!passwordConfirm.length){
+							alert("密码为空");
+				        	return;
+				        //判断密码输入是否一致
+						}else if(passwordConfirm != regInfo.password){
+							alert('密码两次输入不一致');
+							return;
+						//判断手机号	
+						}else if(regInfo.mobile.length!=11){
+							alert('手机号有误');
+							return;
+						//判断姓名是否输入	
+						}else if(!regInfo.my_name.length){
+							alert('请输入姓名');
+							return;
+						//单位未选择
+						}else if(!regInfo.units.length){
+							alert('请选择单位');
+							return;
+						//单位名称为空
+						}else if(!regInfo.unitName.length){
+							alert('请输入单位名称');
 							return;
 						}
-   
-						app.reg(regInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}else{
-								//注册账号异步
-								mui.ajax(url+'reg.php',{
-									data:{
-										account:regInfo.account,
-										password:regInfo.password,
-										email:regInfo.email,
-										mobile:regInfo.mobile,
-										my_name:regInfo.my_name,
-										units:regInfo.units,
-										unitName:regInfo.unitName,
-										cid:cid
-									},
-									dataType:'json',
-									type:'POST', 
-									timeout:10000,
-									success:function(data){
-										if(data.result=='success'){
-											plus.nativeUI.toast('注册成功');
-											mui.back();
-										}else if(data.result!='success'){
-											alert(data.result);
-										}
-									},
-									error:function(xhr,type,errorThrown){
-										alert('ajax错误'+type+'---'+errorThrown);
-									}
-								});
+						
+						//注册账号异步
+						$.ajax(url+'reg.php',{
+							data:{
+								account:regInfo.account,
+								password:regInfo.password,
+								email:regInfo.email,
+								mobile:regInfo.mobile,
+								my_name:regInfo.my_name,
+								units:regInfo.units,
+								unitName:regInfo.unitName,
+								cid:cid
+							},
+							dataType:'json',
+							type:'POST', 
+							timeout:10000,
+							success:function(data){
+								if(data.result=='success'){
+									plus.nativeUI.toast('恭喜注册成功!');
+									mui.back();
+								}else if(data.result!='success'){
+									alert(data.result);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								alert('ajax错误'+type+'---'+errorThrown);
 							}
 						});
 					});

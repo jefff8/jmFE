@@ -92,6 +92,9 @@
 				margin: 0px; 
 				padding: 0px; 
 			}		
+			#pj_title{
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -102,11 +105,12 @@
 		</header>
 		<div class="mui-content">
 		    <div style="padding: 10px 10px;">
-				<div id="segmentedControl" class="mui-segmented-control">
-					<a id="" class="mui-control-item mui-active" href="">
-						江门市建设工程施工质量管理系统
-					</a>					
-				</div>
+				<!--<div id="segmentedControl" class="mui-segmented-control">-->
+					<p id="pj_title"  href="">
+						
+						<!--江门市建设工程施工质量管理系统-->
+					</p>					
+				<!--</div>-->
 			</div>
 			
 			<!-- 时间选择器 -->
@@ -120,6 +124,8 @@
 		            	<option>材料自检</option>
 		            	<option>实体自检</option>
 		            	<option>实体检测</option>
+		            	<option>材料监督抽检</option>
+		            	<option>实体监督抽检</option>
 		            </select>
 		        </div>
 				</form>				
@@ -165,61 +171,8 @@
 				var category = doc.getElementById("category");
 				var collect = doc.getElementById("collect");
 				var empty = doc.getElementById("empty");
-//				var qsrq = doc.getElementById("qsrq");
-//				var jsrq = doc.getElementById("jsrq");
-//				
-//				qsrq.addEventListener('tap', function() {
-//					var dDate = new Date();
-//					plus.nativeUI.pickDate(function(e) {
-//						var d = e.date;
-//						qsrq.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-//						if (qsrq.value&&jsrq.value) {
-//							var gksrq=qsrq.value;
-//							var gjsrq=jsrq.value;
-//							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
-//							var xgksrq = xgksrq.getTime();
-//							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
-//							var xgjsrq = xgjsrq.getTime();
-//							if (xgjsrq>=xgksrq) {
-//								hzong.disabled=false;
-//							}else{
-//								alert('起始日期不能大于结束日期！');
-//								hzong.disabled=true;
-//							}
-//						}
-//						
-//					}, function(e) {
-//						//alert(e);
-//					}, {
-//						title: "请选择日期",
-//					});
-//				});
-//				jsrq.addEventListener('tap', function() {
-//					var dDate = new Date();
-//					plus.nativeUI.pickDate(function(e) {
-//						var d = e.date;
-//						jsrq.value=d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-//						if (qsrq.value&&jsrq.value) {
-//							var gksrq=qsrq.value;
-//							var gjsrq=jsrq.value;
-//							var xgksrq = new Date(Date.parse(gksrq.replace(/-/g, "/")));
-//							var xgksrq = xgksrq.getTime();
-//							var xgjsrq = new Date(Date.parse(gjsrq.replace(/-/g, "/")));
-//							var xgjsrq = xgjsrq.getTime();
-//							if (xgjsrq>=xgksrq) {
-//								hzong.disabled=false;
-//							}else{
-//								alert('起始日期不能大于结束日期！');
-//								hzong.disabled=true;
-//							}
-//						}
-//						
-//					}, function(e) {
-//						//alert(e);
-//					}, {
-//						title: "请选择日期",
-//					});
-//				});
+				var pj_title = doc.getElementById("pj_title");
+				pj_title.innerHTML = pj_name;
 				//异步查询数据
 				collect.addEventListener('tap',function(){
 					if(category.value.length<=0){

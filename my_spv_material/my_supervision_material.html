@@ -396,7 +396,7 @@
 												var index = e.index;	
 												//var nextpage='';
 												switch (index){
-													case 1://取样
+													case 1://委托检测
 														mui.ajax(url+'my_plus/my_spv_material_list.php',{
 															data:{
 																flag:"改新增状态",
@@ -409,12 +409,11 @@
 															type:'POST', 
 															timeout:10000,
 															success:function(data){
-//																alert(data.结果);
 																mui.toast(data.结果,{ duration:'long', type:'div' })
 																location.reload();//刷新本页面
 															},
 															error:function(xhr,type,errorThrown){
-//																alert('ajax错误'+type+'---'+errorThrown+"失败！");
+																alert('ajax错误'+type+'---'+errorThrown+"失败！");
 															}
 														});
 														break;

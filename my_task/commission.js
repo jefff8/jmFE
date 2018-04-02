@@ -44,9 +44,6 @@
 		var ul = document.createElement("ul");
 		ul.className = "mui-table-view mui-card my_list my_marginbottom10px";
 		ul.id = id;
-		if(state=='提交结果'){
-			ul.style.borderColor = "greenyellow";	
-		}
 		var commission = document.getElementById("commission"); 
 		ul.innerHTML = '<li class="mui-table-view-cell my_backgroundcolor_'+color+'"><a class="a_color" href="../my_commission/my_entity_readmessage.html?owtsp='+sjc+'&gcid='+id+'"><span class="mui-icon mui-icon-gear mui-pull-left my_fontweight my_color_white"></span><p class="mui-ellipsis my_style2">工程名称：'+ pj_name +'</p></a></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">自检自测类型：'+type+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测部位/数量：'+part+'/'+quantity+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测人：'+inspector+'</p></li><li class="mui-table-view-cell"><p class="mui-ellipsis my_style1">检测日期：'+testDate+'</p></li>';
 		commission.appendChild(ul);
