@@ -9,11 +9,12 @@
 		<link rel="stylesheet" href="../css/my_css.css">
 		<link rel="stylesheet" href="../css/iconfont.css">
 	</head>
+	
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title" id="H_name"></h1>
+		    <h1 class="mui-title" id="H_name"  ></h1>
 		</header>
 		<div class="mui-content">
 		    <ul id="my_list" class="mui-table-view mui-grid-view mui-grid-9 my_list">
@@ -98,8 +99,12 @@
 				//检测单位
 				detect = decodeURI(detect);
 				var timestamp = geturl("timestamp");
-				document.getElementById('H_name').innerHTML=gcmc;//标题名称
-				
+				var titleName = document.getElementById('H_name');
+				titleName.innerHTML=gcmc;//标题名称
+				var title_length = titleName.innerHTML.length;
+				if(title_length>17){
+					titleName.style.fontSize = '9px';
+				}
 				mui.ajax(url+'check.php',{
 					data:{
 						ulId:"",

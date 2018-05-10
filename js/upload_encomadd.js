@@ -202,7 +202,7 @@ function appendFile(path,entry,lx){
 			var base64 = canvas.toDataURL('image/jpeg', 1 || 0.8 );
 			f1Base64.push(base64+"︴");
 			createItem(base64,entry,lx);
-	}
+		}
 	}else if(lx=='ypzp'){
 		var img = new Image();
 		img.src = path; // 传过来的图片路径在这里用。                                              ///////////// 用canvas画布对照片像素进行处理
