@@ -7,7 +7,7 @@
 	"id": "H5986FCE1",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "江门市建设工程施工质量管理系统",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "2018.02.0126",/*应用版本名称*/
+		"name": "2018.02.0730",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -186,7 +186,7 @@
                     }
                 }
             }
-		}
+		},"ads":{"rp":false,"splash":false,"push":false,"spot":false}
 	},
 	"dependencies": {
 		"pages": {
@@ -1602,10 +1602,7 @@
 				],
 				"refer": [
 					"my_material/readimage.html",
-<<<<<<< HEAD
 					"my_material/editImage.html",
-=======
->>>>>>> 03b8e1f28204763101c3edbe7c0c497c915c29ff
 					"my_task/task_list.html"
 				],
 				"priority": 0
@@ -1832,7 +1829,8 @@
 				"refer": [
 					"my_commission/my_commssion_fail.html",
 					"my_commission/my_commission_add.html",
-					"my_commission/my_commission_change.html"
+					"my_commission/my_commission_change.html",
+					"my_commission/my_commission_list.html"
 				],
 				"priority": 0
 			},
@@ -2440,7 +2438,8 @@
 					"my_spv_material/my_supervision_material.html",
 					"my_spv_material/readimage.html",
 					"my_spv_material/my_spv_material_results.html",
-					"my_task/task_list.html"
+					"my_task/task_list.html",
+					"my_spv_material/editImage.html"
 				],
 				"priority": 0
 			},
@@ -2494,7 +2493,8 @@
 					"my_spv_entity/my_spv_entity_list.html",
 					"my_spv_entity/my_spv_entity_readimage.html",
 					"my_spv_entity/my_spv_entity_results.html",
-					"my_task/task_list.html"
+					"my_task/task_list.html",
+					"my_spv_entity/editImage.html"
 				],
 				"priority": 0
 			},
@@ -2584,12 +2584,13 @@
 				],
 				"priority": 0
 			},
-<<<<<<< HEAD
 			"my_material/editImage.html": {
 				"resources": [],
 				"refer": [
 					"my_material/camera_image.html"
-=======
+				],
+				"priority": 0
+			},
 			"my_task/spv_material/spv_material_deliver.html": {
 				"resources": [
 					"css/mui.min.css",
@@ -2610,7 +2611,13 @@
 				"resources": [],
 				"refer": [
 					"my_spv_material/readimage.html"
->>>>>>> 03b8e1f28204763101c3edbe7c0c497c915c29ff
+				],
+				"priority": 0
+			},
+			"my_commission/editImage.html": {
+				"resources": [],
+				"refer": [
+					"my_commission/camera_image.html"
 				],
 				"priority": 0
 			}
