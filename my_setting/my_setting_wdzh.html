@@ -119,10 +119,10 @@
 					Edit.classList.add("my_none");
 					save.classList.remove("my_none");
 					unit.removeAttribute('disabled');
-  					for(i=0;i<5;i++){
+  					for(i=1;i<5;i++){
   						forminput[i].removeAttribute("readonly");
   					}
-  					for(i=0;i<6;i++){
+  					for(i=1;i<6;i++){
   						forminput[i].removeAttribute("disabled");
   					}
   					mui.toast("现在可以修改您的信息");
@@ -150,7 +150,7 @@
 //							alert(data.result);
 							if (data.result=='success') {
 								mui.toast("修改成功");
-								for(i=0;i<5;i++){
+								for(i=1;i<5;i++){
 									forminput[i].setAttribute('readonly','readonly');
 								}
 								Edit.classList.remove("my_none");

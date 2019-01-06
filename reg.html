@@ -123,8 +123,8 @@
 						var str = accountBox.value.trim();
 						var passwordConfirm = passwordConfirmBox.value;
 						//账号名为中文或为空
-						if(!str.length){
-							alert("账号为空");
+						if(str.length<5){
+							alert("账号至少为5个字符");
 				        	return;
 				        //判断账号是否包含中文
 						}else if(/.*[\u4e00-\u9fa5]+.*$/.test(str)){
