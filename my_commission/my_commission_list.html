@@ -76,7 +76,7 @@
 		<!--委托编号-->
 		<!--验证码-->
 			<div id="zuyPopover" class="mui-popover">
-        		<h4 id="title" style="text-align: center;margin-top: 15px;">确定见证</h4>
+        		<h4 id="title" style="text-align: center;margin-top: 15px;" onclick="cfjc(this)">确定见证</h4>
         		<form class="mui-input-group" style="margin-top: 15px;">
         			<div class="mui-input-row">
         				<label>验证码:</label>
@@ -548,6 +548,38 @@
 						timeout:10000,
 						success:function(data){
 							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){
+					
+										//验证码是否今天使用过
+									mui.ajax(url+'my_plus/my_commission_list.php',{
+									data:{
+										flag:"检测验证码",
+										mobile:mobile,
+										gcmc:gcmc,
+										timestamp:timestamp,
+										submodule:'实体检测'
+										
+										
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+//										alert(data);
+//										alert(data.插入时间);
+//										alert(data.判断位);
+//										alert(data.验证码);
+										var yzmpd = data.判断位;
+										if(yzmpd =='1'){
+//										alert("2");
+										document.getElementById("code").value = data.验证码;
+										document.getElementById("sendMsg").disabled = true;
+										}
+									},
+//									error:function(type){
+//										alert(type);
+//									}
+									});
+								
 								mui.ajax(url+'my_plus/my_commission_list.php',{
 									data:{
 										flag:"获取状态",
@@ -575,10 +607,10 @@
 													case 1://确认见证
 			//											//执行验证码
 														mui("#zuyPopover").popover("toggle");
-														var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
-														but_id.id=ulId;
-			//											alert('wait a moment');
-														break;
+															var but_id=document.getElementById("comfirm").getElementsByTagName('button')[0];
+										but_id.id=ulId;
+			//							alert('wait a moment');
+										break;
 												}	
 											  }
 											);
@@ -810,6 +842,12 @@
 			}
 			//验证码监听
 			var wait = 60;
+//			var myDate = new Date();//获取系统当前时间
+//				mytime=myDate.toLocaleString();//获取日期与时间
+//			var Year=myDate.getFullYear();
+//			var Month=myDate.getMonth();
+//			var Day=myDate.getDate();
+//				alert(Day)
 			function time(o){
 				 if (wait == 0) {  
 		            o.removeAttribute("disabled");
@@ -840,8 +878,9 @@
 							type:'POST', 
 							timeout:10000,
 							success:function(data){
+//								alert(data);
 								if(data.result=='success'){
-//									alert(data.smsContent);
+//									alert(data.result);
 									yzm.value = data.yzm; //获取验证码数字
 									//添加短信记录								
 									mui.ajax(url+'send_Sms/AddSms.php',{

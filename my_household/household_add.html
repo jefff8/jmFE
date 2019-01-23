@@ -163,6 +163,7 @@
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
+//							alert(data);
 							var target=plus.webview.getWebviewById('../my_household/household_list.html');
 							target.reload(true);
 							mui.back();

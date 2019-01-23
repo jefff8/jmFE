@@ -489,7 +489,37 @@
 						type:'post',
 						timeout:10000,
 						success:function(data){
-							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){
+							if((data['单位']=='监理单位'&&data['单位名称']==data['监理操作单位'])||data['单位']=='管理员'){				
+								
+								//验证码是否今天使用过
+									mui.ajax(url+'my_plus/my_inspection_entity.php',{
+									data:{
+										flag:"检测验证码",
+										mobile:mobile,
+										gcmc:gcmc,
+										timestamp:timestamp,
+										submodule:'实体自检'
+									},
+									dataType:'json',
+									type:'POST', 
+									timeout:10000,
+									success:function(data){
+//										alert(data);
+//										alert(data.插入时间);
+//										alert(data.判断位);
+//										alert(data.验证码);
+										var yzmpd = data.判断位;
+										if(yzmpd =='1'){
+//										alert("2");
+										document.getElementById("code").value = data.验证码;
+										document.getElementById("sendMsg").disabled = true;
+										}
+									},
+//									error:function(type){
+//										alert(type);
+//									}
+									});
+								
 								//监理单位见证&&合格不合格操作
 								mui.ajax(url+'my_plus/my_inspection_entity.php',{
 									data:{

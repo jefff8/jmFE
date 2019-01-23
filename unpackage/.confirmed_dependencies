@@ -1,7 +1,15 @@
 {
 	"index.html": {
 		"resources": [
-			"my.html"
+			"my.html",
+			"js/my_js_index.js",
+			"css/my_css.css",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"js/service.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"fonts/iconfont.ttf"
 		],
 		"refer": [
 			"my.html",
@@ -14,7 +22,16 @@
 			"index.html",
 			"reg.html"
 		],
-		"resources": []
+		"resources": [
+			"js/app.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/mui.enterfocus.js",
+			"fonts/mui.ttf"
+		]
 	},
 	"my.html": {
 		"refer": [
@@ -23,13 +40,28 @@
 			"my_plus/my_setting.html",
 			"my_info/information_list.html"
 		],
-		"resources": []
+		"resources": [
+			"js/my_js_nextpage.js",
+			"images/setting.png",
+			"images/xxfb.png",
+			"images/notice.png",
+			"images/my_pj.png",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
 	},
 	"my_plus/my_project_list.html": {
 		"refer": [
 			"my_plus/my_project.html"
 		],
-		"resources": []
+		"resources": [
+			"css/my_css.css",
+			"css/mui.min.css",
+			"images/xmmc.png",
+			"js/mui.min.js",
+			"my_plus/my_project.html"
+		]
 	},
 	"my_material/my_material_list.html": {
 		"refer": [
@@ -39,9 +71,25 @@
 			"my_material/my_material_fail.html",
 			"my_material/my_material_samDetEdit.html",
 			"my_material/my_material_recheckDeliver.html",
-			"my_material/my_material_recheckDet.html"
+			"my_material/my_material_recheckDet.html",
+			"my_material/my_rejection.html",
+			"my_material/my_material_rcvdDet.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css",
+			"my_material/my_material_samDet.html",
+			"my_material/my_material_rcvdDet.html"
+		]
 	},
 	"my_plus/my_project.html": {
 		"refer": [
@@ -55,7 +103,16 @@
 			"my_plus/my_query.html",
 			"my_plus/my_result.html"
 		],
-		"resources": []
+		"resources": [
+			"css/iconfont.css",
+			"fonts/iconfont.ttf",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"my_plus/my_project_list.html"
+		]
 	},
 	"my_material/my_material_samDet.html": {
 		"refer": [
@@ -63,14 +120,27 @@
 			"my_material/my_material_list.html",
 			"my_material/readimage.html"
 		],
-		"resources": []
+		"resources": [
+			"css/mui.min.css",
+			"js/upload_qy.js",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png",
+			"my_material/my_material_list.html",
+			"css/mui.poppicker.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_plus/my_inspection.html": {
 		"refer": [
 			"my_insp_material/my_inspection_material.html",
 			"my_insp_entity/my_inspection_entity.html"
 		],
-		"resources": []
+		"resources": [
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/iconfont.ttf"
+		]
 	},
 	"my_spv_material/my_supervision_material.html": {
 		"refer": [
@@ -78,14 +148,27 @@
 			"my_spv_material/my_spv_material_detail.html",
 			"my_spv_material/my_spv_material_review_detail.html"
 		],
-		"resources": []
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_plus/my_supervision.html": {
 		"refer": [
 			"my_spv_material/my_supervision_material.html",
 			"my_spv_entity/my_spv_entity_list.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
+		]
 	},
 	"my_spv_material/my_spv_material_detail.html": {
 		"refer": [
@@ -100,14 +183,29 @@
 			"my_spv_entity/my_spv_entity_add.html",
 			"my_spv_entity/my_spv_entity_readmessage.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_info/information_list.html": {
 		"refer": [
 			"my_info/information_add.html",
 			"my_info/information_detail.html"
 		],
-		"resources": []
+		"resources": [
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_info/information_detail.html": {
 		"refer": [
@@ -123,7 +221,20 @@
 			"my_commission/my_commission_list.html",
 			"my_commission/my_commssion_fail.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css",
+			"my_commission/my_entity_readmessage.html"
+		]
 	},
 	"my_spv_entity/my_spv_entity_readmessage.html": {
 		"refer": [
@@ -138,7 +249,13 @@
 			"my_commission/editImage.html",
 			"my_commission/my_entity_readimage.html"
 		],
-		"resources": []
+		"resources": [
+			"my_commission/my_commission_list.html",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_insp_material/my_inspection_material.html": {
 		"refer": [
@@ -147,21 +264,44 @@
 			"my_insp_material/my_inspection_deliver.html",
 			"my_insp_material/my_inspection_disqualification.html"
 		],
-		"resources": []
+		"resources": [
+			"js/common.js",
+			"js/immersed.js",
+			"css/my_project_fhys_xz.css",
+			"css/mui.min.css",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"my_insp_material/my_inspection_detail.html"
+		]
 	},
 	"my_insp_material/my_inspection_detail.html": {
 		"refer": [
 			"my_insp_material/editImage.html",
 			"my_insp_material/my_inspection_material.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.picker.js",
+			"my_insp_material/my_inspection_material.html",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/my_css.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_insp_entity/my_inspection_entity.html": {
 		"refer": [
 			"my_insp_entity/my_inspection_new.html",
-			"my_insp_entity/my_inspection_entitydetail.html"
+			"my_insp_entity/my_inspection_entitydetail.html",
+			"my_insp_entity/my_inspection_entitydeliver.html"
 		],
-		"resources": []
+		"resources": [
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_insp_entity/my_inspection_entitydetail.html": {
 		"refer": [
@@ -174,7 +314,12 @@
 		"refer": [
 			"my_division/division_details.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_commission/editImage.html": {
 		"refer": [
@@ -188,7 +333,12 @@
 			"my_commission/my_entity_results.html",
 			"my_material/my_material_results.html"
 		],
-		"resources": []
+		"resources": [
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"fonts/iconfont.ttf"
+		]
 	},
 	"my_commission/my_entity_results.html": {
 		"refer": [
@@ -200,7 +350,19 @@
 		"refer": [
 			"my_material/camera_image.html"
 		],
-		"resources": []
+		"resources": [
+			"js/upload_qy.js",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png",
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"css/my_css.css",
+			"css/mui.poppicker.css",
+			"css/my_project_fhys_xz.css"
+		]
 	},
 	"my_material/my_material_results.html": {
 		"refer": [
@@ -235,6 +397,208 @@
 	"my_commission/my_commission_add.html": {
 		"refer": [
 			"my_commission/camera_image.html"
+		],
+		"resources": [
+			"css/mui.min.css",
+			"js/upload_encomadd.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_plus/my_setting.html": {
+		"resources": [
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"css/my_css.css"
+		],
+		"refer": [
+			"my_setting/my_setting_wdzh.html"
+		]
+	},
+	"team.html": {
+		"resources": [
+			"images/xzmc.png",
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"my_setting/my_setting_wdzh.html": {
+		"resources": [
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
+		],
+		"refer": []
+	},
+	"my_insp_material/my_inspection_add.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/pic_upload_SelfTest.js",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css"
+		],
+		"refer": []
+	},
+	"my_household/household_list.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css",
+			"my_household/construction_detail.html",
+			"js/service.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"my_household/household_add.html",
+			"my_household/construction_detail.html"
+		]
+	},
+	"my_division/division_details.html": {
+		"resources": [
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_material/my_inspection_mtResult.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/service.js",
+			"js/native.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"js/mui.poppicker.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_plus/my_query.html": {
+		"resources": [
+			"js/echarts.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.picker.min.css"
+		]
+	},
+	"my_task/task_list.html": {
+		"resources": [
+			"my_task/spv_entity/my_spv_entity.js",
+			"my_task/spv_material/spv_material.js",
+			"js/public.js",
+			"css/mui.min.css",
+			"my_task/self_inspection1.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"my_task/send.js",
+			"my_task/commission.js",
+			"my_task/self_inspection2.js",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/style.css"
+		]
+	},
+	"my_material/camera_image.html": {
+		"resources": [
+			"js/common.js"
+		]
+	},
+	"my_commission/my_entity_readimage.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
+		]
+	},
+	"my_commission/my_commission_change.html": {
+		"resources": [
+			"js/upload_encomchge.js",
+			"css/mui.min.css",
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"info.html": {
+		"resources": [
+			"images/appDownload.png",
+			"css/mui.min.css"
+		]
+	},
+	"my_insp_entity/my_inspection_entitydeliver.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/pic_upload_entity_2.js",
+			"images/iconfont-tianjia.png",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_insp_material/my_inspection_deliver.html": {
+		"resources": [
+			"js/pic_upload_SelfTest_2.js",
+			"css/mui.min.css",
+			"images/iconfont-tianjia.png"
+		]
+	},
+	"my_material/my_material_deliver.html": {
+		"resources": [
+			"js/upload_sy.js",
+			"js/service.js",
+			"js/mui.min.js",
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css",
+			"images/iconfont-tianjia.png"
+		]
+	},
+	"my_material/my_material_fail.html": {
+		"resources": [
+			"js/upload_shy.js"
+		]
+	},
+	"my_material/my_rejection.html": {
+		"resources": [
+			"css/my_css.css",
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
+		]
+	},
+	"my_household/household_add.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/mui.picker.min.css",
+			"css/my_css.css"
+		]
+	},
+	"my_household/construction_detail.html": {
+		"resources": [
+			"my_household/household_list.html",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"my_household/household_list.html"
+		]
+	},
+	"my_material/my_material_rcvdDet.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/my_project_fhys_xz.css"
 		]
 	}
 }
